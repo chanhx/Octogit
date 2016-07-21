@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C538FCFF1D3FBFDC003A559E /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FCFE1D3FBFDC003A559E /* GithubAPI.swift */; };
+		C538FD021D406638003A559E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD011D406638003A559E /* User.swift */; };
+		C538FD081D406BE8003A559E /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD071D406BE8003A559E /* AccountManager.swift */; };
 		C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB94621D3F842000887E81 /* AppDelegate.swift */; };
 		C5DB94651D3F842000887E81 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB94641D3F842000887E81 /* ViewController.swift */; };
 		C5DB94681D3F842000887E81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5DB94661D3F842000887E81 /* Main.storyboard */; };
@@ -28,6 +31,9 @@
 		C5DB94AA1D3F8A0A00887E81 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DB94A91D3F8A0A00887E81 /* Result.framework */; };
 		C5F4BDE71D3F95E5009DF758 /* Octicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDE61D3F95E5009DF758 /* Octicon.swift */; };
 		C5F4BDEB1D3F96D2009DF758 /* octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */; };
+		C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */; };
+		C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDF41D3FB294009DF758 /* OAuthViewController.swift */; };
+		C5F4BDF71D3FB37A009DF758 /* OAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDF61D3FB37A009DF758 /* OAuthAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +54,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C538FCFE1D3FBFDC003A559E /* GithubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
+		C538FD011D406638003A559E /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		C538FD071D406BE8003A559E /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		C5DB945F1D3F842000887E81 /* iGithub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGithub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5DB94621D3F842000887E81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5DB94641D3F842000887E81 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +84,9 @@
 		C5DB94A91D3F8A0A00887E81 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		C5F4BDE61D3F95E5009DF758 /* Octicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Octicon.swift; sourceTree = "<group>"; };
 		C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = octicons.ttf; sourceTree = "<group>"; };
+		C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		C5F4BDF41D3FB294009DF758 /* OAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthViewController.swift; sourceTree = "<group>"; };
+		C5F4BDF61D3FB37A009DF758 /* OAuthAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +126,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C538FD001D4065F2003A559E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C538FD011D406638003A559E /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		C5DB94561D3F842000887E81 = {
 			isa = PBXGroup;
 			children = (
@@ -139,7 +159,12 @@
 			isa = PBXGroup;
 			children = (
 				C5DB94621D3F842000887E81 /* AppDelegate.swift */,
+				C5F4BDF61D3FB37A009DF758 /* OAuthAPI.swift */,
+				C538FCFE1D3FBFDC003A559E /* GithubAPI.swift */,
+				C5F4BDEC1D3FAEE6009DF758 /* ViewControllers */,
+				C538FD001D4065F2003A559E /* Models */,
 				C5DB94641D3F842000887E81 /* ViewController.swift */,
+				C538FD071D406BE8003A559E /* AccountManager.swift */,
 				C5F4BDE61D3F95E5009DF758 /* Octicon.swift */,
 				C5DB94661D3F842000887E81 /* Main.storyboard */,
 				C5DB94691D3F842000887E81 /* Assets.xcassets */,
@@ -193,6 +218,23 @@
 				C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		C5F4BDEC1D3FAEE6009DF758 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C5F4BDED1D3FB19A009DF758 /* Login */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C5F4BDED1D3FB19A009DF758 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */,
+				C5F4BDF41D3FB294009DF758 /* OAuthViewController.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -358,9 +400,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */,
 				C5DB94651D3F842000887E81 /* ViewController.swift in Sources */,
+				C5F4BDF71D3FB37A009DF758 /* OAuthAPI.swift in Sources */,
 				C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */,
+				C538FD021D406638003A559E /* User.swift in Sources */,
+				C538FD081D406BE8003A559E /* AccountManager.swift in Sources */,
 				C5F4BDE71D3F95E5009DF758 /* Octicon.swift in Sources */,
+				C538FCFF1D3FBFDC003A559E /* GithubAPI.swift in Sources */,
+				C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,58 @@
+//
+//  GithubAPI.swift
+//  iGithub
+//
+//  Created by Chan Hocheung on 7/20/16.
+//  Copyright © 2016 Hocheung. All rights reserved.
+//
+
+import Foundation
+import RxMoya
+
+enum GithubAPI {
+    case OAuthUser(accessToken: String)
+}
+
+extension GithubAPI: TargetType {
+    var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
+    var path: String {
+        switch self {
+        case .OAuthUser(_):
+            return "/user"
+        }
+    }
+    var method: RxMoya.Method {
+        switch self {
+        default:
+            return .GET
+        }
+    }
+    var parameters: [String: AnyObject]? {
+        switch self {
+        case .OAuthUser(let accessToken):
+            return ["access_token": accessToken]
+        }
+    }
+    var sampleData: NSData {
+        switch self {
+        default:
+            return "Half measures are as bad as nothing at all.".UTF8EncodedData
+        }
+    }
+    var multipartBody: [RxMoya.MultipartFormData]? {
+        switch self {
+        default:
+            return nil
+        }
+    }
+}
+
+
+private extension String {
+    var URLEscapedString: String {
+        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+    }
+    var UTF8EncodedData: NSData {
+        return self.dataUsingEncoding(NSUTF8StringEncoding)!
+    }
+}
