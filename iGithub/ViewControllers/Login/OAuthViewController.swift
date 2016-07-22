@@ -35,7 +35,8 @@ class OAuthViewController: UIViewController, WKNavigationDelegate {
             let queryItems = NSURLComponents(URL: navigationAction.request.URL!, resolvingAgainstBaseURL: false)?.queryItems
             if let code = queryItems?.filter({$0.name == "code"}).first!.value {
                 AccountManager.shareManager.requestToken(code, success: {
-                    let rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+                    let rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as! EventsViewController
+//                    rootViewController.viewModel = EventsTableViewModel()
                     UIApplication.sharedApplication().delegate!.window!!.rootViewController = rootViewController
                 }, failure: {
                     print($0)

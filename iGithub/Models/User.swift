@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class User: Mappable {
+class User: BaseModel, CustomStringConvertible {
     
     var id: Int?
     var login: String?
@@ -30,12 +30,8 @@ class User: Mappable {
     var publicGists: Int?
     var publicRepos: Int?
     
-    required init?(_ map: Map) {
-        
-    }
-    
     // Mappable
-    func mapping(map: Map) {
+    override func mapping(map: Map) {
         id          <- map["id"]
         login       <- map["login"]
         name        <- map["name"]
@@ -54,5 +50,11 @@ class User: Mappable {
         following   <- map["following"]
         publicGists <- map["public_gists"]
         publicRepos <- map["public_repos"]
+    }
+    
+    var description : String {
+        get {
+            return self.login!
+        }
     }
 }

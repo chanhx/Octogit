@@ -22,12 +22,12 @@ class AccountManager {
     lazy var disposeBag = DisposeBag()
     
     var currentUser: User? {
-        didSet(user) {
-            keychain["userJSON"] = user != nil ? Mapper().toJSONString(user!, prettyPrint: true) : nil
+        didSet {
+            keychain["userJSON"] = currentUser != nil ? Mapper().toJSONString(currentUser!, prettyPrint: true) : nil
         }
     }
     var token: String? {
-        didSet(token) {
+        didSet {
             keychain["access_token"] = token
         }
     }

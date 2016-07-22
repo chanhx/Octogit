@@ -20,13 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
         var initialViewController: UIViewController
         
-//        if AccountManager.shareManager.token == nil {
+        if AccountManager.shareManager.token == nil {
             initialViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("Login")
-//        } else {
-//            initialViewController = mainStoryBoard.instantiateInitialViewController()!
-//        }
-//        
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)        
+        } else {
+            initialViewController = mainStoryBoard.instantiateInitialViewController()!
+        }
+
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
         

@@ -11,6 +11,7 @@ import RxMoya
 
 enum GithubAPI {
     case OAuthUser(accessToken: String)
+    case ReceivedEvents(username: String)
 }
 
 extension GithubAPI: TargetType {
@@ -19,6 +20,8 @@ extension GithubAPI: TargetType {
         switch self {
         case .OAuthUser(_):
             return "/user"
+        case .ReceivedEvents(let username):
+            return "/users/\(username)/received_events"
         }
     }
     var method: RxMoya.Method {
@@ -31,6 +34,8 @@ extension GithubAPI: TargetType {
         switch self {
         case .OAuthUser(let accessToken):
             return ["access_token": accessToken]
+        default:
+            return nil
         }
     }
     var sampleData: NSData {
