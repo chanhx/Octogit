@@ -13,13 +13,13 @@ class IssueComment : BaseModel {
     
     var id: Int?
     var user: User?
-    var content: String?
+    var body: String?
     var createdAt: NSDate?
     
     override func mapping(map: Map) {
         id          <- map["id"]
         user        <- (map["user"], UserTransform())
-        content     <- map["content"]
+        body        <- map["content"]
         createdAt   <- (map["created_at"], DateTransform())
     }
 }

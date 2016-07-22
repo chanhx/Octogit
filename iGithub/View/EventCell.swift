@@ -14,8 +14,8 @@ class EventCell: UITableViewCell {
 
     @IBOutlet weak var avatarView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var distanceFromDetail: NSLayoutConstraint!
     
     var entity: Event! {
@@ -25,8 +25,8 @@ class EventCell: UITableViewCell {
             
             titleLabel.text = eventTitle(entity)
             
-            detailLabel.text = nil
-            distanceFromDetail.constant = 0
+            contentLabel.text = eventDetail(entity)
+            distanceFromDetail.constant = contentLabel.text == nil ? 0 : 8
         }
     }
     
@@ -37,7 +37,9 @@ func eventTitle(event: Event) -> String {
     switch event.type! {
     case .CommitCommentEvent:
         let e = event as! CommitCommentEvent
-        return "\(e.actor!) commented on \(e.comment!.commitID!) at \(e.repositoryName!)"
+        let commitID = e.comment!.commitID!
+        let shortenedSHA = commitID.substringToIndex(commitID.startIndex.advancedBy(7))
+        return "\(e.actor!) commented on \(shortenedSHA) at \(e.repositoryName!)"
     case .CreateEvent:
         let e = event as! CreateEvent
         switch e.refType! {
@@ -88,5 +90,54 @@ func eventTitle(event: Event) -> String {
         return "\(event.actor!) starred \(event.repositoryName!)"
     default:
         return ""
+    }
+}
+
+func eventDetail(event: Event) -> String? {
+    switch event.type! {
+    case .CommitCommentEvent:
+        let e = event as! CommitCommentEvent
+        return e.comment!.body!
+    case .CreateEvent:
+        let e = event as! CreateEvent
+        switch e.refType! {
+        case .Repository:
+            return e.repoDescription
+        default:
+            return nil
+        }
+    case .ForkEvent:
+        let e = event as! ForkEvent
+        return e.forkeeDescription
+    case .GollumEvent:
+        let e = event as! GollumEvent
+        return e.summary
+    case .IssueCommentEvent:
+        let e = event as! IssueCommentEvent
+        return e.comment!.body
+    case .IssuesEvent:
+        let e = event as! IssueEvent
+        return e.issue!.title
+    case .PublicEvent:
+        let e = event as! PublicEvent
+        return e.repositoryDescription
+    case .PullRequestEvent:
+        let e = event as! PullRequestEvent
+        return e.pullRequest?.title
+    case .PullRequestReviewCommentEvent:
+        let e = event as! PullRequestReviewCommentEvent
+        return e.comment!.body
+    case .PushEvent:
+        let e = event as! PushEvent
+        var messages: [String] = []
+        for commit in e.commits! {
+            let SHA = commit.SHA!
+            let shortenedSHA = SHA.substringToIndex(SHA.startIndex.advancedBy(7))
+            let message = "\(shortenedSHA) \(commit.message!)"
+            messages.append(message)
+        }
+        return messages.joinWithSeparator("\n")
+    default:
+        return nil
     }
 }

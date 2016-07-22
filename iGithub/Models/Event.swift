@@ -58,6 +58,7 @@ class Event: BaseModel {
             case .IssueCommentEvent: return IssueCommentEvent(map)
             case .IssuesEvent: return IssueEvent(map)
             case .MemberEvent: return MemberEvent(map)
+            case .PublicEvent: return PublicEvent(map)
             case .PullRequestEvent: return PullRequestEvent(map)
             case .PullRequestReviewCommentEvent: return PullRequestReviewCommentEvent(map)
             case .PushEvent: return PushEvent(map)
@@ -136,11 +137,13 @@ class DeleteEvent: Event {
 
 class ForkEvent: Event {
     var forkeeFullName: String?
+    var forkeeDescription: String?
     
     override func mapping(map: Map) {
         super.mapping(map)
         
         forkeeFullName <- map["payload.forkee.full_name"]
+        forkeeDescription <- map["payload.forkee.description"]
     }
 }
 
@@ -149,12 +152,14 @@ class ForkEvent: Event {
 class GollumEvent: Event {
     var pageName: String?
     var action: String?
+    var summary: String?
     
     override func mapping(map: Map) {
         super.mapping(map)
         
         pageName <- map["payload.pages.0.page_name"]
-        action   <- map["payload.pages.action"]
+        action   <- map["payload.pages.0.action"]
+        summary  <- map["payload.pages.0.summary"]
     }
 }
 
@@ -208,6 +213,18 @@ class MemberEvent: Event {
         super.mapping(map)
         
         member <- (map["payload.member"], UserTransform())
+    }
+}
+
+// MARK: PublicEvent
+
+class PublicEvent: Event {
+    var repositoryDescription: String?
+    
+    override func mapping(map: Map) {
+        super.mapping(map)
+        
+        repositoryDescription <- map["payload.repository.description"]
     }
 }
 

@@ -106,7 +106,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="detail" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IaJ-WK-GLf">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="content" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IaJ-WK-GLf">
                                             <rect key="frame" x="8" y="70.5" width="584" height="42"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -130,7 +130,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarView" destination="GA0-C4-xuf" id="0SB-JC-A0U"/>
-                                    <outlet property="detailLabel" destination="IaJ-WK-GLf" id="ClU-UK-XhS"/>
+                                    <outlet property="contentLabel" destination="IaJ-WK-GLf" id="iNE-Xd-Vhu"/>
                                     <outlet property="distanceFromDetail" destination="rpU-9l-Wq3" id="Fpp-9c-BWq"/>
                                     <outlet property="timeLabel" destination="Qu1-L6-YBg" id="w4D-1t-N10"/>
                                     <outlet property="titleLabel" destination="saC-qP-kih" id="9Vw-6X-oAf"/>

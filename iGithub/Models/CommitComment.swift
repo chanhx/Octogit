@@ -14,14 +14,14 @@ class CommitComment: BaseModel {
     var id: Int?
     var commitID: String?
     var user: User?
-    var content: String?
+    var body: String?
     var createdAt: NSDate?
         
     override func mapping(map: Map) {
         id          <- map["id"]
         commitID    <- map["commit_id"]
         user        <- (map["user"], UserTransform())
-        content     <- map["content"]
+        body        <- map["body"]
         createdAt   <- (map["created_at"], DateTransform())
     }
 }
