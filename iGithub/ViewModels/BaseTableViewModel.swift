@@ -14,7 +14,7 @@ import ObjectMapper
 class BaseTableViewModel<T: BaseModel>: NSObject {
     
     var dataSource: Variable<[T]> = Variable([])
-    var provider = RxMoyaProvider<GithubAPI>()
+    let provider = RxMoyaProvider<GithubAPI>()
     let disposeBag = DisposeBag()
     
     func fetchData() {}

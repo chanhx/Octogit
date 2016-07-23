@@ -58,8 +58,8 @@ class PullRequestCommentTransform: TransformOf<PullRequestComment, AnyObject> {
     }
 }
 
-class RepoTransform: TransformOf<Repo, AnyObject> {
+class RepositoryTransform: TransformOf<Repository, AnyObject> {
     init() {
-        super.init(fromJSON: { Mapper<Repo>().map($0) }, toJSON: { String($0) })
+        super.init(fromJSON: { Mapper<Repository>().map($0) }, toJSON: { String($0) })
     }
 }

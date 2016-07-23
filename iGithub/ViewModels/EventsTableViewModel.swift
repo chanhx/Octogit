@@ -9,11 +9,27 @@
 import Foundation
 import ObjectMapper
 
+enum UserEventType {
+    case Performed
+    case Received
+}
+
 class EventsTableViewModel: BaseTableViewModel<Event> {
+    
+    private var token: GithubAPI
+    
+    init(username: String, type: UserEventType) {
+        switch type {
+        case .Performed:
+            token = .UserEvents(username: username)
+        case .Received:
+            token = .ReceivedEvents(username: username)
+        }
+    }
     
     override func fetchData() {
         provider
-            .request(.ReceivedEvents(username: AccountManager.shareManager.currentUser!.login!))
+            .request(token)
             .mapJSON()
             .subscribe(
                 onNext: {
@@ -25,5 +41,9 @@ class EventsTableViewModel: BaseTableViewModel<Event> {
                     print($0)
             })
             .addDisposableTo(disposeBag)
+    }
+    
+    func repositoryViewModelForIndex(index: Int) -> RepositoryViewModel {
+        return RepositoryViewModel(fullName: dataSource.value[index].repositoryName!)
     }
 }

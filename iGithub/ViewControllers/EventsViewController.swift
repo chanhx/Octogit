@@ -11,31 +11,25 @@ import RxSwift
 
 class EventsViewController: BaseTableViewController {
     
-    let viewModel = EventsTableViewModel()
+    var viewModel: EventsTableViewModel! {
+        didSet {
+            viewModel.dataSource.asObservable()
+                .bindTo(tableView.rx_itemsWithCellIdentifier("EventCell", cellType: EventCell.self)) { row, element, cell in
+                    cell.entity = element
+                }
+                .addDisposableTo(viewModel.disposeBag)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.dataSource.asObservable()
-            .skip(1)
-            .subscribeNext { _ in
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.tableView.reloadData()
-                })
-            }
-            .addDisposableTo(viewModel.disposeBag)
-        
         viewModel.fetchData()
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.dataSource.value.count
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as! EventCell
-        cell.entity = viewModel.dataSource.value[indexPath.row]
-        
-        return cell
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let repositoryVM = viewModel.repositoryViewModelForIndex(tableView.indexPathForSelectedRow!.row)
+        let repositoryVC = segue.destinationViewController as! RepositoryViewController
+        repositoryVC.viewModel = repositoryVM
     }
 }

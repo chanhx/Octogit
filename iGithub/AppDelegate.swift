@@ -17,17 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
-        var initialViewController: UIViewController
+        var initialVC: UIViewController
         
         if AccountManager.shareManager.token == nil {
-            initialViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("Login")
+            initialVC = UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()!
         } else {
-            initialViewController = mainStoryBoard.instantiateInitialViewController()!
+            initialVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()!
+            let eventsVC = (initialVC  as! UINavigationController).topViewController as! EventsViewController
+            eventsVC.viewModel = EventsTableViewModel(username: AccountManager.shareManager.currentUser!.login!, type: .Received)
         }
 
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        self.window?.rootViewController = initialViewController
+        self.window?.rootViewController = initialVC
         self.window?.makeKeyAndVisible()
         
         return true

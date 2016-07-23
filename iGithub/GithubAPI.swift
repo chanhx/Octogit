@@ -10,18 +10,24 @@ import Foundation
 import RxMoya
 
 enum GithubAPI {
+    case GetARepository(fullName: String)
     case OAuthUser(accessToken: String)
     case ReceivedEvents(username: String)
+    case UserEvents(username: String)
 }
 
 extension GithubAPI: TargetType {
     var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     var path: String {
         switch self {
+        case .GetARepository(let fullName):
+            return "/repos/\(fullName)"
         case .OAuthUser(_):
             return "/user"
         case .ReceivedEvents(let username):
             return "/users/\(username)/received_events"
+        case .UserEvents(let username):
+            return "/users/\(username)/events"
         }
     }
     var method: RxMoya.Method {
