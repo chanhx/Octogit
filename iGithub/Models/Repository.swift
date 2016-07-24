@@ -15,12 +15,14 @@ class Repository: BaseModel {
     var name: String?
     var fullName: String?
     var repoDescription: String?
+    var language: String?
     
     var owner: User?
     var parent: Repository?
     var source: Repository?
     
     var createdAt: NSDate?
+    var pushedAt: NSDate?
     var updatedAt: NSDate?
     
     var isPrivate: Bool?
@@ -42,12 +44,14 @@ class Repository: BaseModel {
         name            <- map["name"]
         fullName        <- map["full_name"]
         repoDescription <- map["description"]
+        language        <- map["language"]
         
         owner           <- (map["owner"], UserTransform())
         parent          <- (map["parent"], RepositoryTransform())
         source          <- (map["source"], RepositoryTransform())
         
         createdAt       <- (map["created_at"], DateTransform())
+        pushedAt        <- (map["pushed_at"], DateTransform())
         updatedAt       <- (map["updated_at"], DateTransform())
         
         isPrivate       <- map["private"]

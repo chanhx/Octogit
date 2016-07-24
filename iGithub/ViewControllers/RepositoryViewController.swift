@@ -25,10 +25,12 @@ class RepositoryViewController: BaseTableViewController {
                     self.tableView.reloadData()
                     
                     if self.viewModel.repositoryLoaded {
-                        self.iconLabel.text = repo.isAFork! ? Octicon.RepoForked.rawValue : Octicon.Repo.rawValue
-                        
-//                        let lastUpdatedTime = repo.updatedAt!.toNaturalString(NSDate(), style: FormatterStyle(style: .Full, max: 1))!
-//                        self.updateTimeLabel.text = "last updated \(lastUpdatedTime) ago"
+                        if repo.isPrivate! {
+                            self.iconLabel.text = Octicon.Lock.rawValue
+                        } else {
+                            self.iconLabel.text = repo.isAFork! ? Octicon.RepoForked.rawValue : Octicon.Repo.rawValue
+                        }
+                        self.updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString)"
                     } else {
                         self.iconLabel.text = ""
                     }
@@ -57,23 +59,11 @@ class RepositoryViewController: BaseTableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return viewModel.repositoryLoaded ? 3 : 1
+        return viewModel.numberOfSections()
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        guard viewModel.repositoryLoaded else {
-            return 1
-        }
-        
-        switch section {
-        case 0:
-            return viewModel.repository.value.repoDescription != nil ? 2 : 1
-        case 1:
-            return 6
-        default:
-            return 1
-        }
+        return viewModel.numberOfRowsInSection(section)
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -94,8 +84,9 @@ class RepositoryViewController: BaseTableViewController {
                 }
                 return cell
             default:
-                let cell = tableView.dequeueReusableCellWithIdentifier("RepositoryInfoCell", forIndexPath: indexPath)
+                let cell = UITableViewCell()
                 cell.accessoryType = .None
+                cell.selectionStyle = .None
                 cell.textLabel?.numberOfLines = 0
                 cell.textLabel?.lineBreakMode = .ByWordWrapping
                 cell.textLabel?.text = viewModel.repository.value.repoDescription!
@@ -106,22 +97,21 @@ class RepositoryViewController: BaseTableViewController {
             cell.textLabel?.font = UIFont(name: "octicons", size: 18)
             switch indexPath.row {
             case 0:
-                cell.textLabel?.text = "\(Octicon.GitCommit) Commits"
-            case 1:
                 cell.textLabel?.text = "\(Octicon.IssueOpened) Issues"
-            case 2:
+            case 1:
                 cell.textLabel?.text = "\(Octicon.Tag) Releases"
-            case 3:
+            case 2:
                 cell.textLabel?.text = "\(Octicon.Rss) Recent Activity"
-            case 4:
+            case 3:
                 cell.textLabel?.text = "\(Octicon.Organization) Contributors"
-            case 5:
-                cell.textLabel?.text = "\(Octicon.GitPullRequest) PullRequests"
+            case 4:
+                cell.textLabel?.text = "\(Octicon.GitPullRequest) Pull Requests"
             default: break
             }
             return cell
         case 2:
-            let cell = tableView.dequeueReusableCellWithIdentifier("RepositoryInfoCell", forIndexPath: indexPath)
+            let cell = UITableViewCell()
+            cell.accessoryType = .DisclosureIndicator
             cell.textLabel?.text = viewModel.repository.value.defaultBranch!
             
             return cell

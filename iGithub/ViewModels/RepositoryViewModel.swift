@@ -42,4 +42,24 @@ class RepositoryViewModel: NSObject {
             }
             .addDisposableTo(disposeBag)
     }
+    
+    func numberOfSections() -> Int {
+        return self.repositoryLoaded ? 3 : 1
+    }
+    
+    func numberOfRowsInSection(section: Int) -> Int {
+        guard self.repositoryLoaded else {
+            return 1
+        }
+        
+        switch section {
+        case 0:
+            return self.repository.value.repoDescription != nil ? 2 : 1
+        case 1:
+            return 5
+        default:
+            return 1
+        }
+    }
+
 }
