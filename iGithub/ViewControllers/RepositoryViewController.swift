@@ -119,6 +119,16 @@ class RepositoryViewController: BaseTableViewController {
             return UITableViewCell()
         }
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+        
+        if (indexPath.section, indexPath.row) == (2, 0) {
+            let filesTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FileTVC") as! FilesViewController
+            filesTableVC.viewModel = viewModel.filesTableViewModel
+            self.navigationController?.pushViewController(filesTableVC, animated: true)
+        }
+    }
 
     /*
     // MARK: - Navigation

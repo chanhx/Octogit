@@ -8,6 +8,7 @@
     <customFonts key="customFonts">
         <mutableArray key="octicons.ttf">
             <string>octicons</string>
+            <string>octicons</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -93,6 +94,64 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="53D-vI-Ibd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2127" y="-61"/>
+        </scene>
+        <!--Files View Controller-->
+        <scene sceneID="o1X-Bw-YUd">
+            <objects>
+                <tableViewController storyboardIdentifier="FileTVC" id="g0f-O4-Ico" customClass="FilesViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="kO3-kQ-1Mk">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="p6k-RT-eww">
+                            <rect key="frame" x="0.0" y="72" width="600" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FileCell" id="FfM-oJ-CTZ" customClass="FileCell" customModule="iGithub" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FfM-oJ-CTZ" id="abi-k8-bVj">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9XL-KM-93s">
+                                            <rect key="frame" x="13" y="10" width="22" height="23.5"/>
+                                            <fontDescription key="fontDescription" name="octicons" family="octicons" pointSize="22"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1qQ-4d-pwt">
+                                            <rect key="frame" x="40" y="11" width="544" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.25098039220000001" green="0.47058823529999999" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="9XL-KM-93s" firstAttribute="centerY" secondItem="abi-k8-bVj" secondAttribute="centerY" id="1xS-tZ-0FF"/>
+                                        <constraint firstItem="1qQ-4d-pwt" firstAttribute="leading" secondItem="9XL-KM-93s" secondAttribute="trailing" constant="5" id="J6i-Qs-IUo"/>
+                                        <constraint firstItem="1qQ-4d-pwt" firstAttribute="centerY" secondItem="9XL-KM-93s" secondAttribute="centerY" id="Oft-Qe-oVg"/>
+                                        <constraint firstItem="9XL-KM-93s" firstAttribute="leading" secondItem="abi-k8-bVj" secondAttribute="leadingMargin" constant="5" id="ivo-aL-P9H"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="1qQ-4d-pwt" secondAttribute="trailing" constant="8" id="sUP-PL-eIp"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="iconLabel" destination="9XL-KM-93s" id="lHu-Kh-5jG"/>
+                                    <outlet property="nameLabel" destination="1qQ-4d-pwt" id="eRg-fp-E0T"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="g0f-O4-Ico" id="7ju-yn-jAo"/>
+                            <outlet property="delegate" destination="g0f-O4-Ico" id="gQ2-Cj-Bmp"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gbK-bH-6kE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2127" y="642"/>
         </scene>
         <!--Repository View Controller-->
         <scene sceneID="hg2-Ja-QwL">

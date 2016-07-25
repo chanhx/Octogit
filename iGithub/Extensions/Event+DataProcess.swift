@@ -108,8 +108,8 @@ extension Event {
             let e = self as! PushEvent
             var messages: [String] = []
             for commit in e.commits! {
-                let SHA = commit.SHA!
-                let shortenedSHA = SHA.substringToIndex(SHA.startIndex.advancedBy(7))
+                let sha = commit.sha!
+                let shortenedSHA = sha.substringToIndex(sha.startIndex.advancedBy(7))
                 let message = "\(shortenedSHA) \(commit.message!)"
                 messages.append(message)
             }

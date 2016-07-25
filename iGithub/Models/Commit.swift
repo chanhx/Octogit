@@ -11,7 +11,7 @@ import ObjectMapper
 
 class Commit : BaseModel {
     
-    var SHA: String?
+    var sha: String?
     var message: String?
     var commitDate: NSDate?
     var countOfChanges: Int?
@@ -19,7 +19,7 @@ class Commit : BaseModel {
     var committerName: String?
     
     override func mapping(map: Map) {
-        SHA             <- map["sha"]
+        sha             <- map["sha"]
         message         <- map["commit.message"]
         commitDate      <- (map["commit.author.date"], DateTransform())
         authorName      <- map["commit.author.name"]

@@ -61,5 +61,11 @@ class RepositoryViewModel: NSObject {
             return 1
         }
     }
+    
+    // MARK: generate child viewmodel
+    
+    var filesTableViewModel: FilesTableViewModel {
+        return FilesTableViewModel(repository: fullName)
+    }
 
 }

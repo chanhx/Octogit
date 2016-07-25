@@ -28,8 +28,7 @@ class EventsViewController: BaseTableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let repositoryVM = viewModel.repositoryViewModelForIndex(tableView.indexPathForSelectedRow!.row)
         let repositoryVC = segue.destinationViewController as! RepositoryViewController
-        repositoryVC.viewModel = repositoryVM
+        repositoryVC.viewModel = viewModel.repositoryViewModelForIndex(tableView.indexPathForSelectedRow!.row)
     }
 }

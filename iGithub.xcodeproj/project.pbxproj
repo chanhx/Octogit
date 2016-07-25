@@ -31,6 +31,12 @@
 		C538FD431D43BDE5003A559E /* LoadingStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD421D43BDE5003A559E /* LoadingStatusCell.swift */; };
 		C538FD471D4491DE003A559E /* Event+DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD461D4491DE003A559E /* Event+DataProcess.swift */; };
 		C538FD4A1D449602003A559E /* DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD491D449602003A559E /* DataProcess.swift */; };
+		C538FD4C1D44FB2E003A559E /* FileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD4B1D44FB2E003A559E /* FileViewModel.swift */; };
+		C538FD4E1D44FB79003A559E /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD4D1D44FB79003A559E /* File.swift */; };
+		C538FD501D459C71003A559E /* FilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD4F1D459C71003A559E /* FilesViewController.swift */; };
+		C538FD521D459DC7003A559E /* FilesTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD511D459DC7003A559E /* FilesTableViewModel.swift */; };
+		C538FD541D45A0A2003A559E /* FileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD531D45A0A2003A559E /* FileCell.swift */; };
+		C538FD571D461852003A559E /* FileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD561D461852003A559E /* FileViewController.swift */; };
 		C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB94621D3F842000887E81 /* AppDelegate.swift */; };
 		C5DB94681D3F842000887E81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5DB94661D3F842000887E81 /* Main.storyboard */; };
 		C5DB946A1D3F842000887E81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5DB94691D3F842000887E81 /* Assets.xcassets */; };
@@ -98,6 +104,12 @@
 		C538FD421D43BDE5003A559E /* LoadingStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingStatusCell.swift; sourceTree = "<group>"; };
 		C538FD461D4491DE003A559E /* Event+DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+DataProcess.swift"; sourceTree = "<group>"; };
 		C538FD491D449602003A559E /* DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProcess.swift; sourceTree = "<group>"; };
+		C538FD4B1D44FB2E003A559E /* FileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileViewModel.swift; sourceTree = "<group>"; };
+		C538FD4D1D44FB79003A559E /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		C538FD4F1D459C71003A559E /* FilesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesViewController.swift; sourceTree = "<group>"; };
+		C538FD511D459DC7003A559E /* FilesTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesTableViewModel.swift; sourceTree = "<group>"; };
+		C538FD531D45A0A2003A559E /* FileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCell.swift; sourceTree = "<group>"; };
+		C538FD561D461852003A559E /* FileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileViewController.swift; sourceTree = "<group>"; };
 		C5DB945F1D3F842000887E81 /* iGithub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGithub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5DB94621D3F842000887E81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5DB94671D3F842000887E81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -170,15 +182,16 @@
 			isa = PBXGroup;
 			children = (
 				C538FD2B1D411835003A559E /* BaseModel.swift */,
-				C538FD011D406638003A559E /* User.swift */,
-				C538FD0A1D40A30F003A559E /* Event.swift */,
 				C538FD0C1D40A336003A559E /* Commit.swift */,
 				C538FD161D40A42C003A559E /* CommitComment.swift */,
+				C538FD0A1D40A30F003A559E /* Event.swift */,
+				C538FD4D1D44FB79003A559E /* File.swift */,
 				C538FD121D40A3F0003A559E /* Issue.swift */,
 				C538FD141D40A40B003A559E /* IssueComment.swift */,
 				C538FD181D40A455003A559E /* Repository.swift */,
 				C538FD0E1D40A349003A559E /* PullRequest.swift */,
 				C538FD101D40A3C2003A559E /* PullRequestComment.swift */,
+				C538FD011D406638003A559E /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -189,6 +202,8 @@
 				C538FD281D40E946003A559E /* BaseTableViewModel.swift */,
 				C538FD1D1D40CB8C003A559E /* EventsTableViewModel.swift */,
 				C538FD381D430FB3003A559E /* RepositoryViewModel.swift */,
+				C538FD511D459DC7003A559E /* FilesTableViewModel.swift */,
+				C538FD4B1D44FB2E003A559E /* FileViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -198,6 +213,7 @@
 			children = (
 				C538FD421D43BDE5003A559E /* LoadingStatusCell.swift */,
 				C538FD241D40DB70003A559E /* EventCell.swift */,
+				C538FD531D45A0A2003A559E /* FileCell.swift */,
 				C538FD411D43A972003A559E /* Repository */,
 			);
 			path = Views;
@@ -316,6 +332,8 @@
 				C538FD261D40E86B003A559E /* BaseTableViewController.swift */,
 				C538FD1A1D40C97B003A559E /* EventsViewController.swift */,
 				C538FD3C1D431C35003A559E /* RepositoryViewController.swift */,
+				C538FD4F1D459C71003A559E /* FilesViewController.swift */,
+				C538FD561D461852003A559E /* FileViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -493,6 +511,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C538FD501D459C71003A559E /* FilesViewController.swift in Sources */,
+				C538FD521D459DC7003A559E /* FilesTableViewModel.swift in Sources */,
 				C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */,
 				C538FD4A1D449602003A559E /* DataProcess.swift in Sources */,
 				C538FD1E1D40CB8C003A559E /* EventsTableViewModel.swift in Sources */,
@@ -500,6 +520,7 @@
 				C538FD271D40E86B003A559E /* BaseTableViewController.swift in Sources */,
 				C538FD131D40A3F0003A559E /* Issue.swift in Sources */,
 				C538FD291D40E946003A559E /* BaseTableViewModel.swift in Sources */,
+				C538FD541D45A0A2003A559E /* FileCell.swift in Sources */,
 				C538FD0D1D40A336003A559E /* Commit.swift in Sources */,
 				C538FD111D40A3C2003A559E /* PullRequestComment.swift in Sources */,
 				C5F4BDF71D3FB37A009DF758 /* OAuthAPI.swift in Sources */,
@@ -508,6 +529,7 @@
 				C538FD0B1D40A30F003A559E /* Event.swift in Sources */,
 				C538FD251D40DB70003A559E /* EventCell.swift in Sources */,
 				C538FD191D40A455003A559E /* Repository.swift in Sources */,
+				C538FD571D461852003A559E /* FileViewController.swift in Sources */,
 				C538FD0F1D40A349003A559E /* PullRequest.swift in Sources */,
 				C538FD021D406638003A559E /* User.swift in Sources */,
 				C538FD431D43BDE5003A559E /* LoadingStatusCell.swift in Sources */,
@@ -517,6 +539,8 @@
 				C5F4BDE71D3F95E5009DF758 /* Octicon.swift in Sources */,
 				C538FCFF1D3FBFDC003A559E /* GithubAPI.swift in Sources */,
 				C538FD151D40A40B003A559E /* IssueComment.swift in Sources */,
+				C538FD4C1D44FB2E003A559E /* FileViewModel.swift in Sources */,
+				C538FD4E1D44FB79003A559E /* File.swift in Sources */,
 				C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */,
 				C538FD471D4491DE003A559E /* Event+DataProcess.swift in Sources */,
 				C538FD391D430FB3003A559E /* RepositoryViewModel.swift in Sources */,
