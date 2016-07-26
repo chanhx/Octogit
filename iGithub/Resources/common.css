@@ -1,0 +1,46 @@
+body {
+    font-size: 1em;
+    line-height: 1.5em;
+    font-family: Arial;
+    margin: 0;
+    -webkit-text-size-adjust: 100%;
+}
+
+pre {
+    margin: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+img, table {
+    max-width: 95%;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+    word-break: break-all;
+}
+
+
+ol {
+    counter-reset: item;
+    margin-left: 0;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+li {
+    display: block;
+}
+
+pre li:before {
+    text-align: right;
+    display: inline-block;
+    content: counter(item) " ";
+    counter-increment: item;
+    color: #929292;
+    background-color: #3F4149;
+    width: 3em;
+    margin-right: 1em;
+}

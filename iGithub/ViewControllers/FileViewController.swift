@@ -7,16 +7,36 @@
 //
 
 import UIKit
+import WebKit
 import RxSwift
+import Mustache
 
 class FileViewController: UIViewController {
 
-    let webView = UIWebView()
+    let webView = WKWebView()
     var viewModel: FileViewModel! {
         didSet {
             viewModel.decodedContent.asObservable()
                 .subscribeNext {
-                    self.webView.loadHTMLString("<pre>\($0)</pre>", baseURL: nil)
+//                    do {
+                    let template = try! Template(named: "content")
+                    
+                    var codeClass = ""
+                    if let language = self.viewModel.languageOfFile {
+                        codeClass = "class=language-\(language)"
+                    }
+                    let data = [
+                        "theme": "prism",
+                        "content": $0,
+                        "line-numbers": "class=line-numbers",
+                        "class": codeClass
+                    ]
+                    let rendering = try! template.render(Box(data))
+                
+                    self.webView.loadHTMLString(rendering, baseURL: NSBundle.mainBundle().resourceURL)
+//                    } catch let error as MustacheError {
+//                        
+//                    }
             }
             .addDisposableTo(viewModel.disposeBag)
         }

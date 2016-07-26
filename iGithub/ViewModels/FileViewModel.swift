@@ -13,6 +13,11 @@ import ObjectMapper
 
 class FileViewModel: NSObject {
     
+    static let fileExtensionsDict: [String: String] = {
+        let path = NSBundle.mainBundle().pathForResource("file_extensions", ofType: "plist")
+        return (NSDictionary(contentsOfFile: path!) as! [String: String])
+    }()
+    
     var repository: String
     var token: GithubAPI
     var file: File
@@ -44,5 +49,10 @@ class FileViewModel: NSObject {
         let encodedString = string.stringByReplacingOccurrencesOfString("\n", withString: "")
         let data = NSData(base64EncodedString: encodedString, options: NSDataBase64DecodingOptions(rawValue: 0))
         return String(data: data!, encoding: NSUTF8StringEncoding)!
+    }
+    
+    var languageOfFile: String? {
+        let fileExtension = file.name?.componentsSeparatedByString(".").last!
+        return FileViewModel.fileExtensionsDict[fileExtension!]
     }
 }
