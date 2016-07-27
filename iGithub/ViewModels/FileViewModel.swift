@@ -10,6 +10,7 @@ import Foundation
 import RxMoya
 import RxSwift
 import ObjectMapper
+import Mustache
 
 class FileViewModel: NSObject {
     
@@ -21,7 +22,7 @@ class FileViewModel: NSObject {
     var repository: String
     var token: GithubAPI
     var file: File
-    var decodedContent = Variable("")
+    var html = Variable("")
     let provider = RxMoyaProvider<GithubAPI>()
     let disposeBag = DisposeBag()
     
@@ -40,15 +41,38 @@ class FileViewModel: NSObject {
             .mapJSON()
             .subscribeNext {
                 self.file = Mapper<File>().map($0)!
-                self.decodedContent.value = self.decodeGHBase64String(self.file.content!)
+                self.html.value = self.htmlFrom(self.file.content!)
             }
             .addDisposableTo(disposeBag)
     }
     
-    func decodeGHBase64String(string: String) -> String {
+    func htmlFrom(base64String: String) -> String {
+        
+        if let rawContent = decodeGHBase64String(base64String) {
+            let template = try! Template(named: "content")
+            
+            var codeClass = ""
+            if let language = self.languageOfFile {
+                codeClass = "class=language-\(language)"
+            }
+            let data = [
+                "theme": "prism",
+                "content": rawContent,
+                "line-numbers": "class=line-numbers",
+                "class": codeClass
+            ]
+            return try! template.render(Box(data))
+        }
+        let url = NSBundle.mainBundle().URLForResource("empty_content", withExtension: "html")
+        let html = try! String(contentsOfURL: url!)
+        
+        return html
+    }
+    
+    func decodeGHBase64String(string: String) -> String? {
         let encodedString = string.stringByReplacingOccurrencesOfString("\n", withString: "")
         let data = NSData(base64EncodedString: encodedString, options: NSDataBase64DecodingOptions(rawValue: 0))
-        return String(data: data!, encoding: NSUTF8StringEncoding)!
+        return String(data: data!, encoding: NSUTF8StringEncoding)
     }
     
     var languageOfFile: String? {

@@ -41,6 +41,7 @@
 		C55E08521D4786EB0004EC7C /* Prism in Resources */ = {isa = PBXBuildFile; fileRef = C55E08511D4786EB0004EC7C /* Prism */; };
 		C55E08541D478E8E0004EC7C /* common.css in Resources */ = {isa = PBXBuildFile; fileRef = C55E08531D478E8E0004EC7C /* common.css */; };
 		C55E08561D4793740004EC7C /* file_extensions.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55E08551D4793740004EC7C /* file_extensions.plist */; };
+		C5BB907B1D487ACA005A40C0 /* empty_content.html in Resources */ = {isa = PBXBuildFile; fileRef = C5BB907A1D487ACA005A40C0 /* empty_content.html */; };
 		C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB94621D3F842000887E81 /* AppDelegate.swift */; };
 		C5DB94681D3F842000887E81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5DB94661D3F842000887E81 /* Main.storyboard */; };
 		C5DB946A1D3F842000887E81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5DB94691D3F842000887E81 /* Assets.xcassets */; };
@@ -118,6 +119,7 @@
 		C55E08511D4786EB0004EC7C /* Prism */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Prism; sourceTree = "<group>"; };
 		C55E08531D478E8E0004EC7C /* common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = common.css; sourceTree = "<group>"; };
 		C55E08551D4793740004EC7C /* file_extensions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = file_extensions.plist; sourceTree = "<group>"; };
+		C5BB907A1D487ACA005A40C0 /* empty_content.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = empty_content.html; sourceTree = "<group>"; };
 		C5DB945F1D3F842000887E81 /* iGithub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGithub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5DB94621D3F842000887E81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5DB94671D3F842000887E81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				C55E08511D4786EB0004EC7C /* Prism */,
 				C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */,
 				C55E08481D4701A20004EC7C /* content.mustache */,
+				C5BB907A1D487ACA005A40C0 /* empty_content.html */,
 				C55E08531D478E8E0004EC7C /* common.css */,
 				C55E08551D4793740004EC7C /* file_extensions.plist */,
 			);
@@ -474,6 +477,7 @@
 				C538FD331D430466003A559E /* Login.storyboard in Resources */,
 				C55E08521D4786EB0004EC7C /* Prism in Resources */,
 				C5DB94681D3F842000887E81 /* Main.storyboard in Resources */,
+				C5BB907B1D487ACA005A40C0 /* empty_content.html in Resources */,
 				C55E08561D4793740004EC7C /* file_extensions.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

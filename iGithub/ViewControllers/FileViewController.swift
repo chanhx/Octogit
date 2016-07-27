@@ -16,27 +16,9 @@ class FileViewController: UIViewController {
     let webView = WKWebView()
     var viewModel: FileViewModel! {
         didSet {
-            viewModel.decodedContent.asObservable()
+            viewModel.html.asObservable()
                 .subscribeNext {
-//                    do {
-                    let template = try! Template(named: "content")
-                    
-                    var codeClass = ""
-                    if let language = self.viewModel.languageOfFile {
-                        codeClass = "class=language-\(language)"
-                    }
-                    let data = [
-                        "theme": "prism",
-                        "content": $0,
-                        "line-numbers": "class=line-numbers",
-                        "class": codeClass
-                    ]
-                    let rendering = try! template.render(Box(data))
-                
-                    self.webView.loadHTMLString(rendering, baseURL: NSBundle.mainBundle().resourceURL)
-//                    } catch let error as MustacheError {
-//                        
-//                    }
+                    self.webView.loadHTMLString($0, baseURL: NSBundle.mainBundle().resourceURL)
             }
             .addDisposableTo(viewModel.disposeBag)
         }
