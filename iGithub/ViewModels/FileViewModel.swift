@@ -51,15 +51,11 @@ class FileViewModel: NSObject {
         if let rawContent = decodeGHBase64String(base64String) {
             let template = try! Template(named: "content")
             
-            var codeClass = ""
-            if let language = self.languageOfFile {
-                codeClass = "class=language-\(language)"
-            }
             let data = [
                 "theme": "prism",
                 "content": rawContent,
                 "line-numbers": "class=line-numbers",
-                "class": codeClass
+                "class": languageOfFile ?? "clike"
             ]
             return try! template.render(Box(data))
         }

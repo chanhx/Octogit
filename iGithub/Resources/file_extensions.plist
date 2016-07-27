@@ -11,6 +11,10 @@
     <dict>
         <key>html</key>
         <string>markup</string>
+        <key>htm</key>
+        <string>markup</string>
+        <key>LICENSE</key>
+        <string>markup</string>
         <key>css</key>
         <string>css</string>
         <key>clike</key>
@@ -23,8 +27,8 @@
         <string>actionscript</string>
         <key>ada</key>
         <string>ada</string>
-        <!--<key>apacheconf</key>
-         <string>apacheconf</string>-->
+        <key>htaccess</key>
+        <string>apacheconf</string>
         <key>apl</key>
         <string>apl</string>
         <key>applescript</key>
@@ -33,19 +37,21 @@
          <string>asciidoc</string>-->
         <!--<key>aspnet</key>
          <string>aspnet</string>-->
-        <key>autoit</key>
+        <key>au3</key>
         <string>autoit</string>
-        <key>autohotkey</key>
+        <key>ahk</key>
         <string>autohotkey</string>
         <key>sh</key>
         <string>bash</string>
         <key>basic</key>
         <string>basic</string>
-        <key>batch</key>
+        <key>bat</key>
         <string>batch</string>
-        <key>bison</key>
+        <key>cmd</key>
+        <string>batch</string>
+        <key>y</key>
         <string>bison</string>
-        <key>brainfuck</key>
+        <key>bf</key>
         <string>brainfuck</string>
         <key>bro</key>
         <string>bro</string>
@@ -75,7 +81,7 @@
         <string>dart</string>
         <key>diff</key>
         <string>diff</string>
-        <key>docker</key>
+        <key>Dockerfile</key>
         <string>docker</string>
         <key>e</key>
         <string>eiffel</string>
@@ -163,12 +169,14 @@
         <string>lolcode</string>
         <key>lua</key>
         <string>lua</string>
-        <key>makefile</key>
+        <key>Makefile</key>
         <string>makefile</string>
         <key>md</key>
         <string>markdown</string>
-        <key>matlab</key>
-        <string>matlab</string>
+        <key>markdown</key>
+        <string>markdown</string>
+        <!--<key>m</key>
+         <string>matlab</string>-->
         <key>mel</key>
         <string>mel</string>
         <key>mizar</key>
@@ -177,7 +185,7 @@
         <string>monkey</string>
         <key>nasm</key>
         <string>nasm</string>
-        <key>nginx</key>
+        <key>nginxconf</key>
         <string>nginx</string>
         <key>nim</key>
         <string>nim</string>
@@ -185,9 +193,11 @@
         <string>nix</string>
         <key>nsis</key>
         <string>nsis</string>
-        <key>objectivec</key>
+        <key>m</key>
         <string>objectivec</string>
-        <key>ocaml</key>
+        <key>ml</key>
+        <string>ocaml</string>
+        <key>mli</key>
         <string>ocaml</string>
         <key>oz</key>
         <string>oz</string>
@@ -195,9 +205,9 @@
         <string>parigp</string>
         <key>parser</key>
         <string>parser</string>
-        <key>pascal</key>
+        <key>pas</key>
         <string>pascal</string>
-        <key>perl</key>
+        <key>pl</key>
         <string>perl</string>
         <key>php</key>
         <string>php</string>
@@ -207,18 +217,18 @@
         <string>powershell</string>
         <key>pde</key>
         <string>processing</string>
-        <key>pl</key>
-        <string>prolog</string>
+        <!--<key>pl</key>
+         <string>prolog</string>-->
         <key>pro</key>
         <string>prolog</string>
         <key>P</key>
         <string>prolog</string>
-        <!--<key>properties</key>
+        <!--key>properties</key>
         <string>properties</string>
-         <key>protobuf</key>
-         <string>protobuf</string>-->
-        <!--<key>puppet</key>
-         <string>puppet</string>-->
+        <key>protobuf</key>
+        <string>protobuf</string>-->
+        <key>pp</key>
+        <string>puppet</string>
         <key>pure</key>
         <string>pure</string>
         <key>py</key>
@@ -259,13 +269,13 @@
         <string>scheme</string>
         <key>rkt</key>
         <string>scheme</string>
-        <key>smalltalk</key>
+        <key>st</key>
         <string>smalltalk</string>
         <key>smarty</key>
         <string>smarty</string>
         <key>sql</key>
         <string>sql</string>
-        <key>stylus</key>
+        <key>styl</key>
         <string>stylus</string>
         <key>swift</key>
         <string>swift</string>
@@ -285,9 +295,9 @@
         <string>vim</string>
         <key>wiki</key>
         <string>wiki</string>
-        <key>xojo</key>
+        <key>xojo_code</key>
         <string>xojo</string>
-        <key>yaml</key>
+        <key>yml</key>
         <string>yaml</string>
     </dict>
 </plist>
