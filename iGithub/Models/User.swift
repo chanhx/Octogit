@@ -15,6 +15,7 @@ class User: BaseModel, CustomStringConvertible {
     var login: String?
     var name: String?
     var avatarURL: NSURL?
+    var bio: String?
     
     var gravatarID: String?
     var type: String?
@@ -36,6 +37,7 @@ class User: BaseModel, CustomStringConvertible {
         login       <- map["login"]
         name        <- map["name"]
         avatarURL   <- (map["avatar_url"], URLTransform())
+        bio         <- map["bio"]
         
         gravatarID  <- map["gravatar_id"]
         type        <- map["type"]

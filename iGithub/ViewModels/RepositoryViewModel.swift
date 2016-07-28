@@ -17,7 +17,7 @@ class RepositoryViewModel: NSObject {
     let provider = RxMoyaProvider<GithubAPI>()
     let disposeBag = DisposeBag()
     var repository: Variable<Repository>
-    var repositoryLoaded: Bool = false
+    var repositoryLoaded = false
     
     init(fullName: String) {
         self.fullName = fullName
@@ -43,7 +43,7 @@ class RepositoryViewModel: NSObject {
             .addDisposableTo(disposeBag)
     }
     
-    func numberOfSections() -> Int {
+    var numberOfSections: Int {
         return self.repositoryLoaded ? 3 : 1
     }
     
@@ -58,7 +58,7 @@ class RepositoryViewModel: NSObject {
         case 1:
             return 5
         default:
-            return 1
+            return 2
         }
     }
     
@@ -68,4 +68,7 @@ class RepositoryViewModel: NSObject {
         return FilesTableViewModel(repository: fullName)
     }
 
+    var ownerViewModel: UserViewModel {
+        return UserViewModel(user: repository.value.owner!)
+    }
 }

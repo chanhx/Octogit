@@ -59,7 +59,7 @@ class RepositoryViewController: BaseTableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return viewModel.numberOfSections()
+        return viewModel.numberOfSections
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -112,7 +112,7 @@ class RepositoryViewController: BaseTableViewController {
         case 2:
             let cell = UITableViewCell()
             cell.accessoryType = .DisclosureIndicator
-            cell.textLabel?.text = viewModel.repository.value.defaultBranch!
+            cell.textLabel?.text = indexPath.row == 0 ? "Code" : "Commmits"
             
             return cell
         default:
@@ -123,7 +123,13 @@ class RepositoryViewController: BaseTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
         
-        if (indexPath.section, indexPath.row) == (2, 0) {
+        if (indexPath.section, indexPath.row) == (0, 0) {
+            let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserVC") as! UserViewController
+            userVC.viewModel = self.viewModel.ownerViewModel
+            self.navigationController?.pushViewController(userVC, animated: true)
+        }
+        
+        else if (indexPath.section, indexPath.row) == (2, 0) {
             let filesTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FileTVC") as! FilesViewController
             filesTableVC.viewModel = viewModel.filesTableViewModel
             self.navigationController?.pushViewController(filesTableVC, animated: true)

@@ -14,6 +14,7 @@ enum GithubAPI {
     case GetContents(repository: String, path: String)
     case OAuthUser(accessToken: String)
     case ReceivedEvents(username: String)
+    case User(username: String)
     case UserEvents(username: String)
 }
 
@@ -31,6 +32,8 @@ extension GithubAPI: TargetType {
             return "/users/\(username)/received_events"
         case .UserEvents(let username):
             return "/users/\(username)/events"
+        case .User(let username):
+            return "/users/\(username)"
         }
     }
     var method: RxMoya.Method {
