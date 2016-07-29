@@ -9,6 +9,11 @@
 import Foundation
 import ObjectMapper
 
+enum UserType: String {
+    case User = "User"
+    case Organization = "Organization"
+}
+
 class User: BaseModel, CustomStringConvertible {
     
     var id: Int?
@@ -18,11 +23,12 @@ class User: BaseModel, CustomStringConvertible {
     var bio: String?
     
     var gravatarID: String?
-    var type: String?
+    var type: UserType?
     var company: String?
     var blog: String?
     var location: String?
     var email: String?
+    var orgDescription: String?
     
     var HTMLURL: NSURL?
     
@@ -33,25 +39,26 @@ class User: BaseModel, CustomStringConvertible {
     
     // Mappable
     override func mapping(map: Map) {
-        id          <- map["id"]
-        login       <- map["login"]
-        name        <- map["name"]
-        avatarURL   <- (map["avatar_url"], URLTransform())
-        bio         <- map["bio"]
+        id              <- map["id"]
+        login           <- map["login"]
+        name            <- map["name"]
+        avatarURL       <- (map["avatar_url"], URLTransform())
+        bio             <- map["bio"]
         
-        gravatarID  <- map["gravatar_id"]
-        type        <- map["type"]
-        company     <- map["company"]
-        blog        <- map["blog"]
-        location    <- map["location"]
-        email       <- map["email"]
+        gravatarID      <- map["gravatar_id"]
+        type            <- map["type"]
+        company         <- map["company"]
+        blog            <- map["blog"]
+        location        <- map["location"]
+        email           <- map["email"]
+        orgDescription  <- map["description"]
         
-        HTMLURL     <- (map["url"], URLTransform())
+        HTMLURL         <- (map["url"], URLTransform())
         
-        followers   <- map["followers"]
-        following   <- map["following"]
-        publicGists <- map["public_gists"]
-        publicRepos <- map["public_repos"]
+        followers       <- map["followers"]
+        following       <- map["following"]
+        publicGists     <- map["public_gists"]
+        publicRepos     <- map["public_repos"]
     }
     
     var description : String {

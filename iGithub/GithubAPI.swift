@@ -13,6 +13,8 @@ enum GithubAPI {
     case GetARepository(fullName: String)
     case GetContents(repository: String, path: String)
     case OAuthUser(accessToken: String)
+    case Org(org: String)
+    case Orgs(username: String)
     case ReceivedEvents(username: String)
     case User(username: String)
     case UserEvents(username: String)
@@ -28,6 +30,10 @@ extension GithubAPI: TargetType {
             return "/repos/\(repository)/contents/\(path)"
         case .OAuthUser(_):
             return "/user"
+        case .Org(let org):
+            return "/orgs/\(org)"
+        case .Orgs(let username):
+            return "/users/\(username)/orgs"
         case .ReceivedEvents(let username):
             return "/users/\(username)/received_events"
         case .UserEvents(let username):

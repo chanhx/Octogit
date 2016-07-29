@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		C5373C451D4AF5FD006CFB83 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C441D4AF5FD006CFB83 /* UserCell.swift */; };
+		C5373C491D4B4493006CFB83 /* OrganizationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C481D4B4493006CFB83 /* OrganizationViewModel.swift */; };
+		C5373C4B1D4B7C2D006CFB83 /* OrganizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C4A1D4B7C2D006CFB83 /* OrganizationViewController.swift */; };
 		C538FCFF1D3FBFDC003A559E /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FCFE1D3FBFDC003A559E /* GithubAPI.swift */; };
 		C538FD021D406638003A559E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD011D406638003A559E /* User.swift */; };
 		C538FD081D406BE8003A559E /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD071D406BE8003A559E /* AccountManager.swift */; };
@@ -89,6 +91,8 @@
 
 /* Begin PBXFileReference section */
 		C5373C441D4AF5FD006CFB83 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		C5373C481D4B4493006CFB83 /* OrganizationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationViewModel.swift; sourceTree = "<group>"; };
+		C5373C4A1D4B7C2D006CFB83 /* OrganizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationViewController.swift; sourceTree = "<group>"; };
 		C538FCFE1D3FBFDC003A559E /* GithubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
 		C538FD011D406638003A559E /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C538FD071D406BE8003A559E /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
@@ -221,6 +225,7 @@
 				C538FD511D459DC7003A559E /* FilesTableViewModel.swift */,
 				C538FD4B1D44FB2E003A559E /* FileViewModel.swift */,
 				C5C4D9501D49B1C5007C1891 /* UserViewModel.swift */,
+				C5373C481D4B4493006CFB83 /* OrganizationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -350,6 +355,7 @@
 				C538FD4F1D459C71003A559E /* FilesViewController.swift */,
 				C538FD561D461852003A559E /* FileViewController.swift */,
 				C5C4D9521D49B3FD007C1891 /* UserViewController.swift */,
+				C5373C4A1D4B7C2D006CFB83 /* OrganizationViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -533,6 +539,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C538FD501D459C71003A559E /* FilesViewController.swift in Sources */,
+				C5373C4B1D4B7C2D006CFB83 /* OrganizationViewController.swift in Sources */,
 				C5C4D9531D49B3FD007C1891 /* UserViewController.swift in Sources */,
 				C538FD521D459DC7003A559E /* FilesTableViewModel.swift in Sources */,
 				C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */,
@@ -557,6 +564,7 @@
 				C538FD431D43BDE5003A559E /* LoadingStatusCell.swift in Sources */,
 				C538FD171D40A42C003A559E /* CommitComment.swift in Sources */,
 				C538FD3D1D431C35003A559E /* RepositoryViewController.swift in Sources */,
+				C5373C491D4B4493006CFB83 /* OrganizationViewModel.swift in Sources */,
 				C538FD081D406BE8003A559E /* AccountManager.swift in Sources */,
 				C5F4BDE71D3F95E5009DF758 /* Octicon.swift in Sources */,
 				C538FCFF1D3FBFDC003A559E /* GithubAPI.swift in Sources */,

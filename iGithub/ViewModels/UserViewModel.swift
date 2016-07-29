@@ -6,7 +6,6 @@
 //  Copyright © 2016 Hocheung. All rights reserved.
 //
 
-import UIKit
 import RxMoya
 import RxSwift
 import ObjectMapper
@@ -28,13 +27,13 @@ class UserViewModel: NSObject {
     var userLoaded = false
     var details = [VcardDetail]()
     
-    init(user: User) {
+    init(_ user: User) {
         self.user = Variable(user)
         token = .User(username: user.login!)
         super.init()
     }
 
-    init(username: String) {
+    init(_ username: String) {
         user = Variable(Mapper<User>().map(["login": username])!)
         token = .User(username: username)
         super.init()

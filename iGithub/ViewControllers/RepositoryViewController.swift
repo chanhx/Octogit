@@ -128,9 +128,17 @@ class RepositoryViewController: BaseTableViewController {
         super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
         
         if (indexPath.section, indexPath.row) == (0, 0) {
-            let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserVC") as! UserViewController
-            userVC.viewModel = self.viewModel.ownerViewModel
-            self.navigationController?.pushViewController(userVC, animated: true)
+            var vc: UIViewController
+            
+            switch viewModel.repository.value.owner!.type! {
+            case .User:
+                vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserVC")
+                (vc as! UserViewController).viewModel = self.viewModel.ownerViewModel
+            case .Organization:
+                vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("OrgVC")
+                (vc as! OrganizationViewController).viewModel = (self.viewModel.ownerViewModel as! OrganizationViewModel)
+            }
+            self.navigationController?.pushViewController(vc, animated: true)
         }
         
         else if (indexPath.section, indexPath.row) == (2, 0) {

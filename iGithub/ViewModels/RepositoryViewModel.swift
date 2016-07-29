@@ -74,6 +74,11 @@ class RepositoryViewModel: NSObject {
     }
 
     var ownerViewModel: UserViewModel {
-        return UserViewModel(user: repository.value.owner!)
+        switch repository.value.owner!.type! {
+        case .User:
+            return UserViewModel(repository.value.owner!)
+        case .Organization:
+            return OrganizationViewModel(repository.value.owner!)
+        }
     }
 }
