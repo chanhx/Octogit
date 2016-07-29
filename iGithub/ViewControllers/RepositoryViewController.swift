@@ -78,10 +78,10 @@ class RepositoryViewController: BaseTableViewController {
         case 0:
             switch indexPath.row {
             case 0:
-                let cell = tableView.dequeueReusableCellWithIdentifier("RepositoryOwnerCell", forIndexPath: indexPath) as! RepositoryOwnerCell
-                if viewModel.repository.value.owner != nil {
-                    cell.entity = viewModel.repository.value.owner
-                }
+                let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! UserCell
+                cell.entity = viewModel.repository.value.owner
+                cell.accessoryType = .DisclosureIndicator
+                
                 return cell
             default:
                 let cell = UITableViewCell()
@@ -118,6 +118,10 @@ class RepositoryViewController: BaseTableViewController {
         default:
             return UITableViewCell()
         }
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.separatorInset = UIEdgeInsetsZero
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

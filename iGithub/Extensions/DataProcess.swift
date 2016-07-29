@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftDate
+import Kingfisher
 
 extension NSDate {
     var naturalString: String {
@@ -28,5 +29,11 @@ extension UIColor {
     
     convenience init(netHex:Int) {
         self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
+    }
+}
+
+extension UIImageView {
+    func setAvatarWithURL(avatarURL: NSURL?) {
+        self.kf_setImageWithURL(avatarURL, placeholderImage: UIImage(named: "default-avatar"))
     }
 }

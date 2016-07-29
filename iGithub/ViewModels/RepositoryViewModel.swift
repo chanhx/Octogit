@@ -54,7 +54,12 @@ class RepositoryViewModel: NSObject {
         
         switch section {
         case 0:
-            return self.repository.value.repoDescription != nil ? 2 : 1
+            guard let desc = repository.value.repoDescription else {
+                return 1
+            }
+            
+            let trimmedDesc = desc.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            return trimmedDesc.characters.count == 0 ? 1 : 2
         case 1:
             return 5
         default:

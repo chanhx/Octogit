@@ -11,6 +11,13 @@ import RxMoya
 import RxSwift
 import ObjectMapper
 
+enum VcardDetail {
+    case Company
+    case Location
+    case Email
+    case Blog
+}
+
 class UserViewModel: NSObject {
     
     var user: Variable<User>
@@ -19,7 +26,7 @@ class UserViewModel: NSObject {
     var token: GithubAPI
     
     var userLoaded = false
-    var detailsRowsCount = 0
+    var details = [VcardDetail]()
     
     init(user: User) {
         self.user = Variable(user)
@@ -55,12 +62,12 @@ class UserViewModel: NSObject {
         var sections = 2
         let u = user.value
         
-        if u.company != nil {detailsRowsCount += 1}
-        if u.blog != nil {detailsRowsCount += 1}
-        if u.email != nil {detailsRowsCount += 1}
-        if u.location != nil {detailsRowsCount += 1}
+        if u.company != nil {details.append(.Company)}
+        if u.location != nil {details.append(.Location)}
+        if u.email != nil {details.append(.Email)}
+        if u.blog != nil {details.append(.Blog)}
 
-        if detailsRowsCount > 0 {sections += 1}
+        if details.count > 0 {sections += 1}
         
         return sections
     }
@@ -70,13 +77,15 @@ class UserViewModel: NSObject {
             return 1
         }
         
-        switch section {
-        case 0:
-            return detailsRowsCount > 0 ? detailsRowsCount : 3
-        case 1:
-            return detailsRowsCount > 0 ? 3 : 1
-        default:
+        switch (section, details.count) {
+        case (0, 1...4):
+            return details.count
+        case (0, 0), (1, 1...4):
+            return 3
+        case (1, 0), (2, _):
             return 1
+        default:
+            return 0
         }
     }
 }

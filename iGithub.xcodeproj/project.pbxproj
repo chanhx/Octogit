@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5373C451D4AF5FD006CFB83 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C441D4AF5FD006CFB83 /* UserCell.swift */; };
 		C538FCFF1D3FBFDC003A559E /* GithubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FCFE1D3FBFDC003A559E /* GithubAPI.swift */; };
 		C538FD021D406638003A559E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD011D406638003A559E /* User.swift */; };
 		C538FD081D406BE8003A559E /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD071D406BE8003A559E /* AccountManager.swift */; };
@@ -27,7 +28,6 @@
 		C538FD331D430466003A559E /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C538FD321D430466003A559E /* Login.storyboard */; };
 		C538FD391D430FB3003A559E /* RepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD381D430FB3003A559E /* RepositoryViewModel.swift */; };
 		C538FD3D1D431C35003A559E /* RepositoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD3C1D431C35003A559E /* RepositoryViewController.swift */; };
-		C538FD401D43A968003A559E /* RepositoryOwnerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD3F1D43A968003A559E /* RepositoryOwnerCell.swift */; };
 		C538FD431D43BDE5003A559E /* LoadingStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD421D43BDE5003A559E /* LoadingStatusCell.swift */; };
 		C538FD471D4491DE003A559E /* Event+DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD461D4491DE003A559E /* Event+DataProcess.swift */; };
 		C538FD4A1D449602003A559E /* DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD491D449602003A559E /* DataProcess.swift */; };
@@ -88,6 +88,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C5373C441D4AF5FD006CFB83 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		C538FCFE1D3FBFDC003A559E /* GithubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubAPI.swift; sourceTree = "<group>"; };
 		C538FD011D406638003A559E /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C538FD071D406BE8003A559E /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
@@ -108,7 +109,6 @@
 		C538FD321D430466003A559E /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		C538FD381D430FB3003A559E /* RepositoryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryViewModel.swift; sourceTree = "<group>"; };
 		C538FD3C1D431C35003A559E /* RepositoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryViewController.swift; sourceTree = "<group>"; };
-		C538FD3F1D43A968003A559E /* RepositoryOwnerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryOwnerCell.swift; sourceTree = "<group>"; };
 		C538FD421D43BDE5003A559E /* LoadingStatusCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingStatusCell.swift; sourceTree = "<group>"; };
 		C538FD461D4491DE003A559E /* Event+DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Event+DataProcess.swift"; sourceTree = "<group>"; };
 		C538FD491D449602003A559E /* DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProcess.swift; sourceTree = "<group>"; };
@@ -231,18 +231,10 @@
 				C538FD421D43BDE5003A559E /* LoadingStatusCell.swift */,
 				C538FD241D40DB70003A559E /* EventCell.swift */,
 				C538FD531D45A0A2003A559E /* FileCell.swift */,
-				C538FD411D43A972003A559E /* Repository */,
+				C5373C441D4AF5FD006CFB83 /* UserCell.swift */,
 				C5C4D9541D4A27B2007C1891 /* CountButton.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		C538FD411D43A972003A559E /* Repository */ = {
-			isa = PBXGroup;
-			children = (
-				C538FD3F1D43A968003A559E /* RepositoryOwnerCell.swift */,
-			);
-			path = Repository;
 			sourceTree = "<group>";
 		};
 		C538FD451D449032003A559E /* Extensions */ = {
@@ -546,6 +538,7 @@
 				C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */,
 				C538FD4A1D449602003A559E /* DataProcess.swift in Sources */,
 				C538FD1E1D40CB8C003A559E /* EventsTableViewModel.swift in Sources */,
+				C5373C451D4AF5FD006CFB83 /* UserCell.swift in Sources */,
 				C538FD2C1D411835003A559E /* BaseModel.swift in Sources */,
 				C538FD271D40E86B003A559E /* BaseTableViewController.swift in Sources */,
 				C538FD131D40A3F0003A559E /* Issue.swift in Sources */,
@@ -555,7 +548,6 @@
 				C538FD111D40A3C2003A559E /* PullRequestComment.swift in Sources */,
 				C5F4BDF71D3FB37A009DF758 /* OAuthAPI.swift in Sources */,
 				C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */,
-				C538FD401D43A968003A559E /* RepositoryOwnerCell.swift in Sources */,
 				C538FD0B1D40A30F003A559E /* Event.swift in Sources */,
 				C538FD251D40DB70003A559E /* EventCell.swift in Sources */,
 				C538FD191D40A455003A559E /* Repository.swift in Sources */,

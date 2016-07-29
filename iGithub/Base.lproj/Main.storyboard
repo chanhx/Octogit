@@ -209,43 +209,8 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RepositoryOwnerCell" rowHeight="48" id="HTb-5K-Ot3" customClass="RepositoryOwnerCell" customModule="iGithub" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="201" width="600" height="48"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HTb-5K-Ot3" id="ZSP-Zg-35c">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="47.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vjO-Dr-JQc">
-                                            <rect key="frame" x="13" y="9" width="30" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="30" id="8sy-RN-4ro"/>
-                                                <constraint firstAttribute="height" constant="30" id="U23-Vq-S0k"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fxm-Vc-ZsN">
-                                            <rect key="frame" x="51" y="14" width="503" height="19"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Fxm-Vc-ZsN" firstAttribute="top" secondItem="ZSP-Zg-35c" secondAttribute="topMargin" constant="6" id="0Qk-S4-JFo"/>
-                                        <constraint firstItem="vjO-Dr-JQc" firstAttribute="leading" secondItem="ZSP-Zg-35c" secondAttribute="leadingMargin" constant="5" id="3wY-5w-7pa"/>
-                                        <constraint firstItem="Fxm-Vc-ZsN" firstAttribute="centerY" secondItem="vjO-Dr-JQc" secondAttribute="centerY" id="TNf-VC-zxZ"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Fxm-Vc-ZsN" secondAttribute="trailing" constant="5" id="emv-s7-fU5"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Fxm-Vc-ZsN" secondAttribute="bottom" constant="6" id="iEY-f8-YlF"/>
-                                        <constraint firstItem="Fxm-Vc-ZsN" firstAttribute="leading" secondItem="vjO-Dr-JQc" secondAttribute="trailing" constant="8" id="zpZ-rj-gYO"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="avatarView" destination="vjO-Dr-JQc" id="bL6-Ka-VSe"/>
-                                    <outlet property="nameLabel" destination="Fxm-Vc-ZsN" id="awj-92-MIQ"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RepositoryInfoCell" id="0MK-Ie-vMU">
-                                <rect key="frame" x="0.0" y="249" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="201" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0MK-Ie-vMU" id="Im4-mN-ksI">
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -253,7 +218,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RepositoryLoadingCell" rowHeight="48" id="1Qm-qo-9Qv" customClass="LoadingStatusCell" customModule="iGithub" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="293" width="600" height="48"/>
+                                <rect key="frame" x="0.0" y="245" width="600" height="48"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Qm-qo-9Qv" id="ykv-Hl-pJ8">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="47.5"/>
@@ -282,6 +247,14 @@
                                     <outlet property="indicator" destination="9Eq-TY-arX" id="U1b-5Y-Dit"/>
                                     <outlet property="promptLabel" destination="ssY-bA-ZW3" id="mNv-Ev-NG2"/>
                                 </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="48" id="GIz-xz-16g" customClass="UserCell" customModule="iGithub" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="293" width="600" height="48"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GIz-xz-16g" id="C7m-ng-1GM">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="47.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <sections/>

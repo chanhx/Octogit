@@ -8,9 +8,8 @@
 
 import UIKit
 import RxSwift
-import Kingfisher
 
-class UserViewController: UITableViewController {
+class UserViewController: BaseTableViewController {
     
     @IBOutlet weak var avatarView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -28,8 +27,8 @@ class UserViewController: UITableViewController {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.tableView.reloadData()
                         
-                        self.avatarView.kf_setImageWithURL(user.avatarURL, placeholderImage: UIImage())
-                        self.nameLabel.text = user.name ?? ""
+                        self.avatarView.setAvatarWithURL(user.avatarURL)
+                        self.nameLabel.text = user.name ?? (user.login ?? "")
                         self.followersButton.setTitle(user.followers, title: "Followers")
                         self.repositoriesButton.setTitle(user.publicRepos, title: "Repositories")
                         self.followingButton.setTitle(user.following, title: "Following")
@@ -59,31 +58,54 @@ class UserViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-//    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        return viewModel.numberOfSections
-//    }
-//
-//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return viewModel.numberOfRowsInSection(section)
-//    }
-//    
-//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath)
-//        
-//        guard viewModel.userLoaded else {
-//            return cell
-//        }
-//        
-//        switch indexPath.section {
-//        case 0:
-//            if viewModel.detailsRowsCount > 0 {
-//                
-//            }
-//        case 1:
-//            return detailsRowsCount > 0 ? 3 : 1
-//        default:
-//            return 1
-//        }
-//    }
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return viewModel.numberOfSections
+    }
+
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfRowsInSection(section)
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath)
+        
+        guard viewModel.userLoaded else {
+            return cell
+        }
+        
+        switch (indexPath.section, viewModel.details.count) {
+        case (0, 0), (1, 1...4):
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.text = "Public activity"
+            case 1:
+                cell.textLabel?.text = "Starrd repositories"
+            case 2:
+                cell.textLabel?.text = "Gitsts"
+            default:
+                break
+            }
+            
+            return cell
+        case (0, 1...4):
+            switch viewModel.details[indexPath.row] {
+            case .Company:
+                cell.textLabel?.text = "Company     \(viewModel.user.value.company!)"
+            case .Location:
+                cell.textLabel?.text = "Location    \(viewModel.user.value.location!)"
+            case .Email:
+                cell.textLabel?.text = "Email       \(viewModel.user.value.email!)"
+            case .Blog:
+                cell.textLabel?.text = "Blog        \(viewModel.user.value.blog!)"
+            }
+            
+            return cell
+        case (1, 0), (2, _):
+            cell.textLabel?.text = "Organization"
+            return cell
+        default:
+            return cell
+        }
+    }
 
 }

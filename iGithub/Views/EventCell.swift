@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 import SwiftDate
 
 class EventCell: UITableViewCell {
@@ -20,7 +19,7 @@ class EventCell: UITableViewCell {
     
     var entity: Event! {
         didSet {
-            avatarView.kf_setImageWithURL(entity.actor!.avatarURL, placeholderImage: UIImage(named: "default-avatar"))
+            avatarView.setAvatarWithURL(entity.actor!.avatarURL)
             timeLabel.text = entity.createdAt!.naturalString
             
             titleLabel.text = entity.title
