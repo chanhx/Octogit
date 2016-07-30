@@ -15,6 +15,8 @@ class OrganizationViewController: BaseTableViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
     
+    let statusCell = StatusCell(name: "organizations")
+    
     var viewModel: OrganizationViewModel! {
         didSet {
             viewModel.user.asObservable()
@@ -58,11 +60,12 @@ class OrganizationViewController: BaseTableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath)
         
         guard viewModel.userLoaded else {
-            return cell
+            return statusCell
         }
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath)
         
         switch (indexPath.section, viewModel.details.count) {
         case (0, 0), (1, 1...4):

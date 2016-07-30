@@ -29,15 +29,17 @@ class UserCell: UITableViewCell {
         contentView.addSubview(avatarView)
         contentView.addSubview(nameLabel)
         
-        let views = ["avatarView": avatarView, "nameLabel": nameLabel]
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-13-[avatarView(32)]-6-[nameLabel]-15-|", options: [], metrics: [:], views: views))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[avatarView(32)]", options: [], metrics: [:], views: views))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-14-[nameLabel]-14-|", options: [], metrics: [:], views: views))
-        contentView.addConstraint(NSLayoutConstraint(
-            item: avatarView, attribute: .CenterY,
-            relatedBy: .Equal,
-            toItem: nameLabel, attribute: .CenterY,
-            multiplier: 1, constant: 0))
+        let margins = contentView.layoutMarginsGuide
+        
+        avatarView.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: 5).active = true
+        avatarView.centerYAnchor.constraintEqualToAnchor(nameLabel.centerYAnchor).active = true
+        avatarView.widthAnchor.constraintEqualToConstant(32).active = true
+        avatarView.heightAnchor.constraintEqualToConstant(32).active = true
+        
+        nameLabel.leadingAnchor.constraintEqualToAnchor(avatarView.trailingAnchor, constant: 6).active = true
+        nameLabel.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: -8).active = true
+        nameLabel.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 6).active = true
+        nameLabel.bottomAnchor.constraintEqualToAnchor(margins.bottomAnchor, constant: -6).active = true
     }
     
     var entity: User! {

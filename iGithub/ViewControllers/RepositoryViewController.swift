@@ -17,6 +17,8 @@ class RepositoryViewController: BaseTableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var updateTimeLabel: UILabel!
     
+    let statusCell = StatusCell(name: "repository")
+    
     var viewModel: RepositoryViewModel! {
         didSet {
             viewModel.repository.asObservable().subscribeNext { repo in
@@ -69,10 +71,7 @@ class RepositoryViewController: BaseTableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         guard viewModel.repositoryLoaded else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("StatusCell", forIndexPath: indexPath) as! StatusCell
-            cell.indicator.startAnimating()
-            cell.promptLabel.text = "Loading repository"
-            return cell
+            return statusCell
         }
         
         switch indexPath.section {

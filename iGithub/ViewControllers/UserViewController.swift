@@ -20,8 +20,17 @@ class UserViewController: BaseTableViewController {
     @IBOutlet weak var bioLabel: UILabel!
     @IBOutlet weak var followButton: UIButton!
     
+    var statusCell: StatusCell!
+    
     var viewModel: UserViewModel! {
         didSet {
+            switch viewModel.token {
+            case .Members:
+                statusCell = StatusCell(name: "members")
+            default:
+                statusCell = StatusCell(name: "users")
+            }
+            
             viewModel.user.asObservable()
                 .subscribeNext { user in
                     dispatch_async(dispatch_get_main_queue()) {
@@ -67,11 +76,12 @@ class UserViewController: BaseTableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath)
         
         guard viewModel.userLoaded else {
-            return cell
+            return statusCell
         }
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath)
         
         switch (indexPath.section, viewModel.details.count) {
         case (0, 0), (1, 1...4):

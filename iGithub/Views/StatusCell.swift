@@ -9,34 +9,63 @@
 import UIKit
 
 class StatusCell: UITableViewCell {
-    
-    let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    let promptLabel = UILabel()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        commonInit()
+    enum Status {
+        case Loading
+        case Error
+        case Empty
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
+    var name: String
+    var status: Status! {
+        didSet {
+            switch status! {
+            case .Loading:
+                promptLabel.text = "Loading \(name)"
+                indicator.startAnimating()
+            case .Error:
+                promptLabel.text = "Error loading \(name)"
+                indicator.stopAnimating()
+            case .Empty:
+                promptLabel.text = "No \(name)"
+                indicator.stopAnimating()
+            }
+        }
     }
     
-    func commonInit() {
+    private let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    private let promptLabel = UILabel()
+    
+    init(name: String, status: Status = .Loading) {
+        
+        self.name = name
+        defer {
+            self.status = status
+        }
+        
+        super.init(style: .Default, reuseIdentifier: "StatusCell")
+        
+        self.userInteractionEnabled = false
+        
+        indicator.hidesWhenStopped = true
         indicator.translatesAutoresizingMaskIntoConstraints = false
         promptLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(indicator)
         contentView.addSubview(promptLabel)
         
-        let views = ["indicator": indicator, "promptLabel": promptLabel]
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-16-[indicator]-8-[promptLabel]-16-|", options: [], metrics: [:], views: views))
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-14-[promptLabel]-14-|", options: [], metrics: [:], views: views))
-        contentView.addConstraint(NSLayoutConstraint(
-            item: indicator, attribute: .CenterY,
-            relatedBy: .Equal,
-            toItem: promptLabel, attribute: .CenterY,
-            multiplier: 1, constant: 0))
+        let margins = contentView.layoutMarginsGuide
+        
+        indicator.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: 3).active = true
+        indicator.centerYAnchor.constraintEqualToAnchor(promptLabel.centerYAnchor).active = true
+        
+        promptLabel.leadingAnchor.constraintEqualToAnchor(indicator.trailingAnchor, constant: 8).active = true
+        promptLabel.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: -8).active = true
+        promptLabel.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 6).active = true
+        promptLabel.bottomAnchor.constraintEqualToAnchor(margins.bottomAnchor, constant: -6).active = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
 }
