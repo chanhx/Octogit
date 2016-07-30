@@ -69,8 +69,8 @@ class RepositoryViewModel: NSObject {
     
     // MARK: generate child viewmodel
     
-    var filesTableViewModel: FilesTableViewModel {
-        return FilesTableViewModel(repository: fullName)
+    var filesTableViewModel: FileTableViewModel {
+        return FileTableViewModel(repository: fullName)
     }
 
     var ownerViewModel: UserViewModel {

@@ -36,9 +36,9 @@ class OAuthViewController: UIViewController, WKNavigationDelegate {
             if let code = queryItems?.filter({$0.name == "code"}).first!.value {
                 AccountManager.shareManager.requestToken(code, success: {
                     let navigationVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as! UINavigationController
-                    let eventsVC = navigationVC.topViewController as! EventsViewController
-                    eventsVC.viewModel = EventsTableViewModel(username: AccountManager.shareManager.currentUser!.login!, type: .Received)
-                    UIApplication.sharedApplication().delegate!.window!!.rootViewController = eventsVC
+                    let eventTVC = navigationVC.topViewController as! EventTableViewController
+                    eventTVC.viewModel = EventTableViewModel(username: AccountManager.shareManager.currentUser!.login!, type: .Received)
+                    UIApplication.sharedApplication().delegate!.window!!.rootViewController = eventTVC
                 }, failure: {
                     print($0)
                     self.navigationController?.popViewControllerAnimated(true)

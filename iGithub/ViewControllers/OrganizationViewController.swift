@@ -98,5 +98,28 @@ class OrganizationViewController: BaseTableViewController {
             return cell
         }
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+        
+        switch (indexPath.section, viewModel.details.count) {
+        case (0, 0), (1, 1...4):
+            
+            switch indexPath.row {
+            case 0:
+                break
+            case 1:
+                break
+            case 2:
+                let userTVC = UserTableViewController()
+                userTVC.viewModel = UserTableViewModel(organization: viewModel.user.value)
+                self.navigationController?.pushViewController(userTVC, animated: true)
+            default:
+                break
+            }
+        default:
+            return
+        }
+    }
 
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AnM-2y-q4M">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AnM-2y-q4M">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -15,16 +15,11 @@
         <!--Root View Controller-->
         <scene sceneID="c0U-MZ-lcK">
             <objects>
-                <tableViewController id="Mk3-IO-HSk" customClass="EventsViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Mk3-IO-HSk" customClass="EventTableViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="129" sectionHeaderHeight="28" sectionFooterHeight="28" id="ja5-Io-eG4">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="EMu-Xc-4ff">
-                            <rect key="frame" x="0.0" y="221" width="600" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventCell" rowHeight="129" id="J5n-be-uGS" customClass="EventCell" customModule="iGithub" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="129"/>
@@ -95,19 +90,14 @@
             </objects>
             <point key="canvasLocation" x="2127" y="-61"/>
         </scene>
-        <!--Files View Controller-->
+        <!--File Table View Controller-->
         <scene sceneID="o1X-Bw-YUd">
             <objects>
-                <tableViewController storyboardIdentifier="FileTVC" id="g0f-O4-Ico" customClass="FilesViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FileTVC" id="g0f-O4-Ico" customClass="FileTableViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="kO3-kQ-1Mk">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="p6k-RT-eww">
-                            <rect key="frame" x="0.0" y="72" width="600" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FileCell" id="FfM-oJ-CTZ" customClass="FileCell" customModule="iGithub" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="600" height="44"/>
@@ -203,11 +193,6 @@
                                 <constraint firstItem="CCT-fZ-elm" firstAttribute="trailing" secondItem="kx8-ao-VqG" secondAttribute="trailing" id="vdm-SE-hXG"/>
                             </constraints>
                         </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="Oag-Bi-Ccg">
-                            <rect key="frame" x="0.0" y="379" width="600" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RepositoryInfoCell" id="0MK-Ie-vMU">
                                 <rect key="frame" x="0.0" y="201" width="600" height="44"/>
@@ -217,36 +202,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RepositoryLoadingCell" rowHeight="48" id="1Qm-qo-9Qv" customClass="LoadingStatusCell" customModule="iGithub" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StatusCell" rowHeight="48" id="1Qm-qo-9Qv" customClass="StatusCell" customModule="iGithub" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="245" width="600" height="48"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Qm-qo-9Qv" id="ykv-Hl-pJ8">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="47.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="9Eq-TY-arX">
-                                            <rect key="frame" x="16" y="13.5" width="20" height="20"/>
-                                        </activityIndicatorView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading repository" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ssY-bA-ZW3">
-                                            <rect key="frame" x="44" y="14" width="540" height="19.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottomMargin" secondItem="ssY-bA-ZW3" secondAttribute="bottom" constant="6" id="8nG-wE-PuI"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="ssY-bA-ZW3" secondAttribute="trailing" constant="8" id="Ko3-sU-mBS"/>
-                                        <constraint firstItem="ssY-bA-ZW3" firstAttribute="centerY" secondItem="9Eq-TY-arX" secondAttribute="centerY" id="Pvi-VY-red"/>
-                                        <constraint firstItem="ssY-bA-ZW3" firstAttribute="top" secondItem="ykv-Hl-pJ8" secondAttribute="topMargin" constant="6" id="RBc-80-q7Q"/>
-                                        <constraint firstItem="9Eq-TY-arX" firstAttribute="leading" secondItem="ykv-Hl-pJ8" secondAttribute="leadingMargin" constant="8" id="XNO-aF-1kz"/>
-                                        <constraint firstItem="ssY-bA-ZW3" firstAttribute="leading" secondItem="9Eq-TY-arX" secondAttribute="trailing" constant="8" id="sjY-1y-loe"/>
-                                    </constraints>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="indicator" destination="9Eq-TY-arX" id="U1b-5Y-Dit"/>
-                                    <outlet property="promptLabel" destination="ssY-bA-ZW3" id="mNv-Ev-NG2"/>
-                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="48" id="GIz-xz-16g" customClass="UserCell" customModule="iGithub" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="293" width="600" height="48"/>
@@ -341,11 +303,6 @@
                                 <constraint firstItem="JfX-pb-zp9" firstAttribute="trailing" secondItem="4im-D1-l8C" secondAttribute="trailing" id="uG0-Ie-Eek"/>
                             </constraints>
                         </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="ISO-Rs-UII">
-                            <rect key="frame" x="0.0" y="356.5" width="600" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UITableViewCell" id="u7h-xb-saK">
                                 <rect key="frame" x="0.0" y="186.5" width="600" height="44"/>
@@ -435,11 +392,6 @@
                                 <constraint firstItem="s1x-6Q-nPE" firstAttribute="top" secondItem="8xR-rI-zrW" secondAttribute="top" constant="15" id="aTo-e9-ddC"/>
                                 <constraint firstAttribute="trailingMargin" secondItem="d8B-Pe-4CG" secondAttribute="trailing" constant="8" id="tfP-Wu-Szm"/>
                             </constraints>
-                        </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="j2Y-aP-c8Y">
-                            <rect key="frame" x="0.0" y="268.5" width="600" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UITableViewCell" id="aJx-cc-BSE">

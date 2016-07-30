@@ -69,8 +69,9 @@ class RepositoryViewController: BaseTableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         guard viewModel.repositoryLoaded else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("RepositoryLoadingCell", forIndexPath: indexPath) as! LoadingStatusCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("StatusCell", forIndexPath: indexPath) as! StatusCell
             cell.indicator.startAnimating()
+            cell.promptLabel.text = "Loading repository"
             return cell
         }
         
@@ -142,9 +143,9 @@ class RepositoryViewController: BaseTableViewController {
         }
         
         else if (indexPath.section, indexPath.row) == (2, 0) {
-            let filesTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FileTVC") as! FilesViewController
-            filesTableVC.viewModel = viewModel.filesTableViewModel
-            self.navigationController?.pushViewController(filesTableVC, animated: true)
+            let fileTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FileTVC") as! FileTableViewController
+            fileTableVC.viewModel = viewModel.filesTableViewModel
+            self.navigationController?.pushViewController(fileTableVC, animated: true)
         }
     }
 

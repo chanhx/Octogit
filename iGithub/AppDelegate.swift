@@ -23,8 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             initialVC = UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()!
         } else {
             initialVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()!
-            let eventsVC = (initialVC  as! UINavigationController).topViewController as! EventsViewController
-            eventsVC.viewModel = EventsTableViewModel(username: AccountManager.shareManager.currentUser!.login!, type: .Received)
+            let eventsVC = (initialVC  as! UINavigationController).topViewController as! EventTableViewController
+            eventsVC.viewModel = EventTableViewModel(username: AccountManager.shareManager.currentUser!.login!, type: .Received)
         }
 
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)

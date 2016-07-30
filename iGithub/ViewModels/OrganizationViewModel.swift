@@ -14,12 +14,12 @@ class OrganizationViewModel: UserViewModel {
     
     override init(_ organization: User) {
         super.init(organization)
-        token = .Org(org: organization.login!)
+        token = .Organization(org: organization.login!)
     }
     
     override init(_ orgName: String) {
         super.init(orgName)
-        token = .Org(org: orgName)
+        token = .Organization(org: orgName)
     }
     
     override var numberOfSections: Int {

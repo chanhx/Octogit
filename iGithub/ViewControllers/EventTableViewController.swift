@@ -1,5 +1,5 @@
 //
-//  EventsViewController.swift
+//  EventTableViewController.swift
 //  iGithub
 //
 //  Created by Chan Hocheung on 7/21/16.
@@ -9,9 +9,9 @@
 import UIKit
 import RxSwift
 
-class EventsViewController: BaseTableViewController {
+class EventTableViewController: BaseTableViewController {
     
-    var viewModel: EventsTableViewModel! {
+    var viewModel: EventTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
                 .bindTo(tableView.rx_itemsWithCellIdentifier("EventCell", cellType: EventCell.self)) { row, element, cell in

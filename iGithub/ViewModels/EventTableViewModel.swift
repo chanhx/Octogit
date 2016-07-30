@@ -1,5 +1,5 @@
 //
-//  EventsTableViewModel.swift
+//  EventTableViewModel.swift
 //  iGithub
 //
 //  Created by Chan Hocheung on 7/21/16.
@@ -14,7 +14,7 @@ enum UserEventType {
     case Received
 }
 
-class EventsTableViewModel: BaseTableViewModel<Event> {
+class EventTableViewModel: BaseTableViewModel<Event> {
     
     private var token: GithubAPI
     

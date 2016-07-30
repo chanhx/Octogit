@@ -1,5 +1,5 @@
 //
-//  FilesViewController.swift
+//  FileTableViewController.swift
 //  iGithub
 //
 //  Created by Chan Hocheung on 7/25/16.
@@ -9,9 +9,9 @@
 import UIKit
 import RxSwift
 
-class FilesViewController: BaseTableViewController {
+class FileTableViewController: BaseTableViewController {
     
-    var viewModel: FilesTableViewModel! {
+    var viewModel: FileTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
                 .bindTo(tableView.rx_itemsWithCellIdentifier("FileCell", cellType: FileCell.self)) { row, element, cell in
@@ -48,9 +48,9 @@ class FilesViewController: BaseTableViewController {
             fileVC.viewModel = viewModel.fileViewModel(file)
             self.navigationController?.pushViewController(fileVC, animated: true)
         } else {
-            let filesTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FileTVC") as! FilesViewController
-            filesTableVC.viewModel = viewModel.subDirectoryViewModel(file)
-            self.navigationController?.pushViewController(filesTableVC, animated: true)
+            let fileTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FileTVC") as! FileTableViewController
+            fileTVC.viewModel = viewModel.subDirectoryViewModel(file)
+            self.navigationController?.pushViewController(fileTVC, animated: true)
         }
     }
     

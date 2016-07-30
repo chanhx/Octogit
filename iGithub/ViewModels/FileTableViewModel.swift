@@ -1,5 +1,5 @@
 //
-//  DirectoryTableViewModel.swift
+//  FileTableViewModel.swift
 //  iGithub
 //
 //  Created by Chan Hocheung on 7/25/16.
@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class FilesTableViewModel: BaseTableViewModel<File> {
+class FileTableViewModel: BaseTableViewModel<File> {
     
     var repository: String
     var path: String
@@ -46,7 +46,7 @@ class FilesTableViewModel: BaseTableViewModel<File> {
         return FileViewModel(repository: repository, file: file)
     }
     
-    func subDirectoryViewModel(directory: File) -> FilesTableViewModel {
-        return FilesTableViewModel(repository: repository, path: directory.path!)
+    func subDirectoryViewModel(directory: File) -> FileTableViewModel {
+        return FileTableViewModel(repository: repository, path: directory.path!)
     }
 }
