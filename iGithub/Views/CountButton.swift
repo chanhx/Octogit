@@ -45,10 +45,11 @@ class CountButton: UIButton {
                                                             NSForegroundColorAttributeName: UIColor(netHex: 0x4078C0),
                                                             NSFontAttributeName: UIFont.boldSystemFontOfSize(20)])
         
-        let attributedTitle = NSMutableAttributedString(string: title,
-                                                        attributes: [
-                                                            NSForegroundColorAttributeName: UIColor.grayColor(),
-                                                            NSFontAttributeName: UIFont.systemFontOfSize(12)])
+        let attributedTitle = NSAttributedString(string: title,
+                                                 attributes: [
+                                                    NSForegroundColorAttributeName: UIColor.grayColor(),
+                                                    NSFontAttributeName: UIFont.systemFontOfSize(12)])
+        
         attributedNumber.appendAttributedString(attributedTitle)
         
         setAttributedTitle(attributedNumber, forState: .Normal)

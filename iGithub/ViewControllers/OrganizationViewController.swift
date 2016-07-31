@@ -71,17 +71,7 @@ class OrganizationViewController: BaseTableViewController {
         case (0, 0), (1, 1...4):
             
             cell.accessoryType = .DisclosureIndicator
-            
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "Public activity"
-            case 1:
-                cell.textLabel?.text = "Repositories"
-            case 2:
-                cell.textLabel?.text = "Members"
-            default:
-                break
-            }
+            cell.textLabel?.text = ["Public activity", "Repositories", "Members"][indexPath.row]
             
             return cell
         case (0, 1...4):
@@ -112,7 +102,9 @@ class OrganizationViewController: BaseTableViewController {
             case 0:
                 break
             case 1:
-                break
+                let repositoryTVC = RepositoryTableViewController()
+                repositoryTVC.viewModel = RepositoryTableViewModel(organization: viewModel.user.value)
+                self.navigationController?.pushViewController(repositoryTVC, animated: true)
             case 2:
                 let userTVC = UserTableViewController()
                 userTVC.viewModel = UserTableViewModel(organization: viewModel.user.value)

@@ -19,6 +19,13 @@ class RepositoryViewModel: NSObject {
     var repository: Variable<Repository>
     var repositoryLoaded = false
     
+    init(repository: Repository) {
+        self.fullName = repository.fullName!
+        self.repository = Variable(repository)
+        
+        super.init()
+    }
+    
     init(fullName: String) {
         self.fullName = fullName
         

@@ -16,9 +16,12 @@ enum GithubAPI {
     case Members(organization: String)
     case Organization(org: String)
     case Organizations(username: String)
+    case OrganizationRepos(org: String)
     case ReceivedEvents(username: String)
+    case StarredRepos(username: String)
     case User(username: String)
     case UserEvents(username: String)
+    case UserRepos(username: String)
 }
 
 extension GithubAPI: TargetType {
@@ -37,12 +40,18 @@ extension GithubAPI: TargetType {
             return "/orgs/\(org)"
         case .Organizations(let username):
             return "/users/\(username)/orgs"
+        case .OrganizationRepos(let org):
+            return "/orgs/\(org)/repos"
         case .ReceivedEvents(let username):
             return "/users/\(username)/received_events"
+        case .StarredRepos(let username):
+            return "/users/\(username)/starred"
         case .UserEvents(let username):
             return "/users/\(username)/events"
         case .User(let username):
             return "/users/\(username)"
+        case .UserRepos(let username):
+            return "/users/\(username)/repos"
         }
     }
     var method: RxMoya.Method {

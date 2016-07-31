@@ -24,10 +24,7 @@ class UserCell: UITableViewCell {
     }
     
     func commonInit() {
-        avatarView.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(avatarView)
-        contentView.addSubview(nameLabel)
+        contentView.addSubviews([avatarView, nameLabel])
         
         let margins = contentView.layoutMarginsGuide
         

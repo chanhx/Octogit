@@ -46,12 +46,9 @@ class StatusCell: UITableViewCell {
         super.init(style: .Default, reuseIdentifier: "StatusCell")
         
         self.userInteractionEnabled = false
-        
         indicator.hidesWhenStopped = true
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        promptLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(indicator)
-        contentView.addSubview(promptLabel)
+        
+        contentView.addSubviews([indicator, promptLabel])
         
         let margins = contentView.layoutMarginsGuide
         

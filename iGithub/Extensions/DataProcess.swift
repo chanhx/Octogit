@@ -37,3 +37,12 @@ extension UIImageView {
         self.kf_setImageWithURL(avatarURL, placeholderImage: UIImage(named: "default-avatar"))
     }
 }
+
+extension UIView {
+    func addSubviews(subviews: [UIView], usingAutoLayout: Bool = true) {
+        for view in subviews {
+            view.translatesAutoresizingMaskIntoConstraints = !usingAutoLayout
+            self.addSubview(view)
+        }
+    }
+}

@@ -85,16 +85,8 @@ class UserViewController: BaseTableViewController {
         
         switch (indexPath.section, viewModel.details.count) {
         case (0, 0), (1, 1...4):
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "Public activity"
-            case 1:
-                cell.textLabel?.text = "Starrd repositories"
-            case 2:
-                cell.textLabel?.text = "Gitsts"
-            default:
-                break
-            }
+            cell.accessoryType = .DisclosureIndicator
+            cell.textLabel?.text = ["Public activity", "Starrd repositories", "Gitsts"][indexPath.row]
             
             return cell
         case (0, 1...4):
@@ -115,6 +107,26 @@ class UserViewController: BaseTableViewController {
             return cell
         default:
             return cell
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+        
+        switch (indexPath.section, viewModel.details.count) {
+        case (0, 0), (1, 1...4):
+            switch indexPath.row {
+            case 1:
+                let repositoryTVC = RepositoryTableViewController()
+                repositoryTVC.viewModel = RepositoryTableViewModel(stargazer: viewModel.user.value)
+                self.navigationController?.pushViewController(repositoryTVC, animated: true)
+            default:
+                break
+            }
+        case (1, 0), (2, _):
+            break
+        default:
+            break
         }
     }
 
