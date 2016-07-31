@@ -36,7 +36,7 @@ extension Event {
             return "\(e.actor!) \(e.action!) \(e.pageName) in the \(e.repositoryName!) wiki"
         case .IssueCommentEvent:
             let e = self as! IssueCommentEvent
-            return "\(e.actor!) \(e.action) comment on issue \(e.repositoryName!)#\(e.issue!.id!)"
+            return "\(e.actor!) \(e.action!) comment on issue \(e.repositoryName!)#\(e.issue!.id!)"
         case .IssuesEvent:
             let e = self as! IssueEvent
             return "\(e.actor!) \(e.action!) issue \(e.repositoryName!)#\(e.issue!.id!)"
@@ -110,7 +110,7 @@ extension Event {
             for commit in e.commits! {
                 let sha = commit.sha!
                 let shortenedSHA = sha.substringToIndex(sha.startIndex.advancedBy(7))
-                let message = "\(shortenedSHA) \(commit.message!)"
+                let message = "\(shortenedSHA) \(commit.message!.componentsSeparatedByString("\n")[0])"
                 messages.append(message)
             }
             return messages.joinWithSeparator("\n")

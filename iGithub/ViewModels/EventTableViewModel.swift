@@ -18,13 +18,21 @@ class EventTableViewModel: BaseTableViewModel<Event> {
     
     private var token: GithubAPI
     
-    init(username: String, type: UserEventType) {
+    init(user: User, type: UserEventType) {
         switch type {
         case .Performed:
-            token = .UserEvents(username: username)
+            token = .UserEvents(username: user.login!)
         case .Received:
-            token = .ReceivedEvents(username: username)
+            token = .ReceivedEvents(username: user.login!)
         }
+    }
+    
+    init(repo: Repository) {
+        token = .RepositoryEvents(repo: repo.fullName!)
+    }
+    
+    init(org: User) {
+        token = .OrganizationEvents(org: org.login!)
     }
     
     override func fetchData() {
@@ -41,6 +49,15 @@ class EventTableViewModel: BaseTableViewModel<Event> {
                     print($0)
             })
             .addDisposableTo(disposeBag)
+    }
+    
+    var title: String {
+        switch token {
+        case .ReceivedEvents:
+            return "News"
+        default:
+            return "Recent activity"
+        }
     }
     
     func repositoryViewModelForIndex(index: Int) -> RepositoryViewModel {

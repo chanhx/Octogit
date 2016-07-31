@@ -24,6 +24,8 @@ class EventTableViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = viewModel.title
+        
         viewModel.fetchData()
     }
     

@@ -116,6 +116,10 @@ class UserViewController: BaseTableViewController {
         switch (indexPath.section, viewModel.details.count) {
         case (0, 0), (1, 1...4):
             switch indexPath.row {
+            case 0:
+                let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EventTVC") as! EventTableViewController
+                eventTVC.viewModel = EventTableViewModel(user: viewModel.user.value, type: .Performed)
+                self.navigationController?.pushViewController(eventTVC, animated: true)
             case 1:
                 let repositoryTVC = RepositoryTableViewController()
                 repositoryTVC.viewModel = RepositoryTableViewModel(stargazer: viewModel.user.value)

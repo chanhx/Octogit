@@ -100,7 +100,9 @@ class OrganizationViewController: BaseTableViewController {
             
             switch indexPath.row {
             case 0:
-                break
+                let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EventTVC") as! EventTableViewController
+                eventTVC.viewModel = EventTableViewModel(org: viewModel.user.value)
+                self.navigationController?.pushViewController(eventTVC, animated: true)
             case 1:
                 let repositoryTVC = RepositoryTableViewController()
                 repositoryTVC.viewModel = RepositoryTableViewModel(organization: viewModel.user.value)

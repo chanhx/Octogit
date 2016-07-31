@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class Commit : BaseModel {
+class Commit: BaseModel {
     
     var sha: String?
     var message: String?
@@ -24,5 +24,16 @@ class Commit : BaseModel {
         commitDate      <- (map["commit.author.date"], DateTransform())
         authorName      <- map["commit.author.name"]
         committerName   <- map["commit.committer.name"]
+    }
+}
+
+class CommitsItem: BaseModel {
+    
+    var sha: String?
+    var message: String?
+    
+    override func mapping(map: Map) {
+        sha             <- map["sha"]
+        message         <- map["message"]
     }
 }

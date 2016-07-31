@@ -120,10 +120,6 @@ class RepositoryViewController: BaseTableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.separatorInset = UIEdgeInsetsZero
-    }
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
         
@@ -139,6 +135,12 @@ class RepositoryViewController: BaseTableViewController {
                 (vc as! OrganizationViewController).viewModel = (self.viewModel.ownerViewModel as! OrganizationViewModel)
             }
             self.navigationController?.pushViewController(vc, animated: true)
+        }
+            
+        else if (indexPath.section, indexPath.row) == (1, 2) {
+            let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EventTVC") as! EventTableViewController
+            eventTVC.viewModel = EventTableViewModel(repo: viewModel.repository.value)
+            self.navigationController?.pushViewController(eventTVC, animated: true)
         }
         
         else if (indexPath.section, indexPath.row) == (2, 0) {

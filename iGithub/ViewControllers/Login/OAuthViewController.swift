@@ -37,7 +37,7 @@ class OAuthViewController: UIViewController, WKNavigationDelegate {
                 AccountManager.shareManager.requestToken(code, success: {
                     let navigationVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as! UINavigationController
                     let eventTVC = navigationVC.topViewController as! EventTableViewController
-                    eventTVC.viewModel = EventTableViewModel(username: AccountManager.shareManager.currentUser!.login!, type: .Received)
+                    eventTVC.viewModel = EventTableViewModel(user: AccountManager.shareManager.currentUser!, type: .Received)
                     UIApplication.sharedApplication().delegate!.window!!.rootViewController = eventTVC
                 }, failure: {
                     print($0)
