@@ -19,6 +19,7 @@ enum GithubAPI {
     case OrganizationEvents(org: String)
     case OrganizationRepos(org: String)
     case ReceivedEvents(username: String)
+    case RepositoryContributors(repo: String)
     case RepositoryEvents(repo: String)
     case StarredRepos(username: String)
     case User(username: String)
@@ -48,6 +49,8 @@ extension GithubAPI: TargetType {
             return "/orgs/\(org)/repos"
         case .ReceivedEvents(let username):
             return "/users/\(username)/received_events"
+        case .RepositoryContributors(let repo):
+            return "/repos/\(repo)/contributors"
         case .RepositoryEvents(let repo):
             return "/repos/\(repo)/events"
         case .StarredRepos(let username):

@@ -123,7 +123,8 @@ class RepositoryViewController: BaseTableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
         
-        if (indexPath.section, indexPath.row) == (0, 0) {
+        switch (indexPath.section, indexPath.row) {
+        case (0, 0):
             var vc: UIViewController
             
             switch viewModel.repository.value.owner!.type! {
@@ -135,19 +136,22 @@ class RepositoryViewController: BaseTableViewController {
                 (vc as! OrganizationViewController).viewModel = (self.viewModel.ownerViewModel as! OrganizationViewModel)
             }
             self.navigationController?.pushViewController(vc, animated: true)
-        }
-            
-        else if (indexPath.section, indexPath.row) == (1, 2) {
+        case (1, 2):
             let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EventTVC") as! EventTableViewController
             eventTVC.viewModel = EventTableViewModel(repo: viewModel.repository.value)
             self.navigationController?.pushViewController(eventTVC, animated: true)
-        }
-        
-        else if (indexPath.section, indexPath.row) == (2, 0) {
+        case (1, 3):
+            let memberTVC = UserTableViewController()
+            memberTVC.viewModel = UserTableViewModel(repo: viewModel.repository.value)
+            self.navigationController?.pushViewController(memberTVC, animated: true)
+        case (2, 0):
             let fileTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FileTVC") as! FileTableViewController
             fileTableVC.viewModel = viewModel.filesTableViewModel
             self.navigationController?.pushViewController(fileTableVC, animated: true)
+        default:
+            break
         }
+        
     }
 
     /*

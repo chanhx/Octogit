@@ -12,6 +12,11 @@ class UserTableViewModel: BaseTableViewModel<User> {
     
     private var token: GithubAPI
     
+    init(repo: Repository) {
+        token = .RepositoryContributors(repo: repo.fullName!)
+        super.init()
+    }
+    
     init(organization: User) {
         token = .Members(organization: organization.login!)
         super.init()
