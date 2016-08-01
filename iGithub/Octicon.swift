@@ -6,7 +6,7 @@
 //  Copyright © 2016 Hocheung. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum Octicon : String, CustomStringConvertible {
     case Alert = "\u{f02d}"
@@ -177,9 +177,25 @@ enum Octicon : String, CustomStringConvertible {
     case X = "\u{f081}"
     case Zap = "\u{26a1}"
     
+    func iconString(text: String, fontSize: CGFloat = 14) -> NSAttributedString {
+        
+        let iconString = NSMutableAttributedString(string: "\(self)", attributes: [NSFontAttributeName: UIFont.OcticonOfSize(fontSize)])
+        let attributedText = NSAttributedString(string: " \(text)", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(fontSize)])
+        
+        iconString.appendAttributedString(attributedText)
+        
+        return iconString
+    }
+    
     var description : String {
         get {
             return self.rawValue
         }
+    }
+}
+
+extension UIFont {
+    @inline(__always) class func OcticonOfSize(fontSize: CGFloat) -> UIFont {
+        return UIFont(name: "octicons", size: fontSize)!
     }
 }

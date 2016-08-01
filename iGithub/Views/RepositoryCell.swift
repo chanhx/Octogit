@@ -24,7 +24,31 @@ class RepositoryCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.configureSubviews()
+        self.layout()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configureSubviews() {
+        for label in [languageLabel, stargazersCountLabel, forksCountLabel, watchersCountLabel] {
+            label.textColor = UIColor(netHex: 0x888888)
+        }
         
+        iconLabel.font = UIFont.OcticonOfSize(23)
+        
+        titleLabel.font = UIFont.boldSystemFontOfSize(18)
+        titleLabel.textColor = UIColor(netHex: 0x4078C0)
+        
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.lineBreakMode = .ByWordWrapping
+        descriptionLabel.textColor = UIColor(netHex: 0x666666)
+        
+        languageLabel.font = UIFont.systemFontOfSize(14)
+    }
+    
+    func layout() {
         let hStackView = UIStackView(arrangedSubviews: [languageLabel, stargazersCountLabel, forksCountLabel, watchersCountLabel])
         hStackView.axis = .Horizontal
         hStackView.alignment = .Center
@@ -50,27 +74,6 @@ class RepositoryCell: UITableViewCell {
         vStackView.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: -8).active = true
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configureSubviews() {
-        for label in [languageLabel, stargazersCountLabel, forksCountLabel, watchersCountLabel] {
-            label.textColor = UIColor(netHex: 0x888888)
-        }
-        
-        iconLabel.font = UIFont(name: "octicons", size: 23)
-        
-        titleLabel.font = UIFont.boldSystemFontOfSize(18)
-        titleLabel.textColor = UIColor(netHex: 0x4078C0)
-        
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.lineBreakMode = .ByWordWrapping
-        descriptionLabel.textColor = UIColor(netHex: 0x666666)
-        
-        languageLabel.font = UIFont.systemFontOfSize(14)
-    }
-    
     var entity: Repository! {
         didSet {
             titleLabel.text = shouldDisplayFullName ? entity.fullName! : entity.name!
@@ -81,10 +84,9 @@ class RepositoryCell: UITableViewCell {
             languageLabel.text = entity.language
             languageLabel.hidden = entity.language == nil
             
-            stargazersCountLabel.attributedText = attributedCountString(Octicon.Star, count: entity.stargazersCount!)
-            forksCountLabel.attributedText = attributedCountString(Octicon.RepoForked, count: entity.forksCount!)
-            watchersCountLabel.attributedText = attributedCountString(Octicon.Eye, count:entity.watchersCount!)
-            
+            stargazersCountLabel.attributedText = Octicon.Star.iconString("\(entity.stargazersCount!)")
+            forksCountLabel.attributedText = Octicon.RepoForked.iconString("\(entity.forksCount!)")
+            watchersCountLabel.attributedText = Octicon.Eye.iconString("\(entity.watchersCount!)")
             
             if entity.isPrivate! {
                 iconLabel.text = Octicon.Lock.rawValue
@@ -94,17 +96,6 @@ class RepositoryCell: UITableViewCell {
                 iconLabel.text = Octicon.Repo.rawValue
             }
         }
-    }
-    
-    func attributedCountString(icon: Octicon, count: Int) -> NSAttributedString {
-        let attriStr = NSMutableAttributedString(string: "\(icon)",
-                                                 attributes: [NSFontAttributeName: UIFont(name: "octicons", size: 14)!])
-        
-        let countStr = NSAttributedString(string: " \(count)", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(14)])
-        
-        attriStr.appendAttributedString(countStr)
-        
-        return attriStr
     }
 
 }

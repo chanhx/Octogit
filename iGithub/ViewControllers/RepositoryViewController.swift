@@ -94,7 +94,7 @@ class RepositoryViewController: BaseTableViewController {
             }
         case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier("RepositoryInfoCell", forIndexPath: indexPath)
-            cell.textLabel?.font = UIFont(name: "octicons", size: 18)
+            cell.textLabel?.font = UIFont.OcticonOfSize(18)
             switch indexPath.row {
             case 0:
                 cell.textLabel?.text = "\(Octicon.IssueOpened) Issues"
@@ -136,6 +136,10 @@ class RepositoryViewController: BaseTableViewController {
                 (vc as! OrganizationViewController).viewModel = (self.viewModel.ownerViewModel as! OrganizationViewModel)
             }
             self.navigationController?.pushViewController(vc, animated: true)
+        case (1, 0):
+            let issueTVC = IssueTableViewController()
+            issueTVC.viewModel = IssueTableViewModel(repo: viewModel.repository.value)
+            self.navigationController?.pushViewController(issueTVC, animated: true)
         case (1, 2):
             let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EventTVC") as! EventTableViewController
             eventTVC.viewModel = EventTableViewModel(repo: viewModel.repository.value)

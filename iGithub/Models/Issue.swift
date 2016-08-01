@@ -20,14 +20,20 @@ class Issue : BaseModel {
     var title: String?
     var body: String?
     var state: IssueState?
-    var number: String?
+    var number: Int?
+    var user: String?
+    var createdAt: NSDate?
+    var comments: Int?
     var pullRequest: PullRequest?
     
     override func mapping(map: Map) {
-        id      <- map["id"]
-        number  <- map["number"]
-        title   <- map["title"]
-        body    <- map["body"]
-        state   <- map["state"]
+        id          <- map["id"]
+        number      <- map["number"]
+        title       <- map["title"]
+        body        <- map["body"]
+        state       <- map["state"]
+        user        <- map["user.login"]
+        createdAt   <- (map["created_at"], DateTransform())
+        comments    <- map["comments"]
     }
 }
