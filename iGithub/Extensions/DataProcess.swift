@@ -13,6 +13,11 @@ import Kingfisher
 extension NSDate {
     var naturalString: String {
         let date = NSDate()
+        
+        if self < date - 1.months {
+            return self.toString(dateStyle: .ShortStyle, timeStyle: .NoStyle)!
+        }
+        
         let suffix = self < date ? "ago" : "later"
         return "\(self.toNaturalString(date, style: FormatterStyle(style: .Full, max: 1))!) \(suffix)"
     }
