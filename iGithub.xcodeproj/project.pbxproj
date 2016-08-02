@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C52474281D50F06A0001D9CD /* WebViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52474271D50F06A0001D9CD /* WebViewCell.swift */; };
+		C524742A1D50FB400001D9CD /* issue.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C52474291D50FB400001D9CD /* issue.mustache */; };
 		C5373C451D4AF5FD006CFB83 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C441D4AF5FD006CFB83 /* UserCell.swift */; };
 		C5373C491D4B4493006CFB83 /* OrganizationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C481D4B4493006CFB83 /* OrganizationViewModel.swift */; };
 		C5373C4B1D4B7C2D006CFB83 /* OrganizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C4A1D4B7C2D006CFB83 /* OrganizationViewController.swift */; };
@@ -100,6 +102,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C52474271D50F06A0001D9CD /* WebViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewCell.swift; sourceTree = "<group>"; };
+		C52474291D50FB400001D9CD /* issue.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = issue.mustache; sourceTree = "<group>"; };
 		C5373C441D4AF5FD006CFB83 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		C5373C481D4B4493006CFB83 /* OrganizationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationViewModel.swift; sourceTree = "<group>"; };
 		C5373C4A1D4B7C2D006CFB83 /* OrganizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationViewController.swift; sourceTree = "<group>"; };
@@ -264,6 +268,7 @@
 				C5C4D9541D4A27B2007C1891 /* CountButton.swift */,
 				C5819ABA1D4CF3D4009D7772 /* RepositoryCell.swift */,
 				C5819AC41D4EF7AC009D7772 /* IssueCell.swift */,
+				C52474271D50F06A0001D9CD /* WebViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -364,6 +369,7 @@
 				C55E08511D4786EB0004EC7C /* Prism */,
 				C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */,
 				C55E08481D4701A20004EC7C /* content.mustache */,
+				C52474291D50FB400001D9CD /* issue.mustache */,
 				C5BB907A1D487ACA005A40C0 /* empty_content.html */,
 				C55E08531D478E8E0004EC7C /* common.css */,
 				C55E08551D4793740004EC7C /* file_extensions.plist */,
@@ -506,6 +512,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C524742A1D50FB400001D9CD /* issue.mustache in Resources */,
 				C5DB946D1D3F842000887E81 /* LaunchScreen.storyboard in Resources */,
 				C5DB946A1D3F842000887E81 /* Assets.xcassets in Resources */,
 				C55E08541D478E8E0004EC7C /* common.css in Resources */,
@@ -613,6 +620,7 @@
 				C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */,
 				C538FD471D4491DE003A559E /* Event+DataProcess.swift in Sources */,
 				C538FD391D430FB3003A559E /* RepositoryViewModel.swift in Sources */,
+				C52474281D50F06A0001D9CD /* WebViewCell.swift in Sources */,
 				C5819AC51D4EF7AC009D7772 /* IssueCell.swift in Sources */,
 				C5819ABF1D4DD2B7009D7772 /* RepositoryTableViewController.swift in Sources */,
 				C5C4D9511D49B1C5007C1891 /* UserViewModel.swift in Sources */,

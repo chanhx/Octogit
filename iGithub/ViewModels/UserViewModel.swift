@@ -20,8 +20,8 @@ enum VcardDetail {
 class UserViewModel: NSObject {
     
     var user: Variable<User>
-    var provider = RxMoyaProvider<GithubAPI>()
-    var disposeBag = DisposeBag()
+    let provider = RxMoyaProvider<GithubAPI>()
+    let disposeBag = DisposeBag()
     var token: GithubAPI
     
     var userLoaded = false

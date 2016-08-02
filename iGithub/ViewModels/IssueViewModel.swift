@@ -7,26 +7,46 @@
 //
 
 import Foundation
+import WebKit
+import Mustache
+import RxSwift
 
-class IssueViewModel: NSObject {
+class IssueViewModel: NSObject, WKNavigationDelegate {
+    
+    enum SectionType {
+        case Content
+        case Asignee
+        case Milestone
+    }
 
     var issue: Issue
+    var contentHeight = Variable<CGFloat>(0)
+    var sections = [SectionType]()
     
     init(issue: Issue) {
         self.issue = issue
         super.init()
     }
     
-//    func numberOfRowsInSection(section: Int) -> Int {
-//        
-//        switch section {
-//        case 0:
-//            return details.count
-//        case 1:
-//            return events.count
-//        default:
-//            return 0
-//        }
-//    }
+    var numberOfSections: Int {
+        var sections = 0
+        if issue.body?.characters.count > 0 {
+            sections += 1
+        }
+        
+        return sections
+    }
     
+    
+    var contentHTML: String {
+        let template = try! Template(named: "issue")
+        
+        let data = ["content": issue.body!]
+        
+        return try! template.render(Box(data))
+    }
+    
+    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+        contentHeight.value = webView.scrollView.contentSize.height + 16
+    }
 }

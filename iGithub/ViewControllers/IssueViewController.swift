@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class IssueViewController: BaseTableViewController {
     
@@ -15,7 +16,19 @@ class IssueViewController: BaseTableViewController {
     @IBOutlet weak var userAvatar: UIImageView!
     @IBOutlet weak var infoLabel: UILabel!
     
-    var viewModel: IssueViewModel!
+    let disposeBag = DisposeBag()
+    var viewModel: IssueViewModel! {
+        didSet {
+            viewModel.contentHeight.asObservable()
+                .skip(1)
+                .distinctUntilChanged()
+                .subscribeNext { _ in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.tableView.reloadData()
+                    }
+                }.addDisposableTo(disposeBag)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,10 +72,26 @@ class IssueViewController: BaseTableViewController {
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return viewModel.numberOfSections
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (indexPath.section, indexPath.row) == (0, 0) {
+            return viewModel.contentHeight.value
+        } else {
+            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("WebViewCell", forIndexPath: indexPath) as! WebViewCell
+        cell.webView.loadHTMLString(viewModel.contentHTML, baseURL: NSBundle.mainBundle().resourceURL)
+        cell.webView.navigationDelegate = viewModel
+        
+        return cell
     }
 }
