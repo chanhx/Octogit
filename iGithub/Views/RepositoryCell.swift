@@ -38,7 +38,7 @@ class RepositoryCell: UITableViewCell {
         
         iconLabel.font = UIFont.OcticonOfSize(23)
         
-        titleLabel.font = UIFont.boldSystemFontOfSize(18)
+        titleLabel.font = UIFont.systemFontOfSize(18, weight: UIFontWeightMedium)
         titleLabel.textColor = UIColor(netHex: 0x4078C0)
         
         descriptionLabel.numberOfLines = 0

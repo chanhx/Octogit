@@ -32,4 +32,8 @@ class IssueTableViewModel: BaseTableViewModel<Issue> {
             })
             .addDisposableTo(disposeBag)
     }
+    
+    func viewModelForIndex(index: Int) -> IssueViewModel {
+        return IssueViewModel(issue: dataSource.value[index])
+    }
 }

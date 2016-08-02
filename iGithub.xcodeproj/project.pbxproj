@@ -51,6 +51,8 @@
 		C5819AC11D4EF086009D7772 /* IssueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819AC01D4EF086009D7772 /* IssueTableViewController.swift */; };
 		C5819AC31D4EF0C0009D7772 /* IssueTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819AC21D4EF0C0009D7772 /* IssueTableViewModel.swift */; };
 		C5819AC51D4EF7AC009D7772 /* IssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819AC41D4EF7AC009D7772 /* IssueCell.swift */; };
+		C5819AC71D4F6C3E009D7772 /* IssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819AC61D4F6C3E009D7772 /* IssueViewController.swift */; };
+		C5819ACA1D4F6C6A009D7772 /* IssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819AC91D4F6C6A009D7772 /* IssueViewModel.swift */; };
 		C5BB907B1D487ACA005A40C0 /* empty_content.html in Resources */ = {isa = PBXBuildFile; fileRef = C5BB907A1D487ACA005A40C0 /* empty_content.html */; };
 		C5C4D9511D49B1C5007C1891 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4D9501D49B1C5007C1891 /* UserViewModel.swift */; };
 		C5C4D9531D49B3FD007C1891 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4D9521D49B3FD007C1891 /* UserViewController.swift */; };
@@ -142,6 +144,8 @@
 		C5819AC01D4EF086009D7772 /* IssueTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueTableViewController.swift; path = iGithub/ViewControllers/IssueTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		C5819AC21D4EF0C0009D7772 /* IssueTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTableViewModel.swift; sourceTree = "<group>"; };
 		C5819AC41D4EF7AC009D7772 /* IssueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCell.swift; sourceTree = "<group>"; };
+		C5819AC61D4F6C3E009D7772 /* IssueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewController.swift; sourceTree = "<group>"; };
+		C5819AC91D4F6C6A009D7772 /* IssueViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewModel.swift; sourceTree = "<group>"; };
 		C5BB907A1D487ACA005A40C0 /* empty_content.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = empty_content.html; sourceTree = "<group>"; };
 		C5C4D9501D49B1C5007C1891 /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		C5C4D9521D49B3FD007C1891 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +249,7 @@
 				C5373C4E1D4B97F6006CFB83 /* UserTableViewModel.swift */,
 				C5819ABC1D4DD279009D7772 /* RepositoryTableViewModel.swift */,
 				C5819AC21D4EF0C0009D7772 /* IssueTableViewModel.swift */,
+				C5819AC91D4F6C6A009D7772 /* IssueViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 				C5373C4C1D4B9603006CFB83 /* UserTableViewController.swift */,
 				C5819ABE1D4DD2B7009D7772 /* RepositoryTableViewController.swift */,
 				C5819AC01D4EF086009D7772 /* IssueTableViewController.swift */,
+				C5819AC61D4F6C3E009D7772 /* IssueViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -564,6 +570,7 @@
 			files = (
 				C538FD501D459C71003A559E /* FileTableViewController.swift in Sources */,
 				C5373C4B1D4B7C2D006CFB83 /* OrganizationViewController.swift in Sources */,
+				C5819ACA1D4F6C6A009D7772 /* IssueViewModel.swift in Sources */,
 				C5C4D9531D49B3FD007C1891 /* UserViewController.swift in Sources */,
 				C538FD521D459DC7003A559E /* FileTableViewModel.swift in Sources */,
 				C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */,
@@ -574,6 +581,7 @@
 				C5373C451D4AF5FD006CFB83 /* UserCell.swift in Sources */,
 				C538FD2C1D411835003A559E /* BaseModel.swift in Sources */,
 				C538FD271D40E86B003A559E /* BaseTableViewController.swift in Sources */,
+				C5819AC71D4F6C3E009D7772 /* IssueViewController.swift in Sources */,
 				C538FD131D40A3F0003A559E /* Issue.swift in Sources */,
 				C538FD291D40E946003A559E /* BaseTableViewModel.swift in Sources */,
 				C538FD541D45A0A2003A559E /* FileCell.swift in Sources */,

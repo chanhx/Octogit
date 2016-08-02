@@ -30,7 +30,7 @@ class IssueCell: UITableViewCell {
         statusLabel.font = UIFont.OcticonOfSize(23)
         statusLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, forAxis: .Horizontal)
         
-        titleLabel.font = UIFont.boldSystemFontOfSize(18)
+        titleLabel.font = UIFont.systemFontOfSize(18, weight: UIFontWeightMedium)
         titleLabel.numberOfLines = 0
         titleLabel.lineBreakMode = .ByWordWrapping
         
