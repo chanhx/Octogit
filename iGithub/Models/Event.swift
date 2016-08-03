@@ -277,7 +277,7 @@ class PushEvent : Event {
         previousHeadSHA     <- map["payload.before"]
         currentHeadSHA      <- map["payload.head"]
         branchName          <- map["payload.ref"]
-        commits             <- (map["payload.commits"], CommitsTransform())
+        commits             <- (map["payload.commits"], CommitItemTransform())
     }
 }
 

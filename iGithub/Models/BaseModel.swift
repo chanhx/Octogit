@@ -64,8 +64,14 @@ class RepositoryTransform: TransformOf<Repository, AnyObject> {
     }
 }
 
-class CommitsTransform: TransformOf<[CommitsItem], AnyObject> {
+class CommitItemTransform: TransformOf<CommitsItem, AnyObject> {
     init() {
-        super.init(fromJSON: { Mapper<CommitsItem>().mapArray($0) }, toJSON: { String($0) })
+        super.init(fromJSON: { Mapper<CommitsItem>().map($0) }, toJSON: { String($0) })
+    }
+}
+
+class LabelTransform: TransformOf<Label, AnyObject> {
+    init() {
+        super.init(fromJSON: { Mapper<Label>().map($0) }, toJSON: { String($0) })
     }
 }

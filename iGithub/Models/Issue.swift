@@ -23,7 +23,8 @@ class Issue : BaseModel {
     var number: Int?
     var user: User?
     var assignees: [User]?
-//    var labels: [Label]?
+    var labels: [Label]?
+    var milestone: Milestone?
     var createdAt: NSDate?
     var comments: Int?
     var pullRequest: PullRequest?
@@ -36,6 +37,7 @@ class Issue : BaseModel {
         state       <- map["state"]
         user        <- (map["user"], UserTransform())
         assignees   <- (map["assignees"], UserTransform())
+        labels      <- (map["labels"], LabelTransform())
         createdAt   <- (map["created_at"], DateTransform())
         comments    <- map["comments"]
     }

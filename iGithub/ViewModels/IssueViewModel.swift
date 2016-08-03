@@ -13,30 +13,54 @@ import RxSwift
 
 class IssueViewModel: NSObject, WKNavigationDelegate {
     
-    enum SectionType {
-        case Content
-        case Asignee
+    enum ContentType {
+        case Body
+        case Label
         case Milestone
     }
 
     var issue: Issue
     var contentHeight = Variable<CGFloat>(0)
-    var sections = [SectionType]()
+    var contentTypes = [ContentType]()
     
     init(issue: Issue) {
         self.issue = issue
+        
+        if issue.body?.characters.count > 0 {
+            contentTypes.append(.Body)
+        }
+        if issue.labels?.count > 0 {
+            contentTypes.append(.Label)
+        }
+        if issue.milestone != nil {
+            contentTypes.append(.Milestone)
+        }
+        
         super.init()
     }
     
     var numberOfSections: Int {
-        var sections = 0
-        if issue.body?.characters.count > 0 {
-            sections += 1
+        if issue.assignees?.count > 0 {
+            return contentTypes.count > 0 ? 2 : 1
+        } else {
+            return contentTypes.count > 0 ? 1 : 0
         }
-        
-        return sections
     }
     
+    func numberOfRowsInSection(section: Int) -> Int {
+        switch section {
+        case 0:
+            if contentTypes.count > 0 {
+                return contentTypes.count
+            } else {
+                return issue.assignees!.count
+            }
+        case 1:
+            return issue.assignees!.count
+        default:
+            return 0
+        }
+    }
     
     var contentHTML: String {
         let template = try! Template(named: "issue")
