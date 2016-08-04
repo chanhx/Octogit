@@ -15,7 +15,6 @@ class EventCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var distanceFromDetail: NSLayoutConstraint!
     
     var entity: Event! {
         didSet {
@@ -25,7 +24,7 @@ class EventCell: UITableViewCell {
             titleLabel.text = entity.title
             
             contentLabel.text = entity.content
-            distanceFromDetail.constant = contentLabel.text == nil ? 0 : 8
+            contentLabel.hidden = contentLabel.text == nil
         }
     }
     
