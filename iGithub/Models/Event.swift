@@ -42,7 +42,7 @@ class Event: BaseModel {
     
     var id: Int?
     var type: EventType?
-    var repositoryName: String?
+    var repository: String?
     var actor: User?
     var org: User?
     var createdAt: NSDate?
@@ -74,7 +74,7 @@ class Event: BaseModel {
     override func mapping(map: Map) {
         id              <- (map["id"], IntTransform())
         type            <- map["type"]
-        repositoryName  <- map["repo.name"]
+        repository  <- map["repo.name"]
         actor           <- (map["actor"], UserTransform())
         org             <- (map["org"], UserTransform())
         createdAt       <- (map["created_at"], DateTransform())
@@ -136,13 +136,13 @@ class DeleteEvent: Event {
 // MARK: ForkEvent
 
 class ForkEvent: Event {
-    var forkeeFullName: String?
+    var forkee: String?
     var forkeeDescription: String?
     
     override func mapping(map: Map) {
         super.mapping(map)
         
-        forkeeFullName <- map["payload.forkee.full_name"]
+        forkee <- map["payload.forkee.full_name"]
         forkeeDescription <- map["payload.forkee.description"]
     }
 }

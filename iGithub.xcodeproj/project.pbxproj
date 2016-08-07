@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C500B7961D545A3A00DC6D2A /* IGLinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */; };
+		C52013C91D56C28C00FDCC30 /* TTTAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */; };
 		C52474281D50F06A0001D9CD /* WebViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52474271D50F06A0001D9CD /* WebViewCell.swift */; };
 		C524742A1D50FB400001D9CD /* issue.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C52474291D50FB400001D9CD /* issue.mustache */; };
 		C524742D1D519CBB0001D9CD /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524742C1D519CBB0001D9CD /* Label.swift */; };
@@ -104,6 +106,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IGLinkLabel.swift; sourceTree = "<group>"; };
+		C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TTTAttributedLabel.framework; path = Carthage/Build/iOS/TTTAttributedLabel.framework; sourceTree = "<group>"; };
+		C52013CA1D56C30C00FDCC30 /* iGithub-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iGithub-Bridging-Header.h"; sourceTree = "<group>"; };
 		C52474271D50F06A0001D9CD /* WebViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewCell.swift; sourceTree = "<group>"; };
 		C52474291D50FB400001D9CD /* issue.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = issue.mustache; sourceTree = "<group>"; };
 		C524742C1D519CBB0001D9CD /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
@@ -194,6 +199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C52013C91D56C28C00FDCC30 /* TTTAttributedLabel.framework in Frameworks */,
 				C5DB949C1D3F85CD00887E81 /* Alamofire.framework in Frameworks */,
 				C5DB949D1D3F85CD00887E81 /* KeychainAccess.framework in Frameworks */,
 				C5DB949E1D3F85CD00887E81 /* Kingfisher.framework in Frameworks */,
@@ -275,6 +281,7 @@
 				C5819ABA1D4CF3D4009D7772 /* RepositoryCell.swift */,
 				C5819AC41D4EF7AC009D7772 /* IssueCell.swift */,
 				C52474271D50F06A0001D9CD /* WebViewCell.swift */,
+				C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -327,6 +334,7 @@
 				C5DB94691D3F842000887E81 /* Assets.xcassets */,
 				C5DB946B1D3F842000887E81 /* LaunchScreen.storyboard */,
 				C5DB946E1D3F842000887E81 /* Info.plist */,
+				C52013CA1D56C30C00FDCC30 /* iGithub-Bridging-Header.h */,
 				C5DB94B01D3F8BF500887E81 /* Resources */,
 			);
 			path = iGithub;
@@ -353,6 +361,7 @@
 		C5DB94AB1D3F8AB700887E81 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */,
 				C5DB94A91D3F8A0A00887E81 /* Result.framework */,
 				C5DB94911D3F85CD00887E81 /* Alamofire.framework */,
 				C5DB94921D3F85CD00887E81 /* KeychainAccess.framework */,
@@ -567,6 +576,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/RxMoya.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftDate.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/TTTAttributedLabel.framework",
 			);
 			outputPaths = (
 			);
@@ -611,6 +621,7 @@
 				C538FD571D461852003A559E /* FileViewController.swift in Sources */,
 				C538FD0F1D40A349003A559E /* PullRequest.swift in Sources */,
 				C5819AC11D4EF086009D7772 /* IssueTableViewController.swift in Sources */,
+				C500B7961D545A3A00DC6D2A /* IGLinkLabel.swift in Sources */,
 				C524742F1D51A1500001D9CD /* Milestone.swift in Sources */,
 				C538FD021D406638003A559E /* User.swift in Sources */,
 				C538FD431D43BDE5003A559E /* StatusCell.swift in Sources */,
@@ -776,6 +787,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -785,6 +797,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iGithub/iGithub-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -792,6 +806,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -801,6 +816,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iGithub/iGithub-Bridging-Header.h";
 			};
 			name = Release;
 		};

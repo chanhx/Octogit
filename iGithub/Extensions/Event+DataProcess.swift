@@ -16,35 +16,35 @@ extension Event {
             let e = self as! CommitCommentEvent
             let commitID = e.comment!.commitID!
             let shortenedSHA = commitID.substringToIndex(commitID.startIndex.advancedBy(7))
-            return "\(e.actor!) commented on \(shortenedSHA) at \(e.repositoryName!)"
+            return "\(e.actor!) commented on \(shortenedSHA) at \(e.repository!)"
         case .CreateEvent:
             let e = self as! CreateEvent
             switch e.refType! {
             case .Repository:
-                return "\(e.actor!) created \(e.refType!.rawValue) \(e.repositoryName!)"
+                return "\(e.actor!) created \(e.refType!.rawValue) \(e.repository!)"
             default:
-                return "\(e.actor!) created \(e.refType!.rawValue) \(e.ref!) at \(e.repositoryName!)"
+                return "\(e.actor!) created \(e.refType!.rawValue) \(e.ref!) at \(e.repository!)"
             }
         case .DeleteEvent:
             let e = self as! DeleteEvent
-            return "\(e.actor!) deleted \(e.refType?.rawValue) \(e.ref!) at \(e.repositoryName!)"
+            return "\(e.actor!) deleted \(e.refType?.rawValue) \(e.ref!) at \(e.repository!)"
         case .ForkEvent:
             let e = self as! ForkEvent
-            return "\(e.actor!) forked \(e.repositoryName!) to \(e.forkeeFullName!)"
+            return "\(e.actor!) forked \(e.repository!) to \(e.forkee!)"
         case .GollumEvent:
             let e = self as! GollumEvent
-            return "\(e.actor!) \(e.action!) \(e.pageName) in the \(e.repositoryName!) wiki"
+            return "\(e.actor!) \(e.action!) \(e.pageName!) in the \(e.repository!) wiki"
         case .IssueCommentEvent:
             let e = self as! IssueCommentEvent
-            return "\(e.actor!) \(e.action!) comment on issue \(e.repositoryName!)#\(e.issue!.id!)"
+            return "\(e.actor!) \(e.action!) comment on issue \(e.repository!)#\(e.issue!.number!)"
         case .IssuesEvent:
             let e = self as! IssueEvent
-            return "\(e.actor!) \(e.action!) issue \(e.repositoryName!)#\(e.issue!.id!)"
+            return "\(e.actor!) \(e.action!) issue \(e.repository!)#\(e.issue!.number!)"
         case .MemberEvent:
             let e = self as! MemberEvent
-            return "\(e.actor!) added \(e.member!) to \(e.repositoryName!)"
+            return "\(e.actor!) added \(e.member!) to \(e.repository!)"
         case .PublicEvent:
-            return "\(self.actor!) open-sourced \(self.repositoryName!)"
+            return "\(self.actor!) open-sourced \(self.repository!)"
         case .PullRequestEvent:
             let e = self as! PullRequestEvent
             var action: String
@@ -53,18 +53,18 @@ extension Event {
             } else {
                 action = e.action!.rawValue
             }
-            return "\(e.actor!) \(action) pull request \(e.repositoryName!)#\(e.pullRequest!.id!)"
+            return "\(e.actor!) \(action) pull request \(e.repository!)#\(e.pullRequest!.number!)"
         case .PullRequestReviewCommentEvent:
             let e = self as! PullRequestReviewCommentEvent
-            return "\(e.actor!) \(e.action) comment on issue \(e.repositoryName!)#\(e.pullRequest!.id!)"
+            return "\(e.actor!) \(e.action) comment on issue \(e.repository!)#\(e.pullRequest!.number!)"
         case .PushEvent:
             let e = self as! PushEvent
-            return "\(e.actor!) pushed to \(e.ref!) at \(e.repositoryName!)"
+            return "\(e.actor!) pushed to \(e.ref!) at \(e.repository!)"
         case .ReleaseEvent:
             let e = self as! ReleaseEvent
-            return "\(e.actor) released \(e.releaseTagName) at \(e.repositoryName)"
+            return "\(e.actor) released \(e.releaseTagName) at \(e.repository)"
         case .WatchEvent:
-            return "\(self.actor!) starred \(self.repositoryName!)"
+            return "\(self.actor!) starred \(self.repository!)"
         default:
             return ""
         }

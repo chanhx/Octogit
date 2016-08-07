@@ -61,6 +61,6 @@ class EventTableViewModel: BaseTableViewModel<Event> {
     }
     
     func repositoryViewModelForIndex(index: Int) -> RepositoryViewModel {
-        return RepositoryViewModel(fullName: dataSource.value[index].repositoryName!)
+        return RepositoryViewModel(fullName: dataSource.value[index].repository!)
     }
 }

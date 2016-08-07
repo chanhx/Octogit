@@ -4,3 +4,4 @@ github "onevcat/Kingfisher" ~> 2.4
 github "malcommac/SwiftDate"
 github "groue/GRMustache.swift" ~> 1.0
 github "kishikawakatsumi/KeychainAccess"
+github "TTTAttributedLabel/TTTAttributedLabel"

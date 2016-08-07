@@ -8,14 +8,16 @@
 
 import UIKit
 import RxSwift
+import TTTAttributedLabel
 
-class EventTableViewController: BaseTableViewController {
+class EventTableViewController: BaseTableViewController, TTTAttributedLabelDelegate {
     
     var viewModel: EventTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
                 .bindTo(tableView.rx_itemsWithCellIdentifier("EventCell", cellType: EventCell.self)) { row, element, cell in
                     cell.entity = element
+                    cell.titleLabel.delegate = self
                 }
                 .addDisposableTo(viewModel.disposeBag)
         }
@@ -33,4 +35,9 @@ class EventTableViewController: BaseTableViewController {
         let repositoryVC = segue.destinationViewController as! RepositoryViewController
         repositoryVC.viewModel = viewModel.repositoryViewModelForIndex(tableView.indexPathForSelectedRow!.row)
     }
+    
+    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+        UIApplication.sharedApplication().openURL(url)
+    }
+    
 }

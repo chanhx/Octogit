@@ -30,8 +30,6 @@ class User: BaseModel, CustomStringConvertible {
     var email: String?
     var orgDescription: String?
     
-    var HTMLURL: NSURL?
-    
     var followers: Int?
     var following: Int?
     var publicGists: Int?
@@ -52,8 +50,6 @@ class User: BaseModel, CustomStringConvertible {
         location        <- map["location"]
         email           <- map["email"]
         orgDescription  <- map["description"]
-        
-        HTMLURL         <- (map["url"], URLTransform())
         
         followers       <- map["followers"]
         following       <- map["following"]
