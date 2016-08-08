@@ -13,7 +13,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     
     var webView = WKWebView()
     private var request: NSURLRequest?
-    private var progressView = UIProgressView(progressViewStyle: .Default)
+    private var progressView = UIProgressView(progressViewStyle: .Bar)
     
     private var toolbarWasHidden: Bool!
     
@@ -50,8 +50,15 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     
     deinit {
         webView.stopLoading()
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         webView.navigationDelegate = nil
+        
+        progressView.removeFromSuperview()
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        
+        for keyPath in keyPaths {
+            webView.removeObserver(self, forKeyPath: keyPath)
+        }
     }
     
     override func viewDidLoad() {
@@ -61,18 +68,11 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         webView.navigationDelegate = self
         self.view.addSubview(webView)
         
-        progressView.frame = CGRectMake(0, 64, view.bounds.width, 2)
+        progressView.frame = CGRectMake(0, 42, view.bounds.width, 2)
         progressView.trackTintColor = UIColor.clearColor()
-        self.view.addSubview(progressView)
+        self.navigationController?.navigationBar.addSubview(progressView)
         
         updateToolbar()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        toolbarWasHidden = self.navigationController?.toolbarHidden
-        navigationController?.toolbarHidden = false
         
         for keyPath in keyPaths {
             webView.addObserver(self, forKeyPath: keyPath, options: .New, context: &kvoContext)
@@ -83,14 +83,21 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        toolbarWasHidden = self.navigationController?.toolbarHidden
+        navigationController?.toolbarHidden = false
+        
+        progressView.hidden = false
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
         self.navigationController?.toolbarHidden = toolbarWasHidden
         
-        for keyPath in keyPaths {
-            webView.removeObserver(self, forKeyPath: keyPath)
-        }
+        progressView.hidden = true
     }
     
     func updateToolbar() {
