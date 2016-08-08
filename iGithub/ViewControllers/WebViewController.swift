@@ -13,7 +13,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     
     var webView = WKWebView()
     private var request: NSURLRequest?
-    private var progressBar: ProgressBar!
+    private var progressView = UIProgressView(progressViewStyle: .Default)
     
     private var toolbarWasHidden: Bool!
     
@@ -61,9 +61,9 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         webView.navigationDelegate = self
         self.view.addSubview(webView)
         
-        progressBar = ProgressBar(frame: CGRectMake(0, 64, 0, 2))
-        progressBar.backgroundColor = .blueColor()
-        self.view.addSubview(progressBar)
+        progressView.frame = CGRectMake(0, 64, view.bounds.width, 2)
+        progressView.trackTintColor = UIColor.clearColor()
+        self.view.addSubview(progressView)
         
         updateToolbar()
     }
@@ -134,31 +134,20 @@ class WebViewController: UIViewController, WKNavigationDelegate {
                 navigationItem.title = webView.title
             } else if keyPath == "loading" {
                 updateToolbar()
+                
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = webView.loading
-                if webView.loading {
-                    progressBar.progress = 0
-                }
             } else if keyPath == "estimatedProgress" {
-                progressBar.progress = webView.estimatedProgress
-            }
-        }
-    }
-}
-
-private class ProgressBar: UIView {
-    
-    var progress: Double = 0 {
-        didSet {
-            var frame = self.frame
-            frame.size.width = superview!.bounds.width * CGFloat(progress)
-            
-            UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveEaseOut, animations: {self.frame = frame}) { _ in
-                if self.progress >= 1.0 {
-                    UIView.animateWithDuration(0.2) {
-                        self.alpha = 0
+                
+                let progress = Float(webView.estimatedProgress)
+                let animated = progress > progressView.progress
+                
+                UIView.animateWithDuration(0.1, delay: 0.1, options: .CurveEaseOut, animations: {
+                    self.progressView.setProgress(progress, animated: animated)
+                    if self.webView.estimatedProgress >= 1 {
+                        self.progressView.alpha = 0
                     }
-                } else {
-                    self.alpha = 1
+                }) { _ in
+                    self.progressView.alpha = self.webView.estimatedProgress >= 1 ? 0 : 1
                 }
             }
         }
