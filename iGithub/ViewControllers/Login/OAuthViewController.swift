@@ -8,9 +8,7 @@
 
 import WebKit
 
-class OAuthViewController: UIViewController, WKNavigationDelegate {
-    
-    let webView = WKWebView()
+class OAuthViewController: WebViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -19,10 +17,6 @@ class OAuthViewController: UIViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        webView.frame = self.view.bounds
-        webView.navigationDelegate = self
-        self.view.addSubview(webView)
         
         if let url = OAuthConfiguration.authorizationURL {
             webView.loadRequest(NSURLRequest(URL: url))

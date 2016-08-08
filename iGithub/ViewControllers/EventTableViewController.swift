@@ -37,7 +37,8 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
     }
     
     func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
-        UIApplication.sharedApplication().openURL(url)
+        let webVC = WebViewController(url: url)
+        self.navigationController?.pushViewController(webVC, animated: true)
     }
     
 }
