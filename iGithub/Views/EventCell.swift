@@ -14,15 +14,19 @@ class EventCell: UITableViewCell {
 
     @IBOutlet weak var avatarView: UIImageView!
     @IBOutlet weak var titleLabel: TTTAttributedLabel!
+    @IBOutlet weak var iconLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     
     var entity: Event! {
         didSet {
             avatarView.setAvatarWithURL(entity.actor!.avatarURL)
-            timeLabel.text = entity.createdAt!.naturalString
-            
             titleLabel.text = entity.title
+            
+            let icon = entity.icon
+            iconLabel.text = icon.text
+            iconLabel.textColor = icon.color
+            timeLabel.text = entity.createdAt!.naturalString
             
             contentLabel.text = entity.content
             contentLabel.hidden = contentLabel.text == nil

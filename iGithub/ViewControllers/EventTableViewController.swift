@@ -18,6 +18,8 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                 .bindTo(tableView.rx_itemsWithCellIdentifier("EventCell", cellType: EventCell.self)) { row, element, cell in
                     cell.entity = element
                     cell.titleLabel.delegate = self
+                    
+                    cell.selectionStyle = .None
                 }
                 .addDisposableTo(viewModel.disposeBag)
         }

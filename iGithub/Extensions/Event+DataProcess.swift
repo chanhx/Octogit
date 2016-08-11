@@ -118,5 +118,64 @@ extension Event {
             return nil
         }
     }
+    
+    var icon: (text: String, color: UIColor) {
+        
+        var icon: Octicon?
+        var color = UIColor.darkGrayColor()
+        
+        switch type! {
+        case .CommitCommentEvent, .PullRequestReviewCommentEvent, .IssueCommentEvent:
+            icon = Octicon.Comment
+        case .CreateEvent:
+            let e = self as! CreateEvent
+            switch e.refType! {
+            case .Branch:
+                icon = Octicon.GitBranch
+            case .Repository:
+                icon = Octicon.Repo
+            case .Tag:
+                icon = Octicon.Tag
+            }
+        case .DeleteEvent:
+            icon = Octicon.DiffRemoved
+        case .ForkEvent:
+            icon = Octicon.RepoForked
+        case .GollumEvent:
+            icon = Octicon.Book
+        case .IssuesEvent:
+            let e = self as! IssueEvent
+            switch e.action! {
+            case .Closed:
+                icon = Octicon.IssueClosed
+                color = UIColor(netHex: 0xBD2C00)
+            default:
+                icon = Octicon.IssueOpened
+                color = UIColor(netHex: 0x6CB644)
+            }
+        case .MemberEvent:
+            icon = Octicon.Organization
+        case .PublicEvent:
+            icon = Octicon.Repo
+        case .PullRequestEvent:
+            let e = self as! PullRequestEvent
+            if e.action! == .Closed && e.pullRequest!.isMerged! {
+                icon = Octicon.GitMerge
+            } else {
+                icon = Octicon.GitPullRequest
+            }
+        case .PushEvent:
+            icon = Octicon.GitCommit
+        case .ReleaseEvent:
+            icon = Octicon.Tag
+        case .WatchEvent:
+            icon = Octicon.Star
+            color = UIColor(netHex: 0xFFBF03)
+        default:
+            break
+        }
+        
+        return (icon?.rawValue ?? "", color)
+    }
 
 }
