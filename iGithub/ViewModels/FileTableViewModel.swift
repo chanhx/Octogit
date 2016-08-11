@@ -19,7 +19,7 @@ class FileTableViewModel: BaseTableViewModel<File> {
         
         self.repository = repository
         self.path = path
-        self.token = .GetContents(repository: repository, path: path)
+        self.token = .GetContents(repo: repository, path: path)
         
         super.init()
     }

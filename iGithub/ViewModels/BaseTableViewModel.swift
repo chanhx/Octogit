@@ -11,7 +11,7 @@ import RxMoya
 import RxSwift
 import ObjectMapper
 
-class BaseTableViewModel<T: BaseModel>: NSObject {
+class BaseTableViewModel<T: BaseModel> {
     
     var dataSource: Variable<[T]> = Variable([])
     let provider = RxMoyaProvider<GithubAPI>()

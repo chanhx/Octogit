@@ -31,14 +31,9 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
         viewModel.fetchData()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let repositoryVC = segue.destinationViewController as! RepositoryViewController
-        repositoryVC.viewModel = viewModel.repositoryViewModelForIndex(tableView.indexPathForSelectedRow!.row)
-    }
-    
     func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
-        let webVC = WebViewController(url: url)
-        self.navigationController?.pushViewController(webVC, animated: true)
+        let vc = URLRouter.viewControllerForURL(url)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

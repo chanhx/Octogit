@@ -12,7 +12,6 @@ import ObjectMapper
 class BaseModel: Mappable {
     
     required init?(_ map: Map) {}
-    class func objectForMapping(map: ObjectMapper.Map) -> Mappable? { return nil }
     func mapping(map: Map) {}
 }
 

@@ -10,47 +10,47 @@ import Foundation
 import RxMoya
 
 enum GithubAPI {
-    case GetARepository(fullName: String)
-    case GetContents(repository: String, path: String)
+    case GetARepository(repo: String)
+    case GetContents(repo: String, path: String)
     case OAuthUser(accessToken: String)
-    case Members(organization: String)
+    case Members(org: String)
     case Organization(org: String)
-    case Organizations(username: String)
+    case Organizations(user: String)
     case OrganizationEvents(org: String)
     case OrganizationRepos(org: String)
-    case ReceivedEvents(username: String)
+    case ReceivedEvents(user: String)
     case RepositoryContributors(repo: String)
     case RepositoryEvents(repo: String)
     case RepositoryIssues(repo: String)
     case RepositoryPullRequests(repo: String)
-    case StarredRepos(username: String)
-    case User(username: String)
-    case UserEvents(username: String)
-    case UserRepos(username: String)
+    case StarredRepos(user: String)
+    case User(user: String)
+    case UserEvents(user: String)
+    case UserRepos(user: String)
 }
 
 extension GithubAPI: TargetType {
     var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     var path: String {
         switch self {
-        case .GetARepository(let fullName):
-            return "/repos/\(fullName)"
-        case .GetContents(let repository, let path):
-            return "/repos/\(repository)/contents/\(path)"
-        case .Members(let organization):
-            return "/orgs/\(organization)/members"
+        case .GetARepository(let repo):
+            return "/repos/\(repo)"
+        case .GetContents(let repo, let path):
+            return "/repos/\(repo)/contents/\(path)"
+        case .Members(let org):
+            return "/orgs/\(org)/members"
         case .OAuthUser(_):
             return "/user"
         case .Organization(let org):
             return "/orgs/\(org)"
-        case .Organizations(let username):
-            return "/users/\(username)/orgs"
+        case .Organizations(let user):
+            return "/users/\(user)/orgs"
         case .OrganizationEvents(let org):
             return "/orgs/\(org)/events"
         case .OrganizationRepos(let org):
             return "/orgs/\(org)/repos"
-        case .ReceivedEvents(let username):
-            return "/users/\(username)/received_events"
+        case .ReceivedEvents(let user):
+            return "/users/\(user)/received_events"
         case .RepositoryContributors(let repo):
             return "/repos/\(repo)/contributors"
         case .RepositoryEvents(let repo):
@@ -59,14 +59,14 @@ extension GithubAPI: TargetType {
             return "/repos/\(repo)/issues"
         case .RepositoryPullRequests(let repo):
             return "/repos/\(repo)/pulls"
-        case .StarredRepos(let username):
-            return "/users/\(username)/starred"
-        case .User(let username):
-            return "/users/\(username)"
-        case .UserEvents(let username):
-            return "/users/\(username)/events"
-        case .UserRepos(let username):
-            return "/users/\(username)/repos"
+        case .StarredRepos(let user):
+            return "/users/\(user)/starred"
+        case .User(let user):
+            return "/users/\(user)"
+        case .UserEvents(let user):
+            return "/users/\(user)/events"
+        case .UserRepos(let user):
+            return "/users/\(user)/repos"
         }
     }
     var method: RxMoya.Method {

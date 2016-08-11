@@ -18,12 +18,12 @@ class UserTableViewModel: BaseTableViewModel<User> {
     }
     
     init(organization: User) {
-        token = .Members(organization: organization.login!)
+        token = .Members(org: organization.login!)
         super.init()
     }
     
     init(user: User) {
-        token = .Organizations(username: user.login!)
+        token = .Organizations(user: user.login!)
         super.init()
     }
     

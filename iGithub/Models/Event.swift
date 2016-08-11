@@ -38,7 +38,7 @@ enum EventType: String {
     case WatchEvent = "WatchEvent"
 }
 
-class Event: BaseModel {
+class Event: BaseModel, StaticMappable {
     
     var id: Int?
     var type: EventType?
@@ -47,7 +47,7 @@ class Event: BaseModel {
     var org: User?
     var createdAt: NSDate?
     
-    override class func objectForMapping(map: ObjectMapper.Map) -> Mappable? {
+    static func objectForMapping(map: ObjectMapper.Map) -> Mappable? {
         if let type: EventType = EventType(rawValue: map["type"].value()!) {
             switch type {
             case .CommitCommentEvent: return CommitCommentEvent(map)
@@ -105,11 +105,7 @@ class CreateEvent: Event {
     var refType: RefType?
     var ref: String?
     var repoDescription: String?
-    
-    override class func objectForMapping(map: Map) -> Mappable? {
-        return nil
-    }
-    
+        
     override func mapping(map: Map) {
         super.mapping(map)
         

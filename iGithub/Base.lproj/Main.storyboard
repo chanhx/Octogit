@@ -77,7 +77,6 @@
                                     <outlet property="contentLabel" destination="IaJ-WK-GLf" id="iNE-Xd-Vhu"/>
                                     <outlet property="timeLabel" destination="Qu1-L6-YBg" id="w4D-1t-N10"/>
                                     <outlet property="titleLabel" destination="saC-qP-kih" id="9Vw-6X-oAf"/>
-                                    <segue destination="xZN-qh-DqG" kind="show" id="P52-hN-zVg"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -148,13 +147,13 @@
         <!--Repository View Controller-->
         <scene sceneID="hg2-Ja-QwL">
             <objects>
-                <tableViewController id="xZN-qh-DqG" customClass="RepositoryViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RepositoryVC" id="xZN-qh-DqG" customClass="RepositoryViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="O0s-Jc-Mse">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="CQK-by-IAh">
-                            <rect key="frame" x="0.0" y="64" width="600" height="87.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="87.5"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dk4-Bl-SdB">
@@ -197,7 +196,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RepositoryInfoCell" id="0MK-Ie-vMU">
-                                <rect key="frame" x="0.0" y="201" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="137" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0MK-Ie-vMU" id="Im4-mN-ksI">
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -205,7 +204,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" rowHeight="48" id="GIz-xz-16g" customClass="UserCell" customModule="iGithub" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="245" width="600" height="48"/>
+                                <rect key="frame" x="0.0" y="181" width="600" height="48"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GIz-xz-16g" id="C7m-ng-1GM">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="47.5"/>

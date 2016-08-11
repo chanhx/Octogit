@@ -11,7 +11,7 @@ import RxMoya
 import RxSwift
 import ObjectMapper
 
-class RepositoryViewModel: NSObject {
+class RepositoryViewModel {
     
     var fullName: String
     let provider = RxMoyaProvider<GithubAPI>()
@@ -19,11 +19,9 @@ class RepositoryViewModel: NSObject {
     var repository: Variable<Repository>
     var repositoryLoaded = false
     
-    init(repository: Repository) {
-        self.fullName = repository.fullName!
-        self.repository = Variable(repository)
-        
-        super.init()
+    init(repo: Repository) {
+        self.fullName = repo.fullName!
+        self.repository = Variable(repo)
     }
     
     init(fullName: String) {
@@ -31,13 +29,11 @@ class RepositoryViewModel: NSObject {
         
         let name = fullName.componentsSeparatedByString("/").last!
         self.repository = Variable(Mapper<Repository>().map(["name": "\(name)"])!)
-        
-        super.init()
     }
     
     func fetchRepository() {
         provider
-            .request(.GetARepository(fullName: fullName))
+            .request(.GetARepository(repo: fullName))
             .mapJSON()
             .subscribeNext {
                 // first check if there is an error and if the repo exists

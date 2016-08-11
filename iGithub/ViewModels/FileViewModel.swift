@@ -12,7 +12,7 @@ import RxSwift
 import ObjectMapper
 import Mustache
 
-class FileViewModel: NSObject {
+class FileViewModel {
     
     static let fileExtensionsDict: [String: String] = {
         let path = NSBundle.mainBundle().pathForResource("file_extensions", ofType: "plist")
@@ -30,9 +30,7 @@ class FileViewModel: NSObject {
         
         self.repository = repository
         self.file = file
-        token = .GetContents(repository: repository, path: file.path!)
-        
-        super.init()
+        token = .GetContents(repo: repository, path: file.path!)
     }
     
     func fetchContent() {

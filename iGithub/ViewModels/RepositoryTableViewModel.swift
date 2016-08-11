@@ -19,12 +19,12 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
     }
     
     init(user: User) {
-        token = .UserRepos(username: user.login!)
+        token = .UserRepos(user: user.login!)
         super.init()
     }
     
     init(stargazer: User) {
-        token = .StarredRepos(username: stargazer.login!)
+        token = .StarredRepos(user: stargazer.login!)
         super.init()
     }
     
@@ -54,6 +54,6 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
     }
     
     func repoViewModelForIndex(index: Int) -> RepositoryViewModel {
-        return RepositoryViewModel(repository: dataSource.value[index])
+        return RepositoryViewModel(repo: dataSource.value[index])
     }
 }

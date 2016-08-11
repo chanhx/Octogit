@@ -60,6 +60,8 @@
 		C5819AC51D4EF7AC009D7772 /* IssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819AC41D4EF7AC009D7772 /* IssueCell.swift */; };
 		C5819AC71D4F6C3E009D7772 /* IssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819AC61D4F6C3E009D7772 /* IssueViewController.swift */; };
 		C5819ACA1D4F6C6A009D7772 /* IssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819AC91D4F6C6A009D7772 /* IssueViewModel.swift */; };
+		C59D120E1D5AE2DD0098301A /* NSURL+Github.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D120D1D5AE2DD0098301A /* NSURL+Github.swift */; };
+		C59D12101D5AE6410098301A /* URLRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D120F1D5AE6410098301A /* URLRouter.swift */; };
 		C5BB907B1D487ACA005A40C0 /* empty_content.html in Resources */ = {isa = PBXBuildFile; fileRef = C5BB907A1D487ACA005A40C0 /* empty_content.html */; };
 		C5C4D9511D49B1C5007C1891 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4D9501D49B1C5007C1891 /* UserViewModel.swift */; };
 		C5C4D9531D49B3FD007C1891 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4D9521D49B3FD007C1891 /* UserViewController.swift */; };
@@ -161,6 +163,8 @@
 		C5819AC41D4EF7AC009D7772 /* IssueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCell.swift; sourceTree = "<group>"; };
 		C5819AC61D4F6C3E009D7772 /* IssueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewController.swift; sourceTree = "<group>"; };
 		C5819AC91D4F6C6A009D7772 /* IssueViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewModel.swift; sourceTree = "<group>"; };
+		C59D120D1D5AE2DD0098301A /* NSURL+Github.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURL+Github.swift"; sourceTree = "<group>"; };
+		C59D120F1D5AE6410098301A /* URLRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRouter.swift; sourceTree = "<group>"; };
 		C5BB907A1D487ACA005A40C0 /* empty_content.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = empty_content.html; sourceTree = "<group>"; };
 		C5C4D9501D49B1C5007C1891 /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		C5C4D9521D49B3FD007C1891 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
@@ -293,6 +297,7 @@
 			children = (
 				C538FD491D449602003A559E /* DataProcess.swift */,
 				C538FD461D4491DE003A559E /* Event+DataProcess.swift */,
+				C59D120D1D5AE2DD0098301A /* NSURL+Github.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -330,6 +335,7 @@
 				C538FD001D4065F2003A559E /* Models */,
 				C538FD451D449032003A559E /* Extensions */,
 				C538FD071D406BE8003A559E /* AccountManager.swift */,
+				C59D120F1D5AE6410098301A /* URLRouter.swift */,
 				C5F4BDE61D3F95E5009DF758 /* Octicon.swift */,
 				C5DB94661D3F842000887E81 /* Main.storyboard */,
 				C538FD321D430466003A559E /* Login.storyboard */,
@@ -602,6 +608,7 @@
 				C538FD521D459DC7003A559E /* FileTableViewModel.swift in Sources */,
 				C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */,
 				C538FD4A1D449602003A559E /* DataProcess.swift in Sources */,
+				C59D120E1D5AE2DD0098301A /* NSURL+Github.swift in Sources */,
 				C5819ABD1D4DD279009D7772 /* RepositoryTableViewModel.swift in Sources */,
 				C5819AC31D4EF0C0009D7772 /* IssueTableViewModel.swift in Sources */,
 				C538FD1E1D40CB8C003A559E /* EventTableViewModel.swift in Sources */,
@@ -647,6 +654,7 @@
 				C5819AC51D4EF7AC009D7772 /* IssueCell.swift in Sources */,
 				C5819ABF1D4DD2B7009D7772 /* RepositoryTableViewController.swift in Sources */,
 				C5C4D9511D49B1C5007C1891 /* UserViewModel.swift in Sources */,
+				C59D12101D5AE6410098301A /* URLRouter.swift in Sources */,
 				C538FD1B1D40C97B003A559E /* EventTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

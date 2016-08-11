@@ -21,9 +21,9 @@ class EventTableViewModel: BaseTableViewModel<Event> {
     init(user: User, type: UserEventType) {
         switch type {
         case .Performed:
-            token = .UserEvents(username: user.login!)
+            token = .UserEvents(user: user.login!)
         case .Received:
-            token = .ReceivedEvents(username: user.login!)
+            token = .ReceivedEvents(user: user.login!)
         }
     }
     
@@ -60,7 +60,4 @@ class EventTableViewModel: BaseTableViewModel<Event> {
         }
     }
     
-    func repositoryViewModelForIndex(index: Int) -> RepositoryViewModel {
-        return RepositoryViewModel(fullName: dataSource.value[index].repository!)
-    }
 }

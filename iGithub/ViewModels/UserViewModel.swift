@@ -17,7 +17,7 @@ enum VcardDetail {
     case Blog
 }
 
-class UserViewModel: NSObject {
+class UserViewModel {
     
     var user: Variable<User>
     let provider = RxMoyaProvider<GithubAPI>()
@@ -29,14 +29,12 @@ class UserViewModel: NSObject {
     
     init(_ user: User) {
         self.user = Variable(user)
-        token = .User(username: user.login!)
-        super.init()
+        token = .User(user: user.login!)
     }
 
     init(_ username: String) {
         user = Variable(Mapper<User>().map(["login": username])!)
-        token = .User(username: username)
-        super.init()
+        token = .User(user: username)
     }
     
     var title: String {
