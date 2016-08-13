@@ -159,10 +159,13 @@ extension Event {
             icon = Octicon.Repo
         case .PullRequestEvent:
             let e = self as! PullRequestEvent
+            icon = Octicon.GitPullRequest
             if e.action! == .Closed && e.pullRequest!.isMerged! {
-                icon = Octicon.GitMerge
+                color = UIColor(netHex: 0x6E5494)
+            } else if e.action! == .Closed {
+                color = UIColor(netHex: 0xBD2C00)
             } else {
-                icon = Octicon.GitPullRequest
+                color = UIColor(netHex: 0x6BB644)
             }
         case .PushEvent:
             icon = Octicon.GitCommit

@@ -37,7 +37,6 @@ class PullRequestComment : BaseModel {
         
         body    <- map["body"]
         user    <- (map["user"], UserTransform())
-        body    <- map["body"]
         createdAt   <- (map["created_at"], DateTransform())
         updatedAt   <- (map["updated_at"], DateTransform())
         

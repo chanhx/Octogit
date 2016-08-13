@@ -60,7 +60,7 @@ class RepositoryCell: UITableViewCell {
         
         let vStackView = UIStackView(arrangedSubviews: [nameLabel, descriptionLabel, hStackView])
         vStackView.axis = .Vertical
-        vStackView.alignment = .Fill
+        vStackView.alignment = .Leading
         vStackView.distribution = .Fill
         vStackView.spacing = 8
         
