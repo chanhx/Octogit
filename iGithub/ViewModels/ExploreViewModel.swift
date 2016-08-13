@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import RxMoya
 import Kanna
+import ObjectMapper
 //import Result
 
 class ExplorationViewModel {
@@ -17,8 +18,13 @@ class ExplorationViewModel {
     let provider = RxMoyaProvider<WebAPI>()
     let disposeBag = DisposeBag()
     
-    let token = WebAPI.Trending(since: .Today, language: "", typeRepo: true)
-    
+    var token = WebAPI.Trending(since: .Today, language: "", typeRepo: true)
+    var typeRepo = true {
+        didSet {
+            token = WebAPI.Trending(since: .Today, language: "", typeRepo: typeRepo)
+        }
+    }
+
     let repoTVM = TrendingRepositoryTableViewModel()
     let userTVM = TrendingUserTableViewModel()
     
@@ -31,7 +37,11 @@ class ExplorationViewModel {
                     return// Result(error: ParseError.HTMLParseError)
                 }
                 
-                self.repoTVM.parseRepositories(doc)
+                if self.typeRepo {
+                    self.repoTVM.parseRepositories(doc)
+                } else {
+                    self.userTVM.parseUsers(doc)
+                }
             }
             .addDisposableTo(disposeBag)
     }
@@ -61,5 +71,14 @@ class TrendingRepositoryTableViewModel {
 }
 
 class TrendingUserTableViewModel {
+    var users: Variable<[User]> = Variable([])
     
+    @inline(__always) func parseUsers(doc: HTMLDocument) {
+        users.value = doc.css("li.user-leaderboard-list-item.leaderboard-list-item").map {
+            let name = String($0.css("div h2 a")[0]["href"]!.characters.dropFirst())
+            let avatarURL = $0.css("a img")[0]["src"]!
+            
+            return Mapper<User>().map(["login": name, "avatar_url": avatarURL])!
+        }
+    }
 }

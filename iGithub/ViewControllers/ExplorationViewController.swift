@@ -27,6 +27,13 @@ class ExplorationViewController: BaseTableViewController {
                 cell.configureCell(repo.name, description: repo.description, meta: repo.meta)
             }
             .addDisposableTo(viewModel.disposeBag)
+        
+//        viewModel.userTVM.users.asObservable()
+//            .bindTo(tableView.rx_itemsWithCellIdentifier("UserCell", cellType: UserCell.self)) {
+//                row, user, cell in
+//                cell.entity = user
+//            }
+//            .addDisposableTo(viewModel.disposeBag)
     }
 
     /*
