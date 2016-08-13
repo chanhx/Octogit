@@ -18,7 +18,7 @@ enum PullRequestState : String {
 class PullRequest : BaseModel {
     
     var id: Int?
-    var number: String?
+    var number: Int?
     var title: String?
     var body: String?
     var isMerged: Bool?

@@ -17,7 +17,7 @@ class AccountManager {
     static let shareManager = AccountManager()
     
     lazy var keychain = Keychain(server: "https://github.com", protocolType: .HTTPS)
-    lazy var oauthProvider = RxMoyaProvider<OAuthAPI>()
+    lazy var oauthProvider = RxMoyaProvider<WebAPI>()
     lazy var githubProvider = RxMoyaProvider<GithubAPI>()
     lazy var disposeBag = DisposeBag()
     

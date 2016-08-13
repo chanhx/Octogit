@@ -1,5 +1,5 @@
 //
-//  OAuthAPI.swift
+//  WebAPI.swift
 //  iGithub
 //
 //  Created by Chan Hocheung on 7/20/16.
@@ -19,34 +19,43 @@ struct OAuthConfiguration {
     static var accessToken: String?
     
     static var authorizationURL: NSURL? {
-        return RxMoyaProvider<OAuthAPI>()
+        return RxMoyaProvider<WebAPI>()
             .endpoint(.Authorize)
             .urlRequest
             .URL
     }
 }
 
-enum OAuthAPI {
-    case Authorize
-    case AccessToken(code: String)
+enum TrendingTime: String {
+    case Today = "daily"
+    case ThisWeek = "weekly"
+    case ThisMonth = "monthly"
 }
 
-extension OAuthAPI: TargetType {
-    var baseURL: NSURL { return NSURL(string: "https://github.com/login/oauth")! }
+enum WebAPI {
+    case Authorize
+    case AccessToken(code: String)
+    case Trending(since: TrendingTime, language: String, typeRepo: Bool)
+}
+
+extension WebAPI: TargetType {
+    var baseURL: NSURL { return NSURL(string: "https://github.com")! }
     var path: String {
         switch self {
         case .Authorize:
-            return "/authorize"
+            return "/login/oauth/authorize"
         case .AccessToken(_):
-            return "/access_token"
+            return "/login/oauth/access_token"
+        case .Trending(_, _, let typeRepo):
+            return typeRepo ? "/trending" : "/trending/developers"
         }
     }
     var method: RxMoya.Method {
         switch self {
-        case .Authorize:
-            return .GET
         case .AccessToken(_):
             return .POST
+        default:
+            return .GET
         }
     }
     var parameters: [String: AnyObject]? {
@@ -56,6 +65,8 @@ extension OAuthAPI: TargetType {
             return ["client_id": OAuthConfiguration.clientID, "client_secret": OAuthConfiguration.clientSecret, "scope": scope]
         case .AccessToken(let code):
             return ["client_id": OAuthConfiguration.clientID, "client_secret": OAuthConfiguration.clientSecret, "code": code]
+        case .Trending(let since, let language, _):
+            return ["since": since.rawValue, "l": language]
         }
     }
     var sampleData: NSData {

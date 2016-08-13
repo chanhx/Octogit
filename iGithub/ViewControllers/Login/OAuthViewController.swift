@@ -29,10 +29,8 @@ class OAuthViewController: WebViewController {
             let queryItems = NSURLComponents(URL: navigationAction.request.URL!, resolvingAgainstBaseURL: false)?.queryItems
             if let code = queryItems?.filter({$0.name == "code"}).first!.value {
                 AccountManager.shareManager.requestToken(code, success: {
-                    let navigationVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController() as! UINavigationController
-                    let eventTVC = navigationVC.topViewController as! EventTableViewController
-                    eventTVC.viewModel = EventTableViewModel(user: AccountManager.shareManager.currentUser!, type: .Received)
-                    UIApplication.sharedApplication().delegate!.window!!.rootViewController = eventTVC
+                    let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+                    UIApplication.sharedApplication().delegate!.window!!.rootViewController = mainVC
                 }, failure: {
                     print($0)
                     self.navigationController?.popViewControllerAnimated(true)

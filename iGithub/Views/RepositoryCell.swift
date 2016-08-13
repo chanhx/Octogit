@@ -11,7 +11,7 @@ import UIKit
 class RepositoryCell: UITableViewCell {
     
     private let iconLabel = UILabel()
-    private let titleLabel = UILabel()
+    private let nameLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let languageLabel = UILabel()
     private let stargazersCountLabel = UILabel()
@@ -28,7 +28,10 @@ class RepositoryCell: UITableViewCell {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        
+        self.configureSubviews()
+        self.layout()
     }
     
     func configureSubviews() {
@@ -38,8 +41,8 @@ class RepositoryCell: UITableViewCell {
         
         iconLabel.font = UIFont.OcticonOfSize(23)
         
-        titleLabel.font = UIFont.systemFontOfSize(18, weight: UIFontWeightMedium)
-        titleLabel.textColor = UIColor(netHex: 0x4078C0)
+        nameLabel.font = UIFont.systemFontOfSize(18, weight: UIFontWeightMedium)
+        nameLabel.textColor = UIColor(netHex: 0x4078C0)
         
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .ByWordWrapping
@@ -55,10 +58,10 @@ class RepositoryCell: UITableViewCell {
         hStackView.distribution = .EqualSpacing
         hStackView.spacing = 12
         
-        let vStackView = UIStackView(arrangedSubviews: [titleLabel, descriptionLabel, hStackView])
+        let vStackView = UIStackView(arrangedSubviews: [nameLabel, descriptionLabel, hStackView])
         vStackView.axis = .Vertical
-        vStackView.alignment = .Leading
-        vStackView.distribution = .EqualSpacing
+        vStackView.alignment = .Fill
+        vStackView.distribution = .Fill
         vStackView.spacing = 8
         
         contentView.addSubviews([iconLabel, vStackView])
@@ -76,7 +79,7 @@ class RepositoryCell: UITableViewCell {
     
     var entity: Repository! {
         didSet {
-            titleLabel.text = shouldDisplayFullName ? entity.fullName! : entity.name!
+            nameLabel.text = shouldDisplayFullName ? entity.fullName! : entity.name!
             
             descriptionLabel.text = entity.repoDescription
             descriptionLabel.hidden = entity.repoDescription == nil

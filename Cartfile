@@ -5,3 +5,4 @@ github "malcommac/SwiftDate"
 github "groue/GRMustache.swift" ~> 1.0
 github "kishikawakatsumi/KeychainAccess"
 github "TTTAttributedLabel/TTTAttributedLabel"
+github "tid-kijyun/Kanna" ~> 1.1.0

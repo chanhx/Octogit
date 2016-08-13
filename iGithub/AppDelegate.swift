@@ -17,15 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        var initialVC: UIViewController
-        
-        if AccountManager.shareManager.token == nil {
-            initialVC = UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()!
-        } else {
-            initialVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()!
-            let eventsVC = (initialVC  as! UINavigationController).topViewController as! EventTableViewController
-            eventsVC.viewModel = EventTableViewModel(user: AccountManager.shareManager.currentUser!, type: .Received)
-        }
+        let storyboardName = AccountManager.shareManager.token == nil ? "Login" : "Main"
+        let initialVC = UIStoryboard(name: storyboardName, bundle: nil).instantiateInitialViewController()!
 
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window?.rootViewController = initialVC
