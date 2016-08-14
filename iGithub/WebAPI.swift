@@ -32,10 +32,15 @@ enum TrendingTime: String {
     case ThisMonth = "monthly"
 }
 
+enum TrendingType {
+    case Repos
+    case Users
+}
+
 enum WebAPI {
     case Authorize
     case AccessToken(code: String)
-    case Trending(since: TrendingTime, language: String, typeRepo: Bool)
+    case Trending(since: TrendingTime, language: String, type: TrendingType)
 }
 
 extension WebAPI: TargetType {
@@ -46,8 +51,13 @@ extension WebAPI: TargetType {
             return "/login/oauth/authorize"
         case .AccessToken(_):
             return "/login/oauth/access_token"
-        case .Trending(_, _, let typeRepo):
-            return typeRepo ? "/trending" : "/trending/developers"
+        case .Trending(_, _, let type):
+            switch type {
+            case .Repos:
+                return "/trending"
+            case .Users:
+                return "/trending/developers"
+            }
         }
     }
     var method: RxMoya.Method {

@@ -43,6 +43,8 @@ class RepositoryCell: UITableViewCell {
         
         nameLabel.font = UIFont.systemFontOfSize(18, weight: UIFontWeightMedium)
         nameLabel.textColor = UIColor(netHex: 0x4078C0)
+        nameLabel.numberOfLines = 0
+        nameLabel.lineBreakMode = .ByWordWrapping
         
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .ByWordWrapping

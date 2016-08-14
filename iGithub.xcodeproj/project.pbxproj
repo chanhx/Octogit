@@ -89,6 +89,7 @@
 		C5E7337F1D5D9FE900913A66 /* ExplorationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7337E1D5D9FE900913A66 /* ExplorationViewController.swift */; };
 		C5E733811D5DA0F300913A66 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733801D5DA0F300913A66 /* MainTabBarController.swift */; };
 		C5E733831D5EEE8C00913A66 /* TrendingRepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733821D5EEE8C00913A66 /* TrendingRepoCell.swift */; };
+		C5E733851D603A8E00913A66 /* TrendingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733841D603A8E00913A66 /* TrendingHeaderView.swift */; };
 		C5F4BDE71D3F95E5009DF758 /* Octicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDE61D3F95E5009DF758 /* Octicon.swift */; };
 		C5F4BDEB1D3F96D2009DF758 /* octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */; };
 		C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */; };
@@ -203,6 +204,7 @@
 		C5E7337E1D5D9FE900913A66 /* ExplorationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplorationViewController.swift; sourceTree = "<group>"; };
 		C5E733801D5DA0F300913A66 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		C5E733821D5EEE8C00913A66 /* TrendingRepoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingRepoCell.swift; sourceTree = "<group>"; };
+		C5E733841D603A8E00913A66 /* TrendingHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingHeaderView.swift; sourceTree = "<group>"; };
 		C5F4BDE61D3F95E5009DF758 /* Octicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Octicon.swift; sourceTree = "<group>"; };
 		C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = octicons.ttf; sourceTree = "<group>"; };
 		C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				C52474271D50F06A0001D9CD /* WebViewCell.swift */,
 				C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */,
 				C5E733821D5EEE8C00913A66 /* TrendingRepoCell.swift */,
+				C5E733841D603A8E00913A66 /* TrendingHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 				C52013CE1D57361A00FDCC30 /* WebViewController.swift in Sources */,
 				C5373C4B1D4B7C2D006CFB83 /* OrganizationViewController.swift in Sources */,
 				C5819ACA1D4F6C6A009D7772 /* IssueViewModel.swift in Sources */,
+				C5E733851D603A8E00913A66 /* TrendingHeaderView.swift in Sources */,
 				C5C4D9531D49B3FD007C1891 /* UserViewController.swift in Sources */,
 				C538FD521D459DC7003A559E /* FileTableViewModel.swift in Sources */,
 				C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */,

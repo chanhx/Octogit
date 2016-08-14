@@ -18,10 +18,10 @@ class ExplorationViewModel {
     let provider = RxMoyaProvider<WebAPI>()
     let disposeBag = DisposeBag()
     
-    var token = WebAPI.Trending(since: .Today, language: "", typeRepo: true)
-    var typeRepo = true {
+    var token = WebAPI.Trending(since: .Today, language: "", type: .Repos)
+    var type: TrendingType = .Repos {
         didSet {
-            token = WebAPI.Trending(since: .Today, language: "", typeRepo: typeRepo)
+            token = WebAPI.Trending(since: .Today, language: "", type: type)
         }
     }
 
@@ -37,9 +37,10 @@ class ExplorationViewModel {
                     return// Result(error: ParseError.HTMLParseError)
                 }
                 
-                if self.typeRepo {
+                switch self.type {
+                case .Repos:
                     self.repoTVM.parseRepositories(doc)
-                } else {
+                case .Users:
                     self.userTVM.parseUsers(doc)
                 }
             }

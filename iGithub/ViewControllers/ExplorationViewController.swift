@@ -16,6 +16,7 @@ class ExplorationViewController: BaseTableViewController {
         super.viewDidLoad()
         
         tableView.tableFooterView = UIView()
+        tableView.backgroundColor = UIColor(netHex: 0xFAFAFA)
         
         navigationItem.title = "Trending Repositories"
         
@@ -34,6 +35,16 @@ class ExplorationViewController: BaseTableViewController {
 //                cell.entity = user
 //            }
 //            .addDisposableTo(viewModel.disposeBag)
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 90
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = TrendingHeaderView()
+        
+        return headerView
     }
 
     /*
