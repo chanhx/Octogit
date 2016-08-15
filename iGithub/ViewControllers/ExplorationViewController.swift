@@ -8,9 +8,10 @@
 
 import UIKit
 
-class ExplorationViewController: BaseTableViewController {
+class ExplorationViewController: BaseTableViewController, TrendingHeaderViewDelegate {
     
     let viewModel = ExplorationViewModel()
+    let headerView = TrendingHeaderView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,21 +21,8 @@ class ExplorationViewController: BaseTableViewController {
         
         navigationItem.title = "Trending Repositories"
         
-        viewModel.fetchHTML()
-        
-        viewModel.repoTVM.repositories.asObservable()
-            .bindTo(tableView.rx_itemsWithCellIdentifier("TrendingRepoCell", cellType: TrendingRepoCell.self)) {
-                row, repo, cell in
-                cell.configureCell(repo.name, description: repo.description, meta: repo.meta)
-            }
-            .addDisposableTo(viewModel.disposeBag)
-        
-//        viewModel.userTVM.users.asObservable()
-//            .bindTo(tableView.rx_itemsWithCellIdentifier("UserCell", cellType: UserCell.self)) {
-//                row, user, cell in
-//                cell.entity = user
-//            }
-//            .addDisposableTo(viewModel.disposeBag)
+        headerView.delegate = self
+        headerView.type = .Repos
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -42,9 +30,38 @@ class ExplorationViewController: BaseTableViewController {
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = TrendingHeaderView()
-        
         return headerView
+    }
+    
+    // MARK: header
+    
+    func headerView(view: TrendingHeaderView, didSelectTrendingType type: TrendingType) {
+        switch type {
+        case .Repos:
+            bindToRepoTVM()
+        case .Users:
+            bindToUserTVM()
+        }
+        
+        viewModel.type = type
+    }
+    
+    func bindToRepoTVM() {
+        viewModel.repoTVM.repositories.asObservable()
+            .bindTo(tableView.rx_itemsWithCellIdentifier("TrendingRepoCell", cellType: TrendingRepoCell.self)) {
+                row, repo, cell in
+                cell.configureCell(repo.name, description: repo.description, meta: repo.meta)
+            }
+            .addDisposableTo(viewModel.disposeBag)
+    }
+    
+    func bindToUserTVM() {
+        viewModel.userTVM.users.asObservable()
+            .bindTo(tableView.rx_itemsWithCellIdentifier("UserCell", cellType: UserCell.self)) {
+                row, user, cell in
+                cell.entity = user
+            }
+            .addDisposableTo(viewModel.disposeBag)
     }
 
     /*

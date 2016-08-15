@@ -15,6 +15,20 @@ protocol TrendingHeaderViewDelegate {
 class TrendingHeaderView: UIView {
 
     var delegate: TrendingHeaderViewDelegate?
+    var type: TrendingType = .Repos {
+        didSet {
+            switch type {
+            case .Repos:
+                reposButton.selected = true
+                usersButton.selected = false
+            case .Users:
+                usersButton.selected = true
+                reposButton.selected = false
+            }
+            
+            delegate?.headerView(self, didSelectTrendingType: type)
+        }
+    }
     
     let reposButton = TrendingButton(type: .Custom)
     let usersButton = TrendingButton(type: .Custom)
@@ -32,8 +46,6 @@ class TrendingHeaderView: UIView {
         reposButton.addTarget(self, action: #selector(TrendingHeaderView.buttonTouched(_:)), forControlEvents: .TouchUpInside)
         usersButton.setTitle("Users", forState: .Normal)
         usersButton.addTarget(self, action: #selector(TrendingHeaderView.buttonTouched(_:)), forControlEvents: .TouchUpInside)
-        
-        reposButton.selected = true
         
         let separator = UIView()
         separator.backgroundColor = UIColor(netHex: 0xDDDDDD)
@@ -73,11 +85,8 @@ class TrendingHeaderView: UIView {
         if button.selected {
             return
         }
-        reposButton.selected = !reposButton.selected
-        usersButton.selected = !usersButton.selected
-        
-        let type = reposButton.selected ? TrendingType.Repos : TrendingType.Users
-        delegate?.headerView(self, didSelectTrendingType: type)
+                
+        type = reposButton.selected ? TrendingType.Users : TrendingType.Repos
     }
 
     class TrendingButton: UIButton {

@@ -18,15 +18,44 @@ class ExplorationViewModel {
     let provider = RxMoyaProvider<WebAPI>()
     let disposeBag = DisposeBag()
     
-    var token = WebAPI.Trending(since: .Today, language: "", type: .Repos)
-    var type: TrendingType = .Repos {
+    var token: WebAPI!
+    var since: TrendingTime
+    var language: String
+    var type: TrendingType {
         didSet {
-            token = WebAPI.Trending(since: .Today, language: "", type: type)
+            updateOptions()
         }
     }
 
     let repoTVM = TrendingRepositoryTableViewModel()
     let userTVM = TrendingUserTableViewModel()
+    
+    init(since: TrendingTime = .Today, language: String = "", type: TrendingType = .Repos) {
+        self.since = since
+        self.language = language
+        self.type = type
+        
+        updateOptions()
+    }
+    
+    func updateOptions() {
+        token = WebAPI.Trending(since: since, language: language, type: type)
+        
+        var trendingVM: TrendingViewModelProtocol
+        switch type {
+        case .Repos:
+            trendingVM = repoTVM
+        case .Users:
+            trendingVM = userTVM
+        }
+        
+        guard trendingVM.since != since && trendingVM.language != language else {
+            return
+        }
+        trendingVM.since = since
+        trendingVM.language = language
+        fetchHTML()
+    }
     
     func fetchHTML() {
         provider
@@ -39,9 +68,9 @@ class ExplorationViewModel {
                 
                 switch self.type {
                 case .Repos:
-                    self.repoTVM.parseRepositories(doc)
+                    self.repoTVM.parse(doc)
                 case .Users:
-                    self.userTVM.parseUsers(doc)
+                    self.userTVM.parse(doc)
                 }
             }
             .addDisposableTo(disposeBag)
@@ -50,10 +79,19 @@ class ExplorationViewModel {
 
 // MARK: SubViewModels
 
-class TrendingRepositoryTableViewModel {
+protocol TrendingViewModelProtocol {
+    var since: TrendingTime? { get set }
+    var language: String? { get set }
+    func parse(doc: HTMLDocument)
+}
+
+class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
+    
+    var since: TrendingTime?
+    var language: String?
     var repositories: Variable<[(name: String, description: String?, meta: String)]> = Variable([])
     
-    @inline(__always) func parseRepositories(doc: HTMLDocument) {
+    @inline(__always) func parse(doc: HTMLDocument) {
         repositories.value = doc.css("li.repo-list-item").map {
             let name = String($0.css("h3.repo-list-name a")[0]["href"]!.characters.dropFirst())
             
@@ -71,10 +109,13 @@ class TrendingRepositoryTableViewModel {
     }
 }
 
-class TrendingUserTableViewModel {
+class TrendingUserTableViewModel: TrendingViewModelProtocol {
+    
+    var since: TrendingTime?
+    var language: String?
     var users: Variable<[User]> = Variable([])
     
-    @inline(__always) func parseUsers(doc: HTMLDocument) {
+    @inline(__always) func parse(doc: HTMLDocument) {
         users.value = doc.css("li.user-leaderboard-list-item.leaderboard-list-item").map {
             let name = String($0.css("div h2 a")[0]["href"]!.characters.dropFirst())
             let avatarURL = $0.css("a img")[0]["src"]!
