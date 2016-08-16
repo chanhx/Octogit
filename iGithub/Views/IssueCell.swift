@@ -38,6 +38,7 @@ class IssueCell: UITableViewCell {
         infoLabel.textColor = UIColor(netHex: 0x888888)
         
         commentsLabel.textColor = UIColor(netHex: 0x888888)
+        commentsLabel.font = UIFont.systemFontOfSize(14)
     }
     
     func layout() {

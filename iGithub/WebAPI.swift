@@ -32,15 +32,10 @@ enum TrendingTime: String {
     case ThisMonth = "monthly"
 }
 
-enum TrendingType {
-    case Repos
-    case Users
-}
-
 enum WebAPI {
     case Authorize
     case AccessToken(code: String)
-    case Trending(since: TrendingTime, language: String, type: TrendingType)
+    case Trending(since: TrendingTime, language: String, type: SegmentTitle)
 }
 
 extension WebAPI: TargetType {
@@ -53,7 +48,7 @@ extension WebAPI: TargetType {
             return "/login/oauth/access_token"
         case .Trending(_, _, let type):
             switch type {
-            case .Repos:
+            case .Repositories:
                 return "/trending"
             case .Users:
                 return "/trending/developers"

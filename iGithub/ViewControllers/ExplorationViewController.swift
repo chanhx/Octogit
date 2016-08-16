@@ -8,22 +8,44 @@
 
 import UIKit
 
-class ExplorationViewController: BaseTableViewController, TrendingHeaderViewDelegate {
+class ExplorationViewController: BaseTableViewController, SegmentHeaderViewDelegate, UISearchControllerDelegate {
     
     let viewModel = ExplorationViewModel()
-    let headerView = TrendingHeaderView()
+    let headerView = SegmentHeaderView()
+    
+    var searchController: UISearchController!
+    var searchViewController = SearchViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.tableFooterView = UIView()
         tableView.backgroundColor = UIColor(netHex: 0xFAFAFA)
         
-        navigationItem.title = "Trending Repositories"
-        
         headerView.delegate = self
-        headerView.type = .Repos
+        headerView.title = .Repositories
+        
+        
+        searchController = UISearchController(searchResultsController: searchViewController)
+        
+        searchController.searchResultsUpdater = searchViewController
+        searchController.searchBar.delegate = searchViewController
+        searchController.delegate = self
+        
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = true
+        
+        navigationItem.titleView = searchController.searchBar
+        
+        definesPresentationContext = true
     }
+    
+    // MARK: UISearchControllerDelegate
+    
+//    func didDismissSearchController(searchController: UISearchController) {
+//        searchViewController clear search results
+//    }
+    
+    // MARK: UITableViewDelegate
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 90
@@ -35,15 +57,15 @@ class ExplorationViewController: BaseTableViewController, TrendingHeaderViewDele
     
     // MARK: header
     
-    func headerView(view: TrendingHeaderView, didSelectTrendingType type: TrendingType) {
-        switch type {
-        case .Repos:
+    func headerView(view: SegmentHeaderView, didSelectSegmentTitle title: SegmentTitle) {
+        switch title {
+        case .Repositories:
             bindToRepoTVM()
         case .Users:
             bindToUserTVM()
         }
         
-        viewModel.type = type
+        viewModel.type = title
     }
     
     func bindToRepoTVM() {

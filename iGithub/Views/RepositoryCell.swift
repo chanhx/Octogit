@@ -37,6 +37,7 @@ class RepositoryCell: UITableViewCell {
     func configureSubviews() {
         for label in [languageLabel, stargazersCountLabel, forksCountLabel, watchersCountLabel] {
             label.textColor = UIColor(netHex: 0x888888)
+            label.font = UIFont.systemFontOfSize(14)
         }
         
         iconLabel.font = UIFont.OcticonOfSize(23)
@@ -49,8 +50,6 @@ class RepositoryCell: UITableViewCell {
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .ByWordWrapping
         descriptionLabel.textColor = UIColor(netHex: 0x666666)
-        
-        languageLabel.font = UIFont.systemFontOfSize(14)
     }
     
     func layout() {

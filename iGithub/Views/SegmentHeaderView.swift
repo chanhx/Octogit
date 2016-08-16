@@ -1,5 +1,5 @@
 //
-//  TrendingHeaderView.swift
+//  SegmentHeaderView.swift
 //  iGithub
 //
 //  Created by Chan Hocheung on 8/14/16.
@@ -8,17 +8,22 @@
 
 import UIKit
 
-protocol TrendingHeaderViewDelegate {
-    func headerView(view: TrendingHeaderView, didSelectTrendingType: TrendingType)
+enum SegmentTitle {
+    case Repositories
+    case Users
 }
 
-class TrendingHeaderView: UIView {
+protocol SegmentHeaderViewDelegate {
+    func headerView(view: SegmentHeaderView, didSelectSegmentTitle: SegmentTitle)
+}
 
-    var delegate: TrendingHeaderViewDelegate?
-    var type: TrendingType = .Repos {
+class SegmentHeaderView: UIView {
+
+    var delegate: SegmentHeaderViewDelegate?
+    var title: SegmentTitle = .Repositories {
         didSet {
-            switch type {
-            case .Repos:
+            switch title {
+            case .Repositories:
                 reposButton.selected = true
                 usersButton.selected = false
             case .Users:
@@ -26,7 +31,7 @@ class TrendingHeaderView: UIView {
                 reposButton.selected = false
             }
             
-            delegate?.headerView(self, didSelectTrendingType: type)
+            delegate?.headerView(self, didSelectSegmentTitle: title)
         }
     }
     
@@ -40,12 +45,13 @@ class TrendingHeaderView: UIView {
         backgroundColor = UIColor(netHex: 0xFAFAFA)
         
         let label = UILabel()
-        label.attributedText = Octicon.Flame.iconString("Trending For Today in All Languages")
+        label.font = UIFont.systemFontOfSize(14)
+        label.attributedText = Octicon.Flame.iconString("Trending For Today in All Languages", iconSize: 16, iconColor: UIColor.redColor())
         
         reposButton.setTitle("Repositories", forState: .Normal)
-        reposButton.addTarget(self, action: #selector(TrendingHeaderView.buttonTouched(_:)), forControlEvents: .TouchUpInside)
+        reposButton.addTarget(self, action: #selector(SegmentHeaderView.buttonTouched(_:)), forControlEvents: .TouchUpInside)
         usersButton.setTitle("Users", forState: .Normal)
-        usersButton.addTarget(self, action: #selector(TrendingHeaderView.buttonTouched(_:)), forControlEvents: .TouchUpInside)
+        usersButton.addTarget(self, action: #selector(SegmentHeaderView.buttonTouched(_:)), forControlEvents: .TouchUpInside)
         
         let separator = UIView()
         separator.backgroundColor = UIColor(netHex: 0xDDDDDD)
@@ -86,7 +92,7 @@ class TrendingHeaderView: UIView {
             return
         }
                 
-        type = reposButton.selected ? TrendingType.Users : TrendingType.Repos
+        title = reposButton.selected ? .Users : .Repositories
     }
 
     class TrendingButton: UIButton {

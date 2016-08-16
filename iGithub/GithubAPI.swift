@@ -9,6 +9,25 @@
 import Foundation
 import RxMoya
 
+enum SearchOrder: String {
+    case Asc = "asc"
+    case Desc = "desc"
+}
+
+enum RepositoriesSearchSort: String {
+    case Default = ""
+    case Forks = "forks"
+    case Stars = "stars"
+    case Updated = "updated"
+}
+
+enum UsersSearchSort: String {
+    case Default = ""
+    case Followers = "followers"
+    case Joined = "joined"
+    case Repositories = "repositories"
+}
+
 enum GithubAPI {
     case GetARepository(repo: String)
     case GetContents(repo: String, path: String)
@@ -23,6 +42,8 @@ enum GithubAPI {
     case RepositoryEvents(repo: String)
     case RepositoryIssues(repo: String)
     case RepositoryPullRequests(repo: String)
+    case SearchRepositories(q: String, sort: RepositoriesSearchSort, order: SearchOrder)
+    case SearchUsers(q: String, sort: UsersSearchSort, order: SearchOrder)
     case StarredRepos(user: String)
     case User(user: String)
     case UserEvents(user: String)
@@ -59,6 +80,10 @@ extension GithubAPI: TargetType {
             return "/repos/\(repo)/issues"
         case .RepositoryPullRequests(let repo):
             return "/repos/\(repo)/pulls"
+        case .SearchRepositories(_, _, _):
+            return "/search/repositories"
+        case .SearchUsers(_, _, _):
+            return "/search/users"
         case .StarredRepos(let user):
             return "/users/\(user)/starred"
         case .User(let user):
@@ -79,6 +104,10 @@ extension GithubAPI: TargetType {
         switch self {
         case .OAuthUser(let accessToken):
             return ["access_token": accessToken]
+        case .SearchRepositories(let q, let sort, let order):
+            return ["q": q, "sort": sort.rawValue, "order": order.rawValue]
+        case .SearchUsers(let q, let sort, let order):
+            return ["q": q, "sort": sort.rawValue, "order": order.rawValue]
         default:
             return nil
         }

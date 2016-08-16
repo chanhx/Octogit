@@ -21,7 +21,7 @@ class ExplorationViewModel {
     var token: WebAPI!
     var since: TrendingTime
     var language: String
-    var type: TrendingType {
+    var type: SegmentTitle {
         didSet {
             updateOptions()
         }
@@ -30,7 +30,7 @@ class ExplorationViewModel {
     let repoTVM = TrendingRepositoryTableViewModel()
     let userTVM = TrendingUserTableViewModel()
     
-    init(since: TrendingTime = .Today, language: String = "", type: TrendingType = .Repos) {
+    init(since: TrendingTime = .Today, language: String = "", type: SegmentTitle = .Repositories) {
         self.since = since
         self.language = language
         self.type = type
@@ -43,7 +43,7 @@ class ExplorationViewModel {
         
         var trendingVM: TrendingViewModelProtocol
         switch type {
-        case .Repos:
+        case .Repositories:
             trendingVM = repoTVM
         case .Users:
             trendingVM = userTVM
@@ -67,7 +67,7 @@ class ExplorationViewModel {
                 }
                 
                 switch self.type {
-                case .Repos:
+                case .Repositories:
                     self.repoTVM.parse(doc)
                 case .Users:
                     self.userTVM.parse(doc)

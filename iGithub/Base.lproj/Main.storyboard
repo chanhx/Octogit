@@ -329,7 +329,7 @@
             </objects>
             <point key="canvasLocation" x="3509" y="-53"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Exploration View Controller-->
         <scene sceneID="91v-HG-HTv">
             <objects>
                 <tableViewController id="WiA-kb-oaf" customClass="ExplorationViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
@@ -360,7 +360,7 @@
                             <outlet property="delegate" destination="WiA-kb-oaf" id="kPx-2x-AkZ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="GoZ-Oy-CPa"/>
+                    <navigationItem key="navigationItem" id="GoZ-Oy-CPa"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ASt-QM-Ge0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
