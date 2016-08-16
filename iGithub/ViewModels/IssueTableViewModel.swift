@@ -18,7 +18,7 @@ class IssueTableViewModel: BaseTableViewModel<Issue> {
     }
     
     override func fetchData() {
-        provider
+        GithubProvider
             .request(token)
             .mapJSON()
             .subscribe(

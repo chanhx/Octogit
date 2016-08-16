@@ -28,7 +28,7 @@ class UserTableViewModel: BaseTableViewModel<User> {
     }
     
     override func fetchData() {
-        provider
+        GithubProvider
             .request(token)
             .mapJSON()
             .subscribe(

@@ -52,12 +52,11 @@ class RepositoriesSearchViewModel {
     var query: String?
     var repositories: Variable<[Repository]> = Variable([])
     
-    let provider = RxMoyaProvider<GithubAPI>()
     let disposeBag = DisposeBag()
     
     func search(query: String) {
         let token = GithubAPI.SearchRepositories(q: query, sort: .Default, order: .Desc)
-        provider
+        GithubProvider
             .request(token)
             .mapJSON()
             .subscribeNext {
@@ -77,12 +76,11 @@ class UsersSearchViewModel {
     var query: String?
     var users: Variable<[User]> = Variable([])
     
-    let provider = RxMoyaProvider<GithubAPI>()
     let disposeBag = DisposeBag()
     
     func search(query: String) {
         let token = GithubAPI.SearchUsers(q: query, sort: .Default, order: .Desc)
-        provider
+        GithubProvider
             .request(token)
             .mapJSON()
             .subscribeNext {

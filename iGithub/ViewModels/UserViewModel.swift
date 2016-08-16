@@ -20,7 +20,6 @@ enum VcardDetail {
 class UserViewModel {
     
     var user: Variable<User>
-    let provider = RxMoyaProvider<GithubAPI>()
     let disposeBag = DisposeBag()
     var token: GithubAPI
     
@@ -42,7 +41,7 @@ class UserViewModel {
     }
     
     func fetchUser() {
-        provider
+        GithubProvider
             .request(token)
             .mapJSON()
             .subscribeNext {

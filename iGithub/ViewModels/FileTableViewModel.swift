@@ -29,7 +29,7 @@ class FileTableViewModel: BaseTableViewModel<File> {
     }
     
     override func fetchData() {
-        provider
+        GithubProvider
             .request(token)
             .mapJSON()
             .subscribe(

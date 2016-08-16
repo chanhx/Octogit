@@ -14,7 +14,6 @@ import ObjectMapper
 class BaseTableViewModel<T: BaseModel> {
     
     var dataSource: Variable<[T]> = Variable([])
-    let provider = RxMoyaProvider<GithubAPI>()
     let disposeBag = DisposeBag()
     
     func fetchData() {}

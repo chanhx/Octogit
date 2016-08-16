@@ -14,7 +14,6 @@ import ObjectMapper
 class RepositoryViewModel {
     
     var fullName: String
-    let provider = RxMoyaProvider<GithubAPI>()
     let disposeBag = DisposeBag()
     var repository: Variable<Repository>
     var repositoryLoaded = false
@@ -32,7 +31,7 @@ class RepositoryViewModel {
     }
     
     func fetchRepository() {
-        provider
+        GithubProvider
             .request(.GetARepository(repo: fullName))
             .mapJSON()
             .subscribeNext {

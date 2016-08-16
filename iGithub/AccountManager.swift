@@ -17,8 +17,6 @@ class AccountManager {
     static let shareManager = AccountManager()
     
     lazy var keychain = Keychain(server: "https://github.com", protocolType: .HTTPS)
-    lazy var oauthProvider = RxMoyaProvider<WebAPI>()
-    lazy var githubProvider = RxMoyaProvider<GithubAPI>()
     lazy var disposeBag = DisposeBag()
     
     var currentUser: User? {
@@ -38,7 +36,7 @@ class AccountManager {
     }
     
     func requestToken(code: String, success: () -> Void, failure: ErrorType -> Void) {
-        oauthProvider
+        WebProvider
             .request(.AccessToken(code: code))
             .mapString()
             .subscribe(
@@ -46,7 +44,7 @@ class AccountManager {
                     if let accessToken = $0.componentsSeparatedByString("&").first?.componentsSeparatedByString("=").last {
                         AccountManager.shareManager.token = accessToken
                         
-                        self.githubProvider
+                        GithubProvider
                             .request(.OAuthUser(accessToken: accessToken))
                             .mapJSON()
                             .subscribe(

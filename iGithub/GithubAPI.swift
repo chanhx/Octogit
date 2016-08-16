@@ -9,6 +9,12 @@
 import Foundation
 import RxMoya
 
+// MARK: - Provider setup
+
+let GithubProvider = RxMoyaProvider<GithubAPI>()
+
+// MARK: - Provider support
+
 enum SearchOrder: String {
     case Asc = "asc"
     case Desc = "desc"

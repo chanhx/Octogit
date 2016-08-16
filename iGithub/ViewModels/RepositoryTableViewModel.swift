@@ -29,7 +29,7 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
     }
     
     override func fetchData() {
-        provider
+        GithubProvider
             .request(token)
             .mapJSON()
             .subscribe(

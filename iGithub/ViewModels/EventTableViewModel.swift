@@ -36,7 +36,7 @@ class EventTableViewModel: BaseTableViewModel<Event> {
     }
     
     override func fetchData() {
-        provider
+        GithubProvider
             .request(token)
             .mapJSON()
             .subscribe(

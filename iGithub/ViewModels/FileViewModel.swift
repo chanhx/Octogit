@@ -23,7 +23,6 @@ class FileViewModel {
     var token: GithubAPI
     var file: File
     var html = Variable("")
-    let provider = RxMoyaProvider<GithubAPI>()
     let disposeBag = DisposeBag()
     
     init(repository: String, file: File) {
@@ -34,7 +33,7 @@ class FileViewModel {
     }
     
     func fetchContent() {
-        provider
+        GithubProvider
             .request(token)
             .mapJSON()
             .subscribeNext {

@@ -55,7 +55,6 @@ class ExplorationViewModel {
 // MARK: SubViewModels
 
 protocol TrendingViewModelProtocol {
-    var provider: RxMoyaProvider<WebAPI> { get }
     var disposeBag: DisposeBag { get }
     var token: WebAPI { get }
     var since: TrendingTime? { get set }
@@ -66,7 +65,7 @@ protocol TrendingViewModelProtocol {
 
 extension TrendingViewModelProtocol {
     func fetchHTML() {
-        provider
+        WebProvider
             .request(token)
             .mapString()
             .subscribeNext {
@@ -82,7 +81,6 @@ extension TrendingViewModelProtocol {
 
 class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
     
-    var provider = RxMoyaProvider<WebAPI>()
     var disposeBag = DisposeBag()
     var since: TrendingTime?
     var language: String?
@@ -111,7 +109,6 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
 
 class TrendingUserTableViewModel: TrendingViewModelProtocol {
     
-    var provider = RxMoyaProvider<WebAPI>()
     var disposeBag = DisposeBag()
     var since: TrendingTime?
     var language: String?

@@ -19,12 +19,18 @@ struct OAuthConfiguration {
     static var accessToken: String?
     
     static var authorizationURL: NSURL? {
-        return RxMoyaProvider<WebAPI>()
+        return WebProvider
             .endpoint(.Authorize)
             .urlRequest
             .URL
     }
 }
+
+// MARK: - Provider setup
+
+let WebProvider = RxMoyaProvider<WebAPI>()
+
+// MARK: - Provider support
 
 enum TrendingTime: String {
     case Today = "daily"
