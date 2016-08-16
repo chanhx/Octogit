@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        CustomizeAppearance()
+        
         let storyboardName = AccountManager.shareManager.token == nil ? "Login" : "Main"
         let initialVC = UIStoryboard(name: storyboardName, bundle: nil).instantiateInitialViewController()!
 
@@ -25,6 +27,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
         
         return true
+    }
+    
+    func CustomizeAppearance() {
+        UINavigationBar.appearance().barTintColor = UIColor(netHex: 0x4078C0)
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).alpha = 0.6
+        UITextField.appearance().tintColor = UIColor(netHex: 0x2A9883)
     }
 
     func applicationWillResignActive(application: UIApplication) {
