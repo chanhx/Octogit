@@ -52,39 +52,39 @@ class EventCell: UITableViewCell {
     
     func addLinksToTitle() {
         if entity.actor != nil {
-            titleLabel.addLink(NSURL(string: "https://github.com/\(entity.actor!)")!, toText: entity.actor!.login!)
+            titleLabel.addLink(NSURL(string: "/\(entity.actor!)")!, toText: entity.actor!.login!)
         }
         
         if entity.repository != nil {
-            titleLabel.addLink(NSURL(string: "https://github.com/\(entity.repository!)")!, toText: entity.repository!)
+            titleLabel.addLink(NSURL(string: "/\(entity.repository!)")!, toText: entity.repository!)
         }
         
         if entity.org != nil {
-            titleLabel.addLink(NSURL(string: "https://github.com/\(entity.org!)")!, toText: entity.org!.login!)
+            titleLabel.addLink(NSURL(string: "/\(entity.org!)")!, toText: entity.org!.login!)
         }
         
         switch entity.type! {
         case .ForkEvent:
             let e = entity as! ForkEvent
-            titleLabel.addLink(NSURL(string: "https://github.com/\(e.forkee!)")!, toText: e.forkee!)
+            titleLabel.addLink(NSURL(string: "/\(e.forkee!)")!, toText: e.forkee!)
         case .IssueCommentEvent:
             let e = entity as! IssueCommentEvent
-            titleLabel.addLink(NSURL(string: "https://github.com/\(e.repository!)/issues/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")
+            titleLabel.addLink(NSURL(string: "/\(e.repository!)/issues/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")
         case .IssuesEvent:
             let e = entity as! IssueEvent
-            titleLabel.addLink(NSURL(string: "https://github.com/\(e.repository!)/issues/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")
+            titleLabel.addLink(NSURL(string: "/\(e.repository!)/issues/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")
         case .GollumEvent:
             let e = entity as! GollumEvent
-            titleLabel.addLink(NSURL(string: "https://github.com/\(e.repository!)/wiki/\(e.pageName!)")!, toText: e.pageName!)
+            titleLabel.addLink(NSURL(string: "/\(e.repository!)/wiki/\(e.pageName!)")!, toText: e.pageName!)
         case .MemberEvent:
             let e = entity as! MemberEvent
-            titleLabel.addLink(NSURL(string: "https://github.com/\(e.member!)")!, toText: e.member!.login!)
+            titleLabel.addLink(NSURL(string: "/\(e.member!)")!, toText: e.member!.login!)
         case .PullRequestEvent:
             let e = entity as! PullRequestEvent
-            titleLabel.addLink(NSURL(string: "https://github.com/pull/\(e.pullRequest!.number!)")!, toText: "#\(e.pullRequest!.number!)")
+            titleLabel.addLink(NSURL(string: "/pull/\(e.pullRequest!.number!)")!, toText: "#\(e.pullRequest!.number!)")
         case .PullRequestReviewCommentEvent:
             let e = entity as! PullRequestReviewCommentEvent
-            titleLabel.addLink(NSURL(string: "https://github.com/pull/\(e.pullRequest!.number!)")!, toText: "#\(e.pullRequest!.number!)")
+            titleLabel.addLink(NSURL(string: "/pull/\(e.pullRequest!.number!)")!, toText: "#\(e.pullRequest!.number!)")
         default:
             break
         }
@@ -97,7 +97,7 @@ class EventCell: UITableViewCell {
             for commit in e.commits! {
                 let sha = commit.sha!
                 let shortenedSHA = sha.substringToIndex(sha.startIndex.advancedBy(7))
-                contentLabel.addLink(NSURL(string: "https://github.com/\(entity.repository!)/commit/\(sha)")!, toText: shortenedSHA)
+                contentLabel.addLink(NSURL(string: "/\(entity.repository!)/commit/\(sha)")!, toText: shortenedSHA)
             }
         }
     }
