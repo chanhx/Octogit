@@ -74,7 +74,7 @@ class ExplorationViewController: BaseTableViewController, SegmentHeaderViewDeleg
                 row, repo, cell in
                 cell.configureCell(repo.name, description: repo.description, meta: repo.meta)
             }
-            .addDisposableTo(viewModel.disposeBag)
+            .addDisposableTo(viewModel.repoTVM.disposeBag)
     }
     
     func bindToUserTVM() {
@@ -83,7 +83,7 @@ class ExplorationViewController: BaseTableViewController, SegmentHeaderViewDeleg
                 row, user, cell in
                 cell.entity = user
             }
-            .addDisposableTo(viewModel.disposeBag)
+            .addDisposableTo(viewModel.userTVM.disposeBag)
     }
 
     /*

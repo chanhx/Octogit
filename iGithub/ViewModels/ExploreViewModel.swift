@@ -15,10 +15,6 @@ import ObjectMapper
 
 class ExplorationViewModel {
     
-    let provider = RxMoyaProvider<WebAPI>()
-    let disposeBag = DisposeBag()
-    
-    var token: WebAPI!
     var since: TrendingTime
     var language: String
     var type: SegmentTitle {
@@ -39,8 +35,6 @@ class ExplorationViewModel {
     }
     
     func updateOptions() {
-        token = WebAPI.Trending(since: since, language: language, type: type)
-        
         var trendingVM: TrendingViewModelProtocol
         switch type {
         case .Repositories:
@@ -54,42 +48,48 @@ class ExplorationViewModel {
         }
         trendingVM.since = since
         trendingVM.language = language
-        fetchHTML()
-    }
-    
-    func fetchHTML() {
-        provider
-            .request(token)
-            .mapString()
-            .subscribeNext {
-                guard let doc = Kanna.HTML(html: $0, encoding: NSUTF8StringEncoding) else {
-                    return// Result(error: ParseError.HTMLParseError)
-                }
-                
-                switch self.type {
-                case .Repositories:
-                    self.repoTVM.parse(doc)
-                case .Users:
-                    self.userTVM.parse(doc)
-                }
-            }
-            .addDisposableTo(disposeBag)
+        trendingVM.fetchHTML()
     }
 }
 
 // MARK: SubViewModels
 
 protocol TrendingViewModelProtocol {
+    var provider: RxMoyaProvider<WebAPI> { get }
+    var disposeBag: DisposeBag { get }
+    var token: WebAPI { get }
     var since: TrendingTime? { get set }
     var language: String? { get set }
+    func fetchHTML()
     func parse(doc: HTMLDocument)
+}
+
+extension TrendingViewModelProtocol {
+    func fetchHTML() {
+        provider
+            .request(token)
+            .mapString()
+            .subscribeNext {
+                guard let doc = Kanna.HTML(html: $0, encoding: NSUTF8StringEncoding) else {
+                    return  // Result(error: ParseError.HTMLParseError)
+                }
+                
+                self.parse(doc)
+            }
+            .addDisposableTo(disposeBag)
+    }
 }
 
 class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
     
+    var provider = RxMoyaProvider<WebAPI>()
+    var disposeBag = DisposeBag()
     var since: TrendingTime?
     var language: String?
     var repositories: Variable<[(name: String, description: String?, meta: String)]> = Variable([])
+    var token: WebAPI {
+        return WebAPI.Trending(since: since!, language: language!, type: .Repositories)
+    }
     
     @inline(__always) func parse(doc: HTMLDocument) {
         repositories.value = doc.css("li.repo-list-item").map {
@@ -111,9 +111,14 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
 
 class TrendingUserTableViewModel: TrendingViewModelProtocol {
     
+    var provider = RxMoyaProvider<WebAPI>()
+    var disposeBag = DisposeBag()
     var since: TrendingTime?
     var language: String?
     var users: Variable<[User]> = Variable([])
+    var token: WebAPI {
+        return WebAPI.Trending(since: since!, language: language!, type: .Users)
+    }
     
     @inline(__always) func parse(doc: HTMLDocument) {
         users.value = doc.css("li.user-leaderboard-list-item.leaderboard-list-item").map {
