@@ -16,74 +16,83 @@ class SearchViewModel {
     let repoTVM = RepositoriesSearchViewModel()
     let userTVM = UsersSearchViewModel()
     
-    let provider = RxMoyaProvider<GithubAPI>()
-    let disposeBag = DisposeBag()
-    
-    var query: String
+    var query: String?
     var type: SegmentTitle {
         didSet {
-            switch type {
-            case .Repositories:
-                if query != repoTVM.query {
-                    search(query)
-                }
-            case .Users:
-                if query != userTVM.query {
-                    search(query)
-                }
+            if query != nil && query?.characters.count > 0 {
+                search(query!)
             }
         }
-    }
-    
-    init(query: String = "", type: SegmentTitle = .Repositories) {
-        self.query = query
-        self.type = type
     }
     
     func search(query: String) {
-        var token: GithubAPI
+        self.query = query
         switch type {
         case .Repositories:
-            token = .SearchRepositories(q: query, sort: .Default, order: .Desc)
-        case .Users:
-            token = .SearchUsers(q: query, sort: .Default, order: .Desc)
-        }
-        
-        self.query = query
-        
-        provider
-            .request(token)
-            .mapJSON()
-            .subscribeNext {
-                switch self.type {
-                case .Repositories:
-                    if let results = Mapper<Repository>().mapArray($0["items"]) {
-                        self.repoTVM.repositories.value = results
-                        self.repoTVM.query = query
-                    } else {
-                        // deal with error
-                    }
-                case .Users:
-                    if let results = Mapper<User>().mapArray($0["items"]) {
-                        self.userTVM.users.value = results
-                        self.userTVM.query = query
-                    } else {
-                        // deal with error
-                    }
-                }
+            if query != repoTVM.query {
+                repoTVM.search(query)
             }
-            .addDisposableTo(disposeBag)
+        case .Users:
+            if query != userTVM.query {
+                userTVM.search(query)
+            }
+        }
+    }
+    
+    init(query: String? = nil, type: SegmentTitle = .Repositories) {
+        self.query = query
+        self.type = type
     }
 }
 
 // MARK: SubViewModels
 
 class RepositoriesSearchViewModel {
+    
     var query: String?
     var repositories: Variable<[Repository]> = Variable([])
+    
+    let provider = RxMoyaProvider<GithubAPI>()
+    let disposeBag = DisposeBag()
+    
+    func search(query: String) {
+        let token = GithubAPI.SearchRepositories(q: query, sort: .Default, order: .Desc)
+        provider
+            .request(token)
+            .mapJSON()
+            .subscribeNext {
+                if let results = Mapper<Repository>().mapArray($0["items"]) {
+                    self.repositories.value = results
+                    self.query = query
+                } else {
+                    // deal with error
+                }
+            }
+            .addDisposableTo(disposeBag)
+    }
 }
 
 class UsersSearchViewModel {
+    
     var query: String?
     var users: Variable<[User]> = Variable([])
+    
+    let provider = RxMoyaProvider<GithubAPI>()
+    let disposeBag = DisposeBag()
+    
+    func search(query: String) {
+        let token = GithubAPI.SearchUsers(q: query, sort: .Default, order: .Desc)
+        provider
+            .request(token)
+            .mapJSON()
+            .subscribeNext {
+                if let results = Mapper<User>().mapArray($0["items"]) {
+                    self.users.value = results
+                    self.query = query
+                } else {
+                    // deal with error
+                }
+            }
+            .addDisposableTo(disposeBag)
+    }
 }

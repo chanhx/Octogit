@@ -85,7 +85,7 @@ class SearchViewController: BaseTableViewController, SegmentHeaderViewDelegate, 
                 row, repo, cell in
                 cell.entity = repo
             }
-            .addDisposableTo(viewModel.disposeBag)
+            .addDisposableTo(viewModel.repoTVM.disposeBag)
     }
     
     func bindToUserTVM() {
@@ -94,6 +94,6 @@ class SearchViewController: BaseTableViewController, SegmentHeaderViewDelegate, 
                 row, user, cell in
                 cell.entity = user
             }
-            .addDisposableTo(viewModel.disposeBag)
+            .addDisposableTo(viewModel.userTVM.disposeBag)
     }
 }
