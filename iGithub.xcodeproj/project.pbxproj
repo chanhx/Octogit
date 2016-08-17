@@ -52,6 +52,7 @@
 		C55E08521D4786EB0004EC7C /* Prism in Resources */ = {isa = PBXBuildFile; fileRef = C55E08511D4786EB0004EC7C /* Prism */; };
 		C55E08541D478E8E0004EC7C /* common.css in Resources */ = {isa = PBXBuildFile; fileRef = C55E08531D478E8E0004EC7C /* common.css */; };
 		C55E08561D4793740004EC7C /* file_extensions.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55E08551D4793740004EC7C /* file_extensions.plist */; };
+		C571EF581D64836100F752EE /* OptionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C571EF571D64836100F752EE /* OptionPickerView.swift */; };
 		C5819ABB1D4CF3D4009D7772 /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819ABA1D4CF3D4009D7772 /* RepositoryCell.swift */; };
 		C5819ABD1D4DD279009D7772 /* RepositoryTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819ABC1D4DD279009D7772 /* RepositoryTableViewModel.swift */; };
 		C5819ABF1D4DD2B7009D7772 /* RepositoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819ABE1D4DD2B7009D7772 /* RepositoryTableViewController.swift */; };
@@ -163,6 +164,7 @@
 		C55E08511D4786EB0004EC7C /* Prism */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Prism; sourceTree = "<group>"; };
 		C55E08531D478E8E0004EC7C /* common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = common.css; sourceTree = "<group>"; };
 		C55E08551D4793740004EC7C /* file_extensions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = file_extensions.plist; sourceTree = "<group>"; };
+		C571EF571D64836100F752EE /* OptionPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionPickerView.swift; sourceTree = "<group>"; };
 		C5819ABA1D4CF3D4009D7772 /* RepositoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryCell.swift; sourceTree = "<group>"; };
 		C5819ABC1D4DD279009D7772 /* RepositoryTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryTableViewModel.swift; sourceTree = "<group>"; };
 		C5819ABE1D4DD2B7009D7772 /* RepositoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryTableViewController.swift; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */,
 				C5E733821D5EEE8C00913A66 /* TrendingRepoCell.swift */,
 				C5E733841D603A8E00913A66 /* SegmentHeaderView.swift */,
+				C571EF571D64836100F752EE /* OptionPickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -662,6 +665,7 @@
 				C538FD191D40A455003A559E /* Repository.swift in Sources */,
 				C538FD571D461852003A559E /* FileViewController.swift in Sources */,
 				C538FD0F1D40A349003A559E /* PullRequest.swift in Sources */,
+				C571EF581D64836100F752EE /* OptionPickerView.swift in Sources */,
 				C5819AC11D4EF086009D7772 /* IssueTableViewController.swift in Sources */,
 				C500B7961D545A3A00DC6D2A /* IGLinkLabel.swift in Sources */,
 				C5E733831D5EEE8C00913A66 /* TrendingRepoCell.swift in Sources */,

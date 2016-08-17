@@ -9,6 +9,7 @@
 import UIKit
 import SwiftDate
 import Kingfisher
+import TTTAttributedLabel
 
 extension NSDate {
     var naturalString: String {
@@ -65,5 +66,13 @@ extension UIView {
             view.translatesAutoresizingMaskIntoConstraints = !usingAutoLayout
             self.addSubview(view)
         }
+    }
+}
+
+extension TTTAttributedLabel {
+    func addLink(url: NSURL, toText text: String) {
+        let regexString = NSString(format: "^%1$@\\s|\\s%1$@\\s|\\s%1$@$", text) as String
+        let range = (self.text! as NSString).rangeOfString(regexString, options: .RegularExpressionSearch)
+        addLinkToURL(url, withRange: range)
     }
 }

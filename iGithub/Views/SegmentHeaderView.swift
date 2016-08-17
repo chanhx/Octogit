@@ -18,25 +18,21 @@ protocol SegmentHeaderViewDelegate {
 }
 
 class SegmentHeaderView: UIView {
-
+    
     var delegate: SegmentHeaderViewDelegate?
     var title: SegmentTitle = .Repositories {
         didSet {
-            switch title {
-            case .Repositories:
-                reposButton.selected = true
-                usersButton.selected = false
-            case .Users:
-                usersButton.selected = true
-                reposButton.selected = false
-            }
+            reposButton.selected = title == .Repositories
+            usersButton.selected = title == .Users
             
             delegate?.headerView(self, didSelectSegmentTitle: title)
         }
     }
     
-    let reposButton = TrendingButton(type: .Custom)
-    let usersButton = TrendingButton(type: .Custom)
+    let titleLabel = TTTAttributedLabel(frame: CGRectZero)
+    let pickerView = UIPickerView()
+    let reposButton = SegmentButton(type: .Custom)
+    let usersButton = SegmentButton(type: .Custom)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,15 +40,31 @@ class SegmentHeaderView: UIView {
         clipsToBounds = false
         backgroundColor = UIColor(netHex: 0xFAFAFA)
         
-        let label = UILabel()
-        label.font = UIFont.systemFontOfSize(14)
-        label.attributedText = Octicon.Flame.iconString("Trending For Today in All Languages", iconSize: 16, iconColor: UIColor.redColor())
+        configureSubviews()
+        layout()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configureSubviews() {
+        titleLabel.font = UIFont.systemFontOfSize(14)
+        titleLabel.linkAttributes = [
+            NSForegroundColorAttributeName: UIColor(netHex: 0x4078C0),
+            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleNone.rawValue
+        ]
+        titleLabel.attributedText = Octicon.Flame.iconString("Trending For Today in All Languages", iconSize: 16, iconColor: UIColor.redColor())
+        titleLabel.addLink(NSURL(string: "Time")!, toText: "Today")
+        titleLabel.addLink(NSURL(string: "Language")!, toText: "All Languages")
         
         reposButton.setTitle("Repositories", forState: .Normal)
         reposButton.addTarget(self, action: #selector(SegmentHeaderView.buttonTouched(_:)), forControlEvents: .TouchUpInside)
         usersButton.setTitle("Users", forState: .Normal)
         usersButton.addTarget(self, action: #selector(SegmentHeaderView.buttonTouched(_:)), forControlEvents: .TouchUpInside)
-        
+    }
+    
+    func layout() {
         let separator = UIView()
         separator.backgroundColor = UIColor(netHex: 0xDDDDDD)
         separator.widthAnchor.constraintEqualToConstant(1).active = true
@@ -63,39 +75,28 @@ class SegmentHeaderView: UIView {
         hStackView.alignment = .Fill
         hStackView.distribution = .Fill
         
-        hStackView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, forAxis: .Vertical)
-        hStackView.setContentHuggingPriority(UILayoutPriorityDefaultLow, forAxis: .Vertical)
-        
-        label.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, forAxis: .Vertical)
-        label.setContentHuggingPriority(UILayoutPriorityDefaultHigh, forAxis: .Vertical)
-        
-        addSubviews([label, hStackView])
+        addSubviews([titleLabel, hStackView])
         
         let margins = layoutMarginsGuide
         
-        label.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 10).active = true
-        label.bottomAnchor.constraintEqualToAnchor(hStackView.topAnchor, constant: -12).active = true
-        label.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: 8).active = true
-        label.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: -8).active = true
+        titleLabel.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 10).active = true
+        titleLabel.bottomAnchor.constraintEqualToAnchor(hStackView.topAnchor, constant: -12).active = true
+        titleLabel.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: 8).active = true
+        titleLabel.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: -8).active = true
         
         hStackView.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: 1).active = true
         hStackView.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
         hStackView.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        hStackView.heightAnchor.constraintEqualToConstant(43).active = true
     }
     
     func buttonTouched(button: UIButton) {
-        if button.selected {
-            return
-        }
-                
+        if button.selected {return}
+        
         title = reposButton.selected ? .Users : .Repositories
     }
-
-    class TrendingButton: UIButton {
+    
+    class SegmentButton: UIButton {
         private let topBorder = UIView()
         private let bottomBorder = UIView()
         
