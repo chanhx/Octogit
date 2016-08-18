@@ -8,15 +8,38 @@
 
 import UIKit
 
+@objc protocol OptionPickerViewDelegate {
+    func doneButtonClicked()
+}
+
 class OptionPickerView: UIView {
     
     let pickerView = UIPickerView()
     let toolBar = UIToolbar()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    var options: [String?]
+    var selectedRow: [Int]
+    var tmpSelectedRow: [Int?]
+    var index: Int {
+        didSet {
+            pickerView.reloadAllComponents()
+            pickerView.selectRow(tmpSelectedRow[index] ?? selectedRow[index], inComponent: 0, animated: false)
+            configureToolBar()
+        }
+    }
+    weak var delegate: OptionPickerViewDelegate?
+    
+    init(delegate: OptionPickerViewDelegate, optionsCount: Int, index: Int = 0) {
         
-        pickerView.backgroundColor = UIColor.lightGrayColor()
+        self.delegate = delegate
+        options = Array(count: optionsCount, repeatedValue: nil)
+        selectedRow = Array(count: optionsCount, repeatedValue: 0)
+        tmpSelectedRow = Array(count: optionsCount, repeatedValue: nil)
+        self.index = index
+        
+        super.init(frame: CGRectZero)
+        
+        pickerView.backgroundColor = UIColor(netHex: 0xDADADA)
         configureToolBar()
         addSubviews([pickerView, toolBar])
         
@@ -32,11 +55,18 @@ class OptionPickerView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func clearRecord() {
+        options = Array(count: tmpSelectedRow.count, repeatedValue: nil)
+        tmpSelectedRow = Array(count: tmpSelectedRow.count, repeatedValue: nil)
+    }
+    
+    // MARK: toolbar
 
-    func configureToolBar() {
-        let doneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: nil, action: nil)
-        let backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .Plain, target: nil, action: nil)
-        let forwardItem = UIBarButtonItem(image: UIImage(named: "forward"), style: .Plain, target: nil, action: nil)
+    private func configureToolBar() {
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: delegate, action: #selector(delegate?.doneButtonClicked))
+        let previousItem = UIBarButtonItem(image: UIImage(named: "back"), style: .Plain, target: self, action: #selector(previousItemClicked(_:)))
+        let nextItem = UIBarButtonItem(image: UIImage(named: "forward"), style: .Plain, target: self, action: #selector(nextItemClicked(_:)))
         let fixSpace10 = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
         let fixSpace30 = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
@@ -44,7 +74,17 @@ class OptionPickerView: UIView {
         fixSpace10.width = 10
         fixSpace30.width = 30
         
-        toolBar.setItems([fixSpace10, backItem, fixSpace30, forwardItem, flexibleSpace, doneItem, fixSpace10], animated: false)
+        previousItem.enabled = index > 0
+        nextItem.enabled = index < options.count - 1
+        
+        toolBar.setItems([fixSpace10, previousItem, fixSpace30, nextItem, flexibleSpace, doneItem, fixSpace10], animated: false)
     }
     
+    @objc private func previousItemClicked(item: UIBarButtonItem) {
+        index -= 1
+    }
+    
+    @objc private func nextItemClicked(item: UIBarButtonItem) {
+        index += 1
+    }
 }

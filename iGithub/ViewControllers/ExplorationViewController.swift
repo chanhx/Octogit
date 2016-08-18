@@ -8,8 +8,7 @@
 
 import UIKit
 
-class ExplorationViewController: BaseTableViewController, SegmentHeaderViewDelegate, TTTAttributedLabelDelegate,
-                                 UISearchControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class ExplorationViewController: BaseTableViewController, UISearchControllerDelegate {
     
     let viewModel = ExplorationViewModel()
     let headerView = SegmentHeaderView()
@@ -17,7 +16,14 @@ class ExplorationViewController: BaseTableViewController, SegmentHeaderViewDeleg
     var searchController: UISearchController!
     var searchViewController = SearchViewController()
     
-    lazy var pickerView: OptionPickerView = OptionPickerView()
+    lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self, optionsCount: 2)
+    lazy var background: UIView! = {
+        let background = UIView(frame: self.navigationController!.view.window!.bounds)
+        background.frame = self.view.bounds
+        background.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(removePickerView)))
+        background.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
+        return background
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +33,7 @@ class ExplorationViewController: BaseTableViewController, SegmentHeaderViewDeleg
         headerView.delegate = self
         headerView.title = .Repositories
         headerView.titleLabel.delegate = self
-        headerView.pickerView.dataSource = self
-        headerView.pickerView.delegate = self
+        updateTitle()
         
         searchController = UISearchController(searchResultsController: searchViewController)
         
@@ -59,8 +64,9 @@ class ExplorationViewController: BaseTableViewController, SegmentHeaderViewDeleg
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return headerView
     }
-    
-    // MARK: header
+}
+
+extension ExplorationViewController: SegmentHeaderViewDelegate {
     
     func headerView(view: SegmentHeaderView, didSelectSegmentTitle title: SegmentTitle) {
         switch title {
@@ -71,6 +77,12 @@ class ExplorationViewController: BaseTableViewController, SegmentHeaderViewDeleg
         }
         
         viewModel.type = title
+    }
+    
+    func updateTitle() {
+        headerView.titleLabel.text = "Trending For \(viewModel.since.rawValue) in \(viewModel.language)"
+        headerView.titleLabel.addLink(NSURL(string: "Time")!, toText: "\(viewModel.since.rawValue)")
+        headerView.titleLabel.addLink(NSURL(string: "Language")!, toText: "\(viewModel.language)")
     }
     
     func bindToRepoTVM() {
@@ -90,16 +102,41 @@ class ExplorationViewController: BaseTableViewController, SegmentHeaderViewDeleg
             }
             .addDisposableTo(viewModel.userTVM.disposeBag)
     }
+}
+
+extension ExplorationViewController: OptionPickerViewDelegate {
+    func doneButtonClicked() {
+        
+        removePickerView()
+        
+        if let since = pickerView.options[0] {
+            pickerView.selectedRow[0] = pickerView.tmpSelectedRow[0]!
+            viewModel.since = TrendingTime(rawValue: since)!
+        }
+        if let language = pickerView.options[1] {
+            pickerView.selectedRow[1] = pickerView.tmpSelectedRow[1]!
+            viewModel.language = language
+        }
+        updateTitle()
+        pickerView.clearRecord()
+        viewModel.updateOptions()
+    }
+}
+
+extension ExplorationViewController: TTTAttributedLabelDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
     // MARK: TTTAttributedLabelDelegate
     
     func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
         
-        let background = UIView(frame: navigationController!.view.window!.bounds)
-        background.frame = view.bounds
-        background.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(removePickerView(_:))))
-        background.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
         navigationController?.view.window?.addSubview(background)
+        
+        switch url.absoluteString {
+        case "Time":
+            pickerView.index = 0
+        default:
+            pickerView.index = 1
+        }
         
         pickerView.pickerView.dataSource = self
         pickerView.pickerView.delegate = self
@@ -115,17 +152,18 @@ class ExplorationViewController: BaseTableViewController, SegmentHeaderViewDeleg
             self.pickerView.frame = pickerFrame
         }
     }
-
+    
     // MARK: picker view
     
-    func removePickerView(recognizer: UIGestureRecognizer) {
-        recognizer.view!.removeFromSuperview()
+    func removePickerView() {
+        background.removeFromSuperview()
         
         UIView.animateWithDuration(0.2, animations: {
             var frame = self.pickerView.frame
             frame.origin.y += self.pickerView.frame.height
             self.pickerView.frame = frame
         }) { _ in
+            self.pickerView.clearRecord()
             self.pickerView.removeFromSuperview()
         }
     }
@@ -135,10 +173,17 @@ class ExplorationViewController: BaseTableViewController, SegmentHeaderViewDeleg
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 3
+        return self.pickerView.index == 0 ? 3 : viewModel.languages.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return "123"
+        return self.pickerView.index == 0 ?
+            ["today", "this week", "this month"][row] :
+            viewModel.languages[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.pickerView.tmpSelectedRow[self.pickerView.index] = row
+        self.pickerView.options[self.pickerView.index] = self.pickerView(pickerView, titleForRow: row, forComponent: component)
     }
 }

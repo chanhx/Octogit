@@ -26,7 +26,15 @@ class ExplorationViewModel {
     let repoTVM = TrendingRepositoryTableViewModel()
     let userTVM = TrendingUserTableViewModel()
     
-    init(since: TrendingTime = .Today, language: String = "", type: SegmentTitle = .Repositories) {
+    lazy var languages: [String] = {
+        return Array(self.languagesDict.keys).sort(<)
+    }()
+    lazy var languagesDict: [String: String] = {
+        let path = NSBundle.mainBundle().pathForResource("languages", ofType: "plist")
+        return (NSDictionary(contentsOfFile: path!) as! [String: String])
+    }()
+    
+    init(since: TrendingTime = .Today, language: String = "All Languages", type: SegmentTitle = .Repositories) {
         self.since = since
         self.language = language
         self.type = type
@@ -43,7 +51,7 @@ class ExplorationViewModel {
             trendingVM = userTVM
         }
         
-        guard trendingVM.since != since && trendingVM.language != language else {
+        guard trendingVM.since != since || trendingVM.language != language else {
             return
         }
         trendingVM.since = since

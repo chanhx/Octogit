@@ -13,13 +13,13 @@ enum SegmentTitle {
     case Users
 }
 
-protocol SegmentHeaderViewDelegate {
+protocol SegmentHeaderViewDelegate: class {
     func headerView(view: SegmentHeaderView, didSelectSegmentTitle: SegmentTitle)
 }
 
 class SegmentHeaderView: UIView {
     
-    var delegate: SegmentHeaderViewDelegate?
+    weak var delegate: SegmentHeaderViewDelegate?
     var title: SegmentTitle = .Repositories {
         didSet {
             reposButton.selected = title == .Repositories
@@ -30,7 +30,6 @@ class SegmentHeaderView: UIView {
     }
     
     let titleLabel = TTTAttributedLabel(frame: CGRectZero)
-    let pickerView = UIPickerView()
     let reposButton = SegmentButton(type: .Custom)
     let usersButton = SegmentButton(type: .Custom)
     
@@ -54,9 +53,7 @@ class SegmentHeaderView: UIView {
             NSForegroundColorAttributeName: UIColor(netHex: 0x4078C0),
             NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleNone.rawValue
         ]
-        titleLabel.attributedText = Octicon.Flame.iconString("Trending For Today in All Languages", iconSize: 16, iconColor: UIColor.redColor())
-        titleLabel.addLink(NSURL(string: "Time")!, toText: "Today")
-        titleLabel.addLink(NSURL(string: "Language")!, toText: "All Languages")
+//        titleLabel.attributedText = Octicon.Flame.iconString("Trending For Today in All Languages", iconSize: 16, iconColor: UIColor.redColor())
         
         reposButton.setTitle("Repositories", forState: .Normal)
         reposButton.addTarget(self, action: #selector(SegmentHeaderView.buttonTouched(_:)), forControlEvents: .TouchUpInside)

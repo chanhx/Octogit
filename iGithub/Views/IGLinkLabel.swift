@@ -24,7 +24,7 @@ class IGLinkLabel: UILabel {
     private var linkRanges: [LinkRange]?
     private var tappedLinkRange: LinkRange?
     
-    var delegate: IGLinkLabelDelegate?
+    weak var delegate: IGLinkLabelDelegate?
     
     override var attributedText: NSAttributedString? {
         didSet {
