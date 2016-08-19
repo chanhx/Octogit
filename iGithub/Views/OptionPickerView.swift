@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc protocol OptionPickerViewDelegate {
+@objc protocol OptionPickerViewDelegate: UIPickerViewDataSource, UIPickerViewDelegate {
     func doneButtonClicked()
 }
 
@@ -32,6 +32,9 @@ class OptionPickerView: UIView {
     init(delegate: OptionPickerViewDelegate, optionsCount: Int, index: Int = 0) {
         
         self.delegate = delegate
+        pickerView.dataSource = delegate
+        pickerView.delegate = delegate
+        
         options = Array(count: optionsCount, repeatedValue: nil)
         selectedRow = Array(count: optionsCount, repeatedValue: 0)
         tmpSelectedRow = Array(count: optionsCount, repeatedValue: nil)
@@ -54,6 +57,13 @@ class OptionPickerView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func intrinsicContentSize() -> CGSize {
+        return CGSizeMake(
+            toolBar.intrinsicContentSize().width,
+            toolBar.intrinsicContentSize().height + pickerView.intrinsicContentSize().height
+        )
     }
     
     func clearRecord() {

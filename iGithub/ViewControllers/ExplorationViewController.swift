@@ -40,7 +40,6 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
         searchController.searchResultsUpdater = searchViewController
         searchController.searchBar.delegate = searchViewController
         searchController.delegate = self
-        
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = true
         
@@ -79,12 +78,6 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
         viewModel.type = title
     }
     
-    func updateTitle() {
-        headerView.titleLabel.text = "Trending For \(viewModel.since.rawValue) in \(viewModel.language)"
-        headerView.titleLabel.addLink(NSURL(string: "Time")!, toText: "\(viewModel.since.rawValue)")
-        headerView.titleLabel.addLink(NSURL(string: "Language")!, toText: "\(viewModel.language)")
-    }
-    
     func bindToRepoTVM() {
         viewModel.repoTVM.repositories.asObservable()
             .bindTo(tableView.rx_itemsWithCellIdentifier("TrendingRepoCell", cellType: TrendingRepoCell.self)) {
@@ -104,9 +97,64 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
     }
 }
 
-extension ExplorationViewController: OptionPickerViewDelegate {
-    func doneButtonClicked() {
+extension ExplorationViewController: TTTAttributedLabelDelegate {
+    
+    func updateTitle() {
+        headerView.titleLabel.text = "Trending For \(viewModel.since.rawValue) in \(viewModel.language)"
+        headerView.titleLabel.addLink(NSURL(string: "Time")!, toText: viewModel.since.rawValue)
         
+        let language = viewModel.language.stringByReplacingOccurrencesOfString("+", withString: "\\+")
+        headerView.titleLabel.addLink(NSURL(string: "Language")!, toText: language)
+    }
+    
+    // MARK: TTTAttributedLabelDelegate
+    
+    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+        switch url.absoluteString {
+        case "Time":
+            pickerView.index = 0
+        default:
+            pickerView.index = 1
+        }
+        
+        showPickerView()
+    }
+    
+    // MARK: picker view
+    
+    func showPickerView() {
+        navigationController?.view.window?.addSubview(background)
+        
+        var pickerFrame = view.frame
+        pickerFrame.origin.y = view.frame.height
+        pickerFrame.size.height = pickerView.intrinsicContentSize().height
+        pickerView.frame = pickerFrame
+        
+        navigationController?.view.window?.addSubview(pickerView)
+        
+        UIView.animateWithDuration(0.2) {
+            pickerFrame.origin.y -= pickerFrame.size.height
+            self.pickerView.frame = pickerFrame
+        }
+    }
+    
+    func removePickerView() {
+        background.removeFromSuperview()
+        
+        UIView.animateWithDuration(0.2, animations: {
+            var frame = self.pickerView.frame
+            frame.origin.y += self.pickerView.frame.height
+            self.pickerView.frame = frame
+        }) { _ in
+            self.pickerView.clearRecord()
+            self.pickerView.removeFromSuperview()
+        }
+    }
+}
+
+extension ExplorationViewController: OptionPickerViewDelegate {
+    
+    func doneButtonClicked() {
         removePickerView()
         
         if let since = pickerView.options[0] {
@@ -121,65 +169,19 @@ extension ExplorationViewController: OptionPickerViewDelegate {
         pickerView.clearRecord()
         viewModel.updateOptions()
     }
-}
-
-extension ExplorationViewController: TTTAttributedLabelDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
-    
-    // MARK: TTTAttributedLabelDelegate
-    
-    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
-        
-        navigationController?.view.window?.addSubview(background)
-        
-        switch url.absoluteString {
-        case "Time":
-            pickerView.index = 0
-        default:
-            pickerView.index = 1
-        }
-        
-        pickerView.pickerView.dataSource = self
-        pickerView.pickerView.delegate = self
-        let viewFrame = view.frame
-        var pickerFrame = viewFrame
-        pickerFrame.size.height = pickerView.toolBar.intrinsicContentSize().height + pickerView.pickerView.intrinsicContentSize().height
-        pickerFrame.origin.y = viewFrame.height
-        pickerView.frame = pickerFrame
-        navigationController?.view.window?.addSubview(pickerView)
-        
-        UIView.animateWithDuration(0.2) {
-            pickerFrame.origin.y = viewFrame.height - pickerFrame.size.height
-            self.pickerView.frame = pickerFrame
-        }
-    }
-    
-    // MARK: picker view
-    
-    func removePickerView() {
-        background.removeFromSuperview()
-        
-        UIView.animateWithDuration(0.2, animations: {
-            var frame = self.pickerView.frame
-            frame.origin.y += self.pickerView.frame.height
-            self.pickerView.frame = frame
-        }) { _ in
-            self.pickerView.clearRecord()
-            self.pickerView.removeFromSuperview()
-        }
-    }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.pickerView.index == 0 ? 3 : viewModel.languages.count
+        return self.pickerView.index == 0 ? 3 : languages.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.pickerView.index == 0 ?
             ["today", "this week", "this month"][row] :
-            viewModel.languages[row]
+            languages[row]
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

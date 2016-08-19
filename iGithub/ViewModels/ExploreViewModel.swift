@@ -13,6 +13,11 @@ import Kanna
 import ObjectMapper
 //import Result
 
+var languages: [String] = {
+    let path = NSBundle.mainBundle().pathForResource("languages", ofType: "plist")
+    return Array((NSDictionary(contentsOfFile: path!) as! [String: String]).keys).sort(<)
+}()
+
 class ExplorationViewModel {
     
     var since: TrendingTime
@@ -25,14 +30,6 @@ class ExplorationViewModel {
 
     let repoTVM = TrendingRepositoryTableViewModel()
     let userTVM = TrendingUserTableViewModel()
-    
-    lazy var languages: [String] = {
-        return Array(self.languagesDict.keys).sort(<)
-    }()
-    lazy var languagesDict: [String: String] = {
-        let path = NSBundle.mainBundle().pathForResource("languages", ofType: "plist")
-        return (NSDictionary(contentsOfFile: path!) as! [String: String])
-    }()
     
     init(since: TrendingTime = .Today, language: String = "All Languages", type: SegmentTitle = .Repositories) {
         self.since = since
