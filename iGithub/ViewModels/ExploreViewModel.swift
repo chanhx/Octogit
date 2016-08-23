@@ -15,7 +15,7 @@ import ObjectMapper
 
 var languages: [String] = {
     let path = NSBundle.mainBundle().pathForResource("languages", ofType: "plist")
-    return Array((NSDictionary(contentsOfFile: path!) as! [String: String]).keys).sort(<)
+    return NSArray(contentsOfFile: path!) as! [String]
 }()
 
 class ExplorationViewModel {

@@ -87,7 +87,11 @@ class OptionPickerView: UIView {
         previousItem.enabled = index > 0
         nextItem.enabled = index < options.count - 1
         
-        toolBar.setItems([fixSpace10, previousItem, fixSpace30, nextItem, flexibleSpace, doneItem, fixSpace10], animated: false)
+        if options.count <= 1 {
+            toolBar.setItems([flexibleSpace, doneItem, fixSpace10], animated: false)
+        } else {
+            toolBar.setItems([fixSpace10, previousItem, fixSpace30, nextItem, flexibleSpace, doneItem, fixSpace10], animated: false)
+        }
     }
     
     @objc private func previousItemClicked(item: UIBarButtonItem) {

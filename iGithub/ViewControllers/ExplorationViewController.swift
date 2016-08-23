@@ -100,7 +100,7 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
 extension ExplorationViewController: TTTAttributedLabelDelegate {
     
     func updateTitle() {
-        headerView.titleLabel.text = "Trending For \(viewModel.since.rawValue) in \(viewModel.language)"
+        headerView.titleLabel.text = "Trending for \(viewModel.since.rawValue) in \(viewModel.language)"
         headerView.titleLabel.addLink(NSURL(string: "Time")!, toText: viewModel.since.rawValue)
         
         let language = viewModel.language.stringByReplacingOccurrencesOfString("+", withString: "\\+")
@@ -130,7 +130,7 @@ extension ExplorationViewController: TTTAttributedLabelDelegate {
         pickerFrame.size.height = pickerView.intrinsicContentSize().height
         pickerView.frame = pickerFrame
         
-        navigationController?.view.window?.addSubview(pickerView)
+        UIApplication.sharedApplication().windows.last?.addSubview(pickerView)
         
         UIView.animateWithDuration(0.2) {
             pickerFrame.origin.y -= pickerFrame.size.height
