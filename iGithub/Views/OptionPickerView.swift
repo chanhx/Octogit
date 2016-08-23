@@ -17,7 +17,6 @@ class OptionPickerView: UIView {
     let pickerView = UIPickerView()
     let toolBar = UIToolbar()
     
-    var options: [String?]
     var selectedRow: [Int]
     var tmpSelectedRow: [Int?]
     var index: Int {
@@ -35,7 +34,6 @@ class OptionPickerView: UIView {
         pickerView.dataSource = delegate
         pickerView.delegate = delegate
         
-        options = Array(count: optionsCount, repeatedValue: nil)
         selectedRow = Array(count: optionsCount, repeatedValue: 0)
         tmpSelectedRow = Array(count: optionsCount, repeatedValue: nil)
         self.index = index
@@ -67,7 +65,6 @@ class OptionPickerView: UIView {
     }
     
     func clearRecord() {
-        options = Array(count: tmpSelectedRow.count, repeatedValue: nil)
         tmpSelectedRow = Array(count: tmpSelectedRow.count, repeatedValue: nil)
     }
     
@@ -85,9 +82,9 @@ class OptionPickerView: UIView {
         fixSpace30.width = 30
         
         previousItem.enabled = index > 0
-        nextItem.enabled = index < options.count - 1
+        nextItem.enabled = index < selectedRow.count - 1
         
-        if options.count <= 1 {
+        if selectedRow.count <= 1 {
             toolBar.setItems([flexibleSpace, doneItem, fixSpace10], animated: false)
         } else {
             toolBar.setItems([fixSpace10, previousItem, fixSpace30, nextItem, flexibleSpace, doneItem, fixSpace10], animated: false)

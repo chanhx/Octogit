@@ -22,16 +22,23 @@ class ExplorationViewModel {
     
     var since: TrendingTime
     var language: String
-    var type: SegmentTitle {
+    var type: TrendingType {
         didSet {
             updateOptions()
         }
     }
 
+    let pickerVM = PickerViewModel()
     let repoTVM = TrendingRepositoryTableViewModel()
     let userTVM = TrendingUserTableViewModel()
     
-    init(since: TrendingTime = .Today, language: String = "All Languages", type: SegmentTitle = .Repositories) {
+    var timeOptions: [String] {
+        get {
+            return pickerVM.timeOptions.map {$0.desc}
+        }
+    }
+    
+    init(since: TrendingTime = .Today, language: String = "All Languages", type: TrendingType = .Repositories) {
         self.since = since
         self.language = language
         self.type = type
@@ -58,6 +65,18 @@ class ExplorationViewModel {
 }
 
 // MARK: SubViewModels
+
+class PickerViewModel {
+    
+    let timeOptions: [(time: TrendingTime, desc: String)] = [
+        (.Today, "today"),
+        (.ThisWeek, "this week"),
+        (.ThisMonth, "this month")
+    ]
+    
+//    var selectedIndexes = [0, 0]
+    
+}
 
 protocol TrendingViewModelProtocol {
     var disposeBag: DisposeBag { get }

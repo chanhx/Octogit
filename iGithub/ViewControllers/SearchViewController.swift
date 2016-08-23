@@ -77,7 +77,7 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
 
 extension SearchViewController: SegmentHeaderViewDelegate {
     
-    func headerView(view: SegmentHeaderView, didSelectSegmentTitle title: SegmentTitle) {
+    func headerView(view: SegmentHeaderView, didSelectSegmentTitle title: TrendingType) {
         switch title {
         case .Repositories:
             bindToRepoTVM()

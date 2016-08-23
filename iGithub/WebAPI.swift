@@ -33,15 +33,15 @@ let WebProvider = RxMoyaProvider<WebAPI>()
 // MARK: - Provider support
 
 enum TrendingTime: String {
-    case Today = "today"
-    case ThisWeek = "this week"
-    case ThisMonth = "this month"
+    case Today = "daily"
+    case ThisWeek = "weekly"
+    case ThisMonth = "monthly"
 }
 
 enum WebAPI {
     case Authorize
     case AccessToken(code: String)
-    case Trending(since: TrendingTime, language: String, type: SegmentTitle)
+    case Trending(since: TrendingTime, language: String, type: TrendingType)
 }
 
 extension WebAPI: TargetType {
@@ -50,7 +50,7 @@ extension WebAPI: TargetType {
         switch self {
         case .Authorize:
             return "/login/oauth/authorize"
-        case .AccessToken(_):
+        case .AccessToken:
             return "/login/oauth/access_token"
         case .Trending(_, _, let type):
             switch type {
@@ -77,16 +77,7 @@ extension WebAPI: TargetType {
         case .AccessToken(let code):
             return ["client_id": OAuthConfiguration.clientID, "client_secret": OAuthConfiguration.clientSecret, "code": code]
         case .Trending(let since, let language, _):
-            var time: String
-            switch since {
-            case .Today:
-                time = "daily"
-            case .ThisWeek:
-                time = "weekly"
-            case .ThisMonth:
-                time = "monthly"
-            }
-            return ["since": time, "l": language]
+            return ["since": since.rawValue, "l": language]
         }
     }
     var sampleData: NSData {

@@ -67,7 +67,7 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
 
 extension ExplorationViewController: SegmentHeaderViewDelegate {
     
-    func headerView(view: SegmentHeaderView, didSelectSegmentTitle title: SegmentTitle) {
+    func headerView(view: SegmentHeaderView, didSelectSegmentTitle title: TrendingType) {
         switch title {
         case .Repositories:
             bindToRepoTVM()
@@ -100,8 +100,9 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
 extension ExplorationViewController: TTTAttributedLabelDelegate {
     
     func updateTitle() {
-        headerView.titleLabel.text = "Trending for \(viewModel.since.rawValue) in \(viewModel.language)"
-        headerView.titleLabel.addLink(NSURL(string: "Time")!, toText: viewModel.since.rawValue)
+        let time = viewModel.pickerVM.timeOptions[pickerView.selectedRow[0]].desc
+        headerView.titleLabel.text = "Trending for \(time) in \(viewModel.language)"
+        headerView.titleLabel.addLink(NSURL(string: "Time")!, toText: time)
         
         let language = viewModel.language.stringByReplacingOccurrencesOfString("+", withString: "\\+")
         headerView.titleLabel.addLink(NSURL(string: "Language")!, toText: language)
@@ -157,17 +158,17 @@ extension ExplorationViewController: OptionPickerViewDelegate {
     func doneButtonClicked() {
         removePickerView()
         
-        if let since = pickerView.options[0] {
-            pickerView.selectedRow[0] = pickerView.tmpSelectedRow[0]!
-            viewModel.since = TrendingTime(rawValue: since)!
+        if let row0 = pickerView.tmpSelectedRow[0] {
+            pickerView.selectedRow[0] = row0
+            viewModel.since = viewModel.pickerVM.timeOptions[row0].time
         }
-        if let language = pickerView.options[1] {
-            pickerView.selectedRow[1] = pickerView.tmpSelectedRow[1]!
-            viewModel.language = language
+        if let row1 = pickerView.tmpSelectedRow[1] {
+            pickerView.selectedRow[1] = row1
+            viewModel.language = languages[row1]
         }
+        viewModel.updateOptions()
         updateTitle()
         pickerView.clearRecord()
-        viewModel.updateOptions()
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
@@ -179,13 +180,10 @@ extension ExplorationViewController: OptionPickerViewDelegate {
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.pickerView.index == 0 ?
-            ["today", "this week", "this month"][row] :
-            languages[row]
+        return self.pickerView.index == 0 ? viewModel.timeOptions[row] : languages[row]
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.pickerView.tmpSelectedRow[self.pickerView.index] = row
-        self.pickerView.options[self.pickerView.index] = self.pickerView(pickerView, titleForRow: row, forComponent: component)
     }
 }

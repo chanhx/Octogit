@@ -50,11 +50,17 @@ class SearchViewModel {
     ]
     
     let reposSortOptions: [(option: RepositoriesSearchSort, desc: String)] = [
-        (.Default, "Best match"), (.Stars, "Most stars"), (.Forks, "Most forks"), (.Updated, "Recently updated")
+        (.Default, "Best match"),
+        (.Stars, "Most stars"),
+        (.Forks, "Most forks"),
+        (.Updated, "Recently updated")
     ]
     
     let usersSortOptions: [(option: UsersSearchSort, desc: String)] = [
-        (.Default, "Best match"), (.Followers, "Most followers"), (.Repositories, "Most repositories"), (.Joined, "Recently joined")
+        (.Default, "Best match"),
+        (.Followers, "Most followers"),
+        (.Repositories, "Most repositories"),
+        (.Joined, "Recently joined")
     ]
     
     func search(query: String) {

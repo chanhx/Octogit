@@ -8,19 +8,19 @@
 
 import UIKit
 
-enum SegmentTitle {
+enum TrendingType {
     case Repositories
     case Users
 }
 
 protocol SegmentHeaderViewDelegate: class {
-    func headerView(view: SegmentHeaderView, didSelectSegmentTitle: SegmentTitle)
+    func headerView(view: SegmentHeaderView, didSelectSegmentTitle: TrendingType)
 }
 
 class SegmentHeaderView: UIView {
     
     weak var delegate: SegmentHeaderViewDelegate?
-    var title: SegmentTitle = .Repositories {
+    var title: TrendingType = .Repositories {
         didSet {
             reposButton.selected = title == .Repositories
             usersButton.selected = title == .Users
