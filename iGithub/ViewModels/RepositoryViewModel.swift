@@ -57,11 +57,11 @@ class RepositoryViewModel {
         switch section {
         case 0:
             guard let desc = repository.value.repoDescription else {
-                return 1
+                return 2
             }
             
-            let trimmedDesc = desc.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            return trimmedDesc.characters.count == 0 ? 1 : 2
+            let trimmedDesc = desc.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+            return trimmedDesc.characters.count == 0 ? 2 : 3
         case 1:
             return 5
         default:

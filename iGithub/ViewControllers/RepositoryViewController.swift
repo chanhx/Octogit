@@ -83,9 +83,13 @@ class RepositoryViewController: BaseTableViewController {
                 cell.accessoryType = .DisclosureIndicator
                 
                 return cell
+            case viewModel.numberOfRowsInSection(0) - 1:
+                let cell = UITableViewCell()
+                cell.accessoryType = .DisclosureIndicator
+                cell.textLabel?.attributedText = Octicon.Book.iconString(" README", iconSize: 18, iconColor: .grayColor())
+                return cell
             default:
                 let cell = UITableViewCell()
-                cell.accessoryType = .None
                 cell.selectionStyle = .None
                 cell.textLabel?.numberOfLines = 0
                 cell.textLabel?.lineBreakMode = .ByWordWrapping
@@ -94,25 +98,31 @@ class RepositoryViewController: BaseTableViewController {
             }
         case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier("RepositoryInfoCell", forIndexPath: indexPath)
-            cell.textLabel?.font = UIFont.OcticonOfSize(18)
             switch indexPath.row {
             case 0:
-                cell.textLabel?.text = "\(Octicon.IssueOpened) Issues"
+                cell.textLabel?.attributedText = Octicon.IssueOpened.iconString(" Issues", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             case 1:
-                cell.textLabel?.text = "\(Octicon.Tag) Releases"
+                cell.textLabel?.attributedText = Octicon.Tag.iconString(" Releases", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             case 2:
-                cell.textLabel?.text = "\(Octicon.Rss) Recent Activity"
+                cell.textLabel?.attributedText = Octicon.Rss.iconString(" Recent Activity", iconSize: 18, iconColor: .grayColor())
             case 3:
-                cell.textLabel?.text = "\(Octicon.Organization) Contributors"
+                cell.textLabel?.attributedText = Octicon.Organization.iconString(" Contributors", iconSize: 18, iconColor: .lightGrayColor())
             case 4:
-                cell.textLabel?.text = "\(Octicon.GitPullRequest) Pull Requests"
+                cell.textLabel?.attributedText = Octicon.GitPullRequest.iconString(" Pull Requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             default: break
             }
             return cell
         case 2:
             let cell = UITableViewCell()
             cell.accessoryType = .DisclosureIndicator
-            cell.textLabel?.text = indexPath.row == 0 ? "Code" : "Commmits"
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.attributedText = Octicon.Code.iconString(" Code", iconSize: 18, iconColor: .lightGrayColor())
+            case 1:
+                cell.textLabel?.attributedText = Octicon.GitCommit.iconString(" Commits", iconSize: 18, iconColor: .lightGrayColor())
+            default:
+                break
+            }
             
             return cell
         default:

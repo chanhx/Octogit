@@ -14,6 +14,7 @@ class Repository: BaseModel {
     var id: Int?
     var name: String?
     var fullName: String?
+    var homepage: NSURL?
     var repoDescription: String?
     var language: String?
     
@@ -43,6 +44,7 @@ class Repository: BaseModel {
         id              <- map["id"]
         name            <- map["name"]
         fullName        <- map["full_name"]
+        homepage        <- map["homepage"]
         repoDescription <- map["description"]
         language        <- map["language"]
         
