@@ -86,19 +86,29 @@ class UserViewController: BaseTableViewController {
         switch (indexPath.section, viewModel.details.count) {
         case (0, 0), (1, 1...4):
             cell.accessoryType = .DisclosureIndicator
-            cell.textLabel?.text = ["Public activity", "Starrd repositories", "Gitsts"][indexPath.row]
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.attributedText = Octicon.Rss.iconString(" Public activity", iconSize: 18, iconColor: .lightGrayColor())
+            case 1:
+                cell.textLabel?.attributedText = Octicon.Star.iconString(" Starrd repositories", iconSize: 18, iconColor: .lightGrayColor())
+            case 2:
+                cell.textLabel?.attributedText = Octicon.Gist.iconString(" Gitsts", iconSize: 18, iconColor: .lightGrayColor())
+            default:
+                break
+            }
             
             return cell
         case (0, 1...4):
             switch viewModel.details[indexPath.row] {
             case .Company:
-                cell.textLabel?.text = "Company     \(viewModel.user.value.company!)"
+                cell.textLabel?.attributedText = Octicon.Organization.iconString(" \(viewModel.user.value.company!)", iconSize: 18, iconColor: .lightGrayColor())
             case .Location:
-                cell.textLabel?.text = "Location    \(viewModel.user.value.location!)"
+                cell.textLabel?.attributedText = Octicon.Location.iconString(" \(viewModel.user.value.location!)", iconSize: 18, iconColor: .lightGrayColor())
             case .Email:
-                cell.textLabel?.text = "Email       \(viewModel.user.value.email!)"
+                cell.textLabel?.attributedText = Octicon.Mail.iconString(" \(viewModel.user.value.email!)", iconSize: 18, iconColor: .lightGrayColor())
             case .Blog:
-                cell.textLabel?.text = "Blog        \(viewModel.user.value.blog!)"
+                cell.textLabel?.attributedText = Octicon.Link.iconString(" \(viewModel.user.value.blog!)", iconSize: 18, iconColor: .lightGrayColor())
+                cell.accessoryType = .DisclosureIndicator
             }
             
             return cell
@@ -114,16 +124,23 @@ class UserViewController: BaseTableViewController {
         super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
         
         switch (indexPath.section, viewModel.details.count) {
+        case (0, 1...4):
+            switch viewModel.details[indexPath.row] {
+            case .Blog:
+                navigationController?.pushViewController(URLRouter.viewControllerForURL(viewModel.user.value.blog!), animated: true)
+            default:
+                break
+            }
         case (0, 0), (1, 1...4):
             switch indexPath.row {
             case 0:
                 let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EventTVC") as! EventTableViewController
                 eventTVC.viewModel = EventTableViewModel(user: viewModel.user.value, type: .Performed)
-                self.navigationController?.pushViewController(eventTVC, animated: true)
+                navigationController?.pushViewController(eventTVC, animated: true)
             case 1:
                 let repositoryTVC = RepositoryTableViewController()
                 repositoryTVC.viewModel = RepositoryTableViewModel(stargazer: viewModel.user.value)
-                self.navigationController?.pushViewController(repositoryTVC, animated: true)
+                navigationController?.pushViewController(repositoryTVC, animated: true)
             default:
                 break
             }
@@ -132,6 +149,24 @@ class UserViewController: BaseTableViewController {
         default:
             break
         }
+    }
+    
+    @IBAction func showFollowers() {
+        let userTVC = UserTableViewController()
+        userTVC.viewModel = UserTableViewModel(followersOf: viewModel.user.value)
+        navigationController?.pushViewController(userTVC, animated: true)
+    }
+    
+    @IBAction func showRepositories() {
+        let repoTVC = RepositoryTableViewController()
+        repoTVC.viewModel = RepositoryTableViewModel(user: viewModel.user.value)
+        navigationController?.pushViewController(repoTVC, animated: true)
+    }
+    
+    @IBAction func showFollowings() {
+        let userTVC = UserTableViewController()
+        userTVC.viewModel = UserTableViewModel(followedBy: viewModel.user.value)
+        navigationController?.pushViewController(userTVC, animated: true)
     }
 
 }

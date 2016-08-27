@@ -25,7 +25,7 @@ class User: BaseModel, CustomStringConvertible {
     var gravatarID: String?
     var type: UserType?
     var company: String?
-    var blog: String?
+    var blog: NSURL?
     var location: String?
     var email: String?
     var orgDescription: String?
@@ -46,7 +46,7 @@ class User: BaseModel, CustomStringConvertible {
         gravatarID      <- map["gravatar_id"]
         type            <- map["type"]
         company         <- map["company"]
-        blog            <- map["blog"]
+        blog            <- (map["blog"], URLTransform())
         location        <- map["location"]
         email           <- map["email"]
         orgDescription  <- map["description"]

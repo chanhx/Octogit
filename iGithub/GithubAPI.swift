@@ -30,6 +30,8 @@ enum UsersSearchSort: String {
 }
 
 enum GithubAPI {
+    case FollowedBy(user: String)
+    case FollowersOf(user: String)
     case GetARepository(repo: String)
     case GetContents(repo: String, path: String)
     case OAuthUser(accessToken: String)
@@ -55,6 +57,10 @@ extension GithubAPI: TargetType {
     var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     var path: String {
         switch self {
+        case .FollowedBy(let user):
+            return "/users/\(user)/following"
+        case .FollowersOf(let user):
+            return "/users/\(user)/followers"
         case .GetARepository(let repo):
             return "/repos/\(repo)"
         case .GetContents(let repo, let path):

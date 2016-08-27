@@ -27,6 +27,16 @@ class UserTableViewModel: BaseTableViewModel<User> {
         super.init()
     }
     
+    init(followedBy user: User) {
+        token = .FollowedBy(user: user.login!)
+        super.init()
+    }
+    
+    init(followersOf user: User) {
+        token = .FollowersOf(user: user.login!)
+        super.init()
+    }
+    
     override func fetchData() {
         GithubProvider
             .request(token)

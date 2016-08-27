@@ -432,14 +432,23 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGN-AG-Skv" customClass="CountButton" customModule="iGithub" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="65" height="72.5"/>
                                             <state key="normal" title="Followers"/>
+                                            <connections>
+                                                <action selector="showFollowers" destination="pQL-K4-C6r" eventType="touchUpInside" id="mL4-bL-WPp"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="99v-fH-cxy" customClass="CountButton" customModule="iGithub" customModuleProvider="target">
                                             <rect key="frame" x="210" y="0.0" width="86" height="72.5"/>
                                             <state key="normal" title="Repositories"/>
+                                            <connections>
+                                                <action selector="showRepositories" destination="pQL-K4-C6r" eventType="touchUpInside" id="LOP-ZS-J7s"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JfX-pb-zp9" customClass="CountButton" customModule="iGithub" customModuleProvider="target">
                                             <rect key="frame" x="441" y="0.0" width="65" height="72.5"/>
                                             <state key="normal" title="Following"/>
+                                            <connections>
+                                                <action selector="showFollowings" destination="pQL-K4-C6r" eventType="touchUpInside" id="iMs-D6-Em7"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </stackView>
