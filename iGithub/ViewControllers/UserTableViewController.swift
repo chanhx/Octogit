@@ -18,6 +18,22 @@ class UserTableViewController: BaseTableViewController {
                     cell.entity = element
                 }
                 .addDisposableTo(viewModel.disposeBag)
+            
+            tableView.rx_itemSelected
+                .map {
+                    self.viewModel.dataSource.value[$0.row]
+                }.subscribeNext {
+                    switch $0.type! {
+                    case .User:
+                        let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserVC") as! UserViewController
+                        userVC.viewModel = UserViewModel($0)
+                        self.navigationController?.pushViewController(userVC, animated: true)
+                    case .Organization:
+                        let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("OrgVC") as! OrganizationViewController
+                        orgVC.viewModel = OrganizationViewModel($0)
+                        self.navigationController?.pushViewController(orgVC, animated: true)
+                    }
+                }.addDisposableTo(viewModel.disposeBag)
         }
     }
     

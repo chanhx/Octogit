@@ -20,6 +20,10 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                     cell.titleLabel.delegate = self
                     cell.contentLabel.delegate = self
                     cell.selectionStyle = .None
+                    
+                    cell.titleLabel.tag = row
+                    cell.avatarView.tag = row
+                    cell.avatarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.avatarTapped)))
                 }
                 .addDisposableTo(viewModel.disposeBag)
         }
@@ -34,8 +38,28 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
     }
     
     func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+        let row = label.tag
+        let user = viewModel.dataSource.value[row].actor!
+        
+        guard url.absoluteString != "/\(user)" else {
+            showUser(user)
+            return
+        }
+        
         let vc = URLRouter.viewControllerForURL(url)
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func avatarTapped(recognizer: UITapGestureRecognizer) {
+        let row = recognizer.view?.tag
+        let user = viewModel.dataSource.value[row!].actor!
+        showUser(user)
+    }
+    
+    func showUser(user: User) {
+        let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserVC") as! UserViewController
+        userVC.viewModel = UserViewModel(user)
+        navigationController?.pushViewController(userVC, animated: true)
     }
     
 }

@@ -41,6 +41,12 @@ class UserViewController: BaseTableViewController {
                         self.followersButton.setTitle(user.followers, title: "Followers")
                         self.repositoriesButton.setTitle(user.publicRepos, title: "Repositories")
                         self.followingButton.setTitle(user.following, title: "Following")
+                        if let bio = user.bio {
+                            self.bioLabel.text = bio
+                            self.bioLabel.hidden = false
+                        } else {
+                            self.bioLabel.hidden = true
+                        }
                         
                         if let headerView = self.tableView.tableHeaderView {
                             let height = headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
