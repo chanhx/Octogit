@@ -51,6 +51,7 @@
 		C55791531D73E71300FBBD41 /* RefreshComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791521D73E71300FBBD41 /* RefreshComponent.swift */; };
 		C55791551D74392600FBBD41 /* UIScrollView+RefreshComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791541D74392600FBBD41 /* UIScrollView+RefreshComponent.swift */; };
 		C55791571D743A2D00FBBD41 /* RefreshFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791561D743A2D00FBBD41 /* RefreshFooter.swift */; };
+		C55791591D76E50900FBBD41 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791581D76E50900FBBD41 /* LoadingIndicator.swift */; };
 		C55E08491D4701A20004EC7C /* content.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C55E08481D4701A20004EC7C /* content.mustache */; };
 		C55E08521D4786EB0004EC7C /* Prism in Resources */ = {isa = PBXBuildFile; fileRef = C55E08511D4786EB0004EC7C /* Prism */; };
 		C55E08541D478E8E0004EC7C /* common.css in Resources */ = {isa = PBXBuildFile; fileRef = C55E08531D478E8E0004EC7C /* common.css */; };
@@ -167,6 +168,7 @@
 		C55791521D73E71300FBBD41 /* RefreshComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshComponent.swift; sourceTree = "<group>"; };
 		C55791541D74392600FBBD41 /* UIScrollView+RefreshComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+RefreshComponent.swift"; sourceTree = "<group>"; };
 		C55791561D743A2D00FBBD41 /* RefreshFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshFooter.swift; sourceTree = "<group>"; };
+		C55791581D76E50900FBBD41 /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		C55E08481D4701A20004EC7C /* content.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = content.mustache; sourceTree = "<group>"; };
 		C55E08511D4786EB0004EC7C /* Prism */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Prism; sourceTree = "<group>"; };
 		C55E08531D478E8E0004EC7C /* common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = common.css; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				C5E733821D5EEE8C00913A66 /* TrendingRepoCell.swift */,
 				C5E733841D603A8E00913A66 /* SegmentHeaderView.swift */,
 				C571EF571D64836100F752EE /* OptionPickerView.swift */,
+				C55791581D76E50900FBBD41 /* LoadingIndicator.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -707,6 +710,7 @@
 				C538FD151D40A40B003A559E /* IssueComment.swift in Sources */,
 				C538FD4C1D44FB2E003A559E /* FileViewModel.swift in Sources */,
 				C538FD4E1D44FB79003A559E /* File.swift in Sources */,
+				C55791591D76E50900FBBD41 /* LoadingIndicator.swift in Sources */,
 				C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */,
 				C55791571D743A2D00FBBD41 /* RefreshFooter.swift in Sources */,
 				C538FD471D4491DE003A559E /* Event+DataProcess.swift in Sources */,

@@ -11,7 +11,7 @@ import RxCocoa
 class RefreshFooter: RefreshComponent {
     
     private var kvoContext: UInt8 = 0
-    private let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    private let indicator = LoadingIndicator(lineWidth: 3)
     
     private var target: AnyObject?
     private var selector: Selector?
@@ -25,6 +25,7 @@ class RefreshFooter: RefreshComponent {
             switch state {
             case .Idle, .NoMoreData:
                 scrollView.contentInset.bottom -= RefreshComponentHeight
+                indicator.stopAnimating()
                 hidden = true
             case .Draging:
                 hidden = false
@@ -32,6 +33,7 @@ class RefreshFooter: RefreshComponent {
                 hidden = false
             case .Refreshing:
                 scrollView.contentInset.bottom += RefreshComponentHeight
+                indicator.startAnimating()
                 if let selector = self.selector {
                     target?.performSelector(selector)
                 }
@@ -68,7 +70,8 @@ class RefreshFooter: RefreshComponent {
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
         indicator.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
-        indicator.startAnimating()
+        indicator.heightAnchor.constraintEqualToConstant(40).active = true
+        indicator.widthAnchor.constraintEqualToConstant(40).active = true
         
         hidden = true
     }
