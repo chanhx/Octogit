@@ -48,6 +48,9 @@
 		C538FD521D459DC7003A559E /* FileTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD511D459DC7003A559E /* FileTableViewModel.swift */; };
 		C538FD541D45A0A2003A559E /* FileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD531D45A0A2003A559E /* FileCell.swift */; };
 		C538FD571D461852003A559E /* FileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD561D461852003A559E /* FileViewController.swift */; };
+		C55791531D73E71300FBBD41 /* RefreshComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791521D73E71300FBBD41 /* RefreshComponent.swift */; };
+		C55791551D74392600FBBD41 /* UIScrollView+RefreshComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791541D74392600FBBD41 /* UIScrollView+RefreshComponent.swift */; };
+		C55791571D743A2D00FBBD41 /* RefreshFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791561D743A2D00FBBD41 /* RefreshFooter.swift */; };
 		C55E08491D4701A20004EC7C /* content.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C55E08481D4701A20004EC7C /* content.mustache */; };
 		C55E08521D4786EB0004EC7C /* Prism in Resources */ = {isa = PBXBuildFile; fileRef = C55E08511D4786EB0004EC7C /* Prism */; };
 		C55E08541D478E8E0004EC7C /* common.css in Resources */ = {isa = PBXBuildFile; fileRef = C55E08531D478E8E0004EC7C /* common.css */; };
@@ -161,6 +164,9 @@
 		C538FD511D459DC7003A559E /* FileTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTableViewModel.swift; sourceTree = "<group>"; };
 		C538FD531D45A0A2003A559E /* FileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCell.swift; sourceTree = "<group>"; };
 		C538FD561D461852003A559E /* FileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileViewController.swift; sourceTree = "<group>"; };
+		C55791521D73E71300FBBD41 /* RefreshComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshComponent.swift; sourceTree = "<group>"; };
+		C55791541D74392600FBBD41 /* UIScrollView+RefreshComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+RefreshComponent.swift"; sourceTree = "<group>"; };
+		C55791561D743A2D00FBBD41 /* RefreshFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshFooter.swift; sourceTree = "<group>"; };
 		C55E08481D4701A20004EC7C /* content.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = content.mustache; sourceTree = "<group>"; };
 		C55E08511D4786EB0004EC7C /* Prism */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Prism; sourceTree = "<group>"; };
 		C55E08531D478E8E0004EC7C /* common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = common.css; sourceTree = "<group>"; };
@@ -302,6 +308,7 @@
 		C538FD231D40DB11003A559E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C55791511D73E69800FBBD41 /* Refresh */,
 				C538FD421D43BDE5003A559E /* StatusCell.swift */,
 				C538FD241D40DB70003A559E /* EventCell.swift */,
 				C538FD531D45A0A2003A559E /* FileCell.swift */,
@@ -326,6 +333,16 @@
 				C59D120D1D5AE2DD0098301A /* NSURL+Github.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C55791511D73E69800FBBD41 /* Refresh */ = {
+			isa = PBXGroup;
+			children = (
+				C55791521D73E71300FBBD41 /* RefreshComponent.swift */,
+				C55791561D743A2D00FBBD41 /* RefreshFooter.swift */,
+				C55791541D74392600FBBD41 /* UIScrollView+RefreshComponent.swift */,
+			);
+			path = Refresh;
 			sourceTree = "<group>";
 		};
 		C5DB94561D3F842000887E81 = {
@@ -640,6 +657,7 @@
 				C5E733881D61C90000913A66 /* SearchViewController.swift in Sources */,
 				C5373C4B1D4B7C2D006CFB83 /* OrganizationViewController.swift in Sources */,
 				C5819ACA1D4F6C6A009D7772 /* IssueViewModel.swift in Sources */,
+				C55791531D73E71300FBBD41 /* RefreshComponent.swift in Sources */,
 				C5E733851D603A8E00913A66 /* SegmentHeaderView.swift in Sources */,
 				C5C4D9531D49B3FD007C1891 /* UserViewController.swift in Sources */,
 				C538FD521D459DC7003A559E /* FileTableViewModel.swift in Sources */,
@@ -660,6 +678,7 @@
 				C538FD541D45A0A2003A559E /* FileCell.swift in Sources */,
 				C538FD0D1D40A336003A559E /* Commit.swift in Sources */,
 				C538FD111D40A3C2003A559E /* PullRequestComment.swift in Sources */,
+				C55791551D74392600FBBD41 /* UIScrollView+RefreshComponent.swift in Sources */,
 				C5819ABB1D4CF3D4009D7772 /* RepositoryCell.swift in Sources */,
 				C5F4BDF71D3FB37A009DF758 /* WebAPI.swift in Sources */,
 				C5373C4F1D4B97F6006CFB83 /* UserTableViewModel.swift in Sources */,
@@ -689,6 +708,7 @@
 				C538FD4C1D44FB2E003A559E /* FileViewModel.swift in Sources */,
 				C538FD4E1D44FB79003A559E /* File.swift in Sources */,
 				C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */,
+				C55791571D743A2D00FBBD41 /* RefreshFooter.swift in Sources */,
 				C538FD471D4491DE003A559E /* Event+DataProcess.swift in Sources */,
 				C538FD391D430FB3003A559E /* RepositoryViewModel.swift in Sources */,
 				C52474281D50F06A0001D9CD /* WebViewCell.swift in Sources */,

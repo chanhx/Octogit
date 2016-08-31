@@ -24,12 +24,7 @@ class UserViewController: BaseTableViewController {
     
     var viewModel: UserViewModel! {
         didSet {
-            switch viewModel.token {
-            case .Members:
-                statusCell = StatusCell(name: "members")
-            default:
-                statusCell = StatusCell(name: "users")
-            }
+            statusCell = StatusCell(name: "user")
             
             viewModel.user.asObservable()
                 .subscribeNext { user in
@@ -37,16 +32,12 @@ class UserViewController: BaseTableViewController {
                         self.tableView.reloadData()
                         
                         self.avatarView.setAvatarWithURL(user.avatarURL)
-                        self.nameLabel.text = user.name ?? (user.login ?? "")
+                        self.nameLabel.text = user.name ?? user.login
                         self.followersButton.setTitle(user.followers, title: "Followers")
                         self.repositoriesButton.setTitle(user.publicRepos, title: "Repositories")
                         self.followingButton.setTitle(user.following, title: "Following")
-                        if let bio = user.bio {
-                            self.bioLabel.text = bio
-                            self.bioLabel.hidden = false
-                        } else {
-                            self.bioLabel.hidden = true
-                        }
+                        self.bioLabel.text = user.bio
+                        self.bioLabel.hidden = user.bio == nil
                         
                         if let headerView = self.tableView.tableHeaderView {
                             let height = headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
@@ -90,20 +81,6 @@ class UserViewController: BaseTableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath)
         
         switch (indexPath.section, viewModel.details.count) {
-        case (0, 0), (1, 1...4):
-            cell.accessoryType = .DisclosureIndicator
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.attributedText = Octicon.Rss.iconString(" Public activity", iconSize: 18, iconColor: .lightGrayColor())
-            case 1:
-                cell.textLabel?.attributedText = Octicon.Star.iconString(" Starrd repositories", iconSize: 18, iconColor: .lightGrayColor())
-            case 2:
-                cell.textLabel?.attributedText = Octicon.Gist.iconString(" Gitsts", iconSize: 18, iconColor: .lightGrayColor())
-            default:
-                break
-            }
-            
-            return cell
         case (0, 1...4):
             switch viewModel.details[indexPath.row] {
             case .Company:
@@ -115,6 +92,20 @@ class UserViewController: BaseTableViewController {
             case .Blog:
                 cell.textLabel?.attributedText = Octicon.Link.iconString(" \(viewModel.user.value.blog!)", iconSize: 18, iconColor: .lightGrayColor())
                 cell.accessoryType = .DisclosureIndicator
+            }
+            
+            return cell
+        case (0, 0), (1, 1...4):
+            cell.accessoryType = .DisclosureIndicator
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.attributedText = Octicon.Rss.iconString(" Public activity", iconSize: 18, iconColor: .lightGrayColor())
+            case 1:
+                cell.textLabel?.attributedText = Octicon.Star.iconString(" Starrd repositories", iconSize: 18, iconColor: .lightGrayColor())
+            case 2:
+                cell.textLabel?.attributedText = Octicon.Gist.iconString(" Gitsts", iconSize: 18, iconColor: .lightGrayColor())
+            default:
+                break
             }
             
             return cell

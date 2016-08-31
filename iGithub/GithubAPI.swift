@@ -38,18 +38,18 @@ enum GithubAPI {
     case Members(org: String)
     case Organization(org: String)
     case Organizations(user: String)
-    case OrganizationEvents(org: String)
+    case OrganizationEvents(org: String, page: Int)
     case OrganizationRepos(org: String)
-    case ReceivedEvents(user: String)
+    case ReceivedEvents(user: String, page: Int)
     case RepositoryContributors(repo: String)
-    case RepositoryEvents(repo: String)
+    case RepositoryEvents(repo: String, page: Int)
     case RepositoryIssues(repo: String)
     case RepositoryPullRequests(repo: String)
     case SearchRepositories(q: String, sort: RepositoriesSearchSort)
     case SearchUsers(q: String, sort: UsersSearchSort)
     case StarredRepos(user: String)
     case User(user: String)
-    case UserEvents(user: String)
+    case UserEvents(user: String, page: Int)
     case UserRepos(user: String)
 }
 
@@ -77,7 +77,7 @@ extension GithubAPI: TargetType {
             return "/orgs/\(org)/events"
         case .OrganizationRepos(let org):
             return "/orgs/\(org)/repos"
-        case .ReceivedEvents(let user):
+        case .ReceivedEvents(let user, _):
             return "/users/\(user)/received_events"
         case .RepositoryContributors(let repo):
             return "/repos/\(repo)/contributors"
@@ -95,7 +95,7 @@ extension GithubAPI: TargetType {
             return "/users/\(user)/starred"
         case .User(let user):
             return "/users/\(user)"
-        case .UserEvents(let user):
+        case .UserEvents(let user, _):
             return "/users/\(user)/events"
         case .UserRepos(let user):
             return "/users/\(user)/repos"
@@ -111,10 +111,14 @@ extension GithubAPI: TargetType {
         switch self {
         case .OAuthUser(let accessToken):
             return ["access_token": accessToken]
+        case .ReceivedEvents(_, let page):
+            return ["page": page]
         case .SearchRepositories(let q, let sort):
             return ["q": q, "sort": sort.rawValue]
         case .SearchUsers(let q, let sort):
             return ["q": q, "sort": sort.rawValue]
+        case .UserEvents(_, let page):
+            return ["page": page]
         default:
             return nil
         }

@@ -26,6 +26,12 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                     cell.avatarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.avatarTapped)))
                 }
                 .addDisposableTo(viewModel.disposeBag)
+            
+            viewModel.dataSource.asObservable().subscribeNext { _ in
+                if let refreshFooter = self.tableView.refreshFooter {
+                    refreshFooter.state = .Idle
+                }
+            }.addDisposableTo(viewModel.disposeBag)
         }
     }
     
@@ -35,6 +41,16 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
         self.navigationItem.title = viewModel.title
         
         viewModel.fetchData()
+        
+        tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
+        
+//        tableView.rx_contentOffset
+//            .filter {
+//                $0.y >= self.tableView.contentSize.height - self.tableView.bounds.height
+//            }.subscribeNext { _ in
+//                self.viewModel.page += 1
+//                self.viewModel.fetchData()
+//            }.addDisposableTo(viewModel.disposeBag)
     }
     
     func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
