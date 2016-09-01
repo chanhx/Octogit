@@ -14,12 +14,15 @@ class LoadingIndicator: UIView {
     var toColor: UIColor
     var lineWidth: CGFloat
     
-    let gradations = 7
+    private let circleLayer = CAShapeLayer()
+    private let gradations = 7
+    private var strokeEnd: CGFloat
     
-    init(fromColor: UIColor = .whiteColor(), toColor: UIColor = UIColor(netHex: 0x4078C0), lineWidth: CGFloat) {
+    init(fromColor: UIColor = .whiteColor(), toColor: UIColor = UIColor(netHex: 0x4078C0), lineWidth: CGFloat, strokeEnd: CGFloat = 0.95) {
         self.fromColor = fromColor
         self.toColor = toColor
         self.lineWidth = lineWidth
+        self.strokeEnd = strokeEnd
         
         super.init(frame: CGRectZero)
     }
@@ -27,7 +30,6 @@ class LoadingIndicator: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let circleLayer = CAShapeLayer()
         let arcCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
         let radius = (bounds.width > bounds.height ? bounds.height : bounds.width) / 2 - lineWidth
         let path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: 0, endAngle: 2 * CGFloat(M_PI), clockwise: true)
@@ -38,7 +40,7 @@ class LoadingIndicator: UIView {
         circleLayer.lineWidth = lineWidth
         circleLayer.lineCap = kCALineCapRound
         circleLayer.strokeStart = 0.15
-        circleLayer.strokeEnd = 0.95
+        circleLayer.strokeEnd = strokeEnd
         
         var locations = [Float]()
         let halfStep: Float = 1 / (Float(gradations) + 1)
@@ -62,12 +64,28 @@ class LoadingIndicator: UIView {
         }
         
         layer.mask = circleLayer
-        
-        startAnimating()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func resetStrokeEnd() {
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.toValue = strokeEnd
+        animation.fillMode = kCAFillModeForwards
+        animation.removedOnCompletion = false
+        
+        circleLayer.addAnimation(animation, forKey: nil)
+    }
+    
+    func updateStrokeEnd(strokeEnd: CGFloat) {
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.toValue = strokeEnd
+        animation.fillMode = kCAFillModeForwards
+        animation.removedOnCompletion = false
+        
+        circleLayer.addAnimation(animation, forKey: nil)
     }
     
     func startAnimating() {

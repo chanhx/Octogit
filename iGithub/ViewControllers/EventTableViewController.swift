@@ -43,14 +43,6 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
         viewModel.fetchData()
         
         tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
-        
-//        tableView.rx_contentOffset
-//            .filter {
-//                $0.y >= self.tableView.contentSize.height - self.tableView.bounds.height
-//            }.subscribeNext { _ in
-//                self.viewModel.page += 1
-//                self.viewModel.fetchData()
-//            }.addDisposableTo(viewModel.disposeBag)
     }
     
     func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {

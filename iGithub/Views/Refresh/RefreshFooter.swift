@@ -8,6 +8,8 @@
 
 import RxCocoa
 
+let AnimationDuration = 0.25
+
 class RefreshFooter: RefreshComponent {
     
     private var kvoContext: UInt8 = 0
@@ -24,7 +26,11 @@ class RefreshFooter: RefreshComponent {
             
             switch state {
             case .Idle, .NoMoreData:
-                scrollView.contentInset.bottom -= RefreshComponentHeight
+                if oldValue == .Refreshing {
+                    UIView.animateWithDuration(AnimationDuration) {
+                        self.scrollView.contentInset.bottom -= RefreshComponentHeight
+                    }
+                }
                 indicator.stopAnimating()
                 hidden = true
             case .Draging:
@@ -32,30 +38,16 @@ class RefreshFooter: RefreshComponent {
             case .WillRefresh:
                 hidden = false
             case .Refreshing:
-                scrollView.contentInset.bottom += RefreshComponentHeight
                 indicator.startAnimating()
-                if let selector = self.selector {
-                    target?.performSelector(selector)
+                UIView.animateWithDuration(AnimationDuration, animations: {
+                    self.scrollView.contentInset.bottom += RefreshComponentHeight
+                }) { _ in
+                    if let selector = self.selector {
+                        self.target?.performSelector(selector)
+                    }
                 }
             }
         }
-    }
-    
-    override func willMoveToSuperview(newSuperview: UIView?) {
-        super.willMoveToSuperview(newSuperview)
-        
-        guard let scrollView = newSuperview as? UIScrollView else {
-            return
-        }
-        
-        superview?.removeObserver(self, forKeyPath: RefreshContentOffsetKey, context: &kvoContext)
-        superview?.removeObserver(self, forKeyPath: RefreshContentSizeKey, context: &kvoContext)
-        
-        self.scrollView = scrollView
-        frame = CGRect(x: 0, y: scrollView.contentSize.height, width: scrollView.bounds.width, height: RefreshComponentHeight)
-        
-        self.scrollView.addObserver(self, forKeyPath: RefreshContentOffsetKey, options: .New, context: &kvoContext)
-        self.scrollView.addObserver(self, forKeyPath: RefreshContentSizeKey, options: .New, context: &kvoContext)
     }
     
     init(target: AnyObject?, selector: Selector?) {
@@ -80,6 +72,28 @@ class RefreshFooter: RefreshComponent {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        superview?.removeObserver(self, forKeyPath: RefreshContentOffsetKey, context: &kvoContext)
+        superview?.removeObserver(self, forKeyPath: RefreshContentSizeKey, context: &kvoContext)
+    }
+    
+    override func willMoveToSuperview(newSuperview: UIView?) {
+        super.willMoveToSuperview(newSuperview)
+        
+        guard let scrollView = newSuperview as? UIScrollView else {
+            return
+        }
+        
+        superview?.removeObserver(self, forKeyPath: RefreshContentOffsetKey, context: &kvoContext)
+        superview?.removeObserver(self, forKeyPath: RefreshContentSizeKey, context: &kvoContext)
+        
+        self.scrollView = scrollView
+        frame = CGRect(x: 0, y: scrollView.contentSize.height, width: scrollView.bounds.width, height: RefreshComponentHeight)
+        
+        self.scrollView.addObserver(self, forKeyPath: RefreshContentOffsetKey, options: .New, context: &kvoContext)
+        self.scrollView.addObserver(self, forKeyPath: RefreshContentSizeKey, options: .New, context: &kvoContext)
+    }
+    
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         guard context == &kvoContext else {
@@ -101,14 +115,19 @@ class RefreshFooter: RefreshComponent {
         
         if keyPath == RefreshContentOffsetKey {
             if scrollView?.dragging == true {
-                if scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.height + scrollView.contentInset.bottom - RefreshComponentHeight + RefreshComponentHeight * 0.5 {
-                    state = .WillRefresh
-                } else {
+                if scrollView.contentOffset.y <= scrollView.contentSize.height - scrollView.bounds.height {
                     state = .Idle
-                }
-            } else {
-                if state == .WillRefresh {
-                    state = .Refreshing
+                } else if state == .Draging {
+                    let yDiff = scrollView.contentOffset.y - (scrollView.contentSize.height - scrollView.bounds.height) - scrollView.contentInset.bottom
+                    var yPercent = yDiff / RefreshComponentHeight
+                    yPercent = yPercent >= 1 ? 1 : yPercent
+                    indicator.updateStrokeEnd(yPercent * 0.95)
+                    
+                    if yPercent >= 1 {
+                        state = .Refreshing
+                    }
+                } else  {
+                    state = .Draging
                 }
             }
         }
