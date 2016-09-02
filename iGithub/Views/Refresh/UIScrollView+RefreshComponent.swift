@@ -10,13 +10,27 @@ import UIKit
 
 var RefreshHeaderKey = "refreshHeader"
 var RefreshFooterKey = "refreshFooter"
-var RefreshContentOffsetKey = "contentOffset"
-var RefreshContentSizeKey = "contentSize"
 
 extension UIScrollView {
     
-    var refreshFooter: RefreshFooter? {
+    var refreshHeader: RefreshHeader? {
+        get {
+            return objc_getAssociatedObject(self, &RefreshHeaderKey) as? RefreshHeader
+        }
         
+        set {
+            guard newValue != refreshHeader else {
+                return
+            }
+            
+            refreshHeader?.removeFromSuperview()
+            insertSubview(newValue!, atIndex: 0)
+            
+            objc_setAssociatedObject(self, &RefreshHeaderKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
+        }
+    }
+    
+    var refreshFooter: RefreshFooter? {
         get {
             return objc_getAssociatedObject(self, &RefreshFooterKey) as? RefreshFooter
         }

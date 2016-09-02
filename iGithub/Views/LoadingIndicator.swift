@@ -71,12 +71,7 @@ class LoadingIndicator: UIView {
     }
     
     func resetStrokeEnd() {
-        let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.toValue = strokeEnd
-        animation.fillMode = kCAFillModeForwards
-        animation.removedOnCompletion = false
-        
-        circleLayer.addAnimation(animation, forKey: nil)
+        circleLayer.strokeEnd = self.strokeEnd
     }
     
     func updateStrokeEnd(strokeEnd: CGFloat) {

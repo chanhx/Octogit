@@ -58,13 +58,22 @@ class EventTableViewModel: BaseTableViewModel<Event> {
             .subscribe(
                 onNext: {
                     if let newEvents = Mapper<Event>().mapArray($0) {
-                        self.dataSource.value.appendContentsOf(newEvents)
+                        if self.page == 1 {
+                            self.dataSource.value = newEvents
+                        } else {
+                            self.dataSource.value.appendContentsOf(newEvents)
+                        }
                     }
                 },
                 onError: {
                     print($0)
             })
             .addDisposableTo(disposeBag)
+    }
+    
+    @objc func refresh() {
+        page = 1
+        fetchData()
     }
     
     @objc func fetchNextPage() {

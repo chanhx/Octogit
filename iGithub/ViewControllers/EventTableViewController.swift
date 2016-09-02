@@ -28,8 +28,12 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                 .addDisposableTo(viewModel.disposeBag)
             
             viewModel.dataSource.asObservable().subscribeNext { _ in
-                if let refreshFooter = self.tableView.refreshFooter {
-                    refreshFooter.state = .Idle
+                if let header = self.tableView.refreshHeader {
+                    header.endRefreshing()
+                }
+                
+                if let footer = self.tableView.refreshFooter {
+                    footer.endRefreshing()
                 }
             }.addDisposableTo(viewModel.disposeBag)
         }
@@ -42,6 +46,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
         
         viewModel.fetchData()
         
+        tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
         tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
     }
     
