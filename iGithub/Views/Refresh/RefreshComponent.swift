@@ -42,8 +42,8 @@ class RefreshComponent: UIView {
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.centerXAnchor.constraintEqualToAnchor(centerXAnchor).active = true
         indicator.centerYAnchor.constraintEqualToAnchor(centerYAnchor).active = true
-        indicator.heightAnchor.constraintEqualToConstant(30).active = true
-        indicator.widthAnchor.constraintEqualToConstant(30).active = true
+        indicator.heightAnchor.constraintEqualToConstant(26).active = true
+        indicator.widthAnchor.constraintEqualToConstant(26).active = true
         
         hidden = true
     }

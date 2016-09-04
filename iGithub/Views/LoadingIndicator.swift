@@ -32,7 +32,7 @@ class LoadingIndicator: UIView {
         
         let arcCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
         let radius = (bounds.width > bounds.height ? bounds.height : bounds.width) / 2 - lineWidth
-        let path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: 0, endAngle: 2 * CGFloat(M_PI), clockwise: true)
+        let path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: CGFloat(-M_PI_2), endAngle: 3 * CGFloat(M_PI_2), clockwise: true)
         
         circleLayer.path = path.CGPath
         circleLayer.strokeColor = UIColor(netHex: 0x4078C0).CGColor
@@ -52,12 +52,12 @@ class LoadingIndicator: UIView {
         for i in 0...1 {
             let gradientLayer = CAGradientLayer()
             
-            gradientLayer.startPoint = CGPointMake(0.0, 0.5)
-            gradientLayer.endPoint = CGPointMake(1.0, 0.5)
-            gradientLayer.frame = CGRectMake(0, bounds.height / 2 * CGFloat(1-i), bounds.width, bounds.height / 2)
+            gradientLayer.startPoint = CGPointMake(0.5, 1.0)
+            gradientLayer.endPoint = CGPointMake(0.5, 0.0)
+            gradientLayer.frame = CGRectMake(bounds.width / 2 * CGFloat(i), 0, bounds.width / 2, bounds.height)
             gradientLayer.colors = i == 0 ?
-                Array(colors[0...gradations/2]).reverse() :
-                Array(colors[gradations/2...gradations - 1])
+                Array(colors[gradations/2...gradations - 1]) :
+                Array(colors[0...gradations/2]).reverse()
             gradientLayer.locations = locations
             
             layer.addSublayer(gradientLayer)
