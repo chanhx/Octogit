@@ -14,6 +14,10 @@
 		C524742A1D50FB400001D9CD /* issue.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C52474291D50FB400001D9CD /* issue.mustache */; };
 		C524742D1D519CBB0001D9CD /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524742C1D519CBB0001D9CD /* Label.swift */; };
 		C524742F1D51A1500001D9CD /* Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524742E1D51A1500001D9CD /* Milestone.swift */; };
+		C526EE101D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C526EE0F1D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift */; };
+		C526EE121D7C62B6008C0D72 /* sample in Resources */ = {isa = PBXBuildFile; fileRef = C526EE111D7C62B6008C0D72 /* sample */; };
+		C526EE141D7D1954008C0D72 /* themes.plist in Resources */ = {isa = PBXBuildFile; fileRef = C526EE131D7D1954008C0D72 /* themes.plist */; };
+		C526EE161D7D7E36008C0D72 /* Prism in Resources */ = {isa = PBXBuildFile; fileRef = C526EE151D7D7E36008C0D72 /* Prism */; };
 		C5373C451D4AF5FD006CFB83 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C441D4AF5FD006CFB83 /* UserCell.swift */; };
 		C5373C491D4B4493006CFB83 /* OrganizationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C481D4B4493006CFB83 /* OrganizationViewModel.swift */; };
 		C5373C4B1D4B7C2D006CFB83 /* OrganizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C4A1D4B7C2D006CFB83 /* OrganizationViewController.swift */; };
@@ -53,7 +57,6 @@
 		C55791571D743A2D00FBBD41 /* RefreshFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791561D743A2D00FBBD41 /* RefreshFooter.swift */; };
 		C55791591D76E50900FBBD41 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791581D76E50900FBBD41 /* LoadingIndicator.swift */; };
 		C55E08491D4701A20004EC7C /* content.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C55E08481D4701A20004EC7C /* content.mustache */; };
-		C55E08521D4786EB0004EC7C /* Prism in Resources */ = {isa = PBXBuildFile; fileRef = C55E08511D4786EB0004EC7C /* Prism */; };
 		C55E08541D478E8E0004EC7C /* common.css in Resources */ = {isa = PBXBuildFile; fileRef = C55E08531D478E8E0004EC7C /* common.css */; };
 		C55E08561D4793740004EC7C /* file_extensions.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55E08551D4793740004EC7C /* file_extensions.plist */; };
 		C571EF581D64836100F752EE /* OptionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C571EF571D64836100F752EE /* OptionPickerView.swift */; };
@@ -68,6 +71,8 @@
 		C59482BF1D65A73300B9F47C /* languages.plist in Resources */ = {isa = PBXBuildFile; fileRef = C59482BE1D65A73300B9F47C /* languages.plist */; };
 		C59D120E1D5AE2DD0098301A /* NSURL+Github.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D120D1D5AE2DD0098301A /* NSURL+Github.swift */; };
 		C59D12101D5AE6410098301A /* URLRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D120F1D5AE6410098301A /* URLRouter.swift */; };
+		C5ABDF4E1D7DC8A800F07DC2 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ABDF4D1D7DC8A800F07DC2 /* Renderer.swift */; };
+		C5ABDF501D7DCCB800F07DC2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ABDF4F1D7DCCB800F07DC2 /* Constants.swift */; };
 		C5BB907B1D487ACA005A40C0 /* empty_content.html in Resources */ = {isa = PBXBuildFile; fileRef = C5BB907A1D487ACA005A40C0 /* empty_content.html */; };
 		C5C4D9511D49B1C5007C1891 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4D9501D49B1C5007C1891 /* UserViewModel.swift */; };
 		C5C4D9531D49B3FD007C1891 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4D9521D49B3FD007C1891 /* UserViewController.swift */; };
@@ -131,6 +136,10 @@
 		C52474291D50FB400001D9CD /* issue.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = issue.mustache; sourceTree = "<group>"; };
 		C524742C1D519CBB0001D9CD /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		C524742E1D51A1500001D9CD /* Milestone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Milestone.swift; sourceTree = "<group>"; };
+		C526EE0F1D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyntaxHighlightSettingsViewController.swift; sourceTree = "<group>"; };
+		C526EE111D7C62B6008C0D72 /* sample */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample; sourceTree = "<group>"; };
+		C526EE131D7D1954008C0D72 /* themes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = themes.plist; sourceTree = "<group>"; };
+		C526EE151D7D7E36008C0D72 /* Prism */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Prism; sourceTree = "<group>"; };
 		C5373C441D4AF5FD006CFB83 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		C5373C481D4B4493006CFB83 /* OrganizationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationViewModel.swift; sourceTree = "<group>"; };
 		C5373C4A1D4B7C2D006CFB83 /* OrganizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationViewController.swift; sourceTree = "<group>"; };
@@ -170,7 +179,6 @@
 		C55791561D743A2D00FBBD41 /* RefreshFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshFooter.swift; sourceTree = "<group>"; };
 		C55791581D76E50900FBBD41 /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		C55E08481D4701A20004EC7C /* content.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = content.mustache; sourceTree = "<group>"; };
-		C55E08511D4786EB0004EC7C /* Prism */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Prism; sourceTree = "<group>"; };
 		C55E08531D478E8E0004EC7C /* common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = common.css; sourceTree = "<group>"; };
 		C55E08551D4793740004EC7C /* file_extensions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = file_extensions.plist; sourceTree = "<group>"; };
 		C571EF571D64836100F752EE /* OptionPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionPickerView.swift; sourceTree = "<group>"; };
@@ -185,6 +193,8 @@
 		C59482BE1D65A73300B9F47C /* languages.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = languages.plist; sourceTree = "<group>"; };
 		C59D120D1D5AE2DD0098301A /* NSURL+Github.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURL+Github.swift"; sourceTree = "<group>"; };
 		C59D120F1D5AE6410098301A /* URLRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRouter.swift; sourceTree = "<group>"; };
+		C5ABDF4D1D7DC8A800F07DC2 /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		C5ABDF4F1D7DCCB800F07DC2 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5BB907A1D487ACA005A40C0 /* empty_content.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = empty_content.html; sourceTree = "<group>"; };
 		C5C4D9501D49B1C5007C1891 /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		C5C4D9521D49B3FD007C1891 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
@@ -381,6 +391,8 @@
 				C538FD001D4065F2003A559E /* Models */,
 				C538FD451D449032003A559E /* Extensions */,
 				C538FD071D406BE8003A559E /* AccountManager.swift */,
+				C5ABDF4D1D7DC8A800F07DC2 /* Renderer.swift */,
+				C5ABDF4F1D7DCCB800F07DC2 /* Constants.swift */,
 				C59D120F1D5AE6410098301A /* URLRouter.swift */,
 				C5F4BDE61D3F95E5009DF758 /* Octicon.swift */,
 				C5DB94661D3F842000887E81 /* Main.storyboard */,
@@ -436,7 +448,7 @@
 		C5DB94B01D3F8BF500887E81 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C55E08511D4786EB0004EC7C /* Prism */,
+				C526EE151D7D7E36008C0D72 /* Prism */,
 				C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */,
 				C55E08481D4701A20004EC7C /* content.mustache */,
 				C52474291D50FB400001D9CD /* issue.mustache */,
@@ -444,6 +456,8 @@
 				C55E08531D478E8E0004EC7C /* common.css */,
 				C55E08551D4793740004EC7C /* file_extensions.plist */,
 				C59482BE1D65A73300B9F47C /* languages.plist */,
+				C526EE111D7C62B6008C0D72 /* sample */,
+				C526EE131D7D1954008C0D72 /* themes.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -467,6 +481,7 @@
 				C52013CD1D57361A00FDCC30 /* WebViewController.swift */,
 				C5E7337E1D5D9FE900913A66 /* ExplorationViewController.swift */,
 				C5E733871D61C90000913A66 /* SearchViewController.swift */,
+				C526EE0F1D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -588,17 +603,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C526EE121D7C62B6008C0D72 /* sample in Resources */,
 				C524742A1D50FB400001D9CD /* issue.mustache in Resources */,
 				C5DB946D1D3F842000887E81 /* LaunchScreen.storyboard in Resources */,
 				C5DB946A1D3F842000887E81 /* Assets.xcassets in Resources */,
+				C526EE141D7D1954008C0D72 /* themes.plist in Resources */,
 				C55E08541D478E8E0004EC7C /* common.css in Resources */,
 				C59482BF1D65A73300B9F47C /* languages.plist in Resources */,
 				C5F4BDEB1D3F96D2009DF758 /* octicons.ttf in Resources */,
 				C55E08491D4701A20004EC7C /* content.mustache in Resources */,
 				C538FD331D430466003A559E /* Login.storyboard in Resources */,
-				C55E08521D4786EB0004EC7C /* Prism in Resources */,
 				C5DB94681D3F842000887E81 /* Main.storyboard in Resources */,
 				C5BB907B1D487ACA005A40C0 /* empty_content.html in Resources */,
+				C526EE161D7D7E36008C0D72 /* Prism in Resources */,
 				C55E08561D4793740004EC7C /* file_extensions.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -665,6 +682,7 @@
 				C5C4D9531D49B3FD007C1891 /* UserViewController.swift in Sources */,
 				C538FD521D459DC7003A559E /* FileTableViewModel.swift in Sources */,
 				C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */,
+				C5ABDF501D7DCCB800F07DC2 /* Constants.swift in Sources */,
 				C538FD4A1D449602003A559E /* DataProcess.swift in Sources */,
 				C59D120E1D5AE2DD0098301A /* NSURL+Github.swift in Sources */,
 				C5819ABD1D4DD279009D7772 /* RepositoryTableViewModel.swift in Sources */,
@@ -711,6 +729,8 @@
 				C538FD4C1D44FB2E003A559E /* FileViewModel.swift in Sources */,
 				C538FD4E1D44FB79003A559E /* File.swift in Sources */,
 				C55791591D76E50900FBBD41 /* LoadingIndicator.swift in Sources */,
+				C526EE101D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift in Sources */,
+				C5ABDF4E1D7DC8A800F07DC2 /* Renderer.swift in Sources */,
 				C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */,
 				C55791571D743A2D00FBBD41 /* RefreshFooter.swift in Sources */,
 				C538FD471D4491DE003A559E /* Event+DataProcess.swift in Sources */,

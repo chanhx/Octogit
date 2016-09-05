@@ -1,0 +1,9 @@
+#import <stdio.h>
+
+int main(int argc, char *argv[])
+{
+    char *greeting = "Hello World!";
+    printf("%s\n", greeting);
+
+    return 0;
+}

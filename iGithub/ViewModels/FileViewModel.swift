@@ -46,15 +46,7 @@ class FileViewModel {
     func htmlFrom(base64String: String) -> String {
         
         if let rawContent = decodeGHBase64String(base64String) {
-            let template = try! Template(named: "content")
-            
-            let data = [
-                "theme": "prism",
-                "content": rawContent,
-                "line-numbers": "class=line-numbers",
-                "class": languageOfFile ?? "clike"
-            ]
-            return try! template.render(Box(data))
+            return Renderer.render(rawContent, language: languageOfFile ?? "clike")
         }
         let url = NSBundle.mainBundle().URLForResource("empty_content", withExtension: "html")
         let html = try! String(contentsOfURL: url!)

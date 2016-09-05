@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        CustomizeAppearance()
+        self.customizeAppearance()
+        self.registerDefaults()
         
         let storyboardName = AccountManager.shareManager.token == nil ? "Login" : "Main"
         let initialVC = UIStoryboard(name: storyboardName, bundle: nil).instantiateInitialViewController()!
@@ -29,12 +30,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func CustomizeAppearance() {
+    func customizeAppearance() {
         UINavigationBar.appearance().barTintColor = UIColor(netHex: 0x4078C0)
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).alpha = 0.6
         UITextField.appearance().tintColor = UIColor(netHex: 0x2A9883)
+    }
+    
+    func registerDefaults() {
+        NSUserDefaults.standardUserDefaults().registerDefaults(
+            [
+                Constants.kTheme: "Default",
+                Constants.kLineNumbers: true
+            ]
+        )
     }
 
     func applicationWillResignActive(application: UIApplication) {
