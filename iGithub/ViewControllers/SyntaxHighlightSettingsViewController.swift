@@ -14,7 +14,7 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
     
     @IBOutlet weak var themeLabel: UILabel!
     @IBOutlet weak var lineNumbersSwitch: UISwitch!
-    @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var webViewCell: WebViewCell!
     
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
@@ -41,7 +41,6 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
         
         themeLabel.text = userDefaults.objectForKey(Constants.kTheme) as? String
         lineNumbersSwitch.on = userDefaults.boolForKey(Constants.kLineNumbers)
-        webView.scrollView.scrollEnabled = false
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             self.pickerView.selectedRow[0] = self.themes.indexOf(self.themeLabel.text!) ?? 0
@@ -71,7 +70,7 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
     }
     
     func renderSample() {
-        webView.loadHTMLString(rendering, baseURL: NSBundle.mainBundle().resourceURL)
+        webViewCell.webView.loadHTMLString(rendering, baseURL: NSBundle.mainBundle().resourceURL)
     }
 }
 

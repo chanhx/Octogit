@@ -71,6 +71,6 @@ class IssueViewModel: NSObject, WKNavigationDelegate {
     }
     
     func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
-        contentHeight.value = webView.scrollView.contentSize.height + 16
+        contentHeight.value = webView.scrollView.contentSize.height
     }
 }

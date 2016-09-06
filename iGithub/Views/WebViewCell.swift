@@ -35,14 +35,12 @@ class WebViewCell: UITableViewCell {
     }
     
     func layout() {
-        
         contentView.addSubview(webView)
-        let margins = contentView.layoutMarginsGuide
         
-        webView.topAnchor.constraintEqualToAnchor(margins.topAnchor).active = true
-        webView.bottomAnchor.constraintEqualToAnchor(margins.bottomAnchor).active = true
-        webView.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor).active = true
-        webView.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor).active = true
+        webView.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
+        webView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
+        webView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor).active = true
+        webView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
     }
     
 }
