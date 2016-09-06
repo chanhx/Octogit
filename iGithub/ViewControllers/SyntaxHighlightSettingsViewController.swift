@@ -31,19 +31,10 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
     }()
     
     var rendering: String {
-        get {
-            return Renderer.render(sample, language: "c", theme: themeLabel.text, showLineNumbers: lineNumbersSwitch.on)
-        }
+        return Renderer.render(sample, language: "c", theme: themeLabel.text, showLineNumbers: lineNumbersSwitch.on)
     }
     
-    lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self, optionsCount: 1)
-    lazy var background: UIView! = {
-        let background = UIView(frame: self.navigationController!.view.window!.bounds)
-        background.frame = self.view.bounds
-        background.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(removePickerView)))
-        background.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
-        return background
-    }()
+    lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +42,10 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
         themeLabel.text = userDefaults.objectForKey(Constants.kTheme) as? String
         lineNumbersSwitch.on = userDefaults.boolForKey(Constants.kLineNumbers)
         webView.scrollView.scrollEnabled = false
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            self.pickerView.selectedRow[0] = self.themes.indexOf(self.themeLabel.text!) ?? 0
+        }
 
         lineNumbersSwitch.rx_value.subscribeNext { _ in
             self.renderSample()
@@ -72,7 +67,7 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        showPickerView()
+        self.pickerView.show()
     }
     
     func renderSample() {
@@ -82,42 +77,10 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
 
 extension SyntaxHighlightSettingsViewController: OptionPickerViewDelegate {
     
-    func doneButtonClicked() {
-        themeLabel.text = themes[self.pickerView.tmpSelectedRow[0]!]
-        removePickerView()
-        
-        pickerView.clearRecord()
+    func doneButtonClicked(pickerView: OptionPickerView) {
+        themeLabel.text = themes[pickerView.selectedRow[0]]
         
         renderSample()
-    }
-    
-    func removePickerView() {
-        background.removeFromSuperview()
-        
-        UIView.animateWithDuration(0.2, animations: {
-            var frame = self.pickerView.frame
-            frame.origin.y += self.pickerView.frame.height
-            self.pickerView.frame = frame
-        }) { _ in
-            self.pickerView.clearRecord()
-            self.pickerView.removeFromSuperview()
-        }
-    }
-    
-    func showPickerView() {
-        UIApplication.sharedApplication().windows.last?.addSubview(background)
-        
-        var pickerFrame = view.frame
-        pickerFrame.origin.y = view.frame.height
-        pickerFrame.size.height = pickerView.intrinsicContentSize().height
-        pickerView.frame = pickerFrame
-        
-        UIApplication.sharedApplication().windows.last?.addSubview(pickerView)
-        
-        UIView.animateWithDuration(0.2) {
-            pickerFrame.origin.y -= pickerFrame.size.height
-            self.pickerView.frame = pickerFrame
-        }
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
@@ -133,6 +96,6 @@ extension SyntaxHighlightSettingsViewController: OptionPickerViewDelegate {
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.pickerView.tmpSelectedRow[self.pickerView.index] = row
+        self.pickerView.tmpSelectedRow[0] = row
     }
 }

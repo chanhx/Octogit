@@ -9,13 +9,19 @@
 import UIKit
 
 @objc protocol OptionPickerViewDelegate: UIPickerViewDataSource, UIPickerViewDelegate {
-    func doneButtonClicked()
+    func doneButtonClicked(pickerView: OptionPickerView)
 }
 
 class OptionPickerView: UIView {
     
     let pickerView = UIPickerView()
     let toolBar = UIToolbar()
+    
+    lazy var background: UIView! = {
+        let background = UIView(frame: UIApplication.sharedApplication().windows.last!.bounds)
+        background.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hide)))
+        return background
+    }()
     
     var selectedRow: [Int]
     var tmpSelectedRow: [Int?]
@@ -28,7 +34,7 @@ class OptionPickerView: UIView {
     }
     weak var delegate: OptionPickerViewDelegate?
     
-    init(delegate: OptionPickerViewDelegate, optionsCount: Int, index: Int = 0) {
+    init(delegate: OptionPickerViewDelegate, optionsCount: Int = 1, index: Int = 0) {
         
         self.delegate = delegate
         pickerView.dataSource = delegate
@@ -71,7 +77,7 @@ class OptionPickerView: UIView {
     // MARK: toolbar
 
     private func configureToolBar() {
-        let doneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: delegate, action: #selector(delegate?.doneButtonClicked))
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(doneItemClicked))
         let previousItem = UIBarButtonItem(image: UIImage(named: "back"), style: .Plain, target: self, action: #selector(previousItemClicked(_:)))
         let nextItem = UIBarButtonItem(image: UIImage(named: "forward"), style: .Plain, target: self, action: #selector(nextItemClicked(_:)))
         let fixSpace10 = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
@@ -97,5 +103,54 @@ class OptionPickerView: UIView {
     
     @objc private func nextItemClicked(item: UIBarButtonItem) {
         index += 1
+    }
+    
+    @objc private func doneItemClicked() {
+        for i in 0..<selectedRow.count {
+            selectedRow[i] = tmpSelectedRow[i] ?? selectedRow[i]
+        }
+        
+        self.hide()
+        delegate?.doneButtonClicked(self)
+    }
+    
+    // MARK: show and hide
+    
+    func show() {
+        if let _ = self.superview {
+            return
+        }
+        
+        UIApplication.sharedApplication().windows.last?.addSubview(background)
+        
+        var pickerFrame = background.frame
+        pickerFrame.origin.y = pickerFrame.height
+        pickerFrame.size.height = self.intrinsicContentSize().height
+        self.frame = pickerFrame
+        self.pickerView.selectRow(self.selectedRow[self.index], inComponent: 0, animated: false)
+        
+        UIApplication.sharedApplication().windows.last?.addSubview(self)
+        
+        UIView.animateWithDuration(0.2) {
+            pickerFrame.origin.y -= pickerFrame.size.height
+            self.frame = pickerFrame
+        }
+    }
+    
+    func hide() {
+        guard let _ = self.superview else {
+            return
+        }
+        
+        background.removeFromSuperview()
+        
+        UIView.animateWithDuration(0.2, animations: {
+            var frame = self.frame
+            frame.origin.y += self.frame.height
+            self.frame = frame
+        }) { _ in
+            self.clearRecord()
+            self.removeFromSuperview()
+        }
     }
 }

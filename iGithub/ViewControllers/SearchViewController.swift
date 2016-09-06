@@ -15,14 +15,7 @@ class SearchViewController: BaseTableViewController {
     let headerView = SegmentHeaderView()
     
     lazy var repoOptionsPickerView: OptionPickerView = OptionPickerView(delegate: self, optionsCount: 2)
-    lazy var userOptionPickerView: OptionPickerView = OptionPickerView(delegate: self, optionsCount: 1)
-    lazy var background: UIView! = {
-        let background = UIView(frame: UIApplication.sharedApplication().windows.last!.bounds)
-        background.frame = self.view.bounds
-        background.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(removePickerView)))
-        background.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
-        return background
-    }()
+    lazy var userOptionPickerView: OptionPickerView = OptionPickerView(delegate: self)
     
     init () {
         super.init(style: .Grouped)
@@ -131,84 +124,33 @@ extension SearchViewController: TTTAttributedLabelDelegate {
         switch url.absoluteString {
         case "ReposSort":
             repoOptionsPickerView.index = 0
-            showPickerView(repoOptionsPickerView)
+            repoOptionsPickerView.show()
         case "Language":
             repoOptionsPickerView.index = 1
-            showPickerView(repoOptionsPickerView)
+            repoOptionsPickerView.show()
         default:
             userOptionPickerView.index = 0
-            showPickerView(userOptionPickerView)
+            userOptionPickerView.show()
         }
     }
     
     // MARK: picker view
-    
-    func showPickerView(pickerView: OptionPickerView) {
-        UIApplication.sharedApplication().windows.last?.addSubview(background)
-        
-        var pickerFrame = view.frame
-        pickerFrame.origin.y = view.frame.height
-        pickerFrame.size.height = pickerView.intrinsicContentSize().height
-        pickerView.frame = pickerFrame
-        
-        UIApplication.sharedApplication().windows.last?.addSubview(pickerView)
-        
-        UIView.animateWithDuration(0.2) {
-            pickerFrame.origin.y -= pickerFrame.size.height
-            pickerView.frame = pickerFrame
-        }
-    }
-    
-    func removePickerView() {
-        background.removeFromSuperview()
-        
-        var pickerView: OptionPickerView
-        switch viewModel.option {
-        case .Repositories:
-            pickerView = repoOptionsPickerView
-        case .Users:
-            pickerView = userOptionPickerView
-        }
-        
-        UIView.animateWithDuration(0.2, animations: {
-            var frame = pickerView.frame
-            frame.origin.y += pickerView.frame.height
-            pickerView.frame = frame
-        }) { _ in
-            pickerView.clearRecord()
-            pickerView.removeFromSuperview()
-        }
-    }
 }
 
 extension SearchViewController: OptionPickerViewDelegate {
     
-    func doneButtonClicked() {
-        removePickerView()
-        
-        var pickerView: OptionPickerView
-        switch viewModel.option {
-        case .Repositories:
-            pickerView = repoOptionsPickerView
-            
-            let row0 = pickerView.tmpSelectedRow[0] ?? pickerView.selectedRow[0]
-            let row1 = pickerView.tmpSelectedRow[1] ?? pickerView.selectedRow[1]
-            
-            pickerView.selectedRow[0] = row0
-            pickerView.selectedRow[1] = row1
+    func doneButtonClicked(pickerView: OptionPickerView) {
+        if pickerView == repoOptionsPickerView {
+            let row0 = pickerView.selectedRow[0]
+            let row1 = pickerView.selectedRow[1]
             
             viewModel.option = .Repositories(sort: viewModel.reposSortOptions[row0].option, language: languages[row1])
-        case .Users:
-            pickerView = userOptionPickerView
-            
-            let row = pickerView.tmpSelectedRow[0] ?? pickerView.selectedRow[0]
-            pickerView.selectedRow[0] = row
+        } else if pickerView == userOptionPickerView {
+            let row = pickerView.selectedRow[0]
             viewModel.option = .Users(sort: viewModel.usersSortOptions[row].option)
         }
         
-        
         updateTitle()
-        pickerView.clearRecord()
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {

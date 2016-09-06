@@ -17,13 +17,6 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
     var searchViewController = SearchViewController()
     
     lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self, optionsCount: 2)
-    lazy var background: UIView! = {
-        let background = UIView(frame: self.navigationController!.view.window!.bounds)
-        background.frame = self.view.bounds
-        background.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(removePickerView)))
-        background.addGestureRecognizer(UIPanGestureRecognizer(target: nil, action: nil))
-        return background
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,57 +111,21 @@ extension ExplorationViewController: TTTAttributedLabelDelegate {
             pickerView.index = 1
         }
         
-        showPickerView()
-    }
-    
-    // MARK: picker view
-    
-    func showPickerView() {
-        navigationController?.view.window?.addSubview(background)
-        
-        var pickerFrame = view.frame
-        pickerFrame.origin.y = view.frame.height
-        pickerFrame.size.height = pickerView.intrinsicContentSize().height
-        pickerView.frame = pickerFrame
-        
-        UIApplication.sharedApplication().windows.last?.addSubview(pickerView)
-        
-        UIView.animateWithDuration(0.2) {
-            pickerFrame.origin.y -= pickerFrame.size.height
-            self.pickerView.frame = pickerFrame
-        }
-    }
-    
-    func removePickerView() {
-        background.removeFromSuperview()
-        
-        UIView.animateWithDuration(0.2, animations: {
-            var frame = self.pickerView.frame
-            frame.origin.y += self.pickerView.frame.height
-            self.pickerView.frame = frame
-        }) { _ in
-            self.pickerView.clearRecord()
-            self.pickerView.removeFromSuperview()
-        }
+        pickerView.show()
     }
 }
 
 extension ExplorationViewController: OptionPickerViewDelegate {
     
-    func doneButtonClicked() {
-        removePickerView()
-        
+    func doneButtonClicked(pickerView: OptionPickerView) {
         if let row0 = pickerView.tmpSelectedRow[0] {
-            pickerView.selectedRow[0] = row0
             viewModel.since = viewModel.pickerVM.timeOptions[row0].time
         }
         if let row1 = pickerView.tmpSelectedRow[1] {
-            pickerView.selectedRow[1] = row1
             viewModel.language = languages[row1]
         }
         viewModel.updateOptions()
         updateTitle()
-        pickerView.clearRecord()
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
