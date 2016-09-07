@@ -14,7 +14,7 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
     
     @IBOutlet weak var themeLabel: UILabel!
     @IBOutlet weak var lineNumbersSwitch: UISwitch!
-    @IBOutlet weak var webViewCell: WebViewCell!
+    let webViewCell = WebViewCell()
     
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
@@ -41,6 +41,10 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
         
         themeLabel.text = userDefaults.objectForKey(Constants.kTheme) as? String
         lineNumbersSwitch.on = userDefaults.boolForKey(Constants.kLineNumbers)
+        
+        webViewCell.frame = CGRectMake(0, 0, self.view.bounds.width, 230)
+        webViewCell.webView.opaque = false
+        tableView.tableFooterView = webViewCell
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             self.pickerView.selectedRow[0] = self.themes.indexOf(self.themeLabel.text!) ?? 0

@@ -849,18 +849,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="xcG-lI-Iwd">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="218" id="03u-yg-oXr" customClass="WebViewCell" customModule="iGithub" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="223" width="600" height="218"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="03u-yg-oXr" id="nRf-mg-c3p">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="217.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="2En-FR-fvR" id="bdC-hA-JAv"/>
@@ -870,7 +858,6 @@
                     <connections>
                         <outlet property="lineNumbersSwitch" destination="hVh-lY-23K" id="YDU-xc-GiX"/>
                         <outlet property="themeLabel" destination="spB-dP-AT7" id="sCY-Yl-RVA"/>
-                        <outlet property="webViewCell" destination="03u-yg-oXr" id="vpw-9h-KYD"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eXP-ve-hiv" userLabel="First Responder" sceneMemberID="firstResponder"/>
