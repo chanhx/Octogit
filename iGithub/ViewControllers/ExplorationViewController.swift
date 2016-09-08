@@ -32,6 +32,7 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
         
         searchController.searchResultsUpdater = searchViewController
         searchController.searchBar.delegate = searchViewController
+        searchController.searchBar.autocapitalizationType = .None
         searchController.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = true
@@ -55,6 +56,30 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return headerView
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+        
+        switch viewModel.type {
+        case .Repositories:
+            let repo = self.viewModel.repoTVM.repositories.value[indexPath.row]
+            let repoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("RepositoryVC") as! RepositoryViewController
+            repoVC.viewModel = RepositoryViewModel(fullName: repo.name)
+            self.navigationController?.pushViewController(repoVC, animated: true)
+        case .Users:
+            let user = viewModel.userTVM.users.value[indexPath.row]
+            switch user.type! {
+            case .User:
+                let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserVC") as! UserViewController
+                userVC.viewModel = UserViewModel(user)
+                self.presentingViewController?.navigationController?.pushViewController(userVC, animated: true)
+            case .Organization:
+                let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("OrgVC") as! OrganizationViewController
+                orgVC.viewModel = OrganizationViewModel(user)
+                self.navigationController?.pushViewController(orgVC, animated: true)
+            }
+        }
     }
 }
 

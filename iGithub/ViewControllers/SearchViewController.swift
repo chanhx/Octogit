@@ -48,6 +48,30 @@ class SearchViewController: BaseTableViewController {
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return headerView
     }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+        
+        switch viewModel.option {
+        case .Repositories:
+            let repo = self.viewModel.repoTVM.repositories.value[indexPath.row]
+            let repoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("RepositoryVC") as! RepositoryViewController
+            repoVC.viewModel = RepositoryViewModel(repo: repo)
+            self.presentingViewController?.navigationController?.pushViewController(repoVC, animated: true)
+        case .Users:
+            let user = viewModel.userTVM.users.value[indexPath.row]
+            switch user.type! {
+            case .User:
+                let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserVC") as! UserViewController
+                userVC.viewModel = UserViewModel(user)
+                self.presentingViewController?.navigationController?.pushViewController(userVC, animated: true)
+            case .Organization:
+                let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("OrgVC") as! OrganizationViewController
+                orgVC.viewModel = OrganizationViewModel(user)
+                self.presentingViewController?.navigationController?.pushViewController(orgVC, animated: true)
+            }
+        }
+    }
 }
 
 extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
