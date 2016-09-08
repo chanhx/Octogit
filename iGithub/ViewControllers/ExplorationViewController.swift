@@ -73,7 +73,7 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
             case .User:
                 let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserVC") as! UserViewController
                 userVC.viewModel = UserViewModel(user)
-                self.presentingViewController?.navigationController?.pushViewController(userVC, animated: true)
+                self.navigationController?.pushViewController(userVC, animated: true)
             case .Organization:
                 let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("OrgVC") as! OrganizationViewController
                 orgVC.viewModel = OrganizationViewModel(user)

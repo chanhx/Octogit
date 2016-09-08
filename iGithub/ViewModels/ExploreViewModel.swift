@@ -145,8 +145,16 @@ class TrendingUserTableViewModel: TrendingViewModelProtocol {
         users.value = doc.css("li.user-leaderboard-list-item.leaderboard-list-item").map {
             let name = String($0.css("div h2 a")[0]["href"]!.characters.dropFirst())
             let avatarURL = $0.css("a img")[0]["src"]!
+
+            var type: String
+            switch $0.css("div.leaderboard-action span") {
+            case .None:
+                type = "Organization"
+            default:
+                type = "User"
+            }
             
-            return Mapper<User>().map(["login": name, "avatar_url": avatarURL])!
+            return Mapper<User>().map(["login": name, "avatar_url": avatarURL, "type": type])!
         }
     }
 }
