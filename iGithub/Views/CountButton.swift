@@ -35,7 +35,7 @@ class CountButton: UIButton {
         if count == nil {
            countText = ""
         } else if abbreviative && count > 1000 {
-            countText = String(format: "%.1gk", Double(count!) / 1000)
+            countText = String(format: "%.1fk", Double(count!) / 1000)
         } else {
             countText = "\(count!)"
         }
