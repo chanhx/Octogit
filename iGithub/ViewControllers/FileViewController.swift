@@ -32,7 +32,7 @@ class FileViewController: UIViewController {
         
         self.navigationItem.title = viewModel.file.name
         
-        viewModel.fetchContent()
+        viewModel.fetch()
     }
     
 }

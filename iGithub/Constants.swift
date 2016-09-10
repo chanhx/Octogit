@@ -9,6 +9,9 @@
 import Foundation
 
 struct Constants {
+    static let APIVersion = "v3"
     static let kTheme = "theme"
     static let kLineNumbers = "linenumbers"
+    
+    static let ContentsHTML = "application/vnd.github.\(APIVersion).html"
 }

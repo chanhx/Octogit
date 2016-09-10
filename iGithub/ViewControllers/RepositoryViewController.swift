@@ -146,6 +146,10 @@ class RepositoryViewController: BaseTableViewController {
                 (vc as! OrganizationViewController).viewModel = (self.viewModel.ownerViewModel as! OrganizationViewModel)
             }
             self.navigationController?.pushViewController(vc, animated: true)
+        case (0, viewModel.numberOfRowsInSection(0) - 1):
+            let fileVC = FileViewController()
+            fileVC.viewModel = FileViewModel(repository: viewModel.repository.value.fullName!)
+            self.navigationController?.pushViewController(fileVC, animated: true)
         case (1, 0):
             let issueTVC = IssueTableViewController()
             issueTVC.viewModel = IssueTableViewModel(repo: viewModel.repository.value)

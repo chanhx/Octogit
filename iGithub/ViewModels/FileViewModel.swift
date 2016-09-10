@@ -19,31 +19,89 @@ class FileViewModel {
         return (NSDictionary(contentsOfFile: path!) as! [String: String])
     }()
     
-    var repository: String
-    var token: GithubAPI
+    var repo: String
     var file: File
     var html = Variable("")
     let disposeBag = DisposeBag()
     
     init(repository: String, file: File) {
-        
-        self.repository = repository
+        repo = repository
         self.file = file
-        token = .GetContents(repo: repository, path: file.path!)
+    }
+    
+    init(repository: String) {
+        repo = repository
+        file = Mapper<File>().map(["name": "README"])!
+    }
+    
+    func fetch() {
+        switch self.file.name! {
+        case "README", "LICENSE":
+            fetchHTMLContent()
+            return
+        default: break
+        }
+        
+        switch self.file.name!.componentsSeparatedByString(".").last! {
+        case "md", "markdown", "adoc", "txt":
+            fetchHTMLContent()
+            return
+        case "gif", "jpg", "png", "mp3", "mp4":
+            break
+        case "rar", "zip":
+            break
+        default:
+            fetchContent()
+        }
     }
     
     func fetchContent() {
+        let token = GithubAPI.GetContents(repo: repo, path: file.path!)
+        
         GithubProvider
             .request(token)
             .mapJSON()
             .subscribeNext {
                 self.file = Mapper<File>().map($0)!
-                self.html.value = self.htmlFrom(self.file.content!)
+                self.html.value = self.htmlForRawFile(self.file.content!)
             }
             .addDisposableTo(disposeBag)
     }
     
-    func htmlFrom(base64String: String) -> String {
+    func fetchHTMLContent() {
+        let token: GithubAPI
+        if let path = file.path {
+            token = GithubAPI.GetHTMLContents(repo: repo, path: path)
+        } else {
+            token = GithubAPI.GetTheREADME(repo: repo)
+        }
+        
+        GithubProvider
+            .request(token)
+            .mapString()
+            .subscribeNext {
+                self.html.value = self.htmlForMarkdown($0)
+            }
+            .addDisposableTo(disposeBag)
+    }
+    
+    func htmlForMarkdown(markdown: String?) -> String {
+        
+        if let upwarppedMarkdown = markdown {
+            let template = try! Template(named: "markdown")
+            
+            let data: [String: AnyObject] = [
+                "content": upwarppedMarkdown,
+            ]
+            return try! template.render(Box(data))
+        }
+        let url = NSBundle.mainBundle().URLForResource("empty_content", withExtension: "html")
+        let html = try! String(contentsOfURL: url!)
+        
+        return html
+    }
+    
+    func htmlForRawFile(base64String: String) -> String {
         
         if let rawContent = decodeGHBase64String(base64String) {
             return Renderer.render(rawContent, language: languageOfFile ?? "clike")

@@ -22,34 +22,31 @@ class FileCell: UITableViewCell {
                 iconLabel.text = Octicon.FileDirectory.rawValue
                 iconLabel.textColor = UIColor(netHex: 0x80A6CD)
             case .File:
-                if entity.size == 0 {
-                    iconLabel.text = Octicon.FileSubmodule.rawValue
-                    return
-                }
-                iconLabel.text = Octicon.FileText.rawValue
                 iconLabel.textColor = UIColor(netHex: 0x767676)
                 
-//                let suffix = entity.name?.componentsSeparatedByString(".").last
-//                guard suffix != nil else {
-//                    iconLabel.text = Octicon.FileText.rawValue
-//                    return
-//                }
-//                
-//                switch suffix! {
-//                case "gif", "jpg", "png", "mp3", "mp4":
-//                    iconLabel.text = Octicon.FileMedia.rawValue
-//                case "pdf":
-//                    iconLabel.text = Octicon.FilePdf.rawValue
-//                case "rar", "zip":
-//                    iconLabel.text = Octicon.FileZip.rawValue
-//                default:
-//                    iconLabel.text = Octicon.FileText.rawValue
-//                }
-//                iconLabel.textColor = UIColor(rgba: "#767676")
+                guard let suffix = entity.name?.componentsSeparatedByString(".").last else {
+                    iconLabel.text = Octicon.FileText.rawValue
+                    return
+                }
+                
+                switch suffix {
+                case "gif", "jpg", "png", "mp3", "mp4":
+                    iconLabel.text = Octicon.FileMedia.rawValue
+                case "pdf":
+                    iconLabel.text = Octicon.FilePdf.rawValue
+//                case "md", "markdown":
+//                    iconLabel.text = Octicon.Book.rawValue
+                case "rar", "zip":
+                    iconLabel.text = Octicon.FileZip.rawValue
+                default:
+                    iconLabel.text = Octicon.FileText.rawValue
+                }
             case .Submodule:
                 iconLabel.text = Octicon.FileSubmodule.rawValue
+                iconLabel.textColor = UIColor(netHex: 0x80A6CD)
             case .Symlink:
                 iconLabel.text = Octicon.FileSymlinkDirectory.rawValue
+                iconLabel.textColor = UIColor(netHex: 0x80A6CD)
             }
         }
     }

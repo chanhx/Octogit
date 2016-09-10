@@ -60,6 +60,8 @@
 		C55E08541D478E8E0004EC7C /* common.css in Resources */ = {isa = PBXBuildFile; fileRef = C55E08531D478E8E0004EC7C /* common.css */; };
 		C55E08561D4793740004EC7C /* file_extensions.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55E08551D4793740004EC7C /* file_extensions.plist */; };
 		C571EF581D64836100F752EE /* OptionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C571EF571D64836100F752EE /* OptionPickerView.swift */; };
+		C5757E901D82E5C50012EF0C /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = C5757E8F1D82E5C50012EF0C /* markdown.css */; };
+		C5757E921D82E9770012EF0C /* markdown.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5757E911D82E9770012EF0C /* markdown.mustache */; };
 		C5819ABB1D4CF3D4009D7772 /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819ABA1D4CF3D4009D7772 /* RepositoryCell.swift */; };
 		C5819ABD1D4DD279009D7772 /* RepositoryTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819ABC1D4DD279009D7772 /* RepositoryTableViewModel.swift */; };
 		C5819ABF1D4DD2B7009D7772 /* RepositoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819ABE1D4DD2B7009D7772 /* RepositoryTableViewController.swift */; };
@@ -182,6 +184,8 @@
 		C55E08531D478E8E0004EC7C /* common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = common.css; sourceTree = "<group>"; };
 		C55E08551D4793740004EC7C /* file_extensions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = file_extensions.plist; sourceTree = "<group>"; };
 		C571EF571D64836100F752EE /* OptionPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionPickerView.swift; sourceTree = "<group>"; };
+		C5757E8F1D82E5C50012EF0C /* markdown.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = markdown.css; sourceTree = "<group>"; };
+		C5757E911D82E9770012EF0C /* markdown.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = markdown.mustache; sourceTree = "<group>"; };
 		C5819ABA1D4CF3D4009D7772 /* RepositoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryCell.swift; sourceTree = "<group>"; };
 		C5819ABC1D4DD279009D7772 /* RepositoryTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryTableViewModel.swift; sourceTree = "<group>"; };
 		C5819ABE1D4DD2B7009D7772 /* RepositoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryTableViewController.swift; sourceTree = "<group>"; };
@@ -451,12 +455,14 @@
 				C526EE151D7D7E36008C0D72 /* Prism */,
 				C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */,
 				C55E08481D4701A20004EC7C /* content.mustache */,
+				C5757E911D82E9770012EF0C /* markdown.mustache */,
 				C52474291D50FB400001D9CD /* issue.mustache */,
-				C5BB907A1D487ACA005A40C0 /* empty_content.html */,
 				C55E08531D478E8E0004EC7C /* common.css */,
+				C5757E8F1D82E5C50012EF0C /* markdown.css */,
+				C5BB907A1D487ACA005A40C0 /* empty_content.html */,
+				C526EE111D7C62B6008C0D72 /* sample */,
 				C55E08551D4793740004EC7C /* file_extensions.plist */,
 				C59482BE1D65A73300B9F47C /* languages.plist */,
-				C526EE111D7C62B6008C0D72 /* sample */,
 				C526EE131D7D1954008C0D72 /* themes.plist */,
 			);
 			path = Resources;
@@ -607,6 +613,7 @@
 				C524742A1D50FB400001D9CD /* issue.mustache in Resources */,
 				C5DB946D1D3F842000887E81 /* LaunchScreen.storyboard in Resources */,
 				C5DB946A1D3F842000887E81 /* Assets.xcassets in Resources */,
+				C5757E901D82E5C50012EF0C /* markdown.css in Resources */,
 				C526EE141D7D1954008C0D72 /* themes.plist in Resources */,
 				C55E08541D478E8E0004EC7C /* common.css in Resources */,
 				C59482BF1D65A73300B9F47C /* languages.plist in Resources */,
@@ -614,6 +621,7 @@
 				C55E08491D4701A20004EC7C /* content.mustache in Resources */,
 				C538FD331D430466003A559E /* Login.storyboard in Resources */,
 				C5DB94681D3F842000887E81 /* Main.storyboard in Resources */,
+				C5757E921D82E9770012EF0C /* markdown.mustache in Resources */,
 				C5BB907B1D487ACA005A40C0 /* empty_content.html in Resources */,
 				C526EE161D7D7E36008C0D72 /* Prism in Resources */,
 				C55E08561D4793740004EC7C /* file_extensions.plist in Resources */,

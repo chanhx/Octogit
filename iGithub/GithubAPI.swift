@@ -11,7 +11,20 @@ import RxMoya
 
 // MARK: - Provider setup
 
-let GithubProvider = RxMoyaProvider<GithubAPI>()
+let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
+    
+    (target: GithubAPI) -> Endpoint<GithubAPI> in
+    
+    var endpoint = MoyaProvider.DefaultEndpointMapping(target)
+    endpoint = endpoint.endpointByAddingParameters(["access_token": AccountManager.shareManager.token!])
+    
+    switch target {
+    case .GetHTMLContents, .GetTheREADME:
+        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.ContentsHTML])
+    default:
+        return endpoint
+    }
+})
 
 // MARK: - Provider support
 
@@ -34,6 +47,8 @@ enum GithubAPI {
     case FollowersOf(user: String)
     case GetARepository(repo: String)
     case GetContents(repo: String, path: String)
+    case GetHTMLContents(repo: String, path: String)
+    case GetTheREADME(repo: String)
     case OAuthUser(accessToken: String)
     case Members(org: String)
     case Organization(org: String)
@@ -65,6 +80,10 @@ extension GithubAPI: TargetType {
             return "/repos/\(repo)"
         case .GetContents(let repo, let path):
             return "/repos/\(repo)/contents/\(path)"
+        case .GetHTMLContents(let repo, let path):
+            return "/repos/\(repo)/contents/\(path)"
+        case .GetTheREADME(let repo):
+            return "/repos/\(repo)/readme"
         case .Members(let org):
             return "/orgs/\(org)/members"
         case .OAuthUser(_):
