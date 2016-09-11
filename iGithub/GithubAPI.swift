@@ -20,7 +20,9 @@ let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
     
     switch target {
     case .GetHTMLContents, .GetTheREADME:
-        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.ContentsHTML])
+        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.ContentTypeHTML])
+    case .RepositoryIssues, .RepositoryPullRequests:
+        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.ContentTypeHTMLAndJSON])
     default:
         return endpoint
     }

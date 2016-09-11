@@ -13,5 +13,6 @@ struct Constants {
     static let kTheme = "theme"
     static let kLineNumbers = "linenumbers"
     
-    static let ContentsHTML = "application/vnd.github.\(APIVersion).html"
+    static let ContentTypeHTML = "application/vnd.github.\(APIVersion).html"
+    static let ContentTypeHTMLAndJSON = "application/vnd.github.\(APIVersion).html+json"
 }

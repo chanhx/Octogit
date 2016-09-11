@@ -33,7 +33,7 @@ class Issue : BaseModel {
         id          <- map["id"]
         number      <- map["number"]
         title       <- map["title"]
-        body        <- map["body"]
+        body        <- map["body_html"]
         state       <- map["state"]
         user        <- (map["user"], UserTransform())
         assignees   <- (map["assignees"], UserTransform())
