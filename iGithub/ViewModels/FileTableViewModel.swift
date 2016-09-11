@@ -34,7 +34,24 @@ class FileTableViewModel: BaseTableViewModel<File> {
             .mapJSON()
             .subscribe(
                 onNext: {
-                    self.dataSource.value = Mapper<File>().mapArray($0)!
+                    self.dataSource.value = Mapper<File>().mapArray($0)!.sort({ (f1, f2) -> Bool in
+                        if f1.type! == f2.type! {
+                            return f1.name! < f2.name!
+                        } else {
+                            switch (f1.type!, f2.type!) {
+                            case (.Directory, _), (_, .Directory):
+                                return f1.type! == .Directory
+                            case (.Submodule, _), (_, .Submodule):
+                                return f1.type! == .Submodule
+                            case (.File, _), (_, .File):
+                                return f1.type! == .File
+                            case (.Symlink, _), (_, .Symlink):
+                                return f1.type! == .Symlink
+                            default:
+                                return true
+                            }
+                        }
+                    })
                 },
                 onError: {
                     print($0)

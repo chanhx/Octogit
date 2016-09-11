@@ -129,13 +129,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9XL-KM-93s">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9XL-KM-93s">
                                             <rect key="frame" x="13" y="10" width="22" height="23.5"/>
                                             <fontDescription key="fontDescription" name="octicons" family="octicons" pointSize="22"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1qQ-4d-pwt">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="name" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1qQ-4d-pwt">
                                             <rect key="frame" x="40" y="11" width="544" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.25098039220000001" green="0.47058823529999999" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -144,6 +144,8 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="9XL-KM-93s" firstAttribute="centerY" secondItem="abi-k8-bVj" secondAttribute="centerY" id="1xS-tZ-0FF"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="1qQ-4d-pwt" secondAttribute="bottom" constant="3" id="8WS-ho-xrQ"/>
+                                        <constraint firstItem="1qQ-4d-pwt" firstAttribute="top" secondItem="abi-k8-bVj" secondAttribute="topMargin" constant="3" id="Hw0-QM-e4S"/>
                                         <constraint firstItem="1qQ-4d-pwt" firstAttribute="leading" secondItem="9XL-KM-93s" secondAttribute="trailing" constant="5" id="J6i-Qs-IUo"/>
                                         <constraint firstItem="1qQ-4d-pwt" firstAttribute="centerY" secondItem="9XL-KM-93s" secondAttribute="centerY" id="Oft-Qe-oVg"/>
                                         <constraint firstItem="9XL-KM-93s" firstAttribute="leading" secondItem="abi-k8-bVj" secondAttribute="leadingMargin" constant="5" id="ivo-aL-P9H"/>
