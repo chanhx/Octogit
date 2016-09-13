@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.customizeAppearance()
         self.registerDefaults()
+        self.setURLCache()
         
         let storyboardName = AccountManager.shareManager.token == nil ? "Login" : "Main"
         let initialVC = UIStoryboard(name: storyboardName, bundle: nil).instantiateInitialViewController()!
@@ -45,6 +46,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Constants.kLineNumbers: true
             ]
         )
+    }
+    
+    func setURLCache() {
+        let URLCache = NSURLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
+        NSURLCache.setSharedURLCache(URLCache)
     }
 
     func applicationWillResignActive(application: UIApplication) {
