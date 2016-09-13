@@ -25,10 +25,12 @@ class FileCell: UITableViewCell {
                 iconLabel.textColor = UIColor(netHex: 0x767676)
                 
                 switch entity.name!.pathExtension {
-                case "gif", "jpg", "png", "mp3", "mp4":
+                case "jpg", "png", "gif", "mp3", "mp4":
                     iconLabel.text = Octicon.FileMedia.rawValue
                 case "pdf":
                     iconLabel.text = Octicon.FilePdf.rawValue
+                case "md", "markdown", "adoc":
+                    iconLabel.text = Octicon.Book.rawValue
                 case "rar", "zip":
                     iconLabel.text = Octicon.FileZip.rawValue
                 default:
