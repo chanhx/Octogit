@@ -20,4 +20,8 @@ extension File {
             return "text/\(ext)"
         }
     }
+    
+    var shortenSHA: String {
+        return sha!.substringToIndex(sha!.startIndex.advancedBy(7))
+    }
 }
