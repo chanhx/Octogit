@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C500B7961D545A3A00DC6D2A /* IGLinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */; };
+		C5113D1A1D87B5B400344739 /* File+DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5113D191D87B5B400344739 /* File+DataProcess.swift */; };
 		C52013C91D56C28C00FDCC30 /* TTTAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */; };
 		C52013CE1D57361A00FDCC30 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52013CD1D57361A00FDCC30 /* WebViewController.swift */; };
 		C52474281D50F06A0001D9CD /* WebViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52474271D50F06A0001D9CD /* WebViewCell.swift */; };
@@ -131,6 +132,7 @@
 
 /* Begin PBXFileReference section */
 		C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IGLinkLabel.swift; sourceTree = "<group>"; };
+		C5113D191D87B5B400344739 /* File+DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "File+DataProcess.swift"; sourceTree = "<group>"; };
 		C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TTTAttributedLabel.framework; path = Carthage/Build/iOS/TTTAttributedLabel.framework; sourceTree = "<group>"; };
 		C52013CA1D56C30C00FDCC30 /* iGithub-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iGithub-Bridging-Header.h"; sourceTree = "<group>"; };
 		C52013CD1D57361A00FDCC30 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 				C538FD491D449602003A559E /* DataProcess.swift */,
 				C538FD461D4491DE003A559E /* Event+DataProcess.swift */,
 				C59D120D1D5AE2DD0098301A /* NSURL+Github.swift */,
+				C5113D191D87B5B400344739 /* File+DataProcess.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -684,6 +687,7 @@
 				C52013CE1D57361A00FDCC30 /* WebViewController.swift in Sources */,
 				C5E733881D61C90000913A66 /* SearchViewController.swift in Sources */,
 				C5373C4B1D4B7C2D006CFB83 /* OrganizationViewController.swift in Sources */,
+				C5113D1A1D87B5B400344739 /* File+DataProcess.swift in Sources */,
 				C5819ACA1D4F6C6A009D7772 /* IssueViewModel.swift in Sources */,
 				C55791531D73E71300FBBD41 /* RefreshComponent.swift in Sources */,
 				C5E733851D603A8E00913A66 /* SegmentHeaderView.swift in Sources */,

@@ -24,18 +24,11 @@ class FileCell: UITableViewCell {
             case .File:
                 iconLabel.textColor = UIColor(netHex: 0x767676)
                 
-                guard let suffix = entity.name?.componentsSeparatedByString(".").last else {
-                    iconLabel.text = Octicon.FileText.rawValue
-                    return
-                }
-                
-                switch suffix {
+                switch entity.name!.pathExtension {
                 case "gif", "jpg", "png", "mp3", "mp4":
                     iconLabel.text = Octicon.FileMedia.rawValue
                 case "pdf":
                     iconLabel.text = Octicon.FilePdf.rawValue
-//                case "md", "markdown":
-//                    iconLabel.text = Octicon.Book.rawValue
                 case "rar", "zip":
                     iconLabel.text = Octicon.FileZip.rawValue
                 default:
@@ -43,10 +36,10 @@ class FileCell: UITableViewCell {
                 }
             case .Submodule:
                 iconLabel.text = Octicon.FileSubmodule.rawValue
-                iconLabel.textColor = UIColor(netHex: 0x80A6CD)
+                iconLabel.textColor = UIColor(netHex: 0x767676)
             case .Symlink:
                 iconLabel.text = Octicon.FileSymlinkDirectory.rawValue
-                iconLabel.textColor = UIColor(netHex: 0x80A6CD)
+                iconLabel.textColor = UIColor(netHex: 0x767676)
             }
         }
     }

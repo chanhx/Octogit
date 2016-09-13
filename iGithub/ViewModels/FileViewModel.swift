@@ -22,6 +22,7 @@ class FileViewModel {
     var repo: String
     var file: File
     var html = Variable("")
+    var contentData = Variable(NSData())
     let disposeBag = DisposeBag()
     
     init(repository: String, file: File) {
@@ -42,14 +43,10 @@ class FileViewModel {
         default: break
         }
         
-        switch self.file.name!.componentsSeparatedByString(".").last! {
+        switch self.file.name!.pathExtension {
         case "md", "markdown", "adoc", "txt":
             fetchHTMLContent()
             return
-        case "gif", "jpg", "png", "mp3", "mp4":
-            break
-        case "rar", "zip":
-            break
         default:
             fetchContent()
         }
@@ -63,7 +60,14 @@ class FileViewModel {
             .mapJSON()
             .subscribeNext {
                 self.file = Mapper<File>().map($0)!
-                self.html.value = self.htmlForRawFile(self.file.content!)
+                
+                let type = self.file.MIMEType.componentsSeparatedByString("/")[0]
+                switch type {
+                case "image":
+                    self.contentData.value = NSData.dataFromGHBase64String(self.file.content!)!
+                default:
+                    self.html.value = self.htmlForRawFile(self.file.content!)
+                }
             }
             .addDisposableTo(disposeBag)
     }
@@ -89,33 +93,21 @@ class FileViewModel {
         
         if let upwarppedMarkdown = markdown {
             let template = try! Template(named: "markdown")
+            let data = ["content": upwarppedMarkdown]
             
-            let data: [String: AnyObject] = [
-                "content": upwarppedMarkdown,
-            ]
             return try! template.render(Box(data))
         }
         let url = NSBundle.mainBundle().URLForResource("empty_content", withExtension: "html")
-        let html = try! String(contentsOfURL: url!)
-        
-        return html
+        return try! String(contentsOfURL: url!)
     }
     
     func htmlForRawFile(base64String: String) -> String {
         
-        if let rawContent = decodeGHBase64String(base64String) {
+        if let rawContent = String.stringFromGHBase64String(base64String) {
             return Renderer.render(rawContent, language: languageOfFile ?? "clike")
         }
         let url = NSBundle.mainBundle().URLForResource("empty_content", withExtension: "html")
-        let html = try! String(contentsOfURL: url!)
-        
-        return html
-    }
-    
-    func decodeGHBase64String(string: String) -> String? {
-        let encodedString = string.stringByReplacingOccurrencesOfString("\n", withString: "")
-        let data = NSData(base64EncodedString: encodedString, options: NSDataBase64DecodingOptions(rawValue: 0))
-        return String(data: data!, encoding: NSUTF8StringEncoding)
+        return try! String(contentsOfURL: url!)
     }
     
     var languageOfFile: String? {

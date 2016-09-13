@@ -76,3 +76,21 @@ extension TTTAttributedLabel {
         addLinkToURL(url, withRange: range)
     }
 }
+
+extension NSData {
+    static func dataFromGHBase64String(base64String: String) -> NSData? {
+        let encodedString = base64String.stringByReplacingOccurrencesOfString("\n", withString: "")
+        return NSData(base64EncodedString: encodedString, options: NSDataBase64DecodingOptions(rawValue: 0))
+    }
+}
+
+extension String {
+    static func stringFromGHBase64String(base64String: String) -> String? {
+        let data = NSData.dataFromGHBase64String(base64String)
+        return String(data: data!, encoding: NSUTF8StringEncoding)
+    }
+    
+    var pathExtension: String {
+        return (self as NSString).pathExtension
+    }
+}

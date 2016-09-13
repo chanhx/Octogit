@@ -13,6 +13,7 @@ struct Constants {
     static let kTheme = "theme"
     static let kLineNumbers = "linenumbers"
     
-    static let ContentTypeHTML = "application/vnd.github.\(APIVersion).html"
-    static let ContentTypeHTMLAndJSON = "application/vnd.github.\(APIVersion).html+json"
+    static let MediaTypeHTML = "application/vnd.github.\(APIVersion).html"
+    static let MediaTypeHTMLAndJSON = "application/vnd.github.\(APIVersion).html+json"
+    static let MediaTypeRaw = "application/vnd.github.\(APIVersion).raw"
 }

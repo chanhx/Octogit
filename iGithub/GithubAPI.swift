@@ -19,10 +19,12 @@ let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
     endpoint = endpoint.endpointByAddingParameters(["access_token": AccountManager.shareManager.token!])
     
     switch target {
+    case .GetABlob:
+        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeRaw])
     case .GetHTMLContents, .GetTheREADME:
-        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.ContentTypeHTML])
+        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeHTML])
     case .RepositoryIssues, .RepositoryPullRequests:
-        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.ContentTypeHTMLAndJSON])
+        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeHTMLAndJSON])
     default:
         return endpoint
     }
@@ -47,6 +49,7 @@ enum UsersSearchSort: String {
 enum GithubAPI {
     case FollowedBy(user: String)
     case FollowersOf(user: String)
+    case GetABlob(repo: String, sha: String)
     case GetARepository(repo: String)
     case GetContents(repo: String, path: String)
     case GetHTMLContents(repo: String, path: String)
@@ -78,6 +81,8 @@ extension GithubAPI: TargetType {
             return "/users/\(user)/following"
         case .FollowersOf(let user):
             return "/users/\(user)/followers"
+        case .GetABlob(let repo, let sha):
+            return "/repos/\(repo)/git/blobs/\(sha)"
         case .GetARepository(let repo):
             return "/repos/\(repo)"
         case .GetContents(let repo, let path):
