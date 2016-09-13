@@ -168,7 +168,7 @@ extension SearchViewController: OptionPickerViewDelegate {
             let row0 = pickerView.selectedRow[0]
             let row1 = pickerView.selectedRow[1]
             
-            viewModel.option = .Repositories(sort: viewModel.reposSortOptions[row0].option, language: languages[row1])
+            viewModel.option = .Repositories(sort: viewModel.reposSortOptions[row0].option, language: languagesArray[row1])
         } else if pickerView == userOptionPickerView {
             let row = pickerView.selectedRow[0]
             viewModel.option = .Users(sort: viewModel.usersSortOptions[row].option)
@@ -184,7 +184,7 @@ extension SearchViewController: OptionPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch viewModel.option {
         case .Repositories:
-            return repoOptionsPickerView.index == 0 ? 4 : languages.count
+            return repoOptionsPickerView.index == 0 ? 4 : languagesArray.count
         case .Users:
             return 4
         }
@@ -195,7 +195,7 @@ extension SearchViewController: OptionPickerViewDelegate {
         case .Repositories:
             return repoOptionsPickerView.index == 0 ?
                 viewModel.reposSortOptions.map {$0.desc} [row] :
-                languages[row]
+                languagesArray[row]
         case .Users:
             return viewModel.usersSortOptions.map {$0.desc} [row]
         }

@@ -68,8 +68,10 @@ class SearchViewModel {
         switch option {
         case .Repositories(let sort, let language):
             if query == repoTVM.query && option == options[0] {return}
-            
-            let token = GithubAPI.SearchRepositories(q: query.stringByAppendingString(" language:\(language)"), sort: sort)
+
+            let lan = languagesDict[language]!
+            let q = lan.characters.count > 0 ? query.stringByAppendingString("+language:\(languagesDict[lan])") : query
+            let token = GithubAPI.SearchRepositories(q: q, sort: sort)
             repoTVM.search(query, token: token)
         case .Users(let sort):
             if query == repoTVM.query && option == options[1] {return}

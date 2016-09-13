@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C500B7961D545A3A00DC6D2A /* IGLinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */; };
 		C5113D1A1D87B5B400344739 /* File+DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5113D191D87B5B400344739 /* File+DataProcess.swift */; };
+		C5113D1C1D88124D00344739 /* languages_dict.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5113D1B1D88124D00344739 /* languages_dict.plist */; };
 		C52013C91D56C28C00FDCC30 /* TTTAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */; };
 		C52013CE1D57361A00FDCC30 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52013CD1D57361A00FDCC30 /* WebViewController.swift */; };
 		C52474281D50F06A0001D9CD /* WebViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52474271D50F06A0001D9CD /* WebViewCell.swift */; };
@@ -71,7 +72,7 @@
 		C5819AC51D4EF7AC009D7772 /* IssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819AC41D4EF7AC009D7772 /* IssueCell.swift */; };
 		C5819AC71D4F6C3E009D7772 /* IssueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819AC61D4F6C3E009D7772 /* IssueViewController.swift */; };
 		C5819ACA1D4F6C6A009D7772 /* IssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819AC91D4F6C6A009D7772 /* IssueViewModel.swift */; };
-		C59482BF1D65A73300B9F47C /* languages.plist in Resources */ = {isa = PBXBuildFile; fileRef = C59482BE1D65A73300B9F47C /* languages.plist */; };
+		C59482BF1D65A73300B9F47C /* languages_array.plist in Resources */ = {isa = PBXBuildFile; fileRef = C59482BE1D65A73300B9F47C /* languages_array.plist */; };
 		C59D120E1D5AE2DD0098301A /* NSURL+Github.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D120D1D5AE2DD0098301A /* NSURL+Github.swift */; };
 		C59D12101D5AE6410098301A /* URLRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D120F1D5AE6410098301A /* URLRouter.swift */; };
 		C5ABDF4E1D7DC8A800F07DC2 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ABDF4D1D7DC8A800F07DC2 /* Renderer.swift */; };
@@ -133,6 +134,7 @@
 /* Begin PBXFileReference section */
 		C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IGLinkLabel.swift; sourceTree = "<group>"; };
 		C5113D191D87B5B400344739 /* File+DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "File+DataProcess.swift"; sourceTree = "<group>"; };
+		C5113D1B1D88124D00344739 /* languages_dict.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = languages_dict.plist; sourceTree = "<group>"; };
 		C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TTTAttributedLabel.framework; path = Carthage/Build/iOS/TTTAttributedLabel.framework; sourceTree = "<group>"; };
 		C52013CA1D56C30C00FDCC30 /* iGithub-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iGithub-Bridging-Header.h"; sourceTree = "<group>"; };
 		C52013CD1D57361A00FDCC30 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -196,7 +198,7 @@
 		C5819AC41D4EF7AC009D7772 /* IssueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueCell.swift; sourceTree = "<group>"; };
 		C5819AC61D4F6C3E009D7772 /* IssueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewController.swift; sourceTree = "<group>"; };
 		C5819AC91D4F6C6A009D7772 /* IssueViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueViewModel.swift; sourceTree = "<group>"; };
-		C59482BE1D65A73300B9F47C /* languages.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = languages.plist; sourceTree = "<group>"; };
+		C59482BE1D65A73300B9F47C /* languages_array.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = languages_array.plist; sourceTree = "<group>"; };
 		C59D120D1D5AE2DD0098301A /* NSURL+Github.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURL+Github.swift"; sourceTree = "<group>"; };
 		C59D120F1D5AE6410098301A /* URLRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRouter.swift; sourceTree = "<group>"; };
 		C5ABDF4D1D7DC8A800F07DC2 /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
@@ -465,7 +467,8 @@
 				C5BB907A1D487ACA005A40C0 /* empty_content.html */,
 				C526EE111D7C62B6008C0D72 /* sample */,
 				C55E08551D4793740004EC7C /* file_extensions.plist */,
-				C59482BE1D65A73300B9F47C /* languages.plist */,
+				C59482BE1D65A73300B9F47C /* languages_array.plist */,
+				C5113D1B1D88124D00344739 /* languages_dict.plist */,
 				C526EE131D7D1954008C0D72 /* themes.plist */,
 			);
 			path = Resources;
@@ -617,9 +620,10 @@
 				C5DB946D1D3F842000887E81 /* LaunchScreen.storyboard in Resources */,
 				C5DB946A1D3F842000887E81 /* Assets.xcassets in Resources */,
 				C5757E901D82E5C50012EF0C /* markdown.css in Resources */,
+				C5113D1C1D88124D00344739 /* languages_dict.plist in Resources */,
 				C526EE141D7D1954008C0D72 /* themes.plist in Resources */,
 				C55E08541D478E8E0004EC7C /* common.css in Resources */,
-				C59482BF1D65A73300B9F47C /* languages.plist in Resources */,
+				C59482BF1D65A73300B9F47C /* languages_array.plist in Resources */,
 				C5F4BDEB1D3F96D2009DF758 /* octicons.ttf in Resources */,
 				C55E08491D4701A20004EC7C /* content.mustache in Resources */,
 				C538FD331D430466003A559E /* Login.storyboard in Resources */,

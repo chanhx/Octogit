@@ -147,7 +147,7 @@ extension ExplorationViewController: OptionPickerViewDelegate {
             viewModel.since = viewModel.pickerVM.timeOptions[row0].time
         }
         if let row1 = pickerView.tmpSelectedRow[1] {
-            viewModel.language = languages[row1]
+            viewModel.language = languagesArray[row1]
         }
         viewModel.updateOptions()
         updateTitle()
@@ -158,11 +158,11 @@ extension ExplorationViewController: OptionPickerViewDelegate {
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.pickerView.index == 0 ? 3 : languages.count
+        return self.pickerView.index == 0 ? 3 : languagesArray.count
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.pickerView.index == 0 ? viewModel.timeOptions[row] : languages[row]
+        return self.pickerView.index == 0 ? viewModel.timeOptions[row] : languagesArray[row]
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

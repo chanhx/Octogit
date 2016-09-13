@@ -13,9 +13,14 @@ import Kanna
 import ObjectMapper
 //import Result
 
-var languages: [String] = {
-    let path = NSBundle.mainBundle().pathForResource("languages", ofType: "plist")
+let languagesArray: [String] = {
+    let path = NSBundle.mainBundle().pathForResource("languages_array", ofType: "plist")
     return NSArray(contentsOfFile: path!) as! [String]
+}()
+
+let languagesDict: [String: String] = {
+    let path = NSBundle.mainBundle().pathForResource("languages_dict", ofType: "plist")
+    return NSDictionary(contentsOfFile: path!) as! [String: String]
 }()
 
 class ExplorationViewModel {
@@ -110,7 +115,7 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
     var language: String?
     var repositories: Variable<[(name: String, description: String?, meta: String)]> = Variable([])
     var token: WebAPI {
-        return WebAPI.Trending(since: since!, language: language!, type: .Repositories)
+        return WebAPI.Trending(since: since!, language: languagesDict[language!]!, type: .Repositories)
     }
     
     @inline(__always) func parse(doc: HTMLDocument) {
@@ -138,7 +143,7 @@ class TrendingUserTableViewModel: TrendingViewModelProtocol {
     var language: String?
     var users: Variable<[User]> = Variable([])
     var token: WebAPI {
-        return WebAPI.Trending(since: since!, language: language!, type: .Users)
+        return WebAPI.Trending(since: since!, language: languagesDict[language!]!, type: .Users)
     }
     
     @inline(__always) func parse(doc: HTMLDocument) {
