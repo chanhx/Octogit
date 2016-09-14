@@ -16,17 +16,6 @@ enum SearchOption {
     case Users(sort: UsersSearchSort)
 }
 
-func ==(lhs: SearchOption, rhs: SearchOption) -> Bool {
-    switch (lhs, rhs) {
-    case (.Repositories(let sortL, let languageL), .Repositories(let sortR, let languageR)):
-        return sortL == sortR && languageL == languageR
-    case (.Users(let sortL), .Users(let sortR)):
-        return sortL == sortR
-    case (.Repositories(_, _), _): return false
-    case (.Users(_), _): return false
-    }
-}
-
 class SearchViewModel {
     
     let repoTVM = RepositoriesSearchViewModel()
@@ -67,15 +56,11 @@ class SearchViewModel {
         self.query = query
         switch option {
         case .Repositories(let sort, let language):
-            if query == repoTVM.query && option == options[0] {return}
-
             let lan = languagesDict[language]!
-            let q = lan.characters.count > 0 ? query.stringByAppendingString("+language:\(languagesDict[lan])") : query
+            let q = lan.characters.count > 0 ? query.stringByAppendingString("+language:\(lan)") : query
             let token = GithubAPI.SearchRepositories(q: q, sort: sort)
             repoTVM.search(query, token: token)
         case .Users(let sort):
-            if query == userTVM.query && option == options[1] {return}
-            
             let token = GithubAPI.SearchUsers(q: query, sort: sort)
             userTVM.search(query, token: token)
         }
