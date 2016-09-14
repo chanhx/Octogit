@@ -74,7 +74,7 @@ class SearchViewModel {
             let token = GithubAPI.SearchRepositories(q: q, sort: sort)
             repoTVM.search(query, token: token)
         case .Users(let sort):
-            if query == repoTVM.query && option == options[1] {return}
+            if query == userTVM.query && option == options[1] {return}
             
             let token = GithubAPI.SearchUsers(q: query, sort: sort)
             userTVM.search(query, token: token)
