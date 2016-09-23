@@ -64,25 +64,25 @@ class EventCell: UITableViewCell {
         }
         
         switch entity.type! {
-        case .ForkEvent:
+        case .forkEvent:
             let e = entity as! ForkEvent
             titleLabel.addLink(URL(string: "/\(e.forkee!)")!, toText: e.forkee!)
-        case .IssueCommentEvent:
+        case .issueCommentEvent:
             let e = entity as! IssueCommentEvent
             titleLabel.addLink(URL(string: "/\(e.repository!)/issues/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")
-        case .IssuesEvent:
+        case .issuesEvent:
             let e = entity as! IssueEvent
             titleLabel.addLink(URL(string: "/\(e.repository!)/issues/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")
-        case .GollumEvent:
+        case .gollumEvent:
             let e = entity as! GollumEvent
             titleLabel.addLink(URL(string: "/\(e.repository!)/wiki/\(e.pageName!)")!, toText: e.pageName!)
-        case .MemberEvent:
+        case .memberEvent:
             let e = entity as! MemberEvent
             titleLabel.addLink(URL(string: "/\(e.member!)")!, toText: e.member!.login!)
-        case .PullRequestEvent:
+        case .pullRequestEvent:
             let e = entity as! PullRequestEvent
             titleLabel.addLink(URL(string: "/pull/\(e.pullRequest!.number!)")!, toText: "#\(e.pullRequest!.number!)")
-        case .PullRequestReviewCommentEvent:
+        case .pullRequestReviewCommentEvent:
             let e = entity as! PullRequestReviewCommentEvent
             titleLabel.addLink(URL(string: "/pull/\(e.pullRequest!.number!)")!, toText: "#\(e.pullRequest!.number!)")
         default:
@@ -92,7 +92,7 @@ class EventCell: UITableViewCell {
     }
     
     func addLinksToContent() {
-        if entity.type! == EventType.PushEvent {
+        if entity.type! == .pushEvent {
             let e = entity as! PushEvent
             for commit in e.commits! {
                 let sha = commit.sha!

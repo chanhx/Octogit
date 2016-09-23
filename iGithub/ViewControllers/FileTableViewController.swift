@@ -14,7 +14,7 @@ class FileTableViewController: BaseTableViewController {
     var viewModel: FileTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
-                .bindTo(tableView.rx_itemsWithCellIdentifier("FileCell", cellType: FileCell.self)) { row, element, cell in
+                .bindTo(tableView.rx.items(cellIdentifier: "FileCell", cellType: FileCell.self)) { row, element, cell in
                     cell.entity = element
                 }
                 .addDisposableTo(viewModel.disposeBag)
@@ -43,7 +43,7 @@ class FileTableViewController: BaseTableViewController {
         super.tableView(tableView, didSelectRowAt: indexPath)
         
         let file = viewModel.dataSource.value[(indexPath as NSIndexPath).row]
-        if file.type! == .File {
+        if file.type! == .file {
             let fileVC = FileViewController()
             fileVC.viewModel = viewModel.fileViewModel(file)
             self.navigationController?.pushViewController(fileVC, animated: true)

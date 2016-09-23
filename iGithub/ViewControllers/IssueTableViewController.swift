@@ -13,7 +13,7 @@ class IssueTableViewController: BaseTableViewController {
     var viewModel: IssueTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
-                .bindTo(tableView.rx_itemsWithCellIdentifier("IssueCell", cellType: IssueCell.self)) { row, element, cell in
+                .bindTo(tableView.rx.items(cellIdentifier: "IssueCell", cellType: IssueCell.self)) { row, element, cell in
                     cell.entity = element
                 }
                 .addDisposableTo(viewModel.disposeBag)

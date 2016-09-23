@@ -18,30 +18,30 @@ class FileCell: UITableViewCell {
             nameLabel.text = entity.name
             
             switch entity.type! {
-            case .Directory:
-                iconLabel.text = Octicon.FileDirectory.rawValue
+            case .directory:
+                iconLabel.text = Octicon.filedirectory.rawValue
                 iconLabel.textColor = UIColor(netHex: 0x80A6CD)
-            case .File:
+            case .file:
                 iconLabel.textColor = UIColor(netHex: 0x767676)
                 
                 switch entity.name!.pathExtension {
                 case "jpg", "png", "gif", "mp3", "mp4":
-                    iconLabel.text = Octicon.FileMedia.rawValue
+                    iconLabel.text = Octicon.filemedia.rawValue
                 case "pdf":
-                    iconLabel.text = Octicon.FilePdf.rawValue
+                    iconLabel.text = Octicon.filepdf.rawValue
                 case "md", "markdown", "adoc":
-                    iconLabel.text = Octicon.Book.rawValue
+                    iconLabel.text = Octicon.book.rawValue
                 case "rar", "zip":
-                    iconLabel.text = Octicon.FileZip.rawValue
+                    iconLabel.text = Octicon.filezip.rawValue
                 default:
-                    iconLabel.text = Octicon.FileText.rawValue
+                    iconLabel.text = Octicon.filetext.rawValue
                 }
-            case .Submodule:
-                iconLabel.text = Octicon.FileSubmodule.rawValue
+            case .submodule:
+                iconLabel.text = Octicon.filesubmodule.rawValue
                 nameLabel.text = "\(entity.name!) @ \(entity.shortenSHA)"
                 iconLabel.textColor = UIColor(netHex: 0x767676)
-            case .Symlink:
-                iconLabel.text = Octicon.FileSymlinkDirectory.rawValue
+            case .symlink:
+                iconLabel.text = Octicon.filesymlinkdirectory.rawValue
                 iconLabel.textColor = UIColor(netHex: 0x767676)
             }
         }

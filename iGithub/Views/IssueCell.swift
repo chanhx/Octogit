@@ -67,18 +67,18 @@ class IssueCell: UITableViewCell {
     var entity: Issue! {
         didSet {
             switch entity.state! {
-            case .Closed:
-                statusLabel.text = Octicon.IssueClosed.rawValue
+            case .closed:
+                statusLabel.text = Octicon.issueclosed.rawValue
                 statusLabel.textColor = UIColor(netHex: 0xBD2C00)
-            case .Open:
-                statusLabel.text = Octicon.IssueOpened.rawValue
+            case .open:
+                statusLabel.text = Octicon.issueopened.rawValue
                 statusLabel.textColor = UIColor(netHex: 0x6CC644)
             }
             
             titleLabel.text = entity.title
             infoLabel.text = "#\(entity.number!) by \(entity.user!) - \(entity.createdAt!.naturalString)"
             
-            commentsLabel.attributedText = Octicon.Comment.iconString("\(entity.comments!)")
+            commentsLabel.attributedText = Octicon.comment.iconString("\(entity.comments!)")
             commentsLabel.isHidden = entity.comments == 0
         }
     }

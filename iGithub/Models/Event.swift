@@ -12,31 +12,31 @@ import ObjectMapper
 import SwiftDate
 
 enum EventType: String {
-    case CommitCommentEvent = "CommitCommentEvent"
-    case CreateEvent = "CreateEvent"
-    case DeleteEvent = "DeleteEvent"
-    case DeploymentEvent = "DeploymentEvent"                    // not visible
-    case DeploymentStatusEvent = "DeploymentStatusEvent"        // not visible
-    case DownloadEvent = "DownloadEvent"                        // no longer created
-    case FollowEvent = "FollowEvent"                            // no longer created
-    case ForkEvent = "ForkEvent"
-    case ForkApplyEvent = "ForkApplyEvent"                      // no longer created
-    case GistEvent = "GistEvent"                                // no longer created
-    case GollumEvent = "GollumEvent"
-    case IssueCommentEvent = "IssueCommentEvent"
-    case IssuesEvent = "IssuesEvent"
-    case MemberEvent = "MemberEvent"
-    case MembershipEvent = "MembershipEvent"                    // not visible
-    case PageBuildEvent = "PageBuildEvent"                      // not visible
-    case PublicEvent = "PublicEvent"
-    case PullRequestEvent = "PullRequestEvent"
-    case PullRequestReviewCommentEvent = "PullRequestReviewCommentEvent"
-    case PushEvent = "PushEvent"
-    case ReleaseEvent = "ReleaseEvent"
-    case RepositoryEvent = "RepositoryEvent"                    // not visible
-    case StatusEvent = "StatusEvent"                            // not visible
-    case TeamAddEvent = "TeamAddEvent"
-    case WatchEvent = "WatchEvent"
+    case commitCommentEvent = "CommitCommentEvent"
+    case createEvent = "CreateEvent"
+    case deleteEvent = "DeleteEvent"
+    case deploymentEvent = "DeploymentEvent"                    // not visible
+    case deploymentStatusEvent = "DeploymentStatusEvent"        // not visible
+    case downloadEvent = "DownloadEvent"                        // no longer created
+    case followEvent = "FollowEvent"                            // no longer created
+    case forkEvent = "ForkEvent"
+    case forkApplyEvent = "ForkApplyEvent"                      // no longer created
+    case gistEvent = "GistEvent"                                // no longer created
+    case gollumEvent = "GollumEvent"
+    case issueCommentEvent = "IssueCommentEvent"
+    case issuesEvent = "IssuesEvent"
+    case memberEvent = "MemberEvent"
+    case membershipEvent = "MembershipEvent"                    // not visible
+    case pageBuildEvent = "PageBuildEvent"                      // not visible
+    case publicEvent = "PublicEvent"
+    case pullRequestEvent = "PullRequestEvent"
+    case pullRequestReviewCommentEvent = "PullRequestReviewCommentEvent"
+    case pushEvent = "PushEvent"
+    case releaseEvent = "ReleaseEvent"
+    case repositoryEvent = "RepositoryEvent"                    // not visible
+    case statusEvent = "StatusEvent"                            // not visible
+    case teamAddEvent = "TeamAddEvent"
+    case watchEvent = "WatchEvent"
 }
 
 class Event: BaseModel, StaticMappable {
@@ -51,20 +51,20 @@ class Event: BaseModel, StaticMappable {
     static func objectForMapping(map: ObjectMapper.Map) -> BaseMappable? {
         if let type: EventType = EventType(rawValue: map["type"].value()!) {
             switch type {
-            case .CommitCommentEvent: return CommitCommentEvent(map: map)
-            case .CreateEvent: return CreateEvent(map: map)
-            case .DeleteEvent: return DeleteEvent(map: map)
-            case .ForkEvent: return ForkEvent(map: map)
-            case .GollumEvent: return GollumEvent(map: map)
-            case .IssueCommentEvent: return IssueCommentEvent(map: map)
-            case .IssuesEvent: return IssueEvent(map: map)
-            case .MemberEvent: return MemberEvent(map: map)
-            case .PublicEvent: return PublicEvent(map: map)
-            case .PullRequestEvent: return PullRequestEvent(map: map)
-            case .PullRequestReviewCommentEvent: return PullRequestReviewCommentEvent(map: map)
-            case .PushEvent: return PushEvent(map: map)
-            case .ReleaseEvent: return ReleaseEvent(map: map)
-            case .WatchEvent: return WatchEvent(map: map)
+            case .commitCommentEvent: return CommitCommentEvent(map: map)
+            case .createEvent: return CreateEvent(map: map)
+            case .deleteEvent: return DeleteEvent(map: map)
+            case .forkEvent: return ForkEvent(map: map)
+            case .gollumEvent: return GollumEvent(map: map)
+            case .issueCommentEvent: return IssueCommentEvent(map: map)
+            case .issuesEvent: return IssueEvent(map: map)
+            case .memberEvent: return MemberEvent(map: map)
+            case .publicEvent: return PublicEvent(map: map)
+            case .pullRequestEvent: return PullRequestEvent(map: map)
+            case .pullRequestReviewCommentEvent: return PullRequestReviewCommentEvent(map: map)
+            case .pushEvent: return PushEvent(map: map)
+            case .releaseEvent: return ReleaseEvent(map: map)
+            case .watchEvent: return WatchEvent(map: map)
             default: return nil
             }
         }

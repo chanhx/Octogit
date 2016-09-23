@@ -77,9 +77,9 @@ class RepositoryViewModel {
 
     var ownerViewModel: UserViewModel {
         switch repository.value.owner!.type! {
-        case .User:
+        case .user:
             return UserViewModel(repository.value.owner!)
-        case .Organization:
+        case .organization:
             return OrganizationViewModel(repository.value.owner!)
         }
     }

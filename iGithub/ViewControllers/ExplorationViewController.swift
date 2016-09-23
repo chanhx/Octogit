@@ -70,11 +70,11 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
         case .users:
             let user = viewModel.userTVM.users.value[(indexPath as NSIndexPath).row]
             switch user.type! {
-            case .User:
+            case .user:
                 let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC") as! UserViewController
                 userVC.viewModel = UserViewModel(user)
                 self.navigationController?.pushViewController(userVC, animated: true)
-            case .Organization:
+            case .organization:
                 let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrgVC") as! OrganizationViewController
                 orgVC.viewModel = OrganizationViewModel(user)
                 self.navigationController?.pushViewController(orgVC, animated: true)

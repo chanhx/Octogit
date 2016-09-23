@@ -28,9 +28,9 @@ class RepositoryViewController: BaseTableViewController {
                     
                     if self.viewModel.repositoryLoaded {
                         if repo.isPrivate! {
-                            self.iconLabel.text = Octicon.Lock.rawValue
+                            self.iconLabel.text = Octicon.lock.rawValue
                         } else {
-                            self.iconLabel.text = repo.isAFork! ? Octicon.RepoForked.rawValue : Octicon.Repo.rawValue
+                            self.iconLabel.text = repo.isAFork! ? Octicon.repoforked.rawValue : Octicon.repo.rawValue
                         }
                         self.updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString)"
                     } else {
@@ -86,7 +86,7 @@ class RepositoryViewController: BaseTableViewController {
             case viewModel.numberOfRowsInSection(0) - 1:
                 let cell = UITableViewCell()
                 cell.accessoryType = .disclosureIndicator
-                cell.textLabel?.attributedText = Octicon.Book.iconString(" README", iconSize: 18, iconColor: .gray)
+                cell.textLabel?.attributedText = Octicon.book.iconString(" README", iconSize: 18, iconColor: .gray)
                 return cell
             default:
                 let cell = UITableViewCell()
@@ -100,15 +100,15 @@ class RepositoryViewController: BaseTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
             switch (indexPath as NSIndexPath).row {
             case 0:
-                cell.textLabel?.attributedText = Octicon.IssueOpened.iconString(" Issues", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
+                cell.textLabel?.attributedText = Octicon.issueopened.iconString(" Issues", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             case 1:
-                cell.textLabel?.attributedText = Octicon.Tag.iconString(" Releases", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
+                cell.textLabel?.attributedText = Octicon.tag.iconString(" Releases", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             case 2:
-                cell.textLabel?.attributedText = Octicon.Rss.iconString(" Recent Activity", iconSize: 18, iconColor: .gray)
+                cell.textLabel?.attributedText = Octicon.rss.iconString(" Recent Activity", iconSize: 18, iconColor: .gray)
             case 3:
-                cell.textLabel?.attributedText = Octicon.Organization.iconString(" Contributors", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.organization.iconString(" Contributors", iconSize: 18, iconColor: .lightGray)
             case 4:
-                cell.textLabel?.attributedText = Octicon.GitPullRequest.iconString(" Pull Requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
+                cell.textLabel?.attributedText = Octicon.gitpullrequest.iconString(" Pull Requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             default: break
             }
             return cell
@@ -117,9 +117,9 @@ class RepositoryViewController: BaseTableViewController {
             cell.accessoryType = .disclosureIndicator
             switch (indexPath as NSIndexPath).row {
             case 0:
-                cell.textLabel?.attributedText = Octicon.Code.iconString(" Code", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.code.iconString(" Code", iconSize: 18, iconColor: .lightGray)
             case 1:
-                cell.textLabel?.attributedText = Octicon.GitCommit.iconString(" Commits", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.gitcommit.iconString(" Commits", iconSize: 18, iconColor: .lightGray)
             default:
                 break
             }
@@ -138,10 +138,10 @@ class RepositoryViewController: BaseTableViewController {
             var vc: UIViewController
             
             switch viewModel.repository.value.owner!.type! {
-            case .User:
+            case .user:
                 vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC")
                 (vc as! UserViewController).viewModel = self.viewModel.ownerViewModel
-            case .Organization:
+            case .organization:
                 vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrgVC")
                 (vc as! OrganizationViewController).viewModel = (self.viewModel.ownerViewModel as! OrganizationViewModel)
             }

@@ -10,9 +10,9 @@ import Foundation
 import ObjectMapper
 
 enum PullRequestState : String {
-    case Open = "open"
-    case Closed = "closed"
-    case All = "all"
+    case open = "open"
+    case closed = "closed"
+    case all = "all"
 }
 
 class PullRequest : BaseModel {

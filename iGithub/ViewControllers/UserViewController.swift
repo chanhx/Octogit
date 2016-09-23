@@ -84,13 +84,13 @@ class UserViewController: BaseTableViewController {
         case (0, 1...4):
             switch viewModel.details[(indexPath as NSIndexPath).row] {
             case .company:
-                cell.textLabel?.attributedText = Octicon.Organization.iconString(" \(viewModel.user.value.company!)", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.organization.iconString(" \(viewModel.user.value.company!)", iconSize: 18, iconColor: .lightGray)
             case .location:
-                cell.textLabel?.attributedText = Octicon.Location.iconString(" \(viewModel.user.value.location!)", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.location.iconString(" \(viewModel.user.value.location!)", iconSize: 18, iconColor: .lightGray)
             case .email:
-                cell.textLabel?.attributedText = Octicon.Mail.iconString(" \(viewModel.user.value.email!)", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.mail.iconString(" \(viewModel.user.value.email!)", iconSize: 18, iconColor: .lightGray)
             case .blog:
-                cell.textLabel?.attributedText = Octicon.Link.iconString(" \(viewModel.user.value.blog!)", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.link.iconString(" \(viewModel.user.value.blog!)", iconSize: 18, iconColor: .lightGray)
                 cell.accessoryType = .disclosureIndicator
             }
             
@@ -99,11 +99,11 @@ class UserViewController: BaseTableViewController {
             cell.accessoryType = .disclosureIndicator
             switch (indexPath as NSIndexPath).row {
             case 0:
-                cell.textLabel?.attributedText = Octicon.Rss.iconString(" Public activity", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.rss.iconString(" Public activity", iconSize: 18, iconColor: .lightGray)
             case 1:
-                cell.textLabel?.attributedText = Octicon.Star.iconString(" Starrd repositories", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.star.iconString(" Starrd repositories", iconSize: 18, iconColor: .lightGray)
             case 2:
-                cell.textLabel?.attributedText = Octicon.Gist.iconString(" Gitsts", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.gist.iconString(" Gitsts", iconSize: 18, iconColor: .lightGray)
             default:
                 break
             }

@@ -49,11 +49,11 @@ class IssueViewController: BaseTableViewController {
     func configureHeader() {
         
         switch viewModel.issue.state! {
-        case .Closed:
-            statusLabel.text = Octicon.IssueClosed.rawValue
+        case .closed:
+            statusLabel.text = Octicon.issueclosed.rawValue
             statusLabel.textColor = UIColor(netHex: 0xBD2C00)
-        case .Open:
-            statusLabel.text = Octicon.IssueOpened.rawValue
+        case .open:
+            statusLabel.text = Octicon.issueopened.rawValue
             statusLabel.textColor = UIColor(netHex: 0x6CC644)
         }
         

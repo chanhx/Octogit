@@ -88,16 +88,16 @@ class RepositoryCell: UITableViewCell {
             languageLabel.text = entity.language
             languageLabel.isHidden = entity.language == nil
             
-            stargazersCountLabel.attributedText = Octicon.Star.iconString("\(entity.stargazersCount!)")
-            forksCountLabel.attributedText = Octicon.RepoForked.iconString("\(entity.forksCount!)")
-            watchersCountLabel.attributedText = Octicon.Eye.iconString("\(entity.watchersCount!)")
+            stargazersCountLabel.attributedText = Octicon.star.iconString("\(entity.stargazersCount!)")
+            forksCountLabel.attributedText = Octicon.repoforked.iconString("\(entity.forksCount!)")
+            watchersCountLabel.attributedText = Octicon.eye.iconString("\(entity.watchersCount!)")
             
             if entity.isPrivate! {
-                iconLabel.text = Octicon.Lock.rawValue
+                iconLabel.text = Octicon.lock.rawValue
             } else if entity.isAFork! {
-                iconLabel.text = Octicon.RepoForked.rawValue
+                iconLabel.text = Octicon.repoforked.rawValue
             } else {
-                iconLabel.text = Octicon.Repo.rawValue
+                iconLabel.text = Octicon.repo.rawValue
             }
         }
     }

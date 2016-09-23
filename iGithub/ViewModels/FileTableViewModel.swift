@@ -35,8 +35,8 @@ class FileTableViewModel: BaseTableViewModel<File> {
             .subscribe {
                 self.dataSource.value = Mapper<File>().mapArray(JSONObject: $0)!
                     .map {
-                        if $0.type! == .File && $0.size == 0 {
-                            $0.type = .Submodule
+                        if $0.type! == .file && $0.size == 0 {
+                            $0.type = .submodule
                         }
                         return $0
                     }.sorted(by: { (f1, f2) -> Bool in
@@ -44,14 +44,14 @@ class FileTableViewModel: BaseTableViewModel<File> {
                             return f1.name! < f2.name!
                         } else {
                             switch (f1.type!, f2.type!) {
-                            case (.Directory, _), (_, .Directory):
-                                return f1.type! == .Directory
-                            case (.Submodule, _), (_, .Submodule):
-                                return f1.type! == .Submodule
-                            case (.File, _), (_, .File):
-                                return f1.type! == .File
-                            case (.Symlink, _), (_, .Symlink):
-                                return f1.type! == .Symlink
+                            case (.directory, _), (_, .directory):
+                                return f1.type! == .directory
+                            case (.submodule, _), (_, .submodule):
+                                return f1.type! == .submodule
+                            case (.file, _), (_, .file):
+                                return f1.type! == .file
+                            case (.symlink, _), (_, .symlink):
+                                return f1.type! == .symlink
                             default:
                                 return true
                             }

@@ -10,8 +10,8 @@ import Foundation
 import ObjectMapper
 
 enum UserType: String {
-    case User = "User"
-    case Organization = "Organization"
+    case user = "User"
+    case organization = "Organization"
 }
 
 class User: BaseModel, CustomStringConvertible {

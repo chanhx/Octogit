@@ -10,8 +10,8 @@ import Foundation
 import ObjectMapper
 
 enum IssueState : String {
-    case Open = "open"
-    case Closed = "closed"
+    case open = "open"
+    case closed = "closed"
 }
 
 class Issue : BaseModel {
