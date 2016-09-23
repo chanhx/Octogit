@@ -20,13 +20,15 @@ class RepositoryTableViewController: BaseTableViewController {
                 .addDisposableTo(viewModel.disposeBag)
             
             tableView.rx.itemSelected
-                .map {
-                    self.viewModel.dataSource.value[($0 as IndexPath).row]
-                }.subscribeNext {
+                .map { indexPath in
+                    self.viewModel.dataSource.value[indexPath.row]
+                }
+                .subscribe(onNext: { repo in
                     let repoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RepositoryVC") as! RepositoryViewController
-                    repoVC.viewModel = RepositoryViewModel(repo: $0)
+                    repoVC.viewModel = RepositoryViewModel(repo: repo)
                     self.navigationController?.pushViewController(repoVC, animated: true)
-                }.addDisposableTo(viewModel.disposeBag)
+                })
+                .addDisposableTo(viewModel.disposeBag)
         }
     }
     

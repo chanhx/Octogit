@@ -18,16 +18,16 @@ class FileViewController: UIViewController {
         didSet {
             viewModel.html.asObservable()
                 .skipWhile { $0.characters.count <= 0 }
-                .subscribeNext {
-                    self.webView.loadHTMLString($0, baseURL: Bundle.main.resourceURL)
-                }
+                .subscribe(onNext: { html in
+                    self.webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
+                })
                 .addDisposableTo(viewModel.disposeBag)
             
             viewModel.contentData.asObservable()
                 .skipWhile { $0.count <= 0 }
-                .subscribeNext {
-                    self.webView.load($0, mimeType: self.viewModel.file.MIMEType, characterEncodingName: "utf-8", baseURL: Bundle.main.resourceURL!)
-                }
+                .subscribe(onNext: { data in
+                    self.webView.load(data, mimeType: self.viewModel.file.MIMEType, characterEncodingName: "utf-8", baseURL: Bundle.main.resourceURL!)
+                })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }

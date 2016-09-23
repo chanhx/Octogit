@@ -21,7 +21,7 @@ class RepositoryViewController: BaseTableViewController {
     
     var viewModel: RepositoryViewModel! {
         didSet {
-            viewModel.repository.asObservable().subscribeNext { repo in
+            viewModel.repository.asObservable().subscribe(onNext: { repo in
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -48,7 +48,7 @@ class RepositoryViewController: BaseTableViewController {
                         headerView.layoutIfNeeded()
                     }
                 }
-            }.addDisposableTo(viewModel.disposeBag)
+            }).addDisposableTo(viewModel.disposeBag)
         }
     }
 

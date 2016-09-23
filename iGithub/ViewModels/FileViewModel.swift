@@ -83,9 +83,9 @@ class FileViewModel {
         GithubProvider
             .request(token)
             .mapString()
-            .subscribeNext {
+            .subscribe(onNext: {
                 self.html.value = self.htmlForMarkdown($0)
-            }
+            })
             .addDisposableTo(disposeBag)
     }
     

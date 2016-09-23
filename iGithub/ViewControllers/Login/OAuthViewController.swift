@@ -33,7 +33,7 @@ class OAuthViewController: WebViewController {
                     UIApplication.shared.delegate!.window!!.rootViewController = mainVC
                 }, failure: {
                     print($0)
-                    self.navigationController?.popViewController(animated: true)
+                    _ = self.navigationController?.popViewController(animated: true)
                 })
             }
             decisionHandler(.cancel)

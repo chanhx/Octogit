@@ -22,7 +22,7 @@ class IssueViewController: BaseTableViewController {
             viewModel.contentHeight.asObservable()
                 .skip(1)
                 .distinctUntilChanged()
-                .subscribeNext { _ in
+                .subscribe { _ in
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }

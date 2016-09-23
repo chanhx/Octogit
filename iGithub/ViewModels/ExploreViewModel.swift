@@ -97,13 +97,13 @@ extension TrendingViewModelProtocol {
         WebProvider
             .request(token)
             .mapString()
-            .subscribeNext {
+            .subscribe(onNext: {
                 guard let doc = Kanna.HTML(html: $0, encoding: String.Encoding.utf8) else {
                     return  // Result(error: ParseError.HTMLParseError)
                 }
                 
                 self.parse(doc)
-            }
+            })
             .addDisposableTo(disposeBag)
     }
 }

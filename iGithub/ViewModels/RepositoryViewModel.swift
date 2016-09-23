@@ -34,14 +34,14 @@ class RepositoryViewModel {
         GithubProvider
             .request(.getARepository(repo: fullName))
             .mapJSON()
-            .subscribeNext {
+            .subscribe(onNext: {
                 // first check if there is an error and if the repo exists
 //                if $0.statusCode == 404 {
 //                    
 //                }
                 self.repositoryLoaded = true
                 self.repository.value = Mapper<Repository>().map(JSONObject: $0)!
-            }
+            })
             .addDisposableTo(disposeBag)
     }
     

@@ -20,9 +20,10 @@ class UserTableViewController: BaseTableViewController {
                 .addDisposableTo(viewModel.disposeBag)
             
             tableView.rx.itemSelected
-                .map {
-                    self.viewModel.dataSource.value[($0 as IndexPath).row]
-                }.subscribeNext {
+                .map { indexPath in
+                    self.viewModel.dataSource.value[indexPath.row]
+                }
+                .subscribe( onNext: {
                     switch $0.type! {
                     case .user:
                         let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC") as! UserViewController
@@ -33,7 +34,8 @@ class UserTableViewController: BaseTableViewController {
                         orgVC.viewModel = OrganizationViewModel($0)
                         self.navigationController?.pushViewController(orgVC, animated: true)
                     }
-                }.addDisposableTo(viewModel.disposeBag)
+                })
+                .addDisposableTo(viewModel.disposeBag)
         }
     }
     

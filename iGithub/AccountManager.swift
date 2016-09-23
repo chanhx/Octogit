@@ -44,23 +44,24 @@ class AccountManager {
             .mapString()
             .subscribe(
                 onNext: {
-                    if let accessToken = $0.components(separatedBy: "&").first?.components(separatedBy: "=").last {
-                        AccountManager.shareInstance.token = accessToken
-                        
-                        GithubProvider
-                            .request(.oAuthUser(accessToken: accessToken))
-                            .mapJSON()
-                            .subscribe(
-                                onNext: {
-                                    AccountManager.shareInstance.currentUser = Mapper<User>().map(JSONObject: $0)
-                                    success()
-                                }//,
-//                                onError: {
-//                                    failure($0)
-//                                }
-                            )
-                            .addDisposableTo(self.disposeBag)
+                    guard let accessToken = $0.components(separatedBy: "&").first?.components(separatedBy: "=").last else {
+                        return
                     }
+                    AccountManager.shareInstance.token = accessToken
+                    
+                    GithubProvider
+                        .request(.oAuthUser(accessToken: accessToken))
+                        .mapJSON()
+                        .subscribe(
+                            onNext: {
+                                AccountManager.shareInstance.currentUser = Mapper<User>().map(JSONObject: $0)
+                                success()
+                            }//,
+//                            onError: {
+//                                failure($0)
+//                            }
+                        )
+                        .addDisposableTo(self.disposeBag)
                 }//,
 //                onError: {
 //                    failure($0)

@@ -86,7 +86,7 @@ class RefreshHeader: RefreshComponent {
                     self.scrollView.contentInset.top += RefreshComponentHeight
                 }, completion: { _ in
                     if let selector = self.selector {
-                        self.target?.perform(selector)
+                        _ = self.target?.perform(selector)
                     }
                 }) 
             }
@@ -173,7 +173,7 @@ class RefreshFooter: RefreshComponent {
                     self.scrollView.contentInset.bottom += RefreshComponentHeight
                 }, completion: { _ in
                     if let selector = self.selector {
-                        self.target?.perform(selector)
+                        _ = self.target?.perform(selector)
                     }
                 }) 
             }

@@ -20,7 +20,7 @@ class OrganizationViewController: BaseTableViewController {
     var viewModel: OrganizationViewModel! {
         didSet {
             viewModel.user.asObservable()
-                .subscribeNext { org in
+                .subscribe(onNext: { org in
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                         
@@ -38,7 +38,7 @@ class OrganizationViewController: BaseTableViewController {
                             headerView.layoutIfNeeded()
                         }
                     }
-                }
+                })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }

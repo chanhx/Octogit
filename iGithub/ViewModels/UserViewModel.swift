@@ -44,10 +44,10 @@ class UserViewModel {
         GithubProvider
             .request(token)
             .mapJSON()
-            .subscribeNext {
+            .subscribe(onNext: {
                 self.userLoaded = true
                 self.user.value = Mapper<User>().map(JSONObject: $0)!
-            }
+            })
             .addDisposableTo(disposeBag)
     }
     

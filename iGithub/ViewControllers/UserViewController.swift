@@ -27,7 +27,7 @@ class UserViewController: BaseTableViewController {
             statusCell = StatusCell(name: "user")
             
             viewModel.user.asObservable()
-                .subscribeNext { user in
+                .subscribe(onNext: { user in
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                         
@@ -49,7 +49,7 @@ class UserViewController: BaseTableViewController {
                             headerView.layoutIfNeeded()
                         }
                     }
-                }
+                })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }
