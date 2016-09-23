@@ -28,7 +28,7 @@ class UserViewController: BaseTableViewController {
             
             viewModel.user.asObservable()
                 .subscribeNext { user in
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         self.tableView.reloadData()
                         
                         self.avatarView.setAvatarWithURL(user.avatarURL)
@@ -37,10 +37,10 @@ class UserViewController: BaseTableViewController {
                         self.repositoriesButton.setTitle(user.publicRepos, title: "Repositories")
                         self.followingButton.setTitle(user.following, title: "Following")
                         self.bioLabel.text = user.bio
-                        self.bioLabel.hidden = user.bio == nil
+                        self.bioLabel.isHidden = user.bio == nil
                         
                         if let headerView = self.tableView.tableHeaderView {
-                            let height = headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+                            let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
                             var frame = headerView.frame
                             frame.size.height = height
                             headerView.frame = frame
@@ -64,46 +64,46 @@ class UserViewController: BaseTableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSections
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRowsInSection(section)
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard viewModel.userLoaded else {
             return statusCell
         }
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
         
-        switch (indexPath.section, viewModel.details.count) {
+        switch ((indexPath as NSIndexPath).section, viewModel.details.count) {
         case (0, 1...4):
-            switch viewModel.details[indexPath.row] {
-            case .Company:
-                cell.textLabel?.attributedText = Octicon.Organization.iconString(" \(viewModel.user.value.company!)", iconSize: 18, iconColor: .lightGrayColor())
-            case .Location:
-                cell.textLabel?.attributedText = Octicon.Location.iconString(" \(viewModel.user.value.location!)", iconSize: 18, iconColor: .lightGrayColor())
-            case .Email:
-                cell.textLabel?.attributedText = Octicon.Mail.iconString(" \(viewModel.user.value.email!)", iconSize: 18, iconColor: .lightGrayColor())
-            case .Blog:
-                cell.textLabel?.attributedText = Octicon.Link.iconString(" \(viewModel.user.value.blog!)", iconSize: 18, iconColor: .lightGrayColor())
-                cell.accessoryType = .DisclosureIndicator
+            switch viewModel.details[(indexPath as NSIndexPath).row] {
+            case .company:
+                cell.textLabel?.attributedText = Octicon.Organization.iconString(" \(viewModel.user.value.company!)", iconSize: 18, iconColor: .lightGray)
+            case .location:
+                cell.textLabel?.attributedText = Octicon.Location.iconString(" \(viewModel.user.value.location!)", iconSize: 18, iconColor: .lightGray)
+            case .email:
+                cell.textLabel?.attributedText = Octicon.Mail.iconString(" \(viewModel.user.value.email!)", iconSize: 18, iconColor: .lightGray)
+            case .blog:
+                cell.textLabel?.attributedText = Octicon.Link.iconString(" \(viewModel.user.value.blog!)", iconSize: 18, iconColor: .lightGray)
+                cell.accessoryType = .disclosureIndicator
             }
             
             return cell
         case (0, 0), (1, 1...4):
-            cell.accessoryType = .DisclosureIndicator
-            switch indexPath.row {
+            cell.accessoryType = .disclosureIndicator
+            switch (indexPath as NSIndexPath).row {
             case 0:
-                cell.textLabel?.attributedText = Octicon.Rss.iconString(" Public activity", iconSize: 18, iconColor: .lightGrayColor())
+                cell.textLabel?.attributedText = Octicon.Rss.iconString(" Public activity", iconSize: 18, iconColor: .lightGray)
             case 1:
-                cell.textLabel?.attributedText = Octicon.Star.iconString(" Starrd repositories", iconSize: 18, iconColor: .lightGrayColor())
+                cell.textLabel?.attributedText = Octicon.Star.iconString(" Starrd repositories", iconSize: 18, iconColor: .lightGray)
             case 2:
-                cell.textLabel?.attributedText = Octicon.Gist.iconString(" Gitsts", iconSize: 18, iconColor: .lightGrayColor())
+                cell.textLabel?.attributedText = Octicon.Gist.iconString(" Gitsts", iconSize: 18, iconColor: .lightGray)
             default:
                 break
             }
@@ -117,22 +117,22 @@ class UserViewController: BaseTableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
         
-        switch (indexPath.section, viewModel.details.count) {
+        switch ((indexPath as NSIndexPath).section, viewModel.details.count) {
         case (0, 1...4):
-            switch viewModel.details[indexPath.row] {
-            case .Blog:
+            switch viewModel.details[(indexPath as NSIndexPath).row] {
+            case .blog:
                 navigationController?.pushViewController(URLRouter.viewControllerForURL(viewModel.user.value.blog!), animated: true)
             default:
                 break
             }
         case (0, 0), (1, 1...4):
-            switch indexPath.row {
+            switch (indexPath as NSIndexPath).row {
             case 0:
-                let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EventTVC") as! EventTableViewController
-                eventTVC.viewModel = EventTableViewModel(user: viewModel.user.value, type: .Performed)
+                let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventTVC") as! EventTableViewController
+                eventTVC.viewModel = EventTableViewModel(user: viewModel.user.value, type: .performed)
                 navigationController?.pushViewController(eventTVC, animated: true)
             case 1:
                 let repositoryTVC = RepositoryTableViewController()

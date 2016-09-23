@@ -15,14 +15,14 @@ import Mustache
 class FileViewModel {
     
     static let fileExtensionsDict: [String: String] = {
-        let path = NSBundle.mainBundle().pathForResource("file_extensions", ofType: "plist")
+        let path = Bundle.main.path(forResource: "file_extensions", ofType: "plist")
         return (NSDictionary(contentsOfFile: path!) as! [String: String])
     }()
     
     var repo: String
     var file: File
     var html = Variable("")
-    var contentData = Variable(NSData())
+    var contentData = Variable(Data())
     let disposeBag = DisposeBag()
     
     init(repository: String, file: File) {
@@ -32,7 +32,7 @@ class FileViewModel {
     
     init(repository: String) {
         repo = repository
-        file = Mapper<File>().map(["name": "README"])!
+        file = Mapper<File>().map(JSON: ["name": "README"])!
     }
     
     func fetch() {
@@ -53,18 +53,18 @@ class FileViewModel {
     }
     
     func fetchContent() {
-        let token = GithubAPI.GetContents(repo: repo, path: file.path!)
+        let token = GithubAPI.getContents(repo: repo, path: file.path!)
         
         GithubProvider
             .request(token)
             .mapJSON()
-            .subscribeNext {
-                self.file = Mapper<File>().map($0)!
+            .subscribe {
+                self.file = Mapper<File>().map(JSONObject: $0)!
                 
-                let type = self.file.MIMEType.componentsSeparatedByString("/")[0]
+                let type = self.file.MIMEType.components(separatedBy: "/")[0]
                 switch type {
                 case "image":
-                    self.contentData.value = NSData.dataFromGHBase64String(self.file.content!)!
+                    self.contentData.value = Data.dataFromGHBase64String(self.file.content!)!
                 default:
                     self.html.value = self.htmlForRawFile(self.file.content!)
                 }
@@ -75,9 +75,9 @@ class FileViewModel {
     func fetchHTMLContent() {
         let token: GithubAPI
         if let path = file.path {
-            token = GithubAPI.GetHTMLContents(repo: repo, path: path)
+            token = GithubAPI.getHTMLContents(repo: repo, path: path)
         } else {
-            token = GithubAPI.GetTheREADME(repo: repo)
+            token = GithubAPI.getTheREADME(repo: repo)
         }
         
         GithubProvider
@@ -89,7 +89,7 @@ class FileViewModel {
             .addDisposableTo(disposeBag)
     }
     
-    func htmlForMarkdown(markdown: String?) -> String {
+    func htmlForMarkdown(_ markdown: String?) -> String {
         
         if let upwarppedMarkdown = markdown {
             let template = try! Template(named: "markdown")
@@ -97,21 +97,21 @@ class FileViewModel {
             
             return try! template.render(Box(data))
         }
-        let url = NSBundle.mainBundle().URLForResource("empty_content", withExtension: "html")
-        return try! String(contentsOfURL: url!)
+        let url = Bundle.main.url(forResource: "empty_content", withExtension: "html")
+        return try! String(contentsOf: url!)
     }
     
-    func htmlForRawFile(base64String: String) -> String {
+    func htmlForRawFile(_ base64String: String) -> String {
         
         if let rawContent = String.stringFromGHBase64String(base64String) {
             return Renderer.render(rawContent, language: languageOfFile ?? "clike")
         }
-        let url = NSBundle.mainBundle().URLForResource("empty_content", withExtension: "html")
-        return try! String(contentsOfURL: url!)
+        let url = Bundle.main.url(forResource: "empty_content", withExtension: "html")
+        return try! String(contentsOf: url!)
     }
     
     var languageOfFile: String? {
-        let fileExtension = file.name?.componentsSeparatedByString(".").last!
+        let fileExtension = file.name?.components(separatedBy: ".").last!
         return FileViewModel.fileExtensionsDict[fileExtension!]
     }
 }

@@ -33,7 +33,7 @@ class RxTest
         var allTests : [(String, () throws -> Void)] = []
     #endif
 
-    private var startResourceCount: Int32 = 0
+    fileprivate var startResourceCount: Int32 = 0
 
     var accumulateStatistics: Bool {
         return true
@@ -76,14 +76,14 @@ extension RxTest {
         static let disposed = 1000
     }
 
-    func sleep(time: NSTimeInterval) {
-        NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: time))
+    func sleep(_ time: TimeInterval) {
+        RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: Date(timeIntervalSinceNow: time))
     }
 
     func setUpActions(){
         #if TRACE_RESOURCES
             self.startResourceCount = resourceCount
-            registerMallocHooks()
+            //registerMallocHooks()
             (startNumberOfAllocatedBytes, startNumberOfAllocations) = getMemoryInfo()
         #endif
     }
@@ -95,7 +95,7 @@ extension RxTest {
                 if self.startResourceCount < resourceCount {
                     // main schedulers need to finish work
                     print("Waiting for resource cleanup ...")
-                    NSRunLoop.currentRunLoop().runMode(NSDefaultRunLoopMode, beforeDate: NSDate(timeIntervalSinceNow: 0.05))
+                    RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: NSDate(timeIntervalSinceNow: 0.05) as Date)
                 }
                 else {
                     break

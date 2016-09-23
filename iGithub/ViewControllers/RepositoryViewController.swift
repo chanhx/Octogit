@@ -23,7 +23,7 @@ class RepositoryViewController: BaseTableViewController {
         didSet {
             viewModel.repository.asObservable().subscribeNext { repo in
                 
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     self.tableView.reloadData()
                     
                     if self.viewModel.repositoryLoaded {
@@ -39,7 +39,7 @@ class RepositoryViewController: BaseTableViewController {
                     self.titleLabel.text = repo.name
                     
                     if let headerView = self.tableView.tableHeaderView {
-                        let height = headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+                        let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
                         var frame = headerView.frame
                         frame.size.height = height
                         headerView.frame = frame
@@ -60,53 +60,53 @@ class RepositoryViewController: BaseTableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSections
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRowsInSection(section)
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard viewModel.repositoryLoaded else {
             return statusCell
         }
         
-        switch indexPath.section {
+        switch (indexPath as NSIndexPath).section {
         case 0:
-            switch indexPath.row {
+            switch (indexPath as NSIndexPath).row {
             case 0:
-                let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! UserCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
                 cell.entity = viewModel.repository.value.owner
-                cell.accessoryType = .DisclosureIndicator
+                cell.accessoryType = .disclosureIndicator
                 
                 return cell
             case viewModel.numberOfRowsInSection(0) - 1:
                 let cell = UITableViewCell()
-                cell.accessoryType = .DisclosureIndicator
-                cell.textLabel?.attributedText = Octicon.Book.iconString(" README", iconSize: 18, iconColor: .grayColor())
+                cell.accessoryType = .disclosureIndicator
+                cell.textLabel?.attributedText = Octicon.Book.iconString(" README", iconSize: 18, iconColor: .gray)
                 return cell
             default:
                 let cell = UITableViewCell()
-                cell.selectionStyle = .None
+                cell.selectionStyle = .none
                 cell.textLabel?.numberOfLines = 0
-                cell.textLabel?.lineBreakMode = .ByWordWrapping
+                cell.textLabel?.lineBreakMode = .byWordWrapping
                 cell.textLabel?.text = viewModel.repository.value.repoDescription!
                 return cell
             }
         case 1:
-            let cell = tableView.dequeueReusableCellWithIdentifier("RepositoryInfoCell", forIndexPath: indexPath)
-            switch indexPath.row {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
+            switch (indexPath as NSIndexPath).row {
             case 0:
                 cell.textLabel?.attributedText = Octicon.IssueOpened.iconString(" Issues", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             case 1:
                 cell.textLabel?.attributedText = Octicon.Tag.iconString(" Releases", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             case 2:
-                cell.textLabel?.attributedText = Octicon.Rss.iconString(" Recent Activity", iconSize: 18, iconColor: .grayColor())
+                cell.textLabel?.attributedText = Octicon.Rss.iconString(" Recent Activity", iconSize: 18, iconColor: .gray)
             case 3:
-                cell.textLabel?.attributedText = Octicon.Organization.iconString(" Contributors", iconSize: 18, iconColor: .lightGrayColor())
+                cell.textLabel?.attributedText = Octicon.Organization.iconString(" Contributors", iconSize: 18, iconColor: .lightGray)
             case 4:
                 cell.textLabel?.attributedText = Octicon.GitPullRequest.iconString(" Pull Requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             default: break
@@ -114,12 +114,12 @@ class RepositoryViewController: BaseTableViewController {
             return cell
         case 2:
             let cell = UITableViewCell()
-            cell.accessoryType = .DisclosureIndicator
-            switch indexPath.row {
+            cell.accessoryType = .disclosureIndicator
+            switch (indexPath as NSIndexPath).row {
             case 0:
-                cell.textLabel?.attributedText = Octicon.Code.iconString(" Code", iconSize: 18, iconColor: .lightGrayColor())
+                cell.textLabel?.attributedText = Octicon.Code.iconString(" Code", iconSize: 18, iconColor: .lightGray)
             case 1:
-                cell.textLabel?.attributedText = Octicon.GitCommit.iconString(" Commits", iconSize: 18, iconColor: .lightGrayColor())
+                cell.textLabel?.attributedText = Octicon.GitCommit.iconString(" Commits", iconSize: 18, iconColor: .lightGray)
             default:
                 break
             }
@@ -130,19 +130,19 @@ class RepositoryViewController: BaseTableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
         
-        switch (indexPath.section, indexPath.row) {
+        switch ((indexPath as NSIndexPath).section, (indexPath as NSIndexPath).row) {
         case (0, 0):
             var vc: UIViewController
             
             switch viewModel.repository.value.owner!.type! {
             case .User:
-                vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserVC")
+                vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC")
                 (vc as! UserViewController).viewModel = self.viewModel.ownerViewModel
             case .Organization:
-                vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("OrgVC")
+                vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrgVC")
                 (vc as! OrganizationViewController).viewModel = (self.viewModel.ownerViewModel as! OrganizationViewModel)
             }
             self.navigationController?.pushViewController(vc, animated: true)
@@ -155,7 +155,7 @@ class RepositoryViewController: BaseTableViewController {
             issueTVC.viewModel = IssueTableViewModel(repo: viewModel.repository.value)
             self.navigationController?.pushViewController(issueTVC, animated: true)
         case (1, 2):
-            let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("EventTVC") as! EventTableViewController
+            let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventTVC") as! EventTableViewController
             eventTVC.viewModel = EventTableViewModel(repo: viewModel.repository.value)
             self.navigationController?.pushViewController(eventTVC, animated: true)
         case (1, 3):
@@ -163,7 +163,7 @@ class RepositoryViewController: BaseTableViewController {
             memberTVC.viewModel = UserTableViewModel(repo: viewModel.repository.value)
             self.navigationController?.pushViewController(memberTVC, animated: true)
         case (2, 0):
-            let fileTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FileTVC") as! FileTableViewController
+            let fileTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FileTVC") as! FileTableViewController
             fileTableVC.viewModel = viewModel.filesTableViewModel
             self.navigationController?.pushViewController(fileTableVC, animated: true)
         default:

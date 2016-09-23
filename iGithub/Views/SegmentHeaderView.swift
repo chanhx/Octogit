@@ -9,29 +9,29 @@
 import UIKit
 
 enum TrendingType {
-    case Repositories
-    case Users
+    case repositories
+    case users
 }
 
 protocol SegmentHeaderViewDelegate: class {
-    func headerView(view: SegmentHeaderView, didSelectSegmentTitle: TrendingType)
+    func headerView(_ view: SegmentHeaderView, didSelectSegmentTitle: TrendingType)
 }
 
 class SegmentHeaderView: UIView {
     
     weak var delegate: SegmentHeaderViewDelegate?
-    var title: TrendingType = .Repositories {
+    var title: TrendingType = .repositories {
         didSet {
-            reposButton.selected = title == .Repositories
-            usersButton.selected = title == .Users
+            reposButton.isSelected = title == .repositories
+            usersButton.isSelected = title == .users
             
             delegate?.headerView(self, didSelectSegmentTitle: title)
         }
     }
     
-    let titleLabel = TTTAttributedLabel(frame: CGRectZero)
-    let reposButton = SegmentButton(type: .Custom)
-    let usersButton = SegmentButton(type: .Custom)
+    let titleLabel = TTTAttributedLabel(frame: CGRect.zero)
+    let reposButton = SegmentButton(type: .custom)
+    let usersButton = SegmentButton(type: .custom)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,59 +48,59 @@ class SegmentHeaderView: UIView {
     }
     
     func configureSubviews() {
-        titleLabel.font = UIFont.systemFontOfSize(14)
+        titleLabel.font = UIFont.systemFont(ofSize: 14)
         titleLabel.linkAttributes = [
             NSForegroundColorAttributeName: UIColor(netHex: 0x4078C0),
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleNone.rawValue
+            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue
         ]
 //        titleLabel.attributedText = Octicon.Flame.iconString("Trending For Today in All Languages", iconSize: 16, iconColor: UIColor.redColor())
         
-        reposButton.setTitle("Repositories", forState: .Normal)
-        reposButton.addTarget(self, action: #selector(SegmentHeaderView.buttonTouched(_:)), forControlEvents: .TouchUpInside)
-        usersButton.setTitle("Users", forState: .Normal)
-        usersButton.addTarget(self, action: #selector(SegmentHeaderView.buttonTouched(_:)), forControlEvents: .TouchUpInside)
+        reposButton.setTitle("Repositories", for: UIControlState())
+        reposButton.addTarget(self, action: #selector(SegmentHeaderView.buttonTouched(_:)), for: .touchUpInside)
+        usersButton.setTitle("Users", for: UIControlState())
+        usersButton.addTarget(self, action: #selector(SegmentHeaderView.buttonTouched(_:)), for: .touchUpInside)
     }
     
     func layout() {
         let separator = UIView()
         separator.backgroundColor = UIColor(netHex: 0xDDDDDD)
-        separator.widthAnchor.constraintEqualToConstant(1).active = true
+        separator.widthAnchor.constraint(equalToConstant: 1).isActive = true
         
         let hStackView = UIStackView(arrangedSubviews: [reposButton, separator, usersButton])
-        reposButton.widthAnchor.constraintEqualToAnchor(usersButton.widthAnchor).active = true
-        hStackView.axis = .Horizontal
-        hStackView.alignment = .Fill
-        hStackView.distribution = .Fill
+        reposButton.widthAnchor.constraint(equalTo: usersButton.widthAnchor).isActive = true
+        hStackView.axis = .horizontal
+        hStackView.alignment = .fill
+        hStackView.distribution = .fill
         
         addSubviews([titleLabel, hStackView])
         
         let margins = layoutMarginsGuide
         
-        titleLabel.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 10).active = true
-        titleLabel.bottomAnchor.constraintEqualToAnchor(hStackView.topAnchor, constant: -12).active = true
-        titleLabel.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: 8).active = true
-        titleLabel.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: -8).active = true
+        titleLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 10).isActive = true
+        titleLabel.bottomAnchor.constraint(equalTo: hStackView.topAnchor, constant: -12).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 8).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8).isActive = true
         
-        hStackView.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: 1).active = true
-        hStackView.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-        hStackView.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
-        hStackView.heightAnchor.constraintEqualToConstant(43).active = true
+        hStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 1).isActive = true
+        hStackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        hStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        hStackView.heightAnchor.constraint(equalToConstant: 43).isActive = true
     }
     
-    func buttonTouched(button: UIButton) {
-        if button.selected {return}
+    func buttonTouched(_ button: UIButton) {
+        if button.isSelected {return}
         
-        title = reposButton.selected ? .Users : .Repositories
+        title = reposButton.isSelected ? .users : .repositories
     }
     
     class SegmentButton: UIButton {
-        private let topBorder = UIView()
-        private let bottomBorder = UIView()
+        fileprivate let topBorder = UIView()
+        fileprivate let bottomBorder = UIView()
         
-        override var selected: Bool {
+        override var isSelected: Bool {
             didSet {
-                topBorder.hidden = !selected
-                bottomBorder.hidden = selected
+                topBorder.isHidden = !isSelected
+                bottomBorder.isHidden = isSelected
             }
         }
         
@@ -108,11 +108,11 @@ class SegmentHeaderView: UIView {
             super.init(frame: frame)
             
             adjustsImageWhenHighlighted = false
-            titleLabel?.font = UIFont.systemFontOfSize(17, weight: UIFontWeightMedium)
-            setTitleColor(UIColor(netHex: 0x4078C0), forState: .Normal)
-            setTitleColor(UIColor(netHex: 0x444444), forState: .Selected)
-            setBackgroundImage(UIImage.imageWithColor(UIColor.whiteColor()), forState: .Selected)
-            setBackgroundImage(UIImage.imageWithColor(UIColor(netHex: 0xFAFAFA)), forState: .Normal)
+            titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightMedium)
+            setTitleColor(UIColor(netHex: 0x4078C0), for: UIControlState())
+            setTitleColor(UIColor(netHex: 0x444444), for: .selected)
+            setBackgroundImage(UIImage.imageWithColor(UIColor.white), for: .selected)
+            setBackgroundImage(UIImage.imageWithColor(UIColor(netHex: 0xFAFAFA)), for: UIControlState())
             
             addBorders()
         }
@@ -122,20 +122,20 @@ class SegmentHeaderView: UIView {
         }
         
         func addBorders() {
-            topBorder.hidden = true
+            topBorder.isHidden = true
             topBorder.backgroundColor = UIColor(netHex: 0xD26911)
             bottomBorder.backgroundColor = UIColor(netHex: 0xDDDDDD)
             self.addSubviews([topBorder, bottomBorder])
             
-            topBorder.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-            topBorder.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-            topBorder.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
-            topBorder.heightAnchor.constraintEqualToConstant(2).active = true
+            topBorder.topAnchor.constraint(equalTo: topAnchor).isActive = true
+            topBorder.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            topBorder.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+            topBorder.heightAnchor.constraint(equalToConstant: 2).isActive = true
             
-            bottomBorder.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
-            bottomBorder.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-            bottomBorder.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
-            bottomBorder.heightAnchor.constraintEqualToConstant(1).active = true
+            bottomBorder.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+            bottomBorder.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+            bottomBorder.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+            bottomBorder.heightAnchor.constraint(equalToConstant: 1).isActive = true
         }
     }
 }

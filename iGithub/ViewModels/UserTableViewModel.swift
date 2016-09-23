@@ -10,30 +10,30 @@ import ObjectMapper
 
 class UserTableViewModel: BaseTableViewModel<User> {
     
-    private var token: GithubAPI
+    fileprivate var token: GithubAPI
     
     init(repo: Repository) {
-        token = .RepositoryContributors(repo: repo.fullName!)
+        token = .repositoryContributors(repo: repo.fullName!)
         super.init()
     }
     
     init(organization: User) {
-        token = .Members(org: organization.login!)
+        token = .members(org: organization.login!)
         super.init()
     }
     
     init(user: User) {
-        token = .Organizations(user: user.login!)
+        token = .organizations(user: user.login!)
         super.init()
     }
     
     init(followedBy user: User) {
-        token = .FollowedBy(user: user.login!)
+        token = .followedBy(user: user.login!)
         super.init()
     }
     
     init(followersOf user: User) {
-        token = .FollowersOf(user: user.login!)
+        token = .followersOf(user: user.login!)
         super.init()
     }
     
@@ -41,19 +41,15 @@ class UserTableViewModel: BaseTableViewModel<User> {
         GithubProvider
             .request(token)
             .mapJSON()
-            .subscribe(
-                onNext: {
-                    if let newUsers = Mapper<User>().mapArray($0) {
-                        self.dataSource.value.appendContentsOf(newUsers)
-                    }
-                },
-                onError: {
-                    print($0)
-            })
+            .subscribe {
+                if let newUsers = Mapper<User>().mapArray(JSONObject: $0) {
+                    self.dataSource.value.append(contentsOf: newUsers)
+                }
+            }
             .addDisposableTo(disposeBag)
     }
     
-    func userViewModelForIndex(index: Int) -> UserViewModel {
+    func userViewModelForIndex(_ index: Int) -> UserViewModel {
         return UserViewModel(dataSource.value[index])
     }
 }

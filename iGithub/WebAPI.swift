@@ -18,11 +18,11 @@ struct OAuthConfiguration {
     static let noteURL = "http://ioctocat.com"
     static var accessToken: String?
     
-    static var authorizationURL: NSURL? {
+    static var authorizationURL: URL? {
         return WebProvider
-            .endpoint(.Authorize)
+            .endpoint(.authorize)
             .urlRequest
-            .URL
+            .url
     }
 }
 
@@ -33,63 +33,60 @@ let WebProvider = RxMoyaProvider<WebAPI>()
 // MARK: - Provider support
 
 enum TrendingTime: String {
-    case Today = "daily"
-    case ThisWeek = "weekly"
-    case ThisMonth = "monthly"
+    case today = "daily"
+    case thisWeek = "weekly"
+    case thisMonth = "monthly"
 }
 
 enum WebAPI {
-    case Authorize
-    case AccessToken(code: String)
-    case Trending(since: TrendingTime, language: String, type: TrendingType)
+    case authorize
+    case accessToken(code: String)
+    case trending(since: TrendingTime, language: String, type: TrendingType)
 }
 
 extension WebAPI: TargetType {
-    var baseURL: NSURL { return NSURL(string: "https://github.com")! }
+    var baseURL: URL { return URL(string: "https://github.com")! }
     var path: String {
         switch self {
-        case .Authorize:
+        case .authorize:
             return "/login/oauth/authorize"
-        case .AccessToken:
+        case .accessToken:
             return "/login/oauth/access_token"
-        case .Trending(_, _, let type):
+        case .trending(_, _, let type):
             switch type {
-            case .Repositories:
+            case .repositories:
                 return "/trending"
-            case .Users:
+            case .users:
                 return "/trending/developers"
             }
         }
     }
     var method: RxMoya.Method {
         switch self {
-        case .AccessToken(_):
+        case .accessToken(_):
             return .POST
         default:
             return .GET
         }
     }
-    var parameters: [String: AnyObject]? {
+    var parameters: [String: Any]? {
         switch self {
-        case .Authorize:
-            let scope = (OAuthConfiguration.scopes as NSArray).componentsJoinedByString(",")
-            return ["client_id": OAuthConfiguration.clientID, "client_secret": OAuthConfiguration.clientSecret, "scope": scope]
-        case .AccessToken(let code):
-            return ["client_id": OAuthConfiguration.clientID, "client_secret": OAuthConfiguration.clientSecret, "code": code]
-        case .Trending(let since, let language, _):
-            return ["since": since.rawValue, "l": language]
+        case .authorize:
+            let scope = (OAuthConfiguration.scopes as NSArray).componentsJoined(by: ",")
+            return ["client_id": OAuthConfiguration.clientID as AnyObject, "client_secret": OAuthConfiguration.clientSecret as AnyObject, "scope": scope as AnyObject]
+        case .accessToken(let code):
+            return ["client_id": OAuthConfiguration.clientID as AnyObject, "client_secret": OAuthConfiguration.clientSecret as AnyObject, "code": code as AnyObject]
+        case .trending(let since, let language, _):
+            return ["since": since.rawValue as AnyObject, "l": language as AnyObject]
         }
     }
-    var sampleData: NSData {
+    var task: RxMoya.Task {
+        return .request
+    }
+    var sampleData: Data {
         switch self {
         default:
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
-        }
-    }
-    var multipartBody: [RxMoya.MultipartFormData]? {
-        switch self {
-        default:
-            return nil
         }
     }
 }
@@ -97,9 +94,9 @@ extension WebAPI: TargetType {
 
 private extension String {
     var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+        return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!
     }
-    var UTF8EncodedData: NSData {
-        return self.dataUsingEncoding(NSUTF8StringEncoding)!
+    var UTF8EncodedData: Data {
+        return self.data(using: String.Encoding.utf8)!
     }
 }

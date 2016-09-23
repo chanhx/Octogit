@@ -11,10 +11,10 @@ import RxSwift
 import ObjectMapper
 
 enum VcardDetail {
-    case Company
-    case Location
-    case Email
-    case Blog
+    case company
+    case location
+    case email
+    case blog
 }
 
 class UserViewModel {
@@ -28,12 +28,12 @@ class UserViewModel {
     
     init(_ user: User) {
         self.user = Variable(user)
-        token = .User(user: user.login!)
+        token = .user(user: user.login!)
     }
 
     init(_ username: String) {
-        user = Variable(Mapper<User>().map(["login": username])!)
-        token = .User(user: username)
+        user = Variable(Mapper<User>().map(JSON: ["login": username])!)
+        token = .user(user: username)
     }
     
     var title: String {
@@ -46,7 +46,7 @@ class UserViewModel {
             .mapJSON()
             .subscribeNext {
                 self.userLoaded = true
-                self.user.value = Mapper<User>().map($0)!
+                self.user.value = Mapper<User>().map(JSONObject: $0)!
             }
             .addDisposableTo(disposeBag)
     }
@@ -58,17 +58,17 @@ class UserViewModel {
         var sections = 2
         let u = user.value
         
-        if u.company != nil {details.append(.Company)}
-        if u.location != nil {details.append(.Location)}
-        if u.email != nil {details.append(.Email)}
-        if u.blog != nil {details.append(.Blog)}
+        if u.company != nil {details.append(.company)}
+        if u.location != nil {details.append(.location)}
+        if u.email != nil {details.append(.email)}
+        if u.blog != nil {details.append(.blog)}
 
         if details.count > 0 {sections += 1}
         
         return sections
     }
     
-    func numberOfRowsInSection(section: Int) -> Int {
+    func numberOfRowsInSection(_ section: Int) -> Int {
         guard userLoaded else {
             return 1
         }

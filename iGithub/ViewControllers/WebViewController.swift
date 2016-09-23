@@ -12,23 +12,23 @@ import WebKit
 class WebViewController: UIViewController, WKNavigationDelegate {
     
     var webView = WKWebView()
-    private var request: NSURLRequest?
-    private var progressView = UIProgressView(progressViewStyle: .Bar)
+    fileprivate var request: URLRequest?
+    fileprivate var progressView = UIProgressView(progressViewStyle: .bar)
     
-    private var toolbarWasHidden: Bool!
+    fileprivate var toolbarWasHidden: Bool!
     
-    private var kvoContext: UInt8 = 0
-    private let keyPaths = ["title", "loading", "estimatedProgress"]
+    fileprivate var kvoContext: UInt8 = 0
+    fileprivate let keyPaths = ["title", "loading", "estimatedProgress"]
     
     convenience init(address: String, userScript: WKUserScript? = nil) {
-        self.init(url: NSURL(string: address)!, userScript: userScript)
+        self.init(url: URL(string: address)!, userScript: userScript)
     }
     
-    convenience init(url: NSURL, userScript: WKUserScript? = nil) {
-        self.init(request: NSURLRequest(URL: url), userScript: userScript)
+    convenience init(url: URL, userScript: WKUserScript? = nil) {
+        self.init(request: URLRequest(url: url), userScript: userScript)
     }
     
-    init(request: NSURLRequest, userScript: WKUserScript? = nil) {
+    init(request: URLRequest, userScript: WKUserScript? = nil) {
         super.init(nibName: nil, bundle: nil)
         
         self.request = request
@@ -40,7 +40,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
             let configuration = WKWebViewConfiguration()
             configuration.userContentController = userContentController
             
-            webView = WKWebView(frame: CGRectZero, configuration: configuration)
+            webView = WKWebView(frame: CGRect.zero, configuration: configuration)
         }
     }
     
@@ -54,7 +54,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         
         progressView.removeFromSuperview()
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         for keyPath in keyPaths {
             webView.removeObserver(self, forKeyPath: keyPath)
@@ -68,87 +68,87 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         webView.navigationDelegate = self
         self.view.addSubview(webView)
         
-        progressView.frame = CGRectMake(0, 42, view.bounds.width, 2)
-        progressView.trackTintColor = UIColor.clearColor()
+        progressView.frame = CGRect(x: 0, y: 42, width: view.bounds.width, height: 2)
+        progressView.trackTintColor = UIColor.clear
         self.navigationController?.navigationBar.addSubview(progressView)
         
         updateToolbar()
         
         for keyPath in keyPaths {
-            webView.addObserver(self, forKeyPath: keyPath, options: .New, context: &kvoContext)
+            webView.addObserver(self, forKeyPath: keyPath, options: .new, context: &kvoContext)
         }
         
         if request != nil {
-            webView.loadRequest(request!)
+            webView.load(request!)
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        toolbarWasHidden = self.navigationController?.toolbarHidden
-        navigationController?.toolbarHidden = false
+        toolbarWasHidden = self.navigationController?.isToolbarHidden
+        navigationController?.isToolbarHidden = false
         
-        progressView.hidden = false
+        progressView.isHidden = false
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        self.navigationController?.toolbarHidden = toolbarWasHidden
+        self.navigationController?.isToolbarHidden = toolbarWasHidden
         
-        progressView.hidden = true
+        progressView.isHidden = true
     }
     
     func updateToolbar() {
-        let backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .Plain, target: webView, action: #selector(WKWebView.goBack))
-        let forwardItem = UIBarButtonItem(image: UIImage(named: "forward"), style: .Plain, target: webView, action: #selector(WKWebView.goForward))
+        let backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain, target: webView, action: #selector(WKWebView.goBack))
+        let forwardItem = UIBarButtonItem(image: UIImage(named: "forward"), style: .plain, target: webView, action: #selector(WKWebView.goForward))
         let loadItem: UIBarButtonItem = {
-            if webView.loading {
-                return UIBarButtonItem(barButtonSystemItem: .Stop, target: webView, action: #selector(WKWebView.stopLoading))
+            if webView.isLoading {
+                return UIBarButtonItem(barButtonSystemItem: .stop, target: webView, action: #selector(WKWebView.stopLoading))
             } else {
-                return UIBarButtonItem(barButtonSystemItem: .Refresh, target: webView, action: #selector(WKWebView.reload))
+                return UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(WKWebView.reload))
             }
         }()
-        let shareItem = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(WebViewController.share(_:)))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+        let shareItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(WebViewController.share(_:)))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-        backItem.enabled = webView.canGoBack
-        forwardItem.enabled = webView.canGoForward
+        backItem.isEnabled = webView.canGoBack
+        forwardItem.isEnabled = webView.canGoForward
         
         self.setToolbarItems([flexibleSpace, backItem, flexibleSpace, forwardItem, flexibleSpace, loadItem, flexibleSpace, shareItem, flexibleSpace],
                              animated: false)
     }
     
-    func share(button: UIBarButtonItem) {
+    func share(_ button: UIBarButtonItem) {
         var items = [AnyObject]()
         if webView.title != nil {
-            items.append(webView.title!)
+            items.append(webView.title! as AnyObject)
         }
-        if request?.URL != nil {
-            items.append(request!.URL!)
+        if request?.url != nil {
+            items.append(request!.url! as AnyObject)
         }
         let activityVC = UIActivityViewController(activityItems: items, applicationActivities: [ActivitySafari()])
         activityVC.popoverPresentationController?.barButtonItem = button
-        self.navigationController?.presentViewController(activityVC, animated: true, completion: nil)
+        self.navigationController?.present(activityVC, animated: true, completion: nil)
     }
     
     // MARK: KVO
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if context == &kvoContext {
             if keyPath == "title" {
                 navigationItem.title = webView.title
             } else if keyPath == "loading" {
                 updateToolbar()
                 
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = webView.loading
+                UIApplication.shared.isNetworkActivityIndicatorVisible = webView.isLoading
             } else if keyPath == "estimatedProgress" {
                 
                 let progress = Float(webView.estimatedProgress)
                 let animated = progress > progressView.progress
                 
-                UIView.animateWithDuration(0.1, delay: 0.1, options: .CurveEaseOut, animations: {
+                UIView.animate(withDuration: 0.1, delay: 0.1, options: .curveEaseOut, animations: {
                     self.progressView.setProgress(progress, animated: animated)
                     if self.webView.estimatedProgress >= 1 {
                         self.progressView.alpha = 0
@@ -163,35 +163,35 @@ class WebViewController: UIViewController, WKNavigationDelegate {
 
 class ActivitySafari: UIActivity {
     
-    private var url: NSURL!
+    fileprivate var url: URL!
     
-    override func activityType() -> String? {
-        return "me.hochueng.activity.WebViewController"
+    open override var activityType : UIActivityType? {
+        return UIActivityType("me.hochueng.activity.WebViewController")
     }
-    override func activityTitle() -> String? {
+    override var activityTitle : String? {
         return "Open in Safari"
     }
-    override func activityImage() -> UIImage? {
+    override var activityImage : UIImage? {
         return UIImage(named: "safari")
     }
     
-    override func canPerformWithActivityItems(activityItems: [AnyObject]) -> Bool {
+    override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
         for item in activityItems {
-            if item.isKindOfClass(NSURL.self) && UIApplication.sharedApplication().canOpenURL(item as! NSURL) {
+            if item is URL && UIApplication.shared.canOpenURL(item as! URL) {
                 return true
             }
         }
         return true
     }
-    override func prepareWithActivityItems(activityItems: [AnyObject]) {
+    override func prepare(withActivityItems activityItems: [Any]) {
         for item in activityItems {
-            if item.isKindOfClass(NSURL.self) {
-                url = item as! NSURL
+            if item is URL {
+                url = item as! URL
             }
         }
     }
-    override func performActivity() {
-        let completed = UIApplication.sharedApplication().openURL(url)
+    override func perform() {
+        let completed = UIApplication.shared.openURL(url)
         activityDidFinish(completed)
     }
 }

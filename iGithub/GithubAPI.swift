@@ -16,14 +16,14 @@ let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
     (target: GithubAPI) -> Endpoint<GithubAPI> in
     
     var endpoint = MoyaProvider.DefaultEndpointMapping(target)
-    endpoint = endpoint.endpointByAddingParameters(["access_token": AccountManager.shareManager.token!])
+    endpoint = endpoint.endpointByAddingParameters(["access_token": AccountManager.shareInstance.token!])
     
     switch target {
-    case .GetABlob:
+    case .getABlob:
         return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeRaw])
-    case .GetHTMLContents, .GetTheREADME:
+    case .getHTMLContents, .getTheREADME:
         return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeHTML])
-    case .RepositoryIssues, .RepositoryPullRequests:
+    case .repositoryIssues, .repositoryPullRequests:
         return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeHTMLAndJSON])
     default:
         return endpoint
@@ -33,97 +33,98 @@ let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
 // MARK: - Provider support
 
 enum RepositoriesSearchSort: String {
-    case Default = ""
-    case Forks = "forks"
-    case Stars = "stars"
-    case Updated = "updated"
+    case bestMatch = ""
+    case forks = "forks"
+    case stars = "stars"
+    case updated = "updated"
 }
 
 enum UsersSearchSort: String {
-    case Default = ""
-    case Followers = "followers"
-    case Joined = "joined"
-    case Repositories = "repositories"
+    case bestMatch = ""
+    case followers = "followers"
+    case joined = "joined"
+    case repositories = "repositories"
 }
 
 enum GithubAPI {
-    case FollowedBy(user: String)
-    case FollowersOf(user: String)
-    case GetABlob(repo: String, sha: String)
-    case GetARepository(repo: String)
-    case GetContents(repo: String, path: String)
-    case GetHTMLContents(repo: String, path: String)
-    case GetTheREADME(repo: String)
-    case OAuthUser(accessToken: String)
-    case Members(org: String)
-    case Organization(org: String)
-    case Organizations(user: String)
-    case OrganizationEvents(org: String, page: Int)
-    case OrganizationRepos(org: String)
-    case ReceivedEvents(user: String, page: Int)
-    case RepositoryContributors(repo: String)
-    case RepositoryEvents(repo: String, page: Int)
-    case RepositoryIssues(repo: String)
-    case RepositoryPullRequests(repo: String)
-    case SearchRepositories(q: String, sort: RepositoriesSearchSort)
-    case SearchUsers(q: String, sort: UsersSearchSort)
-    case StarredRepos(user: String)
-    case User(user: String)
-    case UserEvents(user: String, page: Int)
-    case UserRepos(user: String)
+    case followedBy(user: String)
+    case followersOf(user: String)
+    case getABlob(repo: String, sha: String)
+    case getARepository(repo: String)
+    case getContents(repo: String, path: String)
+    case getHTMLContents(repo: String, path: String)
+    case getTheREADME(repo: String)
+    case oAuthUser(accessToken: String)
+    case members(org: String)
+    case organization(org: String)
+    case organizations(user: String)
+    case organizationEvents(org: String, page: Int)
+    case organizationRepos(org: String)
+    case receivedEvents(user: String, page: Int)
+    case repositoryContributors(repo: String)
+    case repositoryEvents(repo: String, page: Int)
+    case repositoryIssues(repo: String)
+    case repositoryPullRequests(repo: String)
+    case searchRepositories(q: String, sort: RepositoriesSearchSort)
+    case searchUsers(q: String, sort: UsersSearchSort)
+    case starredRepos(user: String)
+    case user(user: String)
+    case userEvents(user: String, page: Int)
+    case userRepos(user: String)
 }
 
 extension GithubAPI: TargetType {
-    var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
+    
+    var baseURL: URL { return URL(string: "https://api.github.com")! }
     var path: String {
         switch self {
-        case .FollowedBy(let user):
+        case .followedBy(let user):
             return "/users/\(user)/following"
-        case .FollowersOf(let user):
+        case .followersOf(let user):
             return "/users/\(user)/followers"
-        case .GetABlob(let repo, let sha):
+        case .getABlob(let repo, let sha):
             return "/repos/\(repo)/git/blobs/\(sha)"
-        case .GetARepository(let repo):
+        case .getARepository(let repo):
             return "/repos/\(repo)"
-        case .GetContents(let repo, let path):
+        case .getContents(let repo, let path):
             return "/repos/\(repo)/contents/\(path)"
-        case .GetHTMLContents(let repo, let path):
+        case .getHTMLContents(let repo, let path):
             return "/repos/\(repo)/contents/\(path)"
-        case .GetTheREADME(let repo):
+        case .getTheREADME(let repo):
             return "/repos/\(repo)/readme"
-        case .Members(let org):
+        case .members(let org):
             return "/orgs/\(org)/members"
-        case .OAuthUser(_):
+        case .oAuthUser:
             return "/user"
-        case .Organization(let org):
+        case .organization(let org):
             return "/orgs/\(org)"
-        case .Organizations(let user):
+        case .organizations(let user):
             return "/users/\(user)/orgs"
-        case .OrganizationEvents(let org):
+        case .organizationEvents(let org):
             return "/orgs/\(org)/events"
-        case .OrganizationRepos(let org):
+        case .organizationRepos(let org):
             return "/orgs/\(org)/repos"
-        case .ReceivedEvents(let user, _):
+        case .receivedEvents(let user, _):
             return "/users/\(user)/received_events"
-        case .RepositoryContributors(let repo):
+        case .repositoryContributors(let repo):
             return "/repos/\(repo)/contributors"
-        case .RepositoryEvents(let repo):
+        case .repositoryEvents(let repo):
             return "/repos/\(repo)/events"
-        case .RepositoryIssues(let repo):
+        case .repositoryIssues(let repo):
             return "/repos/\(repo)/issues"
-        case .RepositoryPullRequests(let repo):
+        case .repositoryPullRequests(let repo):
             return "/repos/\(repo)/pulls"
-        case .SearchRepositories(_, _):
+        case .searchRepositories(_, _):
             return "/search/repositories"
-        case .SearchUsers(_, _):
+        case .searchUsers:
             return "/search/users"
-        case .StarredRepos(let user):
+        case .starredRepos(let user):
             return "/users/\(user)/starred"
-        case .User(let user):
+        case .user(let user):
             return "/users/\(user)"
-        case .UserEvents(let user, _):
+        case .userEvents(let user, _):
             return "/users/\(user)/events"
-        case .UserRepos(let user):
+        case .userRepos(let user):
             return "/users/\(user)/repos"
         }
     }
@@ -133,32 +134,29 @@ extension GithubAPI: TargetType {
             return .GET
         }
     }
-    var parameters: [String: AnyObject]? {
+    var parameters: [String: Any]? {
         switch self {
-        case .OAuthUser(let accessToken):
-            return ["access_token": accessToken]
-        case .ReceivedEvents(_, let page):
-            return ["page": page]
-        case .SearchRepositories(let q, let sort):
-            return ["q": q, "sort": sort.rawValue]
-        case .SearchUsers(let q, let sort):
-            return ["q": q, "sort": sort.rawValue]
-        case .UserEvents(_, let page):
-            return ["page": page]
+        case .oAuthUser(let accessToken):
+            return ["access_token": accessToken as AnyObject]
+        case .receivedEvents(_, let page):
+            return ["page": page as AnyObject]
+        case .searchRepositories(let q, let sort):
+            return ["q": q as AnyObject, "sort": sort.rawValue as AnyObject]
+        case .searchUsers(let q, let sort):
+            return ["q": q as AnyObject, "sort": sort.rawValue as AnyObject]
+        case .userEvents(_, let page):
+            return ["page": page as AnyObject]
         default:
             return nil
         }
     }
-    var sampleData: NSData {
+    var task: RxMoya.Task {
+        return .request
+    }
+    var sampleData: Data {
         switch self {
         default:
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
-        }
-    }
-    var multipartBody: [RxMoya.MultipartFormData]? {
-        switch self {
-        default:
-            return nil
         }
     }
 }
@@ -166,9 +164,9 @@ extension GithubAPI: TargetType {
 
 private extension String {
     var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+        return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!
     }
-    var UTF8EncodedData: NSData {
-        return self.dataUsingEncoding(NSUTF8StringEncoding)!
+    var UTF8EncodedData: Data {
+        return self.data(using: String.Encoding.utf8)!
     }
 }

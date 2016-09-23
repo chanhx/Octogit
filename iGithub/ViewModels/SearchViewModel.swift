@@ -12,8 +12,8 @@ import RxMoya
 import ObjectMapper
 
 enum SearchOption {
-    case Repositories(sort: RepositoriesSearchSort, language: String)
-    case Users(sort: UsersSearchSort)
+    case repositories(sort: RepositoriesSearchSort, language: String)
+    case users(sort: UsersSearchSort)
 }
 
 class SearchViewModel {
@@ -26,42 +26,42 @@ class SearchViewModel {
     var option: SearchOption {
         didSet {
             switch option {
-            case .Repositories:
+            case .repositories:
                 options[0] = option
-            case .Users:
+            case .users:
                 options[1] = option
             }
         }
     }
     var options: [SearchOption] = [
-        .Repositories(sort: .Default, language: "All Languages"),
-        .Users(sort: .Default)
+        .repositories(sort: .bestMatch, language: "All Languages"),
+        .users(sort: .bestMatch)
     ]
     
     let reposSortOptions: [(option: RepositoriesSearchSort, desc: String)] = [
-        (.Default, "Best match"),
-        (.Stars, "Most stars"),
-        (.Forks, "Most forks"),
-        (.Updated, "Recently updated")
+        (.bestMatch, "Best match"),
+        (.stars, "Most stars"),
+        (.forks, "Most forks"),
+        (.updated, "Recently updated")
     ]
     
     let usersSortOptions: [(option: UsersSearchSort, desc: String)] = [
-        (.Default, "Best match"),
-        (.Followers, "Most followers"),
-        (.Repositories, "Most repositories"),
-        (.Joined, "Recently joined")
+        (.bestMatch, "Best match"),
+        (.followers, "Most followers"),
+        (.repositories, "Most repositories"),
+        (.joined, "Recently joined")
     ]
     
-    func search(query: String) {
+    func search(_ query: String) {
         self.query = query
         switch option {
-        case .Repositories(let sort, let language):
+        case .repositories(let sort, let language):
             let lan = languagesDict[language]!
-            let q = lan.characters.count > 0 ? query.stringByAppendingString("+language:\(lan)") : query
-            let token = GithubAPI.SearchRepositories(q: q, sort: sort)
+            let q = lan.characters.count > 0 ? query + "+language:\(lan)" : query
+            let token = GithubAPI.searchRepositories(q: q, sort: sort)
             repoTVM.search(query, token: token)
-        case .Users(let sort):
-            let token = GithubAPI.SearchUsers(q: query, sort: sort)
+        case .users(let sort):
+            let token = GithubAPI.searchUsers(q: query, sort: sort)
             userTVM.search(query, token: token)
         }
     }
@@ -74,28 +74,28 @@ class SearchViewModel {
 // MARK: SubViewModels
 
 class TitleViewModel {
-    func sortDescription(option: SearchOption) -> String {
+    func sortDescription(_ option: SearchOption) -> String {
         switch option {
-        case .Repositories(let sort, _):
+        case .repositories(let sort, _):
             switch sort {
-            case .Default:
+            case .bestMatch:
                 return "Best match"
-            case .Forks:
+            case .forks:
                 return "Most forks"
-            case .Stars:
+            case .stars:
                 return "Most stars"
-            case .Updated:
+            case .updated:
                 return "Recently updated"
             }
-        case .Users(let sort):
+        case .users(let sort):
             switch sort {
-            case .Default:
+            case .bestMatch:
                 return "Best match"
-            case .Followers:
+            case .followers:
                 return "Most followers"
-            case .Repositories:
+            case .repositories:
                 return "Most repositories"
-            case .Joined:
+            case .joined:
                 return "Recently joined"
             }
         }
@@ -109,12 +109,12 @@ class RepositoriesSearchViewModel {
     
     let disposeBag = DisposeBag()
     
-    func search(query: String, token: GithubAPI) {
+    func search(_ query: String, token: GithubAPI) {
         GithubProvider
             .request(token)
             .mapJSON()
             .subscribeNext {
-                if let results = Mapper<Repository>().mapArray($0["items"]) {
+                if let results = Mapper<Repository>().mapArray(JSONObject: ($0 as! [String: Any])["items"]) {
                     self.repositories.value = results
                     self.query = query
                 } else {
@@ -132,12 +132,12 @@ class UsersSearchViewModel {
     
     let disposeBag = DisposeBag()
     
-    func search(query: String, token: GithubAPI) {
+    func search(_ query: String, token: GithubAPI) {
         GithubProvider
             .request(token)
             .mapJSON()
             .subscribeNext {
-                if let results = Mapper<User>().mapArray($0["items"]) {
+                if let results = Mapper<User>().mapArray(JSONObject: ($0 as! [String: Any])["items"]) {
                     self.users.value = results
                     self.query = query
                 } else {

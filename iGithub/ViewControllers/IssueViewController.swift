@@ -23,7 +23,7 @@ class IssueViewController: BaseTableViewController {
                 .skip(1)
                 .distinctUntilChanged()
                 .subscribeNext { _ in
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
                 }.addDisposableTo(disposeBag)
@@ -36,7 +36,7 @@ class IssueViewController: BaseTableViewController {
         configureHeader()
         
         if let headerView = self.tableView.tableHeaderView {
-            let height = headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+            let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
             var frame = headerView.frame
             frame.size.height = height
             headerView.frame = frame
@@ -64,32 +64,32 @@ class IssueViewController: BaseTableViewController {
         let attrInfo = NSMutableAttributedString(string: "\(viewModel.issue.user!) opened this issue \(viewModel.issue.createdAt!.naturalString)")
         attrInfo.addAttributes([
             NSForegroundColorAttributeName: UIColor(netHex: 0x555555),
-            NSFontAttributeName: UIFont.systemFontOfSize(15, weight: UIFontWeightMedium)
+            NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightMedium)
             ],
                               range: NSRange(location: 0, length: viewModel.issue.user!.login!.characters.count))
         
         infoLabel.attributedText = attrInfo
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1//viewModel.numberOfSections
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1//viewModel.numberOfRowsInSection(section)
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if (indexPath.section, indexPath.row) == (0, 0) {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if ((indexPath as NSIndexPath).section, (indexPath as NSIndexPath).row) == (0, 0) {
             return viewModel.contentHeight.value
         } else {
-            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+            return super.tableView(tableView, heightForRowAt: indexPath)
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("WebViewCell", forIndexPath: indexPath) as! WebViewCell
-        cell.webView.loadHTMLString(viewModel.contentHTML, baseURL: NSBundle.mainBundle().resourceURL)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WebViewCell", for: indexPath) as! WebViewCell
+        cell.webView.loadHTMLString(viewModel.contentHTML, baseURL: Bundle.main.resourceURL)
         cell.webView.navigationDelegate = viewModel
         
         return cell

@@ -24,7 +24,7 @@ extension UIScrollView {
             }
             
             refreshHeader?.removeFromSuperview()
-            insertSubview(newValue!, atIndex: 0)
+            insertSubview(newValue!, at: 0)
             
             objc_setAssociatedObject(self, &RefreshHeaderKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
         }
@@ -41,7 +41,7 @@ extension UIScrollView {
             }
             
             refreshFooter?.removeFromSuperview()
-            insertSubview(newValue!, atIndex: 0)
+            insertSubview(newValue!, at: 0)
             
             objc_setAssociatedObject(self, &RefreshFooterKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
         }

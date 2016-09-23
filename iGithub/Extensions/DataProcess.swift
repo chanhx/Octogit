@@ -11,16 +11,18 @@ import SwiftDate
 import Kingfisher
 import TTTAttributedLabel
 
-extension NSDate {
+extension Date {
     var naturalString: String {
-        let date = NSDate()
+        let date = Date()
         
         if self < date - 1.months {
-            return self.toString(dateStyle: .ShortStyle, timeStyle: .NoStyle)!
+            return self.toString(dateStyle: .short, timeStyle: .none)!
         }
         
+        let formatter = DateFormatter(componentsStyle: .full)
+        formatter.maxComponentCount = 1
         let suffix = self < date ? "ago" : "later"
-        return "\(self.toNaturalString(date, style: FormatterStyle(style: .Full, max: 1))!) \(suffix)"
+        return "\(formatter.toString(interval: date.timeIntervalSince(self))!) \(suffix)"
     }
 }
 
@@ -39,29 +41,29 @@ extension UIColor {
 }
 
 extension UIImage {
-    class func imageWithColor(color: UIColor) -> UIImage {
-        let rect = CGRectMake(0.0, 0.0, 1.0, 1.0)
+    class func imageWithColor(_ color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
         
-        CGContextSetFillColorWithColor(context, color.CGColor)
-        CGContextFillRect(context, rect)
+        context?.setFillColor(color.cgColor)
+        context?.fill(rect)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return image
+        return image!
     }
 }
 
 extension UIImageView {
-    func setAvatarWithURL(avatarURL: NSURL?) {
-        self.kf_setImageWithURL(avatarURL, placeholderImage: UIImage(named: "default-avatar"))
+    func setAvatarWithURL(_ avatarURL: URL?) {
+        self.kf.setImage(with: avatarURL, placeholder: UIImage(named: "default-avatar"))
     }
 }
 
 extension UIView {
-    func addSubviews(subviews: [UIView], usingAutoLayout: Bool = true) {
+    func addSubviews(_ subviews: [UIView], usingAutoLayout: Bool = true) {
         for view in subviews {
             view.translatesAutoresizingMaskIntoConstraints = !usingAutoLayout
             self.addSubview(view)
@@ -70,24 +72,24 @@ extension UIView {
 }
 
 extension TTTAttributedLabel {
-    func addLink(url: NSURL, toText text: String) {
+    func addLink(_ url: URL, toText text: String) {
         let regexString = NSString(format: "^%1$@\\s|\\s%1$@\\s|\\s%1$@$", text) as String
-        let range = (self.text! as NSString).rangeOfString(regexString, options: .RegularExpressionSearch)
-        addLinkToURL(url, withRange: range)
+        let range = (self.text! as NSString).range(of: regexString, options: .regularExpression)
+        self.addLink(to: url, with: range)
     }
 }
 
-extension NSData {
-    static func dataFromGHBase64String(base64String: String) -> NSData? {
-        let encodedString = base64String.stringByReplacingOccurrencesOfString("\n", withString: "")
-        return NSData(base64EncodedString: encodedString, options: NSDataBase64DecodingOptions(rawValue: 0))
+extension Data {
+    static func dataFromGHBase64String(_ base64String: String) -> Data? {
+        let encodedString = base64String.replacingOccurrences(of: "\n", with: "")
+        return Data(base64Encoded: encodedString, options: NSData.Base64DecodingOptions(rawValue: 0))
     }
 }
 
 extension String {
-    static func stringFromGHBase64String(base64String: String) -> String? {
-        let data = NSData.dataFromGHBase64String(base64String)
-        return String(data: data!, encoding: NSUTF8StringEncoding)
+    static func stringFromGHBase64String(_ base64String: String) -> String? {
+        let data = Data.dataFromGHBase64String(base64String)
+        return String(data: data!, encoding: String.Encoding.utf8)
     }
     
     var pathExtension: String {

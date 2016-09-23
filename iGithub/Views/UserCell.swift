@@ -28,15 +28,15 @@ class UserCell: UITableViewCell {
         
         let margins = contentView.layoutMarginsGuide
         
-        avatarView.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: 5).active = true
-        avatarView.centerYAnchor.constraintEqualToAnchor(nameLabel.centerYAnchor).active = true
-        avatarView.widthAnchor.constraintEqualToConstant(32).active = true
-        avatarView.heightAnchor.constraintEqualToConstant(32).active = true
+        avatarView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5).isActive = true
+        avatarView.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
+        avatarView.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        avatarView.heightAnchor.constraint(equalToConstant: 32).isActive = true
         
-        nameLabel.leadingAnchor.constraintEqualToAnchor(avatarView.trailingAnchor, constant: 6).active = true
-        nameLabel.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: -8).active = true
-        nameLabel.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 6).active = true
-        nameLabel.bottomAnchor.constraintEqualToAnchor(margins.bottomAnchor, constant: -6).active = true
+        nameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 6).isActive = true
+        nameLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 6).isActive = true
+        nameLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -6).isActive = true
     }
     
     var entity: User! {

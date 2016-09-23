@@ -11,18 +11,18 @@ import Mustache
 
 class Renderer {
     
-    class func render(content: String, language: String, theme: String? = nil, showLineNumbers: Bool? = nil) -> String {
+    class func render(_ content: String, language: String, theme: String? = nil, showLineNumbers: Bool? = nil) -> String {
         
         let template = try! Template(named: "content")
         
-        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let userDefaults = UserDefaults.standard
         
-        let s = showLineNumbers ?? userDefaults.boolForKey(Constants.kLineNumbers)
+        let s = showLineNumbers ?? userDefaults.bool(forKey: Constants.kLineNumbers)
         
-        var t = theme ?? (userDefaults.objectForKey(Constants.kTheme) as! String)
-        t = t.lowercaseString.stringByReplacingOccurrencesOfString(" ", withString: "-")
+        var t = theme ?? (userDefaults.object(forKey: Constants.kTheme) as! String)
+        t = t.lowercased().replacingOccurrences(of: " ", with: "-")
         
-        let data: [String: AnyObject] = [
+        let data: [String: String] = [
             "theme": "prism-\(t)",
             "content": content,
             "line-numbers": s ? "class=line-numbers" : "",

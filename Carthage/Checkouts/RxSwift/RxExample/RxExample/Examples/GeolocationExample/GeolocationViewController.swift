@@ -13,24 +13,24 @@ import CoreLocation
     import RxCocoa
 #endif
 
-private extension UILabel {
-    var rx_driveCoordinates: AnyObserver<CLLocationCoordinate2D> {
-        return UIBindingObserver(UIElement: self) { label, location in
+private extension Reactive where Base: UILabel {
+    var driveCoordinates: AnyObserver<CLLocationCoordinate2D> {
+        return UIBindingObserver(UIElement: base) { label, location in
             label.text = "Lat: \(location.latitude)\nLon: \(location.longitude)"
         }.asObserver()
     }
 }
 
-private extension UIView {
-    var rx_driveAuthorization: AnyObserver<Bool> {
-        return UIBindingObserver(UIElement: self) { view, authorized in
+private extension Reactive where Base: UIView {
+    var driveAuthorization: AnyObserver<Bool> {
+        return UIBindingObserver(UIElement: base) { view, authorized in
             if authorized {
-                view.hidden = true
-                view.superview?.sendSubviewToBack(view)
+                view.isHidden = true
+                view.superview?.sendSubview(toBack:view)
             }
             else {
-                view.hidden = false
-                view.superview?.bringSubviewToFront(view)
+                view.isHidden = false
+                view.superview?.bringSubview(toFront:view)
             }
         }.asObserver()
     }
@@ -49,20 +49,20 @@ class GeolocationViewController: ViewController {
         let geolocationService = GeolocationService.instance
 
         geolocationService.authorized
-            .drive(noGeolocationView.rx_driveAuthorization)
+            .drive(noGeolocationView.rx.driveAuthorization)
             .addDisposableTo(disposeBag)
         
         geolocationService.location
-            .drive(label.rx_driveCoordinates)
+            .drive(label.rx.driveCoordinates)
             .addDisposableTo(disposeBag)
 
-        button.rx_tap
+        button.rx.tap
             .bindNext { [weak self] in
                 self?.openAppPreferences()
             }
             .addDisposableTo(disposeBag)
         
-        button2.rx_tap
+        button2.rx.tap
             .bindNext { [weak self] in
                 self?.openAppPreferences()
             }
@@ -70,7 +70,7 @@ class GeolocationViewController: ViewController {
     }
     
     private func openAppPreferences() {
-        UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+        UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
     }
 
 }

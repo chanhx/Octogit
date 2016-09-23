@@ -14,14 +14,15 @@ import ObjectMapper
 
 class AccountManager {
     
-    static let shareManager = AccountManager()
+    static let shareInstance = AccountManager()
     
-    lazy var keychain = Keychain(server: "https://github.com", protocolType: .HTTPS)
+    let keychain = Keychain(server: "https://github.com", protocolType: .https)
+    
     lazy var disposeBag = DisposeBag()
     
     var currentUser: User? {
         didSet {
-            keychain["userJSON"] = currentUser != nil ? Mapper().toJSONString(currentUser!, prettyPrint: true) : nil
+            keychain["user_json"] = currentUser != nil ? Mapper().toJSONString(currentUser!, prettyPrint: true) : nil
         }
     }
     var token: String? {
@@ -32,35 +33,38 @@ class AccountManager {
     
     init() {
         token = keychain["access_token"]
-        currentUser = Mapper<User>().map(keychain["userJSON"])
+        if let json = keychain["user_json"] {
+            currentUser = Mapper<User>().map(JSONString: json)
+        }
     }
     
-    func requestToken(code: String, success: () -> Void, failure: ErrorType -> Void) {
+    func requestToken(_ code: String, success: @escaping () -> Void, failure: @escaping (RxMoya.Error) -> Void) {
         WebProvider
-            .request(.AccessToken(code: code))
+            .request(.accessToken(code: code))
             .mapString()
             .subscribe(
                 onNext: {
-                    if let accessToken = $0.componentsSeparatedByString("&").first?.componentsSeparatedByString("=").last {
-                        AccountManager.shareManager.token = accessToken
+                    if let accessToken = $0.components(separatedBy: "&").first?.components(separatedBy: "=").last {
+                        AccountManager.shareInstance.token = accessToken
                         
                         GithubProvider
-                            .request(.OAuthUser(accessToken: accessToken))
+                            .request(.oAuthUser(accessToken: accessToken))
                             .mapJSON()
                             .subscribe(
                                 onNext: {
-                                    AccountManager.shareManager.currentUser = Mapper<User>().map($0)
+                                    AccountManager.shareInstance.currentUser = Mapper<User>().map(JSONObject: $0)
                                     success()
-                                },
-                                onError: {
-                                    failure($0)
-                                })
+                                }//,
+//                                onError: {
+//                                    failure($0)
+//                                }
+                            )
                             .addDisposableTo(self.disposeBag)
                     }
-                },
-                onError: {
-                    failure($0)
-                }
+                }//,
+//                onError: {
+//                    failure($0)
+//                }
             )
             .addDisposableTo(disposeBag)
     }

@@ -28,19 +28,19 @@ class WebViewCell: UITableViewCell {
     }
     
     func configure() {
-        self.selectionStyle = .None
+        self.selectionStyle = .none
         
-        webView.scrollView.scrollEnabled = false
+        webView.scrollView.isScrollEnabled = false
         webView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func layout() {
         contentView.addSubview(webView)
         
-        webView.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
-        webView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
-        webView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor).active = true
-        webView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
+        webView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        webView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        webView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        webView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
     }
     
 }

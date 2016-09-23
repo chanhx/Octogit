@@ -10,6 +10,7 @@
 		C500B7961D545A3A00DC6D2A /* IGLinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */; };
 		C5113D1A1D87B5B400344739 /* File+DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5113D191D87B5B400344739 /* File+DataProcess.swift */; };
 		C5113D1C1D88124D00344739 /* languages_dict.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5113D1B1D88124D00344739 /* languages_dict.plist */; };
+		C51547A01D940EFE00314C7F /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C515479F1D940EFE00314C7F /* ReactiveSwift.framework */; };
 		C52013C91D56C28C00FDCC30 /* TTTAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */; };
 		C52013CE1D57361A00FDCC30 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52013CD1D57361A00FDCC30 /* WebViewController.swift */; };
 		C52474281D50F06A0001D9CD /* WebViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52474271D50F06A0001D9CD /* WebViewCell.swift */; };
@@ -107,6 +108,7 @@
 		C5E733851D603A8E00913A66 /* SegmentHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733841D603A8E00913A66 /* SegmentHeaderView.swift */; };
 		C5E733881D61C90000913A66 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733871D61C90000913A66 /* SearchViewController.swift */; };
 		C5E7338A1D62292000913A66 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733891D62292000913A66 /* SearchViewModel.swift */; };
+		C5E7ACDB1D94C232007D1986 /* iGithub.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = C5E7ACDA1D94C232007D1986 /* iGithub.entitlements */; };
 		C5F4BDE71D3F95E5009DF758 /* Octicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDE61D3F95E5009DF758 /* Octicon.swift */; };
 		C5F4BDEB1D3F96D2009DF758 /* octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */; };
 		C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */; };
@@ -135,8 +137,8 @@
 		C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IGLinkLabel.swift; sourceTree = "<group>"; };
 		C5113D191D87B5B400344739 /* File+DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "File+DataProcess.swift"; sourceTree = "<group>"; };
 		C5113D1B1D88124D00344739 /* languages_dict.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = languages_dict.plist; sourceTree = "<group>"; };
+		C515479F1D940EFE00314C7F /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
 		C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TTTAttributedLabel.framework; path = Carthage/Build/iOS/TTTAttributedLabel.framework; sourceTree = "<group>"; };
-		C52013CA1D56C30C00FDCC30 /* iGithub-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iGithub-Bridging-Header.h"; sourceTree = "<group>"; };
 		C52013CD1D57361A00FDCC30 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		C52474271D50F06A0001D9CD /* WebViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewCell.swift; sourceTree = "<group>"; };
 		C52474291D50FB400001D9CD /* issue.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = issue.mustache; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 		C5DB949A1D3F85CD00887E81 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		C5DB949B1D3F85CD00887E81 /* SwiftDate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftDate.framework; path = Carthage/Build/iOS/SwiftDate.framework; sourceTree = "<group>"; };
 		C5DB94A91D3F8A0A00887E81 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		C5DF4BA71D8CD2E900052A85 /* iGithub-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iGithub-Bridging-Header.h"; sourceTree = "<group>"; };
 		C5E7337A1D5D642900913A66 /* ExploreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		C5E7337C1D5D809A00913A66 /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = Carthage/Build/iOS/Kanna.framework; sourceTree = "<group>"; };
 		C5E7337E1D5D9FE900913A66 /* ExplorationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplorationViewController.swift; sourceTree = "<group>"; };
@@ -239,6 +242,7 @@
 		C5E733841D603A8E00913A66 /* SegmentHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentHeaderView.swift; sourceTree = "<group>"; };
 		C5E733871D61C90000913A66 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C5E733891D62292000913A66 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		C5E7ACDA1D94C232007D1986 /* iGithub.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = iGithub.entitlements; sourceTree = "<group>"; };
 		C5F4BDE61D3F95E5009DF758 /* Octicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Octicon.swift; sourceTree = "<group>"; };
 		C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = octicons.ttf; sourceTree = "<group>"; };
 		C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -251,6 +255,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C51547A01D940EFE00314C7F /* ReactiveSwift.framework in Frameworks */,
 				C5E7337D1D5D809A00913A66 /* Kanna.framework in Frameworks */,
 				C52013C91D56C28C00FDCC30 /* TTTAttributedLabel.framework in Frameworks */,
 				C5DB949C1D3F85CD00887E81 /* Alamofire.framework in Frameworks */,
@@ -408,8 +413,7 @@
 				C538FD321D430466003A559E /* Login.storyboard */,
 				C5DB94691D3F842000887E81 /* Assets.xcassets */,
 				C5DB946B1D3F842000887E81 /* LaunchScreen.storyboard */,
-				C5DB946E1D3F842000887E81 /* Info.plist */,
-				C52013CA1D56C30C00FDCC30 /* iGithub-Bridging-Header.h */,
+				C5E7ACDC1D94C549007D1986 /* Supporting Files */,
 				C5DB94B01D3F8BF500887E81 /* Resources */,
 			);
 			path = iGithub;
@@ -436,6 +440,7 @@
 		C5DB94AB1D3F8AB700887E81 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C515479F1D940EFE00314C7F /* ReactiveSwift.framework */,
 				C5E7337C1D5D809A00913A66 /* Kanna.framework */,
 				C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */,
 				C5DB94A91D3F8A0A00887E81 /* Result.framework */,
@@ -472,6 +477,16 @@
 				C526EE131D7D1954008C0D72 /* themes.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		C5E7ACDC1D94C549007D1986 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C5E7ACDA1D94C232007D1986 /* iGithub.entitlements */,
+				C5DB946E1D3F842000887E81 /* Info.plist */,
+				C5DF4BA71D8CD2E900052A85 /* iGithub-Bridging-Header.h */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		C5F4BDEC1D3FAEE6009DF758 /* ViewControllers */ = {
@@ -571,21 +586,24 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Hocheung;
 				TargetAttributes = {
 					C5DB945E1D3F842000887E81 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 85F8EE85FH;
+						LastSwiftMigration = 0800;
 					};
 					C5DB94721D3F842000887E81 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 85F8EE85FH;
+						LastSwiftMigration = 0800;
 						TestTargetID = C5DB945E1D3F842000887E81;
 					};
 					C5DB947D1D3F842000887E81 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 85F8EE85FH;
+						LastSwiftMigration = 0800;
 						TestTargetID = C5DB945E1D3F842000887E81;
 					};
 				};
@@ -615,6 +633,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5E7ACDB1D94C232007D1986 /* iGithub.entitlements in Resources */,
 				C526EE121D7C62B6008C0D72 /* sample in Resources */,
 				C524742A1D50FB400001D9CD /* issue.mustache in Resources */,
 				C5DB946D1D3F842000887E81 /* LaunchScreen.storyboard in Resources */,
@@ -672,6 +691,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftDate.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/TTTAttributedLabel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Kanna.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
 			);
 			outputPaths = (
 			);
@@ -826,10 +846,13 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = iGithub/iGithub.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -849,6 +872,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -872,10 +896,13 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = iGithub/iGithub.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -889,9 +916,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -913,6 +942,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iGithub/iGithub-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -931,6 +961,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iGithub/iGithub-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -942,6 +973,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithubTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iGithub.app/iGithub";
 			};
 			name = Debug;
@@ -954,6 +986,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithubTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iGithub.app/iGithub";
 			};
 			name = Release;
@@ -965,6 +998,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithubUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = iGithub;
 			};
 			name = Debug;
@@ -976,6 +1010,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithubUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = iGithub;
 			};
 			name = Release;

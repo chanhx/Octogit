@@ -7,22 +7,26 @@ def libraries
   pod 'Moya', :path => "../"
   pod 'Moya/ReactiveCocoa', :path => "../"
   pod 'Moya/RxSwift', :path => "../"
+  pod 'Alamofire', "~> 4.0.0"
+  pod 'RxSwift', '3.0.0-beta.1'
+  pod 'RxCocoa', '3.0.0-beta.1'
+  pod 'ReactiveSwift', :podspec => 'https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/616a2461690008c61cdecd39200c4f4bb3b107bb/ReactiveSwift.podspec'
 end
 
 # Test Libraries
 def test_pods
-  pod 'Quick'
-  pod 'Nimble'
+  pod 'Quick', :git => "https://github.com/Quick/Quick", :branch => "swift-3.0"
+  pod 'Nimble', :git => "https://github.com/Quick/Nimble", :branch => "master" 
   pod 'OHHTTPStubs'
 end
 
 target 'Demo' do
-  platform :ios, '8.0'
+  platform :ios, '9.0'
   libraries
 end
 
 target 'MoyaTests-iOS' do
-    platform :ios, '8.0'
+    platform :ios, '9.0'
     libraries
     test_pods
 end
@@ -34,7 +38,7 @@ target 'MoyaTests-tvOS' do
 end
 
 target 'MoyaTests-Mac' do
-    platform :osx, '10.9'
+    platform :osx, '10.11'
     libraries
     test_pods
 end
@@ -45,6 +49,7 @@ post_install do |installer|
     target.build_configurations.each do |config|
       if config.name == 'Debug'
         config.build_settings['ENABLE_TESTABILITY'] = 'YES'
+        config.build_settings['SWIFT_VERSION'] = '3.0'
       end
     end
   end

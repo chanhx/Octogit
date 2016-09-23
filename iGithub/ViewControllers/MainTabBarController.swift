@@ -16,10 +16,10 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         delegate = self
         
         let eventTVC = (viewControllers![0]  as! UINavigationController).topViewController as! EventTableViewController
-        eventTVC.viewModel = EventTableViewModel(user: AccountManager.shareManager.currentUser!, type: .Received)
+        eventTVC.viewModel = EventTableViewModel(user: AccountManager.shareInstance.currentUser!, type: .received)
     }
 
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
     }
 }

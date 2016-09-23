@@ -30,39 +30,39 @@ class TrendingRepoCell: UITableViewCell {
     }
     
     func configureSubviews() {
-        nameLabel.font = UIFont.systemFontOfSize(18, weight: UIFontWeightMedium)
+        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
         nameLabel.textColor = UIColor(netHex: 0x4078C0)
         
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.lineBreakMode = .ByWordWrapping
+        descriptionLabel.lineBreakMode = .byWordWrapping
         descriptionLabel.textColor = UIColor(netHex: 0x666666)
         
-        metaLabel.font = UIFont.systemFontOfSize(14)
+        metaLabel.font = UIFont.systemFont(ofSize: 14)
         metaLabel.textColor = UIColor(netHex: 0x888888)
     }
     
     func layout() {
         let vStackView = UIStackView(arrangedSubviews: [nameLabel, descriptionLabel, metaLabel])
-        vStackView.axis = .Vertical
-        vStackView.alignment = .Fill
-        vStackView.distribution = .Fill
+        vStackView.axis = .vertical
+        vStackView.alignment = .fill
+        vStackView.distribution = .fill
         vStackView.spacing = 8
         vStackView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(vStackView)
         
         let margins = contentView.layoutMarginsGuide
         
-        vStackView.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 8).active = true
-        vStackView.bottomAnchor.constraintEqualToAnchor(margins.bottomAnchor, constant: -8).active = true
-        vStackView.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: 8).active = true
-        vStackView.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: -8).active = true
+        vStackView.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8).isActive = true
+        vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8).isActive = true
+        vStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 8).isActive = true
+        vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8).isActive = true
     }
     
-    func configureCell(name: String, description: String?, meta: String) {
+    func configureCell(_ name: String, description: String?, meta: String) {
         nameLabel.text = name
         metaLabel.text = meta
         
         descriptionLabel.text = description
-        descriptionLabel.hidden = description == nil
+        descriptionLabel.isHidden = description == nil
     }
 }

@@ -26,23 +26,24 @@ public class WikipediaSearchCell: UITableViewCell {
     public override func awakeFromNib() {
         super.awakeFromNib()
 
-        self.imagesOutlet.registerNib(UINib(nibName: "WikipediaImageCell", bundle: nil), forCellWithReuseIdentifier: "ImageCell")
+        self.imagesOutlet.register(UINib(nibName: "WikipediaImageCell", bundle: nil), forCellWithReuseIdentifier: "ImageCell")
     }
 
     var viewModel: SearchResultViewModel! {
         didSet {
             let disposeBag = DisposeBag()
 
-            (viewModel?.title ?? Driver.just(""))
-                .drive(self.titleOutlet.rx_text)
+            viewModel.title
+                .map(Optional.init)
+                .drive(self.titleOutlet.rx.text)
                 .addDisposableTo(disposeBag)
 
-            self.URLOutlet.text = viewModel.searchResult.URL.absoluteString ?? ""
+            self.URLOutlet.text = viewModel.searchResult.URL.absoluteString
 
             let reachabilityService = Dependencies.sharedDependencies.reachabilityService
             viewModel.imageURLs
-                .drive(self.imagesOutlet.rx_itemsWithCellIdentifier("ImageCell", cellType: CollectionViewImageCell.self)) { [weak self] (_, URL, cell) in
-                    cell.downloadableImage = self?.imageService.imageFromURL(URL, reachabilityService: reachabilityService) ?? Observable.empty()
+                .drive(self.imagesOutlet.rx.items(cellIdentifier: "ImageCell", cellType: CollectionViewImageCell.self)) { [weak self] (_, url, cell) in
+                    cell.downloadableImage = self?.imageService.imageFromURL(url, reachabilityService: reachabilityService) ?? Observable.empty()
                 }
                 .addDisposableTo(disposeBag)
 

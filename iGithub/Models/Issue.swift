@@ -25,7 +25,7 @@ class Issue : BaseModel {
     var assignees: [User]?
     var labels: [Label]?
     var milestone: Milestone?
-    var createdAt: NSDate?
+    var createdAt: Date?
     var comments: Int?
     var pullRequest: PullRequest?
     

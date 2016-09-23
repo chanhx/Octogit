@@ -24,7 +24,7 @@ class File: BaseModel {
     var path: String?
     var content: String?
     var sha: String?
-    var htmlURL: NSURL?
+    var htmlURL: URL?
     
     override func mapping(map: Map) {
         type        <- map["type"]

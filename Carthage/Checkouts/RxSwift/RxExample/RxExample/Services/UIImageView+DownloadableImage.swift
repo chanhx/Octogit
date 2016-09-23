@@ -14,24 +14,24 @@ import RxCocoa
 #endif
 import UIKit
 
-extension UIImageView{
+extension Reactive where Base: UIImageView{
 
-    var rxex_downloadableImage: AnyObserver<DownloadableImage>{
-        return self.rxex_downloadableImageAnimated(nil)
+    var downloadableImage: AnyObserver<DownloadableImage>{
+        return downloadableImageAnimated(nil)
     }
 
-    func rxex_downloadableImageAnimated(transitionType:String?) -> AnyObserver<DownloadableImage> {
-        return UIBindingObserver(UIElement: self) { imageView, image in
+    func downloadableImageAnimated(_ transitionType:String?) -> AnyObserver<DownloadableImage> {
+        return UIBindingObserver(UIElement: base as UIImageView) { imageView, image in
             for subview in imageView.subviews {
                 subview.removeFromSuperview()
             }
             switch image {
-            case .Content(let image):
-                imageView.rx_image.onNext(image)
-            case .OfflinePlaceholder:
+            case .content(let image):
+                imageView.rx.image.onNext(image)
+            case .offlinePlaceholder:
                 let label = UILabel(frame: imageView.bounds)
-                label.textAlignment = .Center
-                label.font = UIFont.systemFontOfSize(35)
+                label.textAlignment = .center
+                label.font = UIFont.systemFont(ofSize: 35)
                 label.text = "⚠️"
                 imageView.addSubview(label)
             }

@@ -49,9 +49,9 @@ let c = Observable.combineLatest(a.asObservable(), b.asObservable()) { $0 + $1 }
 // 1 + 2 = 3 which is >= 0, so `c` is initially equal to "3 is positive"
 
 // To pull values out of the Rx `Observable` `c`, subscribe to values from `c`.
-// `subscribeNext` means subscribe to the next (fresh) values of `c`.
+// `subscribe(onNext:)` means subscribe to the next (fresh) values of `c`.
 // That also includes the initial value "3 is positive".
-c.subscribeNext { print($0) }          // prints: "3 is positive"
+c.subscribe(onNext: { print($0) })          // prints: "3 is positive"
 
 // Now, let's increase the value of `a`
 a.value = 4                                   // prints: 6 is positive
@@ -72,17 +72,17 @@ b.value = -8                                 // doesn't print anything
 
 ## Simple UI bindings
 
-* Instead of binding to variables, let's bind to `UITextField` values using the `rx_text` property
+* Instead of binding to variables, let's bind to `UITextField` values using the `rx.text` property
 * Next, `map` the `String` into an `Int` and determine if the number is prime using an async API
 * If the text is changed before the async call completes, a new async call will replace it via `concat`
 * Bind the results to a `UILabel`
 
 ```swift
-let subscription/*: Disposable */ = primeTextField.rx_text      // type is Observable<String>
+let subscription/*: Disposable */ = primeTextField.rx.text      // type is Observable<String>
             .map { WolframAlphaIsPrime(Int($0) ?? 0) }          // type is Observable<Observable<Prime>>
             .concat()                                           // type is Observable<Prime>
             .map { "number \($0.n) is prime? \($0.isPrime)" }   // type is Observable<String>
-            .bindTo(resultLabel.rx_text)                        // return Disposable that can be used to unbind everything
+            .bindTo(resultLabel.rx.text)                        // return Disposable that can be used to unbind everything
 
 // This will set `resultLabel.text` to "number 43 is prime? true" after
 // server call completes.
@@ -108,7 +108,7 @@ Let's give it a shot.
 ```swift
 // bind UI control values directly
 // use username from `usernameOutlet` as username values source
-self.usernameOutlet.rx_text
+self.usernameOutlet.rx.text
     .map { username in
 
         // synchronous validation, nothing special here
@@ -152,12 +152,12 @@ self.usernameOutlet.rx_text
 // That's what `switchLatest` does.
     .switchLatest()
 // Now we need to bind that to the user interface somehow.
-// Good old `subscribeNext` can do that.
+// Good old `subscribe(onNext:)` can do that.
 // That's the end of `Observable` chain.
-    .subscribeNext { valid in
+    .subscribe(onNext: { valid in
         errorLabel.textColor = validationColor(valid)
         errorLabel.text = valid.message
-    }
+    })
 // This will produce a `Disposable` object that can unbind everything and cancel
 // pending async operations.
 // Instead of doing it manually, which is tedious,

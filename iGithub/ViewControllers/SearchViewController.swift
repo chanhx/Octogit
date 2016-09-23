@@ -18,7 +18,7 @@ class SearchViewController: BaseTableViewController {
     lazy var userOptionPickerView: OptionPickerView = OptionPickerView(delegate: self)
     
     init () {
-        super.init(style: .Grouped)
+        super.init(style: .grouped)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -28,45 +28,45 @@ class SearchViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.keyboardDismissMode = .OnDrag
+        tableView.keyboardDismissMode = .onDrag
         tableView.backgroundColor = UIColor(netHex: 0xFAFAFA)
-        tableView.registerClass(RepositoryCell.self, forCellReuseIdentifier: "RepositoryCell")
-        tableView.registerClass(UserCell.self, forCellReuseIdentifier: "UserCell")
+        tableView.register(RepositoryCell.self, forCellReuseIdentifier: "RepositoryCell")
+        tableView.register(UserCell.self, forCellReuseIdentifier: "UserCell")
         
         headerView.delegate = self
-        headerView.title = .Repositories
+        headerView.title = .repositories
         headerView.titleLabel.delegate = self
         updateTitle()
     }
 
     // MARK: - Table view data source
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 90
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return headerView
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
         
         switch viewModel.option {
-        case .Repositories:
-            let repo = self.viewModel.repoTVM.repositories.value[indexPath.row]
-            let repoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("RepositoryVC") as! RepositoryViewController
+        case .repositories:
+            let repo = self.viewModel.repoTVM.repositories.value[(indexPath as NSIndexPath).row]
+            let repoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RepositoryVC") as! RepositoryViewController
             repoVC.viewModel = RepositoryViewModel(repo: repo)
             self.presentingViewController?.navigationController?.pushViewController(repoVC, animated: true)
-        case .Users:
-            let user = viewModel.userTVM.users.value[indexPath.row]
+        case .users:
+            let user = viewModel.userTVM.users.value[(indexPath as NSIndexPath).row]
             switch user.type! {
             case .User:
-                let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserVC") as! UserViewController
+                let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC") as! UserViewController
                 userVC.viewModel = UserViewModel(user)
                 self.presentingViewController?.navigationController?.pushViewController(userVC, animated: true)
             case .Organization:
-                let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("OrgVC") as! OrganizationViewController
+                let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrgVC") as! OrganizationViewController
                 orgVC.viewModel = OrganizationViewModel(user)
                 self.presentingViewController?.navigationController?.pushViewController(orgVC, animated: true)
             }
@@ -76,17 +76,17 @@ class SearchViewController: BaseTableViewController {
 
 extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        let query = searchController.searchBar.text
+    func updateSearchResults(for searchController: UISearchController) {
         
-        if query == nil || query?.characters.count <= 0 {
-            self.view.hidden = false
+        guard let query = searchController.searchBar.text, query.characters.count > 0 else {
+            self.view.isHidden = false
+            return
         }
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        if let query = searchBar.text where query.characters.count > 0 {
+        if let query = searchBar.text , query.characters.count > 0 {
             viewModel.search(query)
         }
     }
@@ -94,12 +94,12 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
 
 extension SearchViewController: SegmentHeaderViewDelegate {
     
-    func headerView(view: SegmentHeaderView, didSelectSegmentTitle title: TrendingType) {
+    func headerView(_ view: SegmentHeaderView, didSelectSegmentTitle title: TrendingType) {
         switch title {
-        case .Repositories:
+        case .repositories:
             bindToRepoTVM()
             viewModel.option = viewModel.options[0]
-        case .Users:
+        case .users:
             bindToUserTVM()
             viewModel.option = viewModel.options[1]
         }
@@ -109,7 +109,7 @@ extension SearchViewController: SegmentHeaderViewDelegate {
     
     func bindToRepoTVM() {
         viewModel.repoTVM.repositories.asObservable()
-            .bindTo(tableView.rx_itemsWithCellIdentifier("RepositoryCell", cellType: RepositoryCell.self)) {
+            .bindTo(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) {
                 row, repo, cell in
                 cell.entity = repo
             }
@@ -118,7 +118,7 @@ extension SearchViewController: SegmentHeaderViewDelegate {
     
     func bindToUserTVM() {
         viewModel.userTVM.users.asObservable()
-            .bindTo(tableView.rx_itemsWithCellIdentifier("UserCell", cellType: UserCell.self)) {
+            .bindTo(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) {
                 row, user, cell in
                 cell.entity = user
             }
@@ -131,20 +131,20 @@ extension SearchViewController: TTTAttributedLabelDelegate {
     func updateTitle() {
         let sortDescription = viewModel.titleVM.sortDescription(viewModel.option)
         switch viewModel.option {
-        case .Repositories(_, let language):
+        case .repositories(_, let language):
             headerView.titleLabel.text = "Sort: \(sortDescription) | Language: \(language)"
-            headerView.titleLabel.addLink(NSURL(string: "ReposSort")!, toText: sortDescription)
-            headerView.titleLabel.addLink(NSURL(string: "Language")!,
-                                          toText: language.stringByReplacingOccurrencesOfString("+", withString: "\\+"))
-        case .Users(_):
+            headerView.titleLabel.addLink(URL(string: "ReposSort")!, toText: sortDescription)
+            headerView.titleLabel.addLink(URL(string: "Language")!,
+                                          toText: language.replacingOccurrences(of: "+", with: "\\+"))
+        case .users(_):
             headerView.titleLabel.text = "Sort: \(sortDescription)"
-            headerView.titleLabel.addLink(NSURL(string: "UsersSort")!, toText: sortDescription)
+            headerView.titleLabel.addLink(URL(string: "UsersSort")!, toText: sortDescription)
         }
     }
     
     // MARK: TTTAttributedLabelDelegate
     
-    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
         switch url.absoluteString {
         case "ReposSort":
             repoOptionsPickerView.index = 0
@@ -163,50 +163,50 @@ extension SearchViewController: TTTAttributedLabelDelegate {
 
 extension SearchViewController: OptionPickerViewDelegate {
     
-    func doneButtonClicked(pickerView: OptionPickerView) {
+    func doneButtonClicked(_ pickerView: OptionPickerView) {
         if pickerView == repoOptionsPickerView {
             let row0 = pickerView.selectedRow[0]
             let row1 = pickerView.selectedRow[1]
             
-            viewModel.option = .Repositories(sort: viewModel.reposSortOptions[row0].option, language: languagesArray[row1])
+            viewModel.option = .repositories(sort: viewModel.reposSortOptions[row0].option, language: languagesArray[row1])
         } else if pickerView == userOptionPickerView {
             let row = pickerView.selectedRow[0]
-            viewModel.option = .Users(sort: viewModel.usersSortOptions[row].option)
+            viewModel.option = .users(sort: viewModel.usersSortOptions[row].option)
         }
         
         updateTitle()
     }
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch viewModel.option {
-        case .Repositories:
+        case .repositories:
             return repoOptionsPickerView.index == 0 ? 4 : languagesArray.count
-        case .Users:
+        case .users:
             return 4
         }
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch viewModel.option {
-        case .Repositories:
+        case .repositories:
             return repoOptionsPickerView.index == 0 ?
                 viewModel.reposSortOptions.map {$0.desc} [row] :
                 languagesArray[row]
-        case .Users:
+        case .users:
             return viewModel.usersSortOptions.map {$0.desc} [row]
         }
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         var pickerView: OptionPickerView
         switch viewModel.option {
-        case .Repositories:
+        case .repositories:
             pickerView = repoOptionsPickerView
-        case .Users:
+        case .users:
             pickerView = userOptionPickerView
         }
         pickerView.tmpSelectedRow[pickerView.index] = row

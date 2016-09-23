@@ -21,10 +21,10 @@ class PullRequestComment : BaseModel {
     
     var body: String?
     var user: User?
-    var createdAt: NSDate?
-    var updatedAt: NSDate?
+    var createdAt: Date?
+    var updatedAt: Date?
     
-    var pullRequestURL: NSURL?
+    var pullRequestURL: URL?
     
     override func mapping(map: Map) {
         id      <- map["id"]

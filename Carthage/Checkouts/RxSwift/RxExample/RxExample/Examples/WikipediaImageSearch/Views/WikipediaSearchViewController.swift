@@ -13,21 +13,9 @@ import RxCocoa
 #endif
 
 class WikipediaSearchViewController: ViewController {
-    @IBOutlet var searchBarContainer: UIView!
-    
-    private let searchController = UISearchController(searchResultsController: UITableViewController())
-    
-    private var resultsViewController: UITableViewController {
-        return (self.searchController.searchResultsController as? UITableViewController)!
-    }
-    
-    private var resultsTableView: UITableView {
-        return self.resultsViewController.tableView!
-    }
-
-    private var searchBar: UISearchBar {
-        return self.searchController.searchBar
-    }
+    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var resultsTableView: UITableView!
+    @IBOutlet var emptyView: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,15 +25,8 @@ class WikipediaSearchViewController: ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let searchBar = self.searchBar
-        let searchBarContainer = self.searchBarContainer
 
-        searchBarContainer.addSubview(searchBar)
-        searchBar.frame = searchBarContainer.bounds
-        searchBar.autoresizingMask = .FlexibleWidth
-
-        resultsViewController.edgesForExtendedLayout = UIRectEdge.None
+        self.edgesForExtendedLayout = .all
 
         configureTableDataSource()
         configureKeyboardDismissesOnScroll()
@@ -54,17 +35,15 @@ class WikipediaSearchViewController: ViewController {
     }
 
     func configureTableDataSource() {
-        resultsTableView.registerNib(UINib(nibName: "WikipediaSearchCell", bundle: nil), forCellReuseIdentifier: "WikipediaSearchCell")
+        resultsTableView.register(UINib(nibName: "WikipediaSearchCell", bundle: nil), forCellReuseIdentifier: "WikipediaSearchCell")
         
         resultsTableView.rowHeight = 194
+        resultsTableView.hideEmptyCells()
 
         // This is for clarity only, don't use static dependencies
         let API = DefaultWikipediaAPI.sharedAPI
 
-        resultsTableView.delegate = nil
-        resultsTableView.dataSource = nil
-
-        searchBar.rx_text
+        let results = searchBar.rx.text
             .asDriver()
             .throttle(0.3)
             .distinctUntilChanged()
@@ -78,37 +57,40 @@ class WikipediaSearchViewController: ViewController {
             .map { results in
                 results.map(SearchResultViewModel.init)
             }
-            .drive(resultsTableView.rx_itemsWithCellIdentifier("WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
+
+        results
+            .drive(resultsTableView.rx.items(cellIdentifier: "WikipediaSearchCell", cellType: WikipediaSearchCell.self)) { (_, viewModel, cell) in
                 cell.viewModel = viewModel
             }
+            .addDisposableTo(disposeBag)
+
+        results
+            .map { $0.count != 0 }
+            .drive(self.emptyView.rx.hidden)
             .addDisposableTo(disposeBag)
     }
 
     func configureKeyboardDismissesOnScroll() {
         let searchBar = self.searchBar
-        let searchController = self.searchController
         
-        resultsTableView.rx_contentOffset
+        resultsTableView.rx.contentOffset
             .asDriver()
-            .filter { _ -> Bool in
-                return !searchController.isBeingPresented()
-            }
-            .driveNext { _ in
-                if searchBar.isFirstResponder() {
-                    _ = searchBar.resignFirstResponder()
+            .drive(onNext: { _ in
+                if searchBar?.isFirstResponder ?? false {
+                    _ = searchBar?.resignFirstResponder()
                 }
-            }
+            })
             .addDisposableTo(disposeBag)
     }
 
     func configureNavigateOnRowClick() {
         let wireframe = DefaultWireframe.sharedInstance
 
-        resultsTableView.rx_modelSelected(SearchResultViewModel.self)
+        resultsTableView.rx.modelSelected(SearchResultViewModel.self)
             .asDriver()
-            .driveNext { searchResult in
-                wireframe.openURL(searchResult.searchResult.URL)
-            }
+            .drive(onNext: { searchResult in
+                wireframe.open(url:searchResult.searchResult.URL)
+            })
             .addDisposableTo(disposeBag)
     }
 
@@ -118,7 +100,7 @@ class WikipediaSearchViewController: ViewController {
             DefaultImageService.sharedImageService.loadingImage
         ) { $0 || $1 }
             .distinctUntilChanged()
-            .drive(UIApplication.sharedApplication().rx_networkActivityIndicatorVisible)
+            .drive(UIApplication.shared.rx.networkActivityIndicatorVisible)
             .addDisposableTo(disposeBag)
     }
 }

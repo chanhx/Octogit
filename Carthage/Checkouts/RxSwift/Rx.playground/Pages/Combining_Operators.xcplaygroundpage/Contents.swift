@@ -22,7 +22,7 @@ example("startWith") {
         .startWith("1️⃣")
         .startWith("2️⃣")
         .startWith("3️⃣", "🅰️", "🅱️")
-        .subscribeNext { print($0) }
+        .subscribe(onNext: { print($0) })
         .addDisposableTo(disposeBag)
 }
 /*:
@@ -40,7 +40,7 @@ example("merge") {
     
     Observable.of(subject1, subject2)
         .merge()
-        .subscribeNext { print($0) }
+        .subscribe(onNext: { print($0) })
         .addDisposableTo(disposeBag)
     
     subject1.onNext("🅰️")
@@ -70,7 +70,7 @@ example("zip") {
     Observable.zip(stringSubject, intSubject) { stringElement, intElement in
         "\(stringElement) \(intElement)"
         }
-        .subscribeNext { print($0) }
+        .subscribe(onNext: { print($0) })
         .addDisposableTo(disposeBag)
     
     stringSubject.onNext("🅰️")
@@ -98,7 +98,7 @@ example("combineLatest") {
     Observable.combineLatest(stringSubject, intSubject) { stringElement, intElement in
             "\(stringElement) \(intElement)"
         }
-        .subscribeNext { print($0) }
+        .subscribe(onNext: { print($0) })
         .addDisposableTo(disposeBag)
     
     stringSubject.onNext("🅰️")
@@ -115,13 +115,13 @@ example("Array.combineLatest") {
     let disposeBag = DisposeBag()
     
     let stringObservable = Observable.just("❤️")
-    let fruitObservable = ["🍎", "🍐", "🍊"].toObservable()
+    let fruitObservable = Observable.from(["🍎", "🍐", "🍊"])
     let animalObservable = Observable.of("🐶", "🐱", "🐭", "🐹")
     
     [stringObservable, fruitObservable, animalObservable].combineLatest {
             "\($0[0]) \($0[1]) \($0[2])"
         }
-        .subscribeNext { print($0) }
+        .subscribe(onNext: { print($0) })
         .addDisposableTo(disposeBag)
 }
 /*:
@@ -141,7 +141,7 @@ example("switchLatest") {
         
     variable.asObservable()
         .switchLatest()
-        .subscribeNext { print($0) }
+        .subscribe(onNext: { print($0) })
         .addDisposableTo(disposeBag)
     
     subject1.onNext("🏈")

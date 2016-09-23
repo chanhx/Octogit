@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension NSURL {
+extension URL {
     var isGithubURL: Bool {
         return host == "github.com" || host == "gist.github.com" || absoluteString.hasPrefix("/")
     }

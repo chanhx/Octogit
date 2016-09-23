@@ -26,13 +26,13 @@ class RepositoryViewModel {
     init(fullName: String) {
         self.fullName = fullName
         
-        let name = fullName.componentsSeparatedByString("/").last!
-        self.repository = Variable(Mapper<Repository>().map(["name": "\(name)"])!)
+        let name = fullName.components(separatedBy: "/").last!
+        self.repository = Variable(Mapper<Repository>().map(JSON: ["name": "\(name)"])!)
     }
     
     func fetchRepository() {
         GithubProvider
-            .request(.GetARepository(repo: fullName))
+            .request(.getARepository(repo: fullName))
             .mapJSON()
             .subscribeNext {
                 // first check if there is an error and if the repo exists
@@ -40,7 +40,7 @@ class RepositoryViewModel {
 //                    
 //                }
                 self.repositoryLoaded = true
-                self.repository.value = Mapper<Repository>().map($0)!
+                self.repository.value = Mapper<Repository>().map(JSONObject: $0)!
             }
             .addDisposableTo(disposeBag)
     }
@@ -49,7 +49,7 @@ class RepositoryViewModel {
         return self.repositoryLoaded ? 3 : 1
     }
     
-    func numberOfRowsInSection(section: Int) -> Int {
+    func numberOfRowsInSection(_ section: Int) -> Int {
         guard self.repositoryLoaded else {
             return 1
         }
@@ -60,7 +60,7 @@ class RepositoryViewModel {
                 return 2
             }
             
-            let trimmedDesc = desc.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+            let trimmedDesc = desc.trimmingCharacters(in: .whitespacesAndNewlines)
             return trimmedDesc.characters.count == 0 ? 2 : 3
         case 1:
             return 5

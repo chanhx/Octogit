@@ -19,57 +19,53 @@ class FileTableViewModel: BaseTableViewModel<File> {
         
         self.repository = repository
         self.path = path
-        self.token = .GetContents(repo: repository, path: path)
+        self.token = .getContents(repo: repository, path: path)
         
         super.init()
     }
     
     var title: String {        
-        return (path == "" ? repository : path).componentsSeparatedByString("/").last!
+        return (path == "" ? repository : path).components(separatedBy: "/").last!
     }
     
     override func fetchData() {
         GithubProvider
             .request(token)
             .mapJSON()
-            .subscribe(
-                onNext: {
-                    self.dataSource.value = Mapper<File>().mapArray($0)!
-                        .map {
-                            if $0.type! == .File && $0.size == 0 {
-                                $0.type = .Submodule
+            .subscribe {
+                self.dataSource.value = Mapper<File>().mapArray(JSONObject: $0)!
+                    .map {
+                        if $0.type! == .File && $0.size == 0 {
+                            $0.type = .Submodule
+                        }
+                        return $0
+                    }.sorted(by: { (f1, f2) -> Bool in
+                        if f1.type! == f2.type! {
+                            return f1.name! < f2.name!
+                        } else {
+                            switch (f1.type!, f2.type!) {
+                            case (.Directory, _), (_, .Directory):
+                                return f1.type! == .Directory
+                            case (.Submodule, _), (_, .Submodule):
+                                return f1.type! == .Submodule
+                            case (.File, _), (_, .File):
+                                return f1.type! == .File
+                            case (.Symlink, _), (_, .Symlink):
+                                return f1.type! == .Symlink
+                            default:
+                                return true
                             }
-                            return $0
-                        }.sort({ (f1, f2) -> Bool in
-                            if f1.type! == f2.type! {
-                                return f1.name! < f2.name!
-                            } else {
-                                switch (f1.type!, f2.type!) {
-                                case (.Directory, _), (_, .Directory):
-                                    return f1.type! == .Directory
-                                case (.Submodule, _), (_, .Submodule):
-                                    return f1.type! == .Submodule
-                                case (.File, _), (_, .File):
-                                    return f1.type! == .File
-                                case (.Symlink, _), (_, .Symlink):
-                                    return f1.type! == .Symlink
-                                default:
-                                    return true
-                                }
-                            }
-                    })
-                },
-                onError: {
-                    print($0)
-            })
+                        }
+                })
+            }
             .addDisposableTo(disposeBag)
     }
     
-    func fileViewModel(file: File) -> FileViewModel {
+    func fileViewModel(_ file: File) -> FileViewModel {
         return FileViewModel(repository: repository, file: file)
     }
     
-    func subDirectoryViewModel(directory: File) -> FileTableViewModel {
+    func subDirectoryViewModel(_ directory: File) -> FileTableViewModel {
         return FileTableViewModel(repository: repository, path: directory.path!)
     }
 }

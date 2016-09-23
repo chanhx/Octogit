@@ -10,10 +10,10 @@ import ObjectMapper
 
 class IssueTableViewModel: BaseTableViewModel<Issue> {
     
-    private var token: GithubAPI
+    fileprivate var token: GithubAPI
     
     init(repo: Repository) {
-        token = .RepositoryIssues(repo: repo.fullName!)
+        token = .repositoryIssues(repo: repo.fullName!)
         super.init()
     }
     
@@ -23,8 +23,8 @@ class IssueTableViewModel: BaseTableViewModel<Issue> {
             .mapJSON()
             .subscribe(
                 onNext: {
-                    if let newIssues = Mapper<Issue>().mapArray($0) {
-                        self.dataSource.value.appendContentsOf(newIssues)
+                    if let newIssues = Mapper<Issue>().mapArray(JSONObject: $0) {
+                        self.dataSource.value.append(contentsOf: newIssues)
                     }
                 },
                 onError: {
@@ -33,7 +33,7 @@ class IssueTableViewModel: BaseTableViewModel<Issue> {
             .addDisposableTo(disposeBag)
     }
     
-    func viewModelForIndex(index: Int) -> IssueViewModel {
+    func viewModelForIndex(_ index: Int) -> IssueViewModel {
         return IssueViewModel(issue: dataSource.value[index])
     }
 }

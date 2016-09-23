@@ -10,10 +10,10 @@ import UIKit
 
 class IssueCell: UITableViewCell {
     
-    private let statusLabel = UILabel()
-    private let titleLabel = UILabel()
-    private let infoLabel = UILabel()
-    private let commentsLabel = UILabel()
+    fileprivate let statusLabel = UILabel()
+    fileprivate let titleLabel = UILabel()
+    fileprivate let infoLabel = UILabel()
+    fileprivate let commentsLabel = UILabel()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,40 +28,40 @@ class IssueCell: UITableViewCell {
 
     func configureSubviews() {
         statusLabel.font = UIFont.OcticonOfSize(23)
-        statusLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, forAxis: .Horizontal)
+        statusLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
         
-        titleLabel.font = UIFont.systemFontOfSize(18, weight: UIFontWeightMedium)
+        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
         titleLabel.numberOfLines = 0
-        titleLabel.lineBreakMode = .ByWordWrapping
+        titleLabel.lineBreakMode = .byWordWrapping
         
-        infoLabel.font = UIFont.systemFontOfSize(14)
+        infoLabel.font = UIFont.systemFont(ofSize: 14)
         infoLabel.textColor = UIColor(netHex: 0x888888)
         
         commentsLabel.textColor = UIColor(netHex: 0x888888)
-        commentsLabel.font = UIFont.systemFontOfSize(14)
+        commentsLabel.font = UIFont.systemFont(ofSize: 14)
     }
     
     func layout() {
         let margins = contentView.layoutMarginsGuide
         let hStackView = UIStackView(arrangedSubviews: [infoLabel, commentsLabel])
-        hStackView.axis = .Horizontal
-        hStackView.alignment = .Fill
-        hStackView.distribution = .EqualSpacing
+        hStackView.axis = .horizontal
+        hStackView.alignment = .fill
+        hStackView.distribution = .equalSpacing
         hStackView.spacing = 10
         
         contentView.addSubviews([statusLabel, titleLabel, hStackView])
         
-        statusLabel.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 8).active = true
-        statusLabel.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: 5).active = true
+        statusLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8).isActive = true
+        statusLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5).isActive = true
         
-        titleLabel.topAnchor.constraintEqualToAnchor(statusLabel.topAnchor).active = true
-        titleLabel.leadingAnchor.constraintEqualToAnchor(statusLabel.trailingAnchor, constant: 8).active = true
-        titleLabel.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: -8).active = true
+        titleLabel.topAnchor.constraint(equalTo: statusLabel.topAnchor).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: statusLabel.trailingAnchor, constant: 8).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8).isActive = true
         
-        hStackView.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor, constant: 5).active = true
-        hStackView.bottomAnchor.constraintEqualToAnchor(margins.bottomAnchor, constant: -8).active = true
-        hStackView.leadingAnchor.constraintEqualToAnchor(titleLabel.leadingAnchor).active = true
-        hStackView.trailingAnchor.constraintEqualToAnchor(titleLabel.trailingAnchor).active = true
+        hStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5).isActive = true
+        hStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8).isActive = true
+        hStackView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
+        hStackView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor).isActive = true
     }
     
     var entity: Issue! {
@@ -79,7 +79,7 @@ class IssueCell: UITableViewCell {
             infoLabel.text = "#\(entity.number!) by \(entity.user!) - \(entity.createdAt!.naturalString)"
             
             commentsLabel.attributedText = Octicon.Comment.iconString("\(entity.comments!)")
-            commentsLabel.hidden = entity.comments == 0
+            commentsLabel.isHidden = entity.comments == 0
         }
     }
 }

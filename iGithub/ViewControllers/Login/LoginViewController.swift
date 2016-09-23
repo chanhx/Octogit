@@ -9,7 +9,7 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }

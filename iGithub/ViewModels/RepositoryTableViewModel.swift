@@ -11,20 +11,20 @@ import ObjectMapper
 
 class RepositoryTableViewModel: BaseTableViewModel<Repository> {
     
-    private var token: GithubAPI
+    fileprivate var token: GithubAPI
     
     init(organization: User) {
-        token = .OrganizationRepos(org: organization.login!)
+        token = .organizationRepos(org: organization.login!)
         super.init()
     }
     
     init(user: User) {
-        token = .UserRepos(user: user.login!)
+        token = .userRepos(user: user.login!)
         super.init()
     }
     
     init(stargazer: User) {
-        token = .StarredRepos(user: stargazer.login!)
+        token = .starredRepos(user: stargazer.login!)
         super.init()
     }
     
@@ -34,8 +34,8 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
             .mapJSON()
             .subscribe(
                 onNext: {
-                    if let newRepos = Mapper<Repository>().mapArray($0) {
-                        self.dataSource.value.appendContentsOf(newRepos)
+                    if let newRepos = Mapper<Repository>().mapArray(JSONObject: $0) {
+                        self.dataSource.value.append(contentsOf: newRepos)
                     }
                 },
                 onError: {
@@ -46,14 +46,14 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
     
     var shouldDisplayFullName: Bool {
         switch token {
-        case .OrganizationRepos, .UserRepos:
+        case .organizationRepos, .userRepos:
             return false
         default:
             return true
         }
     }
     
-    func repoViewModelForIndex(index: Int) -> RepositoryViewModel {
+    func repoViewModelForIndex(_ index: Int) -> RepositoryViewModel {
         return RepositoryViewModel(repo: dataSource.value[index])
     }
 }

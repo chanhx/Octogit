@@ -10,7 +10,7 @@ import WebKit
 
 class OAuthViewController: WebViewController {
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
@@ -19,26 +19,26 @@ class OAuthViewController: WebViewController {
         super.viewDidLoad()
         
         if let url = OAuthConfiguration.authorizationURL {
-            webView.loadRequest(NSURLRequest(URL: url))
+            webView.load(URLRequest(url: url as URL))
         }
     }
     
-    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-        if navigationAction.request.URL?.lastPathComponent == OAuthConfiguration.callbackMark {
+    func webView(_ webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.request.url?.lastPathComponent == OAuthConfiguration.callbackMark {
             
-            let queryItems = NSURLComponents(URL: navigationAction.request.URL!, resolvingAgainstBaseURL: false)?.queryItems
+            let queryItems = URLComponents(url: navigationAction.request.url!, resolvingAgainstBaseURL: false)?.queryItems
             if let code = queryItems?.filter({$0.name == "code"}).first!.value {
-                AccountManager.shareManager.requestToken(code, success: {
+                AccountManager.shareInstance.requestToken(code, success: {
                     let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
-                    UIApplication.sharedApplication().delegate!.window!!.rootViewController = mainVC
+                    UIApplication.shared.delegate!.window!!.rootViewController = mainVC
                 }, failure: {
                     print($0)
-                    self.navigationController?.popViewControllerAnimated(true)
+                    self.navigationController?.popViewController(animated: true)
                 })
             }
-            decisionHandler(.Cancel)
+            decisionHandler(.cancel)
         }
         
-        decisionHandler(.Allow)
+        decisionHandler(.allow)
     }
 }

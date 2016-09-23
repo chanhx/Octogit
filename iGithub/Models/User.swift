@@ -19,13 +19,13 @@ class User: BaseModel, CustomStringConvertible {
     var id: Int?
     var login: String?
     var name: String?
-    var avatarURL: NSURL?
+    var avatarURL: URL?
     var bio: String?
     
     var gravatarID: String?
     var type: UserType?
     var company: String?
-    var blog: NSURL?
+    var blog: URL?
     var location: String?
     var email: String?
     var orgDescription: String?

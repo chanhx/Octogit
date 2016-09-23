@@ -14,17 +14,17 @@ class LoadingIndicator: UIView {
     var toColor: UIColor
     var lineWidth: CGFloat
     
-    private let circleLayer = CAShapeLayer()
-    private let gradations = 7
-    private var strokeEnd: CGFloat
+    fileprivate let circleLayer = CAShapeLayer()
+    fileprivate let gradations = 7
+    fileprivate var strokeEnd: CGFloat
     
-    init(fromColor: UIColor = .whiteColor(), toColor: UIColor = UIColor(netHex: 0x4078C0), lineWidth: CGFloat, strokeEnd: CGFloat = 0.95) {
+    init(fromColor: UIColor = .white, toColor: UIColor = UIColor(netHex: 0x4078C0), lineWidth: CGFloat, strokeEnd: CGFloat = 0.95) {
         self.fromColor = fromColor
         self.toColor = toColor
         self.lineWidth = lineWidth
         self.strokeEnd = strokeEnd
         
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
     }
     
     override func layoutSubviews() {
@@ -34,9 +34,9 @@ class LoadingIndicator: UIView {
         let radius = (bounds.width > bounds.height ? bounds.height : bounds.width) / 2 - lineWidth
         let path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: CGFloat(-M_PI_2), endAngle: 3 * CGFloat(M_PI_2), clockwise: true)
         
-        circleLayer.path = path.CGPath
-        circleLayer.strokeColor = UIColor(netHex: 0x4078C0).CGColor
-        circleLayer.fillColor = UIColor.clearColor().CGColor
+        circleLayer.path = path.cgPath
+        circleLayer.strokeColor = UIColor(netHex: 0x4078C0).cgColor
+        circleLayer.fillColor = UIColor.clear.cgColor
         circleLayer.lineWidth = lineWidth
         circleLayer.lineCap = kCALineCapRound
         circleLayer.strokeStart = 0.15
@@ -52,13 +52,13 @@ class LoadingIndicator: UIView {
         for i in 0...1 {
             let gradientLayer = CAGradientLayer()
             
-            gradientLayer.startPoint = CGPointMake(0.5, 1.0)
-            gradientLayer.endPoint = CGPointMake(0.5, 0.0)
-            gradientLayer.frame = CGRectMake(bounds.width / 2 * CGFloat(i), 0, bounds.width / 2, bounds.height)
+            gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
+            gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
+            gradientLayer.frame = CGRect(x: bounds.width / 2 * CGFloat(i), y: 0, width: bounds.width / 2, height: bounds.height)
             gradientLayer.colors = i == 0 ?
                 Array(colors[gradations/2...gradations - 1]) :
-                Array(colors[0...gradations/2]).reverse()
-            gradientLayer.locations = locations
+                Array(colors[0...gradations/2]).reversed()
+            gradientLayer.locations = locations as [NSNumber]?
             
             layer.addSublayer(gradientLayer)
         }
@@ -74,13 +74,13 @@ class LoadingIndicator: UIView {
         circleLayer.strokeEnd = self.strokeEnd
     }
     
-    func updateStrokeEnd(strokeEnd: CGFloat) {
+    func updateStrokeEnd(_ strokeEnd: CGFloat) {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.toValue = strokeEnd
         animation.fillMode = kCAFillModeForwards
-        animation.removedOnCompletion = false
+        animation.isRemovedOnCompletion = false
         
-        circleLayer.addAnimation(animation, forKey: nil)
+        circleLayer.add(animation, forKey: nil)
     }
     
     func startAnimating() {
@@ -89,14 +89,14 @@ class LoadingIndicator: UIView {
         rotate.fromValue = 0
         rotate.toValue = 2 * M_PI
         rotate.repeatCount = HUGE
-        layer.addAnimation(rotate, forKey: nil)
+        layer.add(rotate, forKey: nil)
     }
     
     func stopAnimating() {
         layer.removeAllAnimations()
     }
     
-    func gradientColors(fromColor: UIColor, toColor: UIColor, gradations: Int = 3) -> [CGColor] {
+    func gradientColors(_ fromColor: UIColor, toColor: UIColor, gradations: Int = 3) -> [CGColor] {
         var colors = [CGColor]()
         
         var fromRed: CGFloat = 0
@@ -120,7 +120,7 @@ class LoadingIndicator: UIView {
                                 green: fromGreen + greenDiff / CGFloat(n) * CGFloat(i),
                                 blue: fromBlue + blueDiff / CGFloat(n) * CGFloat(i),
                                 alpha: 1.0)
-            colors.append(color.CGColor)
+            colors.append(color.cgColor)
         }
         
         return colors

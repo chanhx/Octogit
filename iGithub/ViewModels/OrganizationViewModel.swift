@@ -14,12 +14,12 @@ class OrganizationViewModel: UserViewModel {
     
     override init(_ organization: User) {
         super.init(organization)
-        token = .Organization(org: organization.login!)
+        token = .organization(org: organization.login!)
     }
     
     override init(_ orgName: String) {
         super.init(orgName)
-        token = .Organization(org: orgName)
+        token = .organization(org: orgName)
     }
     
     override var numberOfSections: Int {
@@ -29,17 +29,17 @@ class OrganizationViewModel: UserViewModel {
         var sections = 1
         let o = user.value
         
-        if o.company != nil {details.append(.Company)}
-        if o.location != nil {details.append(.Location)}
-        if o.email != nil {details.append(.Email)}
-        if o.blog != nil {details.append(.Blog)}
+        if o.company != nil {details.append(.company)}
+        if o.location != nil {details.append(.location)}
+        if o.email != nil {details.append(.email)}
+        if o.blog != nil {details.append(.blog)}
         
         if details.count > 0 {sections += 1}
         
         return sections
     }
     
-    override func numberOfRowsInSection(section: Int) -> Int {
+    override func numberOfRowsInSection(_ section: Int) -> Int {
         guard userLoaded else {
             return 1
         }

@@ -13,7 +13,7 @@ class Commit: BaseModel {
     
     var sha: String?
     var message: String?
-    var commitDate: NSDate?
+    var commitDate: Date?
     var countOfChanges: Int?
     var authorName: String?
     var committerName: String?

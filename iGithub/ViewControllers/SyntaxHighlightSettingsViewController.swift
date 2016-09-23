@@ -16,22 +16,22 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
     @IBOutlet weak var lineNumbersSwitch: UISwitch!
     let webViewCell = WebViewCell()
     
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     
     let disposeBag = DisposeBag()
     
     lazy var themes: [String] = {
-        let path = NSBundle.mainBundle().pathForResource("themes", ofType: "plist")
+        let path = Bundle.main.path(forResource: "themes", ofType: "plist")
         return NSArray(contentsOfFile: path!) as! [String]
     }()
     
     let sample: String = {
-        let path = NSBundle.mainBundle().pathForResource("sample", ofType: "")
-        return try! String(contentsOfFile: path!, encoding: NSUTF8StringEncoding)
+        let path = Bundle.main.path(forResource: "sample", ofType: "")
+        return try! String(contentsOfFile: path!, encoding: String.Encoding.utf8)
     }()
     
     var rendering: String {
-        return Renderer.render(sample, language: "c", theme: themeLabel.text, showLineNumbers: lineNumbersSwitch.on)
+        return Renderer.render(sample, language: "c", theme: themeLabel.text, showLineNumbers: lineNumbersSwitch.isOn)
     }
     
     lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self)
@@ -39,18 +39,18 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        themeLabel.text = userDefaults.objectForKey(Constants.kTheme) as? String
-        lineNumbersSwitch.on = userDefaults.boolForKey(Constants.kLineNumbers)
+        themeLabel.text = userDefaults.object(forKey: Constants.kTheme) as? String
+        lineNumbersSwitch.isOn = userDefaults.bool(forKey: Constants.kLineNumbers)
         
-        webViewCell.frame = CGRectMake(0, 0, self.view.bounds.width, 230)
-        webViewCell.webView.opaque = false
+        webViewCell.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 230)
+        webViewCell.webView.isOpaque = false
         tableView.tableFooterView = webViewCell
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            self.pickerView.selectedRow[0] = self.themes.indexOf(self.themeLabel.text!) ?? 0
+        DispatchQueue.global(qos: .default).async {
+            self.pickerView.selectedRow[0] = self.themes.index(of: self.themeLabel.text!) ?? 0
         }
 
-        lineNumbersSwitch.rx_value.subscribeNext { _ in
+        lineNumbersSwitch.rx.value.subscribe { _ in
             self.renderSample()
         }
         .addDisposableTo(disposeBag)
@@ -58,47 +58,47 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
         renderSample()
     }
     
-    override func viewDidDisappear(animated: Bool) {
-        userDefaults.setObject(themeLabel.text, forKey: Constants.kTheme)
-        userDefaults.setBool(lineNumbersSwitch.on, forKey: Constants.kLineNumbers)
+    override func viewDidDisappear(_ animated: Bool) {
+        userDefaults.set(themeLabel.text, forKey: Constants.kTheme)
+        userDefaults.set(lineNumbersSwitch.isOn, forKey: Constants.kLineNumbers)
         super.viewDidDisappear(animated)
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard indexPath.row == 0 else {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard (indexPath as NSIndexPath).row == 0 else {
             return
         }
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         self.pickerView.show()
     }
     
     func renderSample() {
-        webViewCell.webView.loadHTMLString(rendering, baseURL: NSBundle.mainBundle().resourceURL)
+        webViewCell.webView.loadHTMLString(rendering, baseURL: Bundle.main.resourceURL)
     }
 }
 
 extension SyntaxHighlightSettingsViewController: OptionPickerViewDelegate {
     
-    func doneButtonClicked(pickerView: OptionPickerView) {
+    func doneButtonClicked(_ pickerView: OptionPickerView) {
         themeLabel.text = themes[pickerView.selectedRow[0]]
         
         renderSample()
     }
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return themes.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return themes[row]
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.pickerView.tmpSelectedRow[0] = row
     }
 }

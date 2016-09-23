@@ -19,7 +19,7 @@ class EventCell: UITableViewCell {
         didSet {
             titleLabel.linkAttributes = [
                 NSForegroundColorAttributeName: UIColor(netHex: 0x4078C0),
-                NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleNone.rawValue
+                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue
             ]
         }
     }
@@ -27,7 +27,7 @@ class EventCell: UITableViewCell {
         didSet {
             contentLabel.linkAttributes = [
                 NSForegroundColorAttributeName: UIColor(netHex: 0x4078C0),
-                NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleNone.rawValue
+                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue
             ]
         }
     }
@@ -43,7 +43,7 @@ class EventCell: UITableViewCell {
             timeLabel.text = entity.createdAt!.naturalString
             
             contentLabel.text = entity.content
-            contentLabel.hidden = contentLabel.text == nil
+            contentLabel.isHidden = contentLabel.text == nil
             
             addLinksToTitle()
             addLinksToContent()
@@ -52,39 +52,39 @@ class EventCell: UITableViewCell {
     
     func addLinksToTitle() {
         if entity.actor != nil {
-            titleLabel.addLink(NSURL(string: "/\(entity.actor!)")!, toText: entity.actor!.login!)
+            titleLabel.addLink(URL(string: "/\(entity.actor!)")!, toText: entity.actor!.login!)
         }
         
         if entity.repository != nil {
-            titleLabel.addLink(NSURL(string: "/\(entity.repository!)")!, toText: entity.repository!)
+            titleLabel.addLink(URL(string: "/\(entity.repository!)")!, toText: entity.repository!)
         }
         
         if entity.org != nil {
-            titleLabel.addLink(NSURL(string: "/\(entity.org!)")!, toText: entity.org!.login!)
+            titleLabel.addLink(URL(string: "/\(entity.org!)")!, toText: entity.org!.login!)
         }
         
         switch entity.type! {
         case .ForkEvent:
             let e = entity as! ForkEvent
-            titleLabel.addLink(NSURL(string: "/\(e.forkee!)")!, toText: e.forkee!)
+            titleLabel.addLink(URL(string: "/\(e.forkee!)")!, toText: e.forkee!)
         case .IssueCommentEvent:
             let e = entity as! IssueCommentEvent
-            titleLabel.addLink(NSURL(string: "/\(e.repository!)/issues/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")
+            titleLabel.addLink(URL(string: "/\(e.repository!)/issues/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")
         case .IssuesEvent:
             let e = entity as! IssueEvent
-            titleLabel.addLink(NSURL(string: "/\(e.repository!)/issues/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")
+            titleLabel.addLink(URL(string: "/\(e.repository!)/issues/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")
         case .GollumEvent:
             let e = entity as! GollumEvent
-            titleLabel.addLink(NSURL(string: "/\(e.repository!)/wiki/\(e.pageName!)")!, toText: e.pageName!)
+            titleLabel.addLink(URL(string: "/\(e.repository!)/wiki/\(e.pageName!)")!, toText: e.pageName!)
         case .MemberEvent:
             let e = entity as! MemberEvent
-            titleLabel.addLink(NSURL(string: "/\(e.member!)")!, toText: e.member!.login!)
+            titleLabel.addLink(URL(string: "/\(e.member!)")!, toText: e.member!.login!)
         case .PullRequestEvent:
             let e = entity as! PullRequestEvent
-            titleLabel.addLink(NSURL(string: "/pull/\(e.pullRequest!.number!)")!, toText: "#\(e.pullRequest!.number!)")
+            titleLabel.addLink(URL(string: "/pull/\(e.pullRequest!.number!)")!, toText: "#\(e.pullRequest!.number!)")
         case .PullRequestReviewCommentEvent:
             let e = entity as! PullRequestReviewCommentEvent
-            titleLabel.addLink(NSURL(string: "/pull/\(e.pullRequest!.number!)")!, toText: "#\(e.pullRequest!.number!)")
+            titleLabel.addLink(URL(string: "/pull/\(e.pullRequest!.number!)")!, toText: "#\(e.pullRequest!.number!)")
         default:
             break
         }
@@ -96,8 +96,8 @@ class EventCell: UITableViewCell {
             let e = entity as! PushEvent
             for commit in e.commits! {
                 let sha = commit.sha!
-                let shortenedSHA = sha.substringToIndex(sha.startIndex.advancedBy(7))
-                contentLabel.addLink(NSURL(string: "/\(entity.repository!)/commit/\(sha)")!, toText: shortenedSHA)
+                let shortenedSHA = sha.substring(to: sha.characters.index(sha.startIndex, offsetBy: 7))
+                contentLabel.addLink(URL(string: "/\(entity.repository!)/commit/\(sha)")!, toText: shortenedSHA)
             }
         }
     }

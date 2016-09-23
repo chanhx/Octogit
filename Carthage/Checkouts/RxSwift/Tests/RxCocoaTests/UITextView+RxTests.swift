@@ -14,8 +14,8 @@ import XCTest
 // UITextView
 class UITextViewTests : RxTest {
     func testText_DelegateEventCompletesOnDealloc() {
-        let createView: () -> UITextView = { UITextView(frame: CGRectMake(0, 0, 1, 1)) }
-        ensurePropertyDeallocated(createView, "text") { (view: UITextView) in view.rx_text }
+        let createView: () -> UITextView = { UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)) }
+        ensurePropertyDeallocated(createView, "text") { (view: UITextView) in view.rx.text }
     }
 
     func testSettingTextDoesntClearMarkedText() {
@@ -23,10 +23,90 @@ class UITextViewTests : RxTest {
 
         textView.text = "Text1"
         textView.set = false
-        textView.rx_text.on(.Next("Text1"))
+        textView.rx.text.on(.next("Text1"))
         XCTAssertTrue(!textView.set)
-        textView.rx_text.on(.Next("Text2"))
+        textView.rx.text.on(.next("Text2"))
         XCTAssertTrue(textView.set)
+    }
+
+    func testDidBeginEditing() {
+        var completed = false
+        var value: ()?
+
+        autoreleasepool {
+            let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+            _ = textView.rx.didBeginEditing.subscribe(onNext: { n in
+                    value = n
+                }, onCompleted: {
+                    completed = true
+                })
+
+            textView.delegate!.textViewDidBeginEditing!(textView)
+        }
+
+        XCTAssertNotNil(value)
+        XCTAssertTrue(completed)
+    }
+
+    func testDidEndEditing() {
+        var completed = false
+        var value: ()?
+
+        autoreleasepool {
+            let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+            _ = textView.rx.didEndEditing.subscribe(onNext: { n in
+                    value = n
+                }, onCompleted: {
+                    completed = true
+                })
+
+            textView.delegate!.textViewDidEndEditing!(textView)
+        }
+
+        XCTAssertNotNil(value)
+        XCTAssertTrue(completed)
+    }
+
+    func testDidChange() {
+        var completed = false
+        var value: ()?
+
+        autoreleasepool {
+            let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+            _ = textView.rx.didChange.subscribe(onNext: { n in
+                    value = n
+                }, onCompleted: {
+                    completed = true
+                })
+
+            textView.delegate!.textViewDidChange!(textView)
+        }
+
+        XCTAssertNotNil(value)
+        XCTAssertTrue(completed)
+    }
+
+    func testDidChangeSelection() {
+        var completed = false
+        var value: ()?
+
+        autoreleasepool {
+            let textView = UITextView(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+
+            _ = textView.rx.didChangeSelection.subscribe(onNext: { n in
+                    value = n
+                }, onCompleted: {
+                    completed = true
+                })
+
+            textView.delegate!.textViewDidChangeSelection!(textView)
+        }
+
+        XCTAssertNotNil(value)
+        XCTAssertTrue(completed)
     }
 }
 

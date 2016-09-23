@@ -15,11 +15,11 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
     var viewModel: EventTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
-                .bindTo(tableView.rx_itemsWithCellIdentifier("EventCell", cellType: EventCell.self)) { row, element, cell in
+                .bindTo(tableView.rx.items(cellIdentifier: "EventCell", cellType: EventCell.self)) { row, element, cell in
                     cell.entity = element
                     cell.titleLabel.delegate = self
                     cell.contentLabel.delegate = self
-                    cell.selectionStyle = .None
+                    cell.selectionStyle = .none
                     
                     cell.titleLabel.tag = row
                     cell.avatarView.tag = row
@@ -27,7 +27,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                 }
                 .addDisposableTo(viewModel.disposeBag)
             
-            viewModel.dataSource.asObservable().subscribeNext { _ in
+            viewModel.dataSource.asObservable().subscribe { _ in
                 if let header = self.tableView.refreshHeader {
                     header.endRefreshing()
                 }
@@ -50,7 +50,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
         tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
     }
     
-    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
         let row = label.tag
         let user = viewModel.dataSource.value[row].actor!
         
@@ -63,14 +63,14 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    func avatarTapped(recognizer: UITapGestureRecognizer) {
+    func avatarTapped(_ recognizer: UITapGestureRecognizer) {
         let row = recognizer.view?.tag
         let user = viewModel.dataSource.value[row!].actor!
         showUser(user)
     }
     
-    func showUser(user: User) {
-        let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserVC") as! UserViewController
+    func showUser(_ user: User) {
+        let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC") as! UserViewController
         userVC.viewModel = UserViewModel(user)
         navigationController?.pushViewController(userVC, animated: true)
     }

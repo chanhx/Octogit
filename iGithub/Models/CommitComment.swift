@@ -15,7 +15,7 @@ class CommitComment: BaseModel {
     var commitID: String?
     var user: User?
     var body: String?
-    var createdAt: NSDate?
+    var createdAt: Date?
         
     override func mapping(map: Map) {
         id          <- map["id"]

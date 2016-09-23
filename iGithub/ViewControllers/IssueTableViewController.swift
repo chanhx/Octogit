@@ -23,16 +23,16 @@ class IssueTableViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.registerClass(IssueCell.self, forCellReuseIdentifier: "IssueCell")
+        self.tableView.register(IssueCell.self, forCellReuseIdentifier: "IssueCell")
         
         viewModel.fetchData()
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
         
-        let issueVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("IssueVC") as! IssueViewController
-        issueVC.viewModel = viewModel.viewModelForIndex(indexPath.row)
+        let issueVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "IssueVC") as! IssueViewController
+        issueVC.viewModel = viewModel.viewModelForIndex((indexPath as NSIndexPath).row)
         self.navigationController?.pushViewController(issueVC, animated: true)
     }
 

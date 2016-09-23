@@ -10,24 +10,24 @@ import Foundation
 import ObjectMapper
 
 enum UserEventType {
-    case Performed
-    case Received
+    case performed
+    case received
 }
 
 class EventTableViewModel: BaseTableViewModel<Event> {
     
-    private var token: GithubAPI
+    fileprivate var token: GithubAPI
     var page: Int = 1 {
         didSet {
             switch token {
-            case .UserEvents(let user, _):
-                token = .UserEvents(user: user, page: page)
-            case .ReceivedEvents(let user, _):
-                token = .ReceivedEvents(user: user, page: page)
-            case .RepositoryEvents(let repo, _):
-                token = .RepositoryEvents(repo: repo, page: page)
-            case .OrganizationEvents(let org, _):
-                token = .OrganizationEvents(org: org, page: page)
+            case .userEvents(let user, _):
+                token = .userEvents(user: user, page: page)
+            case .receivedEvents(let user, _):
+                token = .receivedEvents(user: user, page: page)
+            case .repositoryEvents(let repo, _):
+                token = .repositoryEvents(repo: repo, page: page)
+            case .organizationEvents(let org, _):
+                token = .organizationEvents(org: org, page: page)
             default:
                 break
             }
@@ -36,19 +36,19 @@ class EventTableViewModel: BaseTableViewModel<Event> {
     
     init(user: User, type: UserEventType) {
         switch type {
-        case .Performed:
-            token = .UserEvents(user: user.login!, page: page)
-        case .Received:
-            token = .ReceivedEvents(user: user.login!, page: page)
+        case .performed:
+            token = .userEvents(user: user.login!, page: page)
+        case .received:
+            token = .receivedEvents(user: user.login!, page: page)
         }
     }
     
     init(repo: Repository) {
-        token = .RepositoryEvents(repo: repo.fullName!, page: page)
+        token = .repositoryEvents(repo: repo.fullName!, page: page)
     }
     
     init(org: User) {
-        token = .OrganizationEvents(org: org.login!, page: page)
+        token = .organizationEvents(org: org.login!, page: page)
     }
     
     override func fetchData() {
@@ -57,11 +57,11 @@ class EventTableViewModel: BaseTableViewModel<Event> {
             .mapJSON()
             .subscribe(
                 onNext: {
-                    if let newEvents = Mapper<Event>().mapArray($0) {
+                    if let newEvents = Mapper<Event>().mapArray(JSONObject: $0) {
                         if self.page == 1 {
                             self.dataSource.value = newEvents
                         } else {
-                            self.dataSource.value.appendContentsOf(newEvents)
+                            self.dataSource.value.append(contentsOf: newEvents)
                         }
                     }
                 },
@@ -83,7 +83,7 @@ class EventTableViewModel: BaseTableViewModel<Event> {
     
     var title: String {
         switch token {
-        case .ReceivedEvents:
+        case .receivedEvents:
             return "News"
         default:
             return "Recent activity"

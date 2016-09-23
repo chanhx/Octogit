@@ -18,7 +18,7 @@ extension ObservableType {
      Add observer with `id` and print each emitted event.
      - parameter id: an identifier for the subscription.
      */
-    func addObserver(id: String) -> Disposable {
+    func addObserver(_ id: String) -> Disposable {
         return subscribe { print("Subscription:", id, "Event:", $0) }
     }
     
@@ -47,7 +47,7 @@ example("PublishSubject") {
     subject.onNext("🅱️")
 }
 /*:
- > This example also introduces using the `onNext(_:)` convenience method, equivalent to `on(.Next(_:)`, which causes a new Next event to be emitted to subscribers with the provided `element`. There are also `onError(_:)` and `onCompleted()` convenience methods, equivalent to `on(.Error(_:))` and `on(.Completed)`, respectively.
+ > This example also introduces using the `onNext(_:)` convenience method, equivalent to `on(.next(_:)`, which causes a new Next event to be emitted to subscribers with the provided `element`. There are also `onError(_:)` and `onCompleted()` convenience methods, equivalent to `on(.error(_:))` and `on(.completed)`, respectively.
  ----
  ## ReplaySubject
  Broadcasts new events to all subscribers, and the specified `bufferSize` number of previous events to new subscribers.

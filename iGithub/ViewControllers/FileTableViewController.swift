@@ -39,16 +39,16 @@ class FileTableViewController: BaseTableViewController {
         viewModel.fetchData()
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
         
-        let file = viewModel.dataSource.value[indexPath.row]
+        let file = viewModel.dataSource.value[(indexPath as NSIndexPath).row]
         if file.type! == .File {
             let fileVC = FileViewController()
             fileVC.viewModel = viewModel.fileViewModel(file)
             self.navigationController?.pushViewController(fileVC, animated: true)
         } else {
-            let fileTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("FileTVC") as! FileTableViewController
+            let fileTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FileTVC") as! FileTableViewController
             fileTVC.viewModel = viewModel.subDirectoryViewModel(file)
             self.navigationController?.pushViewController(fileTVC, animated: true)
         }

@@ -1,3 +1,4 @@
+
 //
 //  Event.swift
 //  iGithub
@@ -45,25 +46,25 @@ class Event: BaseModel, StaticMappable {
     var repository: String?
     var actor: User?
     var org: User?
-    var createdAt: NSDate?
+    var createdAt: Date?
     
-    static func objectForMapping(map: ObjectMapper.Map) -> Mappable? {
+    static func objectForMapping(map: ObjectMapper.Map) -> BaseMappable? {
         if let type: EventType = EventType(rawValue: map["type"].value()!) {
             switch type {
-            case .CommitCommentEvent: return CommitCommentEvent(map)
-            case .CreateEvent: return CreateEvent(map)
-            case .DeleteEvent: return DeleteEvent(map)
-            case .ForkEvent: return ForkEvent(map)
-            case .GollumEvent: return GollumEvent(map)
-            case .IssueCommentEvent: return IssueCommentEvent(map)
-            case .IssuesEvent: return IssueEvent(map)
-            case .MemberEvent: return MemberEvent(map)
-            case .PublicEvent: return PublicEvent(map)
-            case .PullRequestEvent: return PullRequestEvent(map)
-            case .PullRequestReviewCommentEvent: return PullRequestReviewCommentEvent(map)
-            case .PushEvent: return PushEvent(map)
-            case .ReleaseEvent: return ReleaseEvent(map)
-            case .WatchEvent: return WatchEvent(map)
+            case .CommitCommentEvent: return CommitCommentEvent(map: map)
+            case .CreateEvent: return CreateEvent(map: map)
+            case .DeleteEvent: return DeleteEvent(map: map)
+            case .ForkEvent: return ForkEvent(map: map)
+            case .GollumEvent: return GollumEvent(map: map)
+            case .IssueCommentEvent: return IssueCommentEvent(map: map)
+            case .IssuesEvent: return IssueEvent(map: map)
+            case .MemberEvent: return MemberEvent(map: map)
+            case .PublicEvent: return PublicEvent(map: map)
+            case .PullRequestEvent: return PullRequestEvent(map: map)
+            case .PullRequestReviewCommentEvent: return PullRequestReviewCommentEvent(map: map)
+            case .PushEvent: return PushEvent(map: map)
+            case .ReleaseEvent: return ReleaseEvent(map: map)
+            case .WatchEvent: return WatchEvent(map: map)
             default: return nil
             }
         }
@@ -87,7 +88,7 @@ class CommitCommentEvent : Event {
     var comment: CommitComment?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         comment <- map["payload.comment"]
     }
@@ -107,7 +108,7 @@ class CreateEvent: Event {
     var repoDescription: String?
         
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         refType         <- map["payload.ref_type"]
         ref             <- map["payload.ref"]
@@ -122,7 +123,7 @@ class DeleteEvent: Event {
     var ref: String?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         refType         <- map["payload.ref_type"]
         ref             <- map["payload.ref"]
@@ -136,7 +137,7 @@ class ForkEvent: Event {
     var forkeeDescription: String?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         forkee <- map["payload.forkee.full_name"]
         forkeeDescription <- map["payload.forkee.description"]
@@ -151,7 +152,7 @@ class GollumEvent: Event {
     var summary: String?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         pageName <- map["payload.pages.0.page_name"]
         action   <- map["payload.pages.0.action"]
@@ -167,7 +168,7 @@ class IssueCommentEvent : Event {
     var comment: IssueComment?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         action <- map["payload.action"]
         issue <- (map["payload.issue"], IssueTransform())
@@ -193,7 +194,7 @@ class IssueEvent: Event {
     var action: IssueAction?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         issue <- (map["payload.issue"], IssueTransform())
         action <- map["payload.action"]
@@ -206,7 +207,7 @@ class MemberEvent: Event {
     var member: User?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         member <- (map["payload.member"], UserTransform())
     }
@@ -218,7 +219,7 @@ class PublicEvent: Event {
     var repositoryDescription: String?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         repositoryDescription <- map["payload.repository.description"]
     }
@@ -231,7 +232,7 @@ class PullRequestEvent : Event {
     var action: IssueAction?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         pullRequest <- (map["payload.pull_request"], PullRequestTransform())
         action <- map["payload.action"]
@@ -246,7 +247,7 @@ class PullRequestReviewCommentEvent : Event {
     var pullRequest : PullRequest?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         action  <- map["payload.action"]
         comment <- (map["payload.comment"], PullRequestCommentTransform())
@@ -265,7 +266,7 @@ class PushEvent : Event {
     var commits: [CommitsItem]?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         ref                 <- map["payload.ref"]
         commitCount         <- map["payload.size"]
@@ -283,7 +284,7 @@ class ReleaseEvent: Event {
     var releaseTagName: String?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         releaseTagName <- map["payload.release.tag_name"]
     }
@@ -295,7 +296,7 @@ class WatchEvent : Event {
     var action: String?
     
     override func mapping(map: Map) {
-        super.mapping(map)
+        super.mapping(map: map)
         
         action <- map["payload.action"]
     }

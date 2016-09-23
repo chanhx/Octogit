@@ -11,54 +11,54 @@ import UIKit
 class StatusCell: UITableViewCell {
 
     enum Status {
-        case Loading
-        case Error
-        case Empty
+        case loading
+        case error
+        case empty
     }
     
     var name: String
     var status: Status! {
         didSet {
             switch status! {
-            case .Loading:
+            case .loading:
                 promptLabel.text = "Loading \(name)"
                 indicator.startAnimating()
-            case .Error:
+            case .error:
                 promptLabel.text = "Error loading \(name)"
                 indicator.stopAnimating()
-            case .Empty:
+            case .empty:
                 promptLabel.text = "No \(name)"
                 indicator.stopAnimating()
             }
         }
     }
     
-    private let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    private let promptLabel = UILabel()
+    fileprivate let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    fileprivate let promptLabel = UILabel()
     
-    init(name: String, status: Status = .Loading) {
+    init(name: String, status: Status = .loading) {
         
         self.name = name
         defer {
             self.status = status
         }
         
-        super.init(style: .Default, reuseIdentifier: "StatusCell")
+        super.init(style: .default, reuseIdentifier: "StatusCell")
         
-        self.userInteractionEnabled = false
+        self.isUserInteractionEnabled = false
         indicator.hidesWhenStopped = true
         
         contentView.addSubviews([indicator, promptLabel])
         
         let margins = contentView.layoutMarginsGuide
         
-        indicator.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: 3).active = true
-        indicator.centerYAnchor.constraintEqualToAnchor(promptLabel.centerYAnchor).active = true
+        indicator.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 3).isActive = true
+        indicator.centerYAnchor.constraint(equalTo: promptLabel.centerYAnchor).isActive = true
         
-        promptLabel.leadingAnchor.constraintEqualToAnchor(indicator.trailingAnchor, constant: 8).active = true
-        promptLabel.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: -8).active = true
-        promptLabel.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 6).active = true
-        promptLabel.bottomAnchor.constraintEqualToAnchor(margins.bottomAnchor, constant: -6).active = true
+        promptLabel.leadingAnchor.constraint(equalTo: indicator.trailingAnchor, constant: 8).isActive = true
+        promptLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8).isActive = true
+        promptLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 6).isActive = true
+        promptLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -6).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {

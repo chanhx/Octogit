@@ -22,6 +22,6 @@ extension File {
     }
     
     var shortenSHA: String {
-        return sha!.substringToIndex(sha!.startIndex.advancedBy(7))
+        return sha!.substring(to: sha!.characters.index(sha!.startIndex, offsetBy: 7))
     }
 }

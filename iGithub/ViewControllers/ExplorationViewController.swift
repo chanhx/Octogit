@@ -24,7 +24,7 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
         tableView.backgroundColor = UIColor(netHex: 0xFAFAFA)
         
         headerView.delegate = self
-        headerView.title = .Repositories
+        headerView.title = .repositories
         headerView.titleLabel.delegate = self
         updateTitle()
         
@@ -32,7 +32,7 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
         
         searchController.searchResultsUpdater = searchViewController
         searchController.searchBar.delegate = searchViewController
-        searchController.searchBar.autocapitalizationType = .None
+        searchController.searchBar.autocapitalizationType = .none
         searchController.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = true
@@ -50,32 +50,32 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
     
     // MARK: UITableViewDelegate
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 90
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return headerView
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        super.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
         
         switch viewModel.type {
-        case .Repositories:
-            let repo = self.viewModel.repoTVM.repositories.value[indexPath.row]
-            let repoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("RepositoryVC") as! RepositoryViewController
+        case .repositories:
+            let repo = self.viewModel.repoTVM.repositories.value[(indexPath as NSIndexPath).row]
+            let repoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RepositoryVC") as! RepositoryViewController
             repoVC.viewModel = RepositoryViewModel(fullName: repo.name)
             self.navigationController?.pushViewController(repoVC, animated: true)
-        case .Users:
-            let user = viewModel.userTVM.users.value[indexPath.row]
+        case .users:
+            let user = viewModel.userTVM.users.value[(indexPath as NSIndexPath).row]
             switch user.type! {
             case .User:
-                let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("UserVC") as! UserViewController
+                let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC") as! UserViewController
                 userVC.viewModel = UserViewModel(user)
                 self.navigationController?.pushViewController(userVC, animated: true)
             case .Organization:
-                let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("OrgVC") as! OrganizationViewController
+                let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrgVC") as! OrganizationViewController
                 orgVC.viewModel = OrganizationViewModel(user)
                 self.navigationController?.pushViewController(orgVC, animated: true)
             }
@@ -85,11 +85,11 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
 
 extension ExplorationViewController: SegmentHeaderViewDelegate {
     
-    func headerView(view: SegmentHeaderView, didSelectSegmentTitle title: TrendingType) {
+    func headerView(_ view: SegmentHeaderView, didSelectSegmentTitle title: TrendingType) {
         switch title {
-        case .Repositories:
+        case .repositories:
             bindToRepoTVM()
-        case .Users:
+        case .users:
             bindToUserTVM()
         }
         
@@ -98,7 +98,7 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
     
     func bindToRepoTVM() {
         viewModel.repoTVM.repositories.asObservable()
-            .bindTo(tableView.rx_itemsWithCellIdentifier("TrendingRepoCell", cellType: TrendingRepoCell.self)) {
+            .bindTo(tableView.rx.items(cellIdentifier: "TrendingRepoCell", cellType: TrendingRepoCell.self)) {
                 row, repo, cell in
                 cell.configureCell(repo.name, description: repo.description, meta: repo.meta)
             }
@@ -107,7 +107,7 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
     
     func bindToUserTVM() {
         viewModel.userTVM.users.asObservable()
-            .bindTo(tableView.rx_itemsWithCellIdentifier("UserCell", cellType: UserCell.self)) {
+            .bindTo(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) {
                 row, user, cell in
                 cell.entity = user
             }
@@ -120,15 +120,15 @@ extension ExplorationViewController: TTTAttributedLabelDelegate {
     func updateTitle() {
         let time = viewModel.pickerVM.timeOptions[pickerView.selectedRow[0]].desc
         headerView.titleLabel.text = "Trending for \(time) in \(viewModel.language)"
-        headerView.titleLabel.addLink(NSURL(string: "Time")!, toText: time)
+        headerView.titleLabel.addLink(URL(string: "Time")!, toText: time)
         
-        let language = viewModel.language.stringByReplacingOccurrencesOfString("+", withString: "\\+")
-        headerView.titleLabel.addLink(NSURL(string: "Language")!, toText: language)
+        let language = viewModel.language.replacingOccurrences(of: "+", with: "\\+")
+        headerView.titleLabel.addLink(URL(string: "Language")!, toText: language)
     }
     
     // MARK: TTTAttributedLabelDelegate
     
-    func attributedLabel(label: TTTAttributedLabel!, didSelectLinkWithURL url: NSURL!) {
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
         switch url.absoluteString {
         case "Time":
             pickerView.index = 0
@@ -142,7 +142,7 @@ extension ExplorationViewController: TTTAttributedLabelDelegate {
 
 extension ExplorationViewController: OptionPickerViewDelegate {
     
-    func doneButtonClicked(pickerView: OptionPickerView) {
+    func doneButtonClicked(_ pickerView: OptionPickerView) {
         if let row0 = pickerView.tmpSelectedRow[0] {
             viewModel.since = viewModel.pickerVM.timeOptions[row0].time
         }
@@ -153,19 +153,19 @@ extension ExplorationViewController: OptionPickerViewDelegate {
         updateTitle()
     }
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.pickerView.index == 0 ? 3 : languagesArray.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.pickerView.index == 0 ? viewModel.timeOptions[row] : languagesArray[row]
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.pickerView.tmpSelectedRow[self.pickerView.index] = row
     }
 }

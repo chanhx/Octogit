@@ -15,7 +15,7 @@ extension Event {
         case .CommitCommentEvent:
             let e = self as! CommitCommentEvent
             let commitID = e.comment!.commitID!
-            let shortenedSHA = commitID.substringToIndex(commitID.startIndex.advancedBy(7))
+            let shortenedSHA = commitID.substring(to: commitID.characters.index(commitID.startIndex, offsetBy: 7))
             return "\(e.actor!) commented on \(shortenedSHA) at \(e.repository!)"
         case .CreateEvent:
             let e = self as! CreateEvent
@@ -109,11 +109,11 @@ extension Event {
             var messages: [String] = []
             for commit in e.commits! {
                 let sha = commit.sha!
-                let shortenedSHA = sha.substringToIndex(sha.startIndex.advancedBy(7))
-                let message = "\(shortenedSHA) \(commit.message!.componentsSeparatedByString("\n")[0])"
+                let shortenedSHA = sha.substring(to: sha.characters.index(sha.startIndex, offsetBy: 7))
+                let message = "\(shortenedSHA) \(commit.message!.components(separatedBy: "\n")[0])"
                 messages.append(message)
             }
-            return messages.joinWithSeparator("\n")
+            return messages.joined(separator: "\n")
         default:
             return nil
         }
@@ -122,7 +122,7 @@ extension Event {
     var icon: (text: String, color: UIColor) {
         
         var icon: Octicon?
-        var color = UIColor.darkGrayColor()
+        var color = UIColor.darkGray
         
         switch type! {
         case .CommitCommentEvent, .PullRequestReviewCommentEvent, .IssueCommentEvent:

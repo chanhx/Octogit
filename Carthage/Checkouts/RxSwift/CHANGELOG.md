@@ -5,6 +5,45 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
+## [3.0.0-beta.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 GM compatible 8A218a)
+
+* Adapts to new Swift 3.0 syntax.
+* Corrects `throttle` operator behavior to be more consistent with other platforms. Adds `latest` flag that controls should latest element
+  be emitted after dueTime.
+* Adds `delay` operator.
+* Adds `UISearchBar` extensions:
+  * `bookmarkButtonClicked`
+  * `resultsListButtonClicked`
+  * `textDidBeginEditing`
+  * `textDidEndEditing`
+* Moves `CLLocationManager` and `UIImagePickerViewController` extensions from RxCocoa to RxExample project. #874
+* Adds matrix CI builds.
+
+## [3.0.0.alpha.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0.alpha.1) (Xcode 8 beta 6 compatible 8S201h)
+
+#### Features
+
+* Modernizes API to be more consistent with Swift 3.0 API Design Guidelines
+* Replaces `rx_*` prefix with `rx.*` extensions. (Inspired by `.lazy` collections API). We've tried annotate deprecated APIs with `@available(*, deprecated, renamed: "new method")` but trivial replacements aren't annotated.
+	* `rx_text` -> `rx.text`
+	* `rx_tap` -> `rx.tap`
+	* `rx_date` -> `rx.date`
+	* ...
+* Deprecates `subscribeNext`, `subscribeError`, `subscribeCompleted` in favor of `subscribe(onNext:onError:onCompleted:onDisposed)` (The downsides of old extensions were inconsistencies with Swift API guidelines. They also weren't expressing that calling them actually performes additional subscriptions and thus potentially additional work beside just registering observers).
+* Deprecates `doOnNext`, `doOnCompleted`, `doOnError` in favor of `do(onNext:onCompleted:onError:onSubscribe:onDisposed:)`
+* Adds `onSubscribe` and `onDisposed` to `do` operator.
+* Adds namespace for immutable disposables called `Disposables`
+	* Deprecates `AnonymousDisposable` in favor of `Disposables.create(with:)`
+	* Deprecates `NopDisposable` in favor of `Disposables.create()`
+	* Deprecates `BinaryDisposable` in favor of `Disposables.create(_:_:)`
+* Deprecates `toObservable` in favor of `Observable.from()`.
+* Replaces old javascript automation tests with Swift UI Tests.
+* ...
+
+#### Anomalies
+
+* There is a problem using `UISwitch` extensions because it seems that a bug exists in UIKit that causes all `UISwitch` instances to leak. https://github.com/ReactiveX/RxSwift/issues/842
+
 ## [2.6.0](https://github.com/ReactiveX/RxSwift/releases/tag/2.6.0)
 
 #### Features
@@ -118,12 +157,12 @@ All notable changes to this project will be documented in this file.
 This is example of those changes:
 
 ```swift
-- public func rx_itemsWithCellFactory<S : SequenceType, O : ObservableType where O.E == S>
+- public func rx_itemsWithCellFactory<S : Sequence, O : ObservableType where O.E == S>
       (source: O)
-      (cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell) -> Disposable
-+ public func rx_itemsWithCellFactory<S : SequenceType, O : ObservableType where O.E == S>
+      (cellFactory: (UITableView, Int, S.Iterator.Element) -> UITableViewCell) -> Disposable
++ public func rx_itemsWithCellFactory<S : Sequence, O : ObservableType where O.E == S>
       (source: O)
-      -> (cellFactory: (UITableView, Int, S.Generator.Element) -> UITableViewCell) -> Disposable
+      -> (cellFactory: (UITableView, Int, S.Iterator.Element) -> UITableViewCell) -> Disposable
 ```
 
 * Fixes anomaly in `CLLocationManager` extensions
@@ -395,7 +434,7 @@ let (
 * `NSURLSession` extensions now return `Observable<(NSData!, NSHTTPURLResponse)>` instead of `Observable<(NSData!, NSURLResponse!)>`.
 * Optimizes consecutive map operators. For example `map(validate1).map(validate2).map(parse)` is now internally optimized to one `map` operator.
 * Adds overloads for `just`, `sequenceOf`, `toObservable` that accept scheduler.
-* Deprecates `asObservable` extension of `SequenceType` in favor of `toObservable`.
+* Deprecates `asObservable` extension of `Sequence` in favor of `toObservable`.
 * Adds `toObservable` extension to `Array`.
 * Improves table view animated data source example.
 * Polishing of `RxDataSourceStarterKit`
@@ -507,7 +546,7 @@ let (
 * Renames `ScopedDispose` to `ScopedDisposable`
 * Deprecates `observeSingleOn` in favor of `observeOn`
 * Adds inline documentation
-* Renames `from` to `asObservable` extension method on `SequenceType`
+* Renames `from` to `asObservable` extension method on `Sequence`
 * Renames `catchErrorResumeNext` in favor of `catchErrorJustReturn`
 * Deprecates `catchErrorToResult`, the preferred way is to use Swift `do/try/catch` mechanism.
 * Deprecates `RxResult`, the preferred way is to use Swift `do/try/catch` mechanism.

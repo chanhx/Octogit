@@ -10,13 +10,13 @@ import UIKit
 
 class RepositoryCell: UITableViewCell {
     
-    private let iconLabel = UILabel()
-    private let nameLabel = UILabel()
-    private let descriptionLabel = UILabel()
-    private let languageLabel = UILabel()
-    private let stargazersCountLabel = UILabel()
-    private let forksCountLabel = UILabel()
-    private let watchersCountLabel = UILabel()
+    fileprivate let iconLabel = UILabel()
+    fileprivate let nameLabel = UILabel()
+    fileprivate let descriptionLabel = UILabel()
+    fileprivate let languageLabel = UILabel()
+    fileprivate let stargazersCountLabel = UILabel()
+    fileprivate let forksCountLabel = UILabel()
+    fileprivate let watchersCountLabel = UILabel()
     
     var shouldDisplayFullName = true
 
@@ -37,45 +37,45 @@ class RepositoryCell: UITableViewCell {
     func configureSubviews() {
         for label in [languageLabel, stargazersCountLabel, forksCountLabel, watchersCountLabel] {
             label.textColor = UIColor(netHex: 0x888888)
-            label.font = UIFont.systemFontOfSize(14)
+            label.font = UIFont.systemFont(ofSize: 14)
         }
         
         iconLabel.font = UIFont.OcticonOfSize(23)
         
-        nameLabel.font = UIFont.systemFontOfSize(18, weight: UIFontWeightMedium)
+        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
         nameLabel.textColor = UIColor(netHex: 0x4078C0)
         nameLabel.numberOfLines = 0
-        nameLabel.lineBreakMode = .ByWordWrapping
+        nameLabel.lineBreakMode = .byWordWrapping
         
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.lineBreakMode = .ByWordWrapping
+        descriptionLabel.lineBreakMode = .byWordWrapping
         descriptionLabel.textColor = UIColor(netHex: 0x666666)
     }
     
     func layout() {
         let hStackView = UIStackView(arrangedSubviews: [languageLabel, stargazersCountLabel, forksCountLabel, watchersCountLabel])
-        hStackView.axis = .Horizontal
-        hStackView.alignment = .Center
-        hStackView.distribution = .EqualSpacing
+        hStackView.axis = .horizontal
+        hStackView.alignment = .center
+        hStackView.distribution = .equalSpacing
         hStackView.spacing = 12
         
         let vStackView = UIStackView(arrangedSubviews: [nameLabel, descriptionLabel, hStackView])
-        vStackView.axis = .Vertical
-        vStackView.alignment = .Leading
-        vStackView.distribution = .Fill
+        vStackView.axis = .vertical
+        vStackView.alignment = .leading
+        vStackView.distribution = .fill
         vStackView.spacing = 8
         
         contentView.addSubviews([iconLabel, vStackView])
         
         let margins = contentView.layoutMarginsGuide
         
-        iconLabel.topAnchor.constraintEqualToAnchor(margins.topAnchor, constant: 8).active = true
-        iconLabel.leadingAnchor.constraintEqualToAnchor(margins.leadingAnchor, constant: 5).active = true
+        iconLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8).isActive = true
+        iconLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5).isActive = true
         
-        vStackView.topAnchor.constraintEqualToAnchor(iconLabel.topAnchor).active = true
-        vStackView.bottomAnchor.constraintEqualToAnchor(margins.bottomAnchor, constant: -8).active = true
-        vStackView.leadingAnchor.constraintEqualToAnchor(iconLabel.trailingAnchor, constant: 8).active = true
-        vStackView.trailingAnchor.constraintEqualToAnchor(margins.trailingAnchor, constant: -8).active = true
+        vStackView.topAnchor.constraint(equalTo: iconLabel.topAnchor).isActive = true
+        vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8).isActive = true
+        vStackView.leadingAnchor.constraint(equalTo: iconLabel.trailingAnchor, constant: 8).isActive = true
+        vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8).isActive = true
     }
     
     var entity: Repository! {
@@ -83,10 +83,10 @@ class RepositoryCell: UITableViewCell {
             nameLabel.text = shouldDisplayFullName ? entity.fullName! : entity.name!
             
             descriptionLabel.text = entity.repoDescription
-            descriptionLabel.hidden = entity.repoDescription == nil
+            descriptionLabel.isHidden = entity.repoDescription == nil
             
             languageLabel.text = entity.language
-            languageLabel.hidden = entity.language == nil
+            languageLabel.isHidden = entity.language == nil
             
             stargazersCountLabel.attributedText = Octicon.Star.iconString("\(entity.stargazersCount!)")
             forksCountLabel.attributedText = Octicon.RepoForked.iconString("\(entity.forksCount!)")

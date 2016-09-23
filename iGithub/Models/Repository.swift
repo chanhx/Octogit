@@ -14,7 +14,7 @@ class Repository: BaseModel {
     var id: Int?
     var name: String?
     var fullName: String?
-    var homepage: NSURL?
+    var homepage: URL?
     var repoDescription: String?
     var language: String?
     
@@ -22,9 +22,9 @@ class Repository: BaseModel {
     var parent: Repository?
     var source: Repository?
     
-    var createdAt: NSDate?
-    var pushedAt: NSDate?
-    var updatedAt: NSDate?
+    var createdAt: Date?
+    var pushedAt: Date?
+    var updatedAt: Date?
     
     var isPrivate: Bool?
     var isAFork: Bool?

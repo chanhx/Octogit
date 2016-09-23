@@ -18,23 +18,23 @@ class CountButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.titleLabel?.numberOfLines = 0
-        self.titleLabel?.lineBreakMode = .ByWordWrapping
-        self.titleLabel?.textAlignment = .Center
+        self.titleLabel?.lineBreakMode = .byWordWrapping
+        self.titleLabel?.textAlignment = .center
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.titleLabel?.numberOfLines = 0
-        self.titleLabel?.lineBreakMode = .ByWordWrapping
-        self.titleLabel?.textAlignment = .Center
+        self.titleLabel?.lineBreakMode = .byWordWrapping
+        self.titleLabel?.textAlignment = .center
     }
     
-    func setTitle(count: Int?, title: String) {
+    func setTitle(_ count: Int?, title: String) {
         
         var countText: String
         if count == nil {
            countText = ""
-        } else if abbreviative && count > 1000 {
+        } else if abbreviative && count != nil && count! > 1000 {
             countText = String(format: "%.1fk", Double(count!) / 1000)
         } else {
             countText = "\(count!)"
@@ -43,16 +43,16 @@ class CountButton: UIButton {
         let attributedNumber = NSMutableAttributedString(string: "\(countText)\n",
                                                          attributes: [
                                                             NSForegroundColorAttributeName: UIColor(netHex: 0x4078C0),
-                                                            NSFontAttributeName: UIFont.boldSystemFontOfSize(20)])
+                                                            NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20)])
         
         let attributedTitle = NSAttributedString(string: title,
                                                  attributes: [
-                                                    NSForegroundColorAttributeName: UIColor.grayColor(),
-                                                    NSFontAttributeName: UIFont.systemFontOfSize(12)])
+                                                    NSForegroundColorAttributeName: UIColor.gray,
+                                                    NSFontAttributeName: UIFont.systemFont(ofSize: 12)])
         
-        attributedNumber.appendAttributedString(attributedTitle)
+        attributedNumber.append(attributedTitle)
         
-        setAttributedTitle(attributedNumber, forState: .Normal)
+        setAttributedTitle(attributedNumber, for: UIControlState())
     }
     
 }

@@ -13,17 +13,17 @@ class RepositoryTableViewController: BaseTableViewController {
     var viewModel: RepositoryTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
-                .bindTo(tableView.rx_itemsWithCellIdentifier("RepositoryCell", cellType: RepositoryCell.self)) { row, element, cell in
+                .bindTo(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) { row, element, cell in
                     cell.shouldDisplayFullName = self.viewModel.shouldDisplayFullName
                     cell.entity = element
                 }
                 .addDisposableTo(viewModel.disposeBag)
             
-            tableView.rx_itemSelected
+            tableView.rx.itemSelected
                 .map {
-                    self.viewModel.dataSource.value[$0.row]
+                    self.viewModel.dataSource.value[($0 as IndexPath).row]
                 }.subscribeNext {
-                    let repoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("RepositoryVC") as! RepositoryViewController
+                    let repoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RepositoryVC") as! RepositoryViewController
                     repoVC.viewModel = RepositoryViewModel(repo: $0)
                     self.navigationController?.pushViewController(repoVC, animated: true)
                 }.addDisposableTo(viewModel.disposeBag)
@@ -33,7 +33,7 @@ class RepositoryTableViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.registerClass(RepositoryCell.self, forCellReuseIdentifier: "RepositoryCell")
+        self.tableView.register(RepositoryCell.self, forCellReuseIdentifier: "RepositoryCell")
         
         viewModel.fetchData()
     }

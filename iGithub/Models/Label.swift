@@ -11,7 +11,7 @@ import ObjectMapper
 
 class Label: BaseModel {
     
-    var url: NSURL?
+    var url: URL?
     var name: String?
     var color: String?
     

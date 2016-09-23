@@ -14,12 +14,12 @@ import ObjectMapper
 //import Result
 
 let languagesArray: [String] = {
-    let path = NSBundle.mainBundle().pathForResource("languages_array", ofType: "plist")
+    let path = Bundle.main.path(forResource: "languages_array", ofType: "plist")
     return NSArray(contentsOfFile: path!) as! [String]
 }()
 
 let languagesDict: [String: String] = {
-    let path = NSBundle.mainBundle().pathForResource("languages_dict", ofType: "plist")
+    let path = Bundle.main.path(forResource: "languages_dict", ofType: "plist")
     return NSDictionary(contentsOfFile: path!) as! [String: String]
 }()
 
@@ -43,7 +43,7 @@ class ExplorationViewModel {
         }
     }
     
-    init(since: TrendingTime = .Today, language: String = "All Languages", type: TrendingType = .Repositories) {
+    init(since: TrendingTime = .today, language: String = "All Languages", type: TrendingType = .repositories) {
         self.since = since
         self.language = language
         self.type = type
@@ -54,9 +54,9 @@ class ExplorationViewModel {
     func updateOptions() {
         var trendingVM: TrendingViewModelProtocol
         switch type {
-        case .Repositories:
+        case .repositories:
             trendingVM = repoTVM
-        case .Users:
+        case .users:
             trendingVM = userTVM
         }
         
@@ -74,9 +74,9 @@ class ExplorationViewModel {
 class PickerViewModel {
     
     let timeOptions: [(time: TrendingTime, desc: String)] = [
-        (.Today, "today"),
-        (.ThisWeek, "this week"),
-        (.ThisMonth, "this month")
+        (.today, "today"),
+        (.thisWeek, "this week"),
+        (.thisMonth, "this month")
     ]
     
 //    var selectedIndexes = [0, 0]
@@ -89,7 +89,7 @@ protocol TrendingViewModelProtocol {
     var since: TrendingTime? { get set }
     var language: String? { get set }
     func fetchHTML()
-    func parse(doc: HTMLDocument)
+    func parse(_ doc: HTMLDocument)
 }
 
 extension TrendingViewModelProtocol {
@@ -98,7 +98,7 @@ extension TrendingViewModelProtocol {
             .request(token)
             .mapString()
             .subscribeNext {
-                guard let doc = Kanna.HTML(html: $0, encoding: NSUTF8StringEncoding) else {
+                guard let doc = Kanna.HTML(html: $0, encoding: String.Encoding.utf8) else {
                     return  // Result(error: ParseError.HTMLParseError)
                 }
                 
@@ -115,21 +115,19 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
     var language: String?
     var repositories: Variable<[(name: String, description: String?, meta: String)]> = Variable([])
     var token: WebAPI {
-        return WebAPI.Trending(since: since!, language: languagesDict[language!]!, type: .Repositories)
+        return WebAPI.trending(since: since!, language: languagesDict[language!]!, type: .repositories)
     }
     
-    @inline(__always) func parse(doc: HTMLDocument) {
+    @inline(__always) func parse(_ doc: HTMLDocument) {
         repositories.value = doc.css("li.repo-list-item").map {
-            let name = String($0.css("h3.repo-list-name a")[0]["href"]!.characters.dropFirst())
+            let name = String($0.at_css("h3.repo-list-name a")!["href"]!.characters.dropFirst())
             
-            var description: String?
-            if let rawDesc = $0.css("p.repo-list-description").first {
-                description = rawDesc.text!.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
-            }
+            let rawDesc = $0.at_css("p.repo-list-description")
+            let description = rawDesc?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            let meta = $0.css("p.repo-list-meta")[0].text!.componentsSeparatedByString("•").map {
-                $0.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
-                }.dropLast().joinWithSeparator(" • ")
+            let meta = $0.at_css("p.repo-list-meta")!.text!.components(separatedBy: "•").map {
+                $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                }.dropLast().joined(separator: " • ")
             
             return (name, description, meta)
         }
@@ -143,23 +141,23 @@ class TrendingUserTableViewModel: TrendingViewModelProtocol {
     var language: String?
     var users: Variable<[User]> = Variable([])
     var token: WebAPI {
-        return WebAPI.Trending(since: since!, language: languagesDict[language!]!, type: .Users)
+        return WebAPI.trending(since: since!, language: languagesDict[language!]!, type: .users)
     }
     
-    @inline(__always) func parse(doc: HTMLDocument) {
+    @inline(__always) func parse(_ doc: HTMLDocument) {
         users.value = doc.css("li.user-leaderboard-list-item.leaderboard-list-item").map {
-            let name = String($0.css("div h2 a")[0]["href"]!.characters.dropFirst())
-            let avatarURL = $0.css("a img")[0]["src"]!
+            let name = String($0.at_css("div h2 a")!["href"]!.characters.dropFirst())
+            let avatarURL = $0.at_css("a img")!["src"]!
 
             var type: String
             switch $0.css("div.leaderboard-action span") {
-            case .None:
+            case .none:
                 type = "Organization"
             default:
                 type = "User"
             }
             
-            return Mapper<User>().map(["login": name, "avatar_url": avatarURL, "type": type])!
+            return Mapper<User>().map(JSON: ["login": name, "avatar_url": avatarURL, "type": type])!
         }
     }
 }

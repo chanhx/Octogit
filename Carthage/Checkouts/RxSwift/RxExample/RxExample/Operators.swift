@@ -16,15 +16,14 @@ import UIKit
 
 // Two way binding operator between control property and variable, that's all it takes {
 
-infix operator <-> {
-}
+infix operator <-> : DefaultPrecedence
 
-func nonMarkedText(textInput: UITextInput) -> String? {
+func nonMarkedText(_ textInput: UITextInput) -> String? {
     let start = textInput.beginningOfDocument
     let end = textInput.endOfDocument
 
-    guard let rangeAll = textInput.textRangeFromPosition(start, toPosition: end),
-        text = textInput.textInRange(rangeAll) else {
+    guard let rangeAll = textInput.textRange(from: start, to: end),
+        let text = textInput.text(in: rangeAll) else {
             return nil
     }
 
@@ -32,24 +31,24 @@ func nonMarkedText(textInput: UITextInput) -> String? {
         return text
     }
 
-    guard let startRange = textInput.textRangeFromPosition(start, toPosition: markedTextRange.start),
-        endRange = textInput.textRangeFromPosition(markedTextRange.end, toPosition: end) else {
+    guard let startRange = textInput.textRange(from: start, to: markedTextRange.start),
+        let endRange = textInput.textRange(from: markedTextRange.end, to: end) else {
         return text
     }
 
-    return (textInput.textInRange(startRange) ?? "") + (textInput.textInRange(endRange) ?? "")
+    return (textInput.text(in: startRange) ?? "") + (textInput.text(in: endRange) ?? "")
 }
 
-func <-> (textInput: RxTextInput, variable: Variable<String>) -> Disposable {
+func <-> <Base: UITextInput>(textInput: TextInput<Base>, variable: Variable<String>) -> Disposable {
     let bindToUIDisposable = variable.asObservable()
-        .bindTo(textInput.rx_text)
-    let bindToVariable = textInput.rx_text
-        .subscribe(onNext: { [weak textInput] n in
-            guard let textInput = textInput else {
+        .bindTo(textInput.text)
+    let bindToVariable = textInput.text
+        .subscribe(onNext: { [weak base = textInput.base] n in
+            guard let base = base else {
                 return
             }
 
-            let nonMarkedTextValue = nonMarkedText(textInput)
+            let nonMarkedTextValue = nonMarkedText(base)
 
             /**
              In some cases `textInput.textRangeFromPosition(start, toPosition: end)` will return nil even though the underlying
@@ -62,14 +61,14 @@ func <-> (textInput: RxTextInput, variable: Variable<String>) -> Disposable {
 
              and you hit "Done" button on keyboard.
              */
-            if let nonMarkedTextValue = nonMarkedTextValue where nonMarkedTextValue != variable.value {
+            if let nonMarkedTextValue = nonMarkedTextValue, nonMarkedTextValue != variable.value {
                 variable.value = nonMarkedTextValue
             }
         }, onCompleted:  {
             bindToUIDisposable.dispose()
         })
 
-    return StableCompositeDisposable.create(bindToUIDisposable, bindToVariable)
+    return Disposables.create(bindToUIDisposable, bindToVariable)
 }
 
 func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable {
@@ -92,7 +91,7 @@ func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable 
             bindToUIDisposable.dispose()
         })
 
-    return StableCompositeDisposable.create(bindToUIDisposable, bindToVariable)
+    return Disposables.create(bindToUIDisposable, bindToVariable)
 }
 
 // }
