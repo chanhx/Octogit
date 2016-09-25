@@ -28,7 +28,7 @@ class OAuthViewController: WebViewController {
             
             let queryItems = URLComponents(url: navigationAction.request.url!, resolvingAgainstBaseURL: false)?.queryItems
             if let code = queryItems?.filter({$0.name == "code"}).first!.value {
-                AccountManager.shareInstance.requestToken(code, success: {
+                AccountManager.requestToken(code, success: {
                     let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
                     UIApplication.shared.delegate!.window!!.rootViewController = mainVC
                 }, failure: {

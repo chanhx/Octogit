@@ -14,31 +14,28 @@ import ObjectMapper
 
 class AccountManager {
     
-    static let shareInstance = AccountManager()
+    static let keychain = Keychain(server: "https://github.com", protocolType: .https)
     
-    let keychain = Keychain(server: "https://github.com", protocolType: .https)
+    static var disposeBag = DisposeBag()
     
-    lazy var disposeBag = DisposeBag()
-    
-    var currentUser: User? {
+    static var currentUser: User? = {
+        if let json = keychain["user_json"] {
+            return Mapper<User>().map(JSONString: json)
+        }
+        return nil
+    }() {
         didSet {
             keychain["user_json"] = currentUser != nil ? Mapper().toJSONString(currentUser!, prettyPrint: true) : nil
         }
     }
-    var token: String? {
+    
+    static var token: String? = keychain["access_token"] {
         didSet {
             keychain["access_token"] = token
         }
     }
     
-    init() {
-        token = keychain["access_token"]
-        if let json = keychain["user_json"] {
-            currentUser = Mapper<User>().map(JSONString: json)
-        }
-    }
-    
-    func requestToken(_ code: String, success: @escaping () -> Void, failure: @escaping (RxMoya.Error) -> Void) {
+    class func requestToken(_ code: String, success: @escaping () -> Void, failure: @escaping (RxMoya.Error) -> Void) {
         WebProvider
             .request(.accessToken(code: code))
             .mapString()
@@ -47,14 +44,14 @@ class AccountManager {
                     guard let accessToken = $0.components(separatedBy: "&").first?.components(separatedBy: "=").last else {
                         return
                     }
-                    AccountManager.shareInstance.token = accessToken
+                    AccountManager.token = accessToken
                     
                     GithubProvider
                         .request(.oAuthUser(accessToken: accessToken))
                         .mapJSON()
                         .subscribe(
                             onNext: {
-                                AccountManager.shareInstance.currentUser = Mapper<User>().map(JSONObject: $0)
+                                AccountManager.currentUser = Mapper<User>().map(JSONObject: $0)
                                 success()
                             }//,
 //                            onError: {

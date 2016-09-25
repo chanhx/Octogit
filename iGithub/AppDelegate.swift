@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setURLCache()
         
         let storyboardName: String
-        if let _ = AccountManager.shareInstance.token, let _ = AccountManager.shareInstance.currentUser {
+        if let _ = AccountManager.token, let _ = AccountManager.currentUser {
             storyboardName = "Main"
         } else {
             storyboardName = "Login"

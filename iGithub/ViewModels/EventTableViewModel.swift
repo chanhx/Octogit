@@ -8,6 +8,7 @@
 
 import Foundation
 import ObjectMapper
+import Moya
 
 enum UserEventType {
     case performed
@@ -54,6 +55,7 @@ class EventTableViewModel: BaseTableViewModel<Event> {
     override func fetchData() {
         GithubProvider
             .request(token)
+            .filterSuccessfulStatusAndRedirectCodes()
             .mapJSON()
             .subscribe(
                 onNext: {
@@ -66,8 +68,9 @@ class EventTableViewModel: BaseTableViewModel<Event> {
                     }
                 },
                 onError: {
-                    print($0)
-            })
+                    MessageManager.show(error: $0)
+                }
+            )
             .addDisposableTo(disposeBag)
     }
     

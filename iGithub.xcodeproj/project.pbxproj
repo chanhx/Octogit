@@ -114,6 +114,8 @@
 		C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */; };
 		C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDF41D3FB294009DF758 /* OAuthViewController.swift */; };
 		C5F4BDF71D3FB37A009DF758 /* WebAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDF61D3FB37A009DF758 /* WebAPI.swift */; };
+		C5F79AD51D9575DC006B0466 /* SwiftMessages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F79AD41D9575DC006B0466 /* SwiftMessages.framework */; };
+		C5F79AD71D957732006B0466 /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F79AD61D957732006B0466 /* MessageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,6 +250,8 @@
 		C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C5F4BDF41D3FB294009DF758 /* OAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthViewController.swift; sourceTree = "<group>"; };
 		C5F4BDF61D3FB37A009DF758 /* WebAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebAPI.swift; sourceTree = "<group>"; };
+		C5F79AD41D9575DC006B0466 /* SwiftMessages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftMessages.framework; path = Carthage/Build/iOS/SwiftMessages.framework; sourceTree = "<group>"; };
+		C5F79AD61D957732006B0466 /* MessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +259,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F79AD51D9575DC006B0466 /* SwiftMessages.framework in Frameworks */,
 				C51547A01D940EFE00314C7F /* ReactiveSwift.framework in Frameworks */,
 				C5E7337D1D5D809A00913A66 /* Kanna.framework in Frameworks */,
 				C52013C91D56C28C00FDCC30 /* TTTAttributedLabel.framework in Frameworks */,
@@ -405,6 +410,7 @@
 				C538FD001D4065F2003A559E /* Models */,
 				C538FD451D449032003A559E /* Extensions */,
 				C538FD071D406BE8003A559E /* AccountManager.swift */,
+				C5F79AD61D957732006B0466 /* MessageManager.swift */,
 				C5ABDF4D1D7DC8A800F07DC2 /* Renderer.swift */,
 				C5ABDF4F1D7DCCB800F07DC2 /* Constants.swift */,
 				C59D120F1D5AE6410098301A /* URLRouter.swift */,
@@ -440,6 +446,7 @@
 		C5DB94AB1D3F8AB700887E81 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5F79AD41D9575DC006B0466 /* SwiftMessages.framework */,
 				C515479F1D940EFE00314C7F /* ReactiveSwift.framework */,
 				C5E7337C1D5D809A00913A66 /* Kanna.framework */,
 				C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */,
@@ -692,6 +699,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/TTTAttributedLabel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Kanna.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftMessages.framework",
 			);
 			outputPaths = (
 			);
@@ -765,6 +773,7 @@
 				C538FD4C1D44FB2E003A559E /* FileViewModel.swift in Sources */,
 				C538FD4E1D44FB79003A559E /* File.swift in Sources */,
 				C55791591D76E50900FBBD41 /* LoadingIndicator.swift in Sources */,
+				C5F79AD71D957732006B0466 /* MessageManager.swift in Sources */,
 				C526EE101D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift in Sources */,
 				C5ABDF4E1D7DC8A800F07DC2 /* Renderer.swift in Sources */,
 				C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */,

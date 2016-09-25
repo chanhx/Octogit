@@ -16,7 +16,7 @@ let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
     (target: GithubAPI) -> Endpoint<GithubAPI> in
     
     var endpoint = MoyaProvider.DefaultEndpointMapping(target)
-    endpoint = endpoint.endpointByAddingParameters(["access_token": AccountManager.shareInstance.token!])
+    endpoint = endpoint.endpointByAddingParameters(["access_token": AccountManager.token!])
     
     switch target {
     case .getABlob:
