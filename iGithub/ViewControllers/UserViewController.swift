@@ -39,15 +39,7 @@ class UserViewController: BaseTableViewController {
                         self.bioLabel.text = user.bio
                         self.bioLabel.isHidden = user.bio == nil
                         
-                        if let headerView = self.tableView.tableHeaderView {
-                            let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-                            var frame = headerView.frame
-                            frame.size.height = height
-                            headerView.frame = frame
-                            self.tableView.tableHeaderView = headerView
-                            headerView.setNeedsLayout()
-                            headerView.layoutIfNeeded()
-                        }
+                        self.sizeHeaderToFit(tableView: self.tableView)
                     }
                 })
                 .addDisposableTo(viewModel.disposeBag)

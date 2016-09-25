@@ -25,6 +25,8 @@ class IssueViewController: BaseTableViewController {
                 .subscribe { _ in
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
+                        
+                        self.sizeHeaderToFit(tableView: self.tableView)
                     }
                 }.addDisposableTo(disposeBag)
         }
@@ -35,15 +37,7 @@ class IssueViewController: BaseTableViewController {
         
         configureHeader()
         
-        if let headerView = self.tableView.tableHeaderView {
-            let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-            var frame = headerView.frame
-            frame.size.height = height
-            headerView.frame = frame
-            self.tableView.tableHeaderView = headerView
-            headerView.setNeedsLayout()
-            headerView.layoutIfNeeded()
-        }
+        sizeHeaderToFit(tableView: tableView)
     }
     
     func configureHeader() {
