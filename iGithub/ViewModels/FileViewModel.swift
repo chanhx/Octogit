@@ -58,17 +58,22 @@ class FileViewModel {
         GithubProvider
             .request(token)
             .mapJSON()
-            .subscribe {
-                self.file = Mapper<File>().map(JSONObject: $0)!
-                
-                let type = self.file.MIMEType.components(separatedBy: "/")[0]
-                switch type {
-                case "image":
-                    self.contentData.value = Data.dataFromGHBase64String(self.file.content!)!
-                default:
-                    self.html.value = self.htmlForRawFile(self.file.content!)
+            .subscribe(
+                onNext: {
+                    self.file = Mapper<File>().map(JSONObject: $0)!
+                    
+                    let type = self.file.MIMEType.components(separatedBy: "/")[0]
+                    switch type {
+                    case "image":
+                        self.contentData.value = Data.dataFromGHBase64String(self.file.content!)!
+                    default:
+                        self.html.value = self.htmlForRawFile(self.file.content!)
+                    }
+                },
+                onError: {
+                    MessageManager.show(error: $0)
                 }
-            }
+            )
             .addDisposableTo(disposeBag)
     }
     

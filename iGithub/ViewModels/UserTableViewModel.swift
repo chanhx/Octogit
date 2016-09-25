@@ -41,11 +41,16 @@ class UserTableViewModel: BaseTableViewModel<User> {
         GithubProvider
             .request(token)
             .mapJSON()
-            .subscribe {
-                if let newUsers = Mapper<User>().mapArray(JSONObject: $0) {
-                    self.dataSource.value.append(contentsOf: newUsers)
+            .subscribe(
+                onNext: {
+                    if let newUsers = Mapper<User>().mapArray(JSONObject: $0) {
+                        self.dataSource.value.append(contentsOf: newUsers)
+                    }
+                },
+                onError: {
+                    MessageManager.show(error: $0)
                 }
-            }
+            )
             .addDisposableTo(disposeBag)
     }
     

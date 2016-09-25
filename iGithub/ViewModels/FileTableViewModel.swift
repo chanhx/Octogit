@@ -32,32 +32,37 @@ class FileTableViewModel: BaseTableViewModel<File> {
         GithubProvider
             .request(token)
             .mapJSON()
-            .subscribe {
-                self.dataSource.value = Mapper<File>().mapArray(JSONObject: $0)!
-                    .map {
-                        if $0.type! == .file && $0.size == 0 {
-                            $0.type = .submodule
-                        }
-                        return $0
-                    }.sorted(by: { (f1, f2) -> Bool in
-                        if f1.type! == f2.type! {
-                            return f1.name! < f2.name!
-                        } else {
-                            switch (f1.type!, f2.type!) {
-                            case (.directory, _), (_, .directory):
-                                return f1.type! == .directory
-                            case (.submodule, _), (_, .submodule):
-                                return f1.type! == .submodule
-                            case (.file, _), (_, .file):
-                                return f1.type! == .file
-                            case (.symlink, _), (_, .symlink):
-                                return f1.type! == .symlink
-                            default:
-                                return true
+            .subscribe(
+                onNext: {
+                    self.dataSource.value = Mapper<File>().mapArray(JSONObject: $0)!
+                        .map {
+                            if $0.type! == .file && $0.size == 0 {
+                                $0.type = .submodule
                             }
-                        }
-                })
-            }
+                            return $0
+                        }.sorted(by: { (f1, f2) -> Bool in
+                            if f1.type! == f2.type! {
+                                return f1.name! < f2.name!
+                            } else {
+                                switch (f1.type!, f2.type!) {
+                                case (.directory, _), (_, .directory):
+                                    return f1.type! == .directory
+                                case (.submodule, _), (_, .submodule):
+                                    return f1.type! == .submodule
+                                case (.file, _), (_, .file):
+                                    return f1.type! == .file
+                                case (.symlink, _), (_, .symlink):
+                                    return f1.type! == .symlink
+                                default:
+                                    return true
+                                }
+                            }
+                    })
+                },
+                onError: {
+                    MessageManager.show(error: $0)
+                }
+            )
             .addDisposableTo(disposeBag)
     }
     
