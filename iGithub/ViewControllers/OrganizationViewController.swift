@@ -24,7 +24,7 @@ class OrganizationViewController: BaseTableViewController {
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                         
-                        self.avatarView.setAvatarWithURL(org.avatarURL)
+                        self.avatarView.setAvatar(with: org.avatarURL)
                         self.nameLabel.text = org.name ?? (org.login ?? "")
                         self.descLabel.text = org.orgDescription
                         

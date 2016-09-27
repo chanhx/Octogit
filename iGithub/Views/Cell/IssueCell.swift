@@ -66,20 +66,21 @@ class IssueCell: UITableViewCell {
     
     var entity: Issue! {
         didSet {
+            titleLabel.text = entity.title
+            commentsLabel.attributedText = Octicon.comment.iconString("\(entity.comments!)")
+            commentsLabel.isHidden = entity.comments == 0
+            let info = "#\(entity.number!) by \(entity.user!)"
+            
             switch entity.state! {
             case .closed:
                 statusLabel.text = Octicon.issueclosed.rawValue
                 statusLabel.textColor = UIColor(netHex: 0xBD2C00)
+                infoLabel.text = "\(info) - \(entity.closedAt!.naturalString)"
             case .open:
                 statusLabel.text = Octicon.issueopened.rawValue
                 statusLabel.textColor = UIColor(netHex: 0x6CC644)
+                infoLabel.text = "\(info) - \(entity.createdAt!.naturalString)"
             }
-            
-            titleLabel.text = entity.title
-            infoLabel.text = "#\(entity.number!) by \(entity.user!) - \(entity.createdAt!.naturalString)"
-            
-            commentsLabel.attributedText = Octicon.comment.iconString("\(entity.comments!)")
-            commentsLabel.isHidden = entity.comments == 0
         }
     }
 }

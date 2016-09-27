@@ -19,7 +19,7 @@ class IssueComment : BaseModel {
     override func mapping(map: Map) {
         id          <- map["id"]
         user        <- (map["user"], UserTransform())
-        body        <- map["body"]
+        body        <- map["body_text"]
         createdAt   <- (map["created_at"], DateTransform())
     }
 }

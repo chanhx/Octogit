@@ -31,7 +31,7 @@ class UserViewController: BaseTableViewController {
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                         
-                        self.avatarView.setAvatarWithURL(user.avatarURL)
+                        self.avatarView.setAvatar(with: user.avatarURL)
                         self.nameLabel.text = user.name ?? user.login
                         self.followersButton.setTitle(user.followers, title: "Followers")
                         self.repositoriesButton.setTitle(user.publicRepos, title: "Repositories")

@@ -14,6 +14,7 @@ struct Constants {
     static let kLineNumbers = "linenumbers"
     
     static let MediaTypeHTML = "application/vnd.github.\(APIVersion).html"
-    static let MediaTypeHTMLAndJSON = "application/vnd.github.\(APIVersion).html+json"
     static let MediaTypeRaw = "application/vnd.github.\(APIVersion).raw"
+    static let MediaTypeHTMLAndJSON = "application/vnd.github.\(APIVersion).html+json"
+    static let MediaTypeTextAndJSON = "application/vnd.github.\(APIVersion).text+json"
 }

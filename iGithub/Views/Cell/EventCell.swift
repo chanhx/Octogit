@@ -34,7 +34,7 @@ class EventCell: UITableViewCell {
     
     var entity: Event! {
         didSet {
-            avatarView.setAvatarWithURL(entity.actor!.avatarURL)
+            avatarView.setAvatar(with: entity.actor!.avatarURL)
             titleLabel.text = entity.title
             
             let icon = entity.icon

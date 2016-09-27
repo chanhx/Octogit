@@ -10,8 +10,9 @@ import Foundation
 import WebKit
 import Mustache
 import RxSwift
+import ObjectMapper
 
-class IssueViewModel: NSObject, WKNavigationDelegate {
+class IssueViewModel: BaseTableViewModel<IssueComment> {
     
     enum ContentType {
         case body
@@ -19,11 +20,13 @@ class IssueViewModel: NSObject, WKNavigationDelegate {
         case milestone
     }
 
+    var token: GithubAPI
     var issue: Issue
-    var contentHeight = Variable<CGFloat>(0)
+    
     var contentTypes = [ContentType]()
     
-    init(issue: Issue) {
+    init(repo: String, issue: Issue) {
+        token = .issueComments(repo: repo, number: issue.number!)
         self.issue = issue
         
         if let count = issue.body?.characters.count, count > 0 {
@@ -35,8 +38,23 @@ class IssueViewModel: NSObject, WKNavigationDelegate {
         if issue.milestone != nil {
             contentTypes.append(.milestone)
         }
-        
-        super.init()
+    }
+    
+    override func fetchData() {
+        GithubProvider
+            .request(token)
+            .mapJSON()
+            .subscribe(
+                onNext: {
+                    if let newComments = Mapper<IssueComment>().mapArray(JSONObject: $0) {
+                        self.dataSource.value.append(contentsOf: newComments)
+                    }
+                },
+                onError: {
+                    MessageManager.show(error: $0)
+                }
+            )
+            .addDisposableTo(disposeBag)
     }
     
     var numberOfSections: Int {
@@ -68,9 +86,5 @@ class IssueViewModel: NSObject, WKNavigationDelegate {
         let data = ["content": issue.body!]
         
         return try! template.render(Box(data))
-    }
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        contentHeight.value = webView.scrollView.contentSize.height
     }
 }

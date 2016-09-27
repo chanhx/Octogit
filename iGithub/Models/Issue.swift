@@ -26,6 +26,7 @@ class Issue : BaseModel {
     var labels: [Label]?
     var milestone: Milestone?
     var createdAt: Date?
+    var closedAt: Date?
     var comments: Int?
     var pullRequest: PullRequest?
     
@@ -39,6 +40,7 @@ class Issue : BaseModel {
         assignees   <- (map["assignees"], UserTransform())
         labels      <- (map["labels"], LabelTransform())
         createdAt   <- (map["created_at"], DateTransform())
+        closedAt    <- (map["closed_at"], DateTransform())
         comments    <- map["comments"]
     }
 }

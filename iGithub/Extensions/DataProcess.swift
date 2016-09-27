@@ -57,7 +57,7 @@ extension UIImage {
 }
 
 extension UIImageView {
-    func setAvatarWithURL(_ avatarURL: URL?) {
+    func setAvatar(with avatarURL: URL?) {
         self.kf.setImage(with: avatarURL, placeholder: UIImage(named: "default-avatar"))
     }
 }

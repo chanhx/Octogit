@@ -41,7 +41,7 @@ class UserCell: UITableViewCell {
     
     var entity: User! {
         didSet {
-            avatarView.setAvatarWithURL(entity.avatarURL)
+            avatarView.setAvatar(with: entity.avatarURL)
             nameLabel.text = entity.login
         }
     }

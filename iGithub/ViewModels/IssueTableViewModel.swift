@@ -10,9 +10,11 @@ import ObjectMapper
 
 class IssueTableViewModel: BaseTableViewModel<Issue> {
     
+    fileprivate var repo: String
     fileprivate var token: GithubAPI
     
     init(repo: Repository) {
+        self.repo = repo.fullName!
         token = .repositoryIssues(repo: repo.fullName!)
         super.init()
     }
@@ -34,6 +36,6 @@ class IssueTableViewModel: BaseTableViewModel<Issue> {
     }
     
     func viewModelForIndex(_ index: Int) -> IssueViewModel {
-        return IssueViewModel(issue: dataSource.value[index])
+        return IssueViewModel(repo: repo, issue: dataSource.value[index])
     }
 }
