@@ -53,7 +53,6 @@ class SegmentHeaderView: UIView {
             NSForegroundColorAttributeName: UIColor(netHex: 0x4078C0),
             NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue
         ]
-//        titleLabel.attributedText = Octicon.Flame.iconString("Trending For Today in All Languages", iconSize: 16, iconColor: UIColor.redColor())
         
         reposButton.setTitle("Repositories", for: UIControlState())
         reposButton.addTarget(self, action: #selector(SegmentHeaderView.buttonTouched(_:)), for: .touchUpInside)
@@ -79,7 +78,7 @@ class SegmentHeaderView: UIView {
             
             reposButton.widthAnchor.constraint(equalTo: usersButton.widthAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 10),
+            titleLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8),
             titleLabel.bottomAnchor.constraint(equalTo: hStackView.topAnchor, constant: -12),
             titleLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 8),
             titleLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8),

@@ -119,7 +119,11 @@ extension ExplorationViewController: TTTAttributedLabelDelegate {
     
     func updateTitle() {
         let time = viewModel.pickerVM.timeOptions[pickerView.selectedRow[0]].desc
-        headerView.titleLabel.text = "Trending for \(time) in \(viewModel.language)"
+        headerView.titleLabel.attributedText = Octicon.flame.iconString("Trending for \(time) in \(viewModel.language)",
+            iconSize: 18,
+            iconColor: .red,
+            attributes: [NSFontAttributeName: headerView.titleLabel.font])
+        
         headerView.titleLabel.addLink(URL(string: "Time")!, toText: time)
         
         let language = viewModel.language.replacingOccurrences(of: "+", with: "\\+")
