@@ -7,3 +7,4 @@ github "kishikawakatsumi/KeychainAccess"
 github "TTTAttributedLabel/TTTAttributedLabel"
 github "tid-kijyun/Kanna" ~> 2.0
 github "SwiftKickMobile/SwiftMessages"
+github "mariohahn/StatusProvider"

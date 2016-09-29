@@ -16,7 +16,7 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
     var searchController: UISearchController!
     var searchViewController = SearchViewController()
     
-    lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self, optionsCount: 2)
+    lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self, optionsCount: 2, selectedRow: [1, 0])
 
     override func viewDidLoad() {
         super.viewDidLoad()

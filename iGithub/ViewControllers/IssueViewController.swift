@@ -113,6 +113,7 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CommentCell
+            cell.selectionStyle = .none
             cell.entity = viewModel.dataSource.value[indexPath.row]
             
             return cell

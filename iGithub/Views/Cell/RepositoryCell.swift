@@ -69,13 +69,15 @@ class RepositoryCell: UITableViewCell {
         
         let margins = contentView.layoutMarginsGuide
         
-        iconLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8).isActive = true
-        iconLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5).isActive = true
-        
-        vStackView.topAnchor.constraint(equalTo: iconLabel.topAnchor).isActive = true
-        vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8).isActive = true
-        vStackView.leadingAnchor.constraint(equalTo: iconLabel.trailingAnchor, constant: 8).isActive = true
-        vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8).isActive = true
+        NSLayoutConstraint.activate([
+            iconLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8),
+            iconLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5),
+            
+            vStackView.topAnchor.constraint(equalTo: iconLabel.topAnchor),
+            vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8),
+            vStackView.leadingAnchor.constraint(equalTo: iconLabel.trailingAnchor, constant: 8),
+            vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8)
+        ])
     }
     
     var entity: Repository! {

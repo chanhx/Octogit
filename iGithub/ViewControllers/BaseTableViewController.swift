@@ -15,7 +15,7 @@ class BaseTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.rx.setDelegate(self)
+        _ = tableView.rx.setDelegate(self)
         tableView.tableFooterView = UIView()
     }
     

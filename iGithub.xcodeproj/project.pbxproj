@@ -714,6 +714,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Kanna.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftMessages.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/StatusProvider.framework",
 			);
 			outputPaths = (
 			);

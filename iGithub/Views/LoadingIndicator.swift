@@ -10,9 +10,9 @@ import UIKit
 
 class LoadingIndicator: UIView {
     
-    var fromColor: UIColor
-    var toColor: UIColor
-    var lineWidth: CGFloat
+    fileprivate var fromColor: UIColor
+    fileprivate var toColor: UIColor
+    fileprivate var lineWidth: CGFloat
     
     fileprivate let circleLayer = CAShapeLayer()
     fileprivate let gradations = 7

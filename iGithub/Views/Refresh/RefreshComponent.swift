@@ -40,10 +40,13 @@ class RefreshComponent: UIView {
         
         addSubview(indicator)
         indicator.translatesAutoresizingMaskIntoConstraints = false
-        indicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        indicator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        indicator.heightAnchor.constraint(equalToConstant: 26).isActive = true
-        indicator.widthAnchor.constraint(equalToConstant: 26).isActive = true
+        
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: centerYAnchor),
+            indicator.heightAnchor.constraint(equalToConstant: 26),
+            indicator.widthAnchor.constraint(equalToConstant: 26)
+        ])
         
         isHidden = true
     }

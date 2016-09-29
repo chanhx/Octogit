@@ -37,10 +37,12 @@ class WebViewCell: UITableViewCell {
     func layout() {
         contentView.addSubview(webView)
         
-        webView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        webView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        webView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        webView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            webView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+        ])
     }
     
 }

@@ -51,17 +51,19 @@ class IssueCell: UITableViewCell {
         
         contentView.addSubviews([statusLabel, titleLabel, hStackView])
         
-        statusLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8).isActive = true
-        statusLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5).isActive = true
-        
-        titleLabel.topAnchor.constraint(equalTo: statusLabel.topAnchor).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: statusLabel.trailingAnchor, constant: 8).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8).isActive = true
-        
-        hStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5).isActive = true
-        hStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8).isActive = true
-        hStackView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor).isActive = true
-        hStackView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            statusLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8),
+            statusLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5),
+            
+            titleLabel.topAnchor.constraint(equalTo: statusLabel.topAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: statusLabel.trailingAnchor, constant: 8),
+            titleLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8),
+            
+            hStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
+            hStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8),
+            hStackView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            hStackView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor)
+        ])
     }
     
     var entity: Issue! {

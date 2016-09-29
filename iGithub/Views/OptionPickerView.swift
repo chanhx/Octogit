@@ -18,10 +18,9 @@ class OptionPickerView: UIView {
     let toolBar = UIToolbar()
     
     lazy var background: UIView! = {
-        let background = UIView(frame: UIApplication.shared.windows.last!.bounds)
-        background.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hide)))
-        return background
-    }()
+        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hide)))
+        return $0
+    }(UIView(frame: UIApplication.shared.windows.last!.bounds))
     
     var selectedRow: [Int]
     var tmpSelectedRow: [Int?]
@@ -34,13 +33,13 @@ class OptionPickerView: UIView {
     }
     weak var delegate: OptionPickerViewDelegate?
     
-    init(delegate: OptionPickerViewDelegate, optionsCount: Int = 1, index: Int = 0) {
+    init(delegate: OptionPickerViewDelegate, optionsCount: Int = 1, index: Int = 0, selectedRow: [Int]? = nil) {
         
         self.delegate = delegate
         pickerView.dataSource = delegate
         pickerView.delegate = delegate
         
-        selectedRow = Array(repeating: 0, count: optionsCount)
+        self.selectedRow = selectedRow ?? Array(repeating: 0, count: optionsCount)
         tmpSelectedRow = Array(repeating: nil, count: optionsCount)
         self.index = index
         
@@ -50,13 +49,15 @@ class OptionPickerView: UIView {
         configureToolBar()
         addSubviews([pickerView, toolBar])
         
-        toolBar.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        toolBar.bottomAnchor.constraint(equalTo: pickerView.topAnchor).isActive = true
-        toolBar.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        toolBar.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        pickerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        pickerView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        pickerView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            toolBar.topAnchor.constraint(equalTo: topAnchor),
+            toolBar.bottomAnchor.constraint(equalTo: pickerView.topAnchor),
+            toolBar.leftAnchor.constraint(equalTo: leftAnchor),
+            toolBar.rightAnchor.constraint(equalTo: rightAnchor),
+            pickerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            pickerView.leftAnchor.constraint(equalTo: leftAnchor),
+            pickerView.rightAnchor.constraint(equalTo: rightAnchor)
+        ])
     }
     
     required init?(coder aDecoder: NSCoder) {

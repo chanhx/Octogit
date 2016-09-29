@@ -52,13 +52,15 @@ class StatusCell: UITableViewCell {
         
         let margins = contentView.layoutMarginsGuide
         
-        indicator.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 3).isActive = true
-        indicator.centerYAnchor.constraint(equalTo: promptLabel.centerYAnchor).isActive = true
-        
-        promptLabel.leadingAnchor.constraint(equalTo: indicator.trailingAnchor, constant: 8).isActive = true
-        promptLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8).isActive = true
-        promptLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 6).isActive = true
-        promptLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -6).isActive = true
+        NSLayoutConstraint.activate([
+            indicator.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 3),
+            indicator.centerYAnchor.constraint(equalTo: promptLabel.centerYAnchor),
+            
+            promptLabel.leadingAnchor.constraint(equalTo: indicator.trailingAnchor, constant: 8),
+            promptLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8),
+            promptLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 6),
+            promptLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -6)
+        ])
     }
     
     required init?(coder aDecoder: NSCoder) {

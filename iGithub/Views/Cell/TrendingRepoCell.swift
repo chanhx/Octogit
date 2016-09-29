@@ -52,10 +52,12 @@ class TrendingRepoCell: UITableViewCell {
         
         let margins = contentView.layoutMarginsGuide
         
-        vStackView.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8).isActive = true
-        vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8).isActive = true
-        vStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 8).isActive = true
-        vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8).isActive = true
+        NSLayoutConstraint.activate([
+            vStackView.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8),
+            vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8),
+            vStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 8),
+            vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8)
+        ])
     }
     
     func configureCell(_ name: String, description: String?, meta: String) {

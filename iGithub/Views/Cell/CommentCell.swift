@@ -44,22 +44,24 @@ class CommentCell: UITableViewCell {
     func layout() {
         let margins = contentView.layoutMarginsGuide
         
-        avatarView.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
-        avatarView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
-        avatarView.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        avatarView.widthAnchor.constraint(equalToConstant: 36).isActive = true
-        
-        nameLabel.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
-        nameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 8).isActive = true
-        
-        timeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 3).isActive = true
-        timeLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor).isActive = true
-        timeLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
-        
-        bodyLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 8).isActive = true
-        bodyLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
-        bodyLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
-        bodyLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            avatarView.topAnchor.constraint(equalTo: margins.topAnchor),
+            avatarView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            avatarView.heightAnchor.constraint(equalToConstant: 36),
+            avatarView.widthAnchor.constraint(equalToConstant: 36),
+            
+            nameLabel.topAnchor.constraint(equalTo: margins.topAnchor),
+            nameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 8),
+            
+            timeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 3),
+            timeLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            timeLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            
+            bodyLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 8),
+            bodyLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
+            bodyLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            bodyLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
+        ])
     }
     
     var entity: IssueComment! {

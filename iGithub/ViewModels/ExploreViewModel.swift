@@ -43,7 +43,7 @@ class ExplorationViewModel {
         }
     }
     
-    init(since: TrendingTime = .today, language: String = "All Languages", type: TrendingType = .repositories) {
+    init(since: TrendingTime = .thisWeek, language: String = "All Languages", type: TrendingType = .repositories) {
         self.since = since
         self.language = language
         self.type = type
@@ -78,8 +78,6 @@ class PickerViewModel {
         (.thisWeek, "this week"),
         (.thisMonth, "this month")
     ]
-    
-//    var selectedIndexes = [0, 0]
     
 }
 

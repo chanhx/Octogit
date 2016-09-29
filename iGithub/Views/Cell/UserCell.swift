@@ -28,15 +28,17 @@ class UserCell: UITableViewCell {
         
         let margins = contentView.layoutMarginsGuide
         
-        avatarView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5).isActive = true
-        avatarView.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
-        avatarView.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        avatarView.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        
-        nameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 6).isActive = true
-        nameLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 6).isActive = true
-        nameLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -6).isActive = true
+        NSLayoutConstraint.activate([
+            avatarView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5),
+            avatarView.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
+            avatarView.widthAnchor.constraint(equalToConstant: 32),
+            avatarView.heightAnchor.constraint(equalToConstant: 32),
+            
+            nameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 6),
+            nameLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8),
+            nameLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 6),
+            nameLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -6)
+        ])
     }
     
     var entity: User! {

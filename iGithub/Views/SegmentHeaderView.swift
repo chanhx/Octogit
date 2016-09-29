@@ -64,10 +64,8 @@ class SegmentHeaderView: UIView {
     func layout() {
         let separator = UIView()
         separator.backgroundColor = UIColor(netHex: 0xDDDDDD)
-        separator.widthAnchor.constraint(equalToConstant: 1).isActive = true
         
         let hStackView = UIStackView(arrangedSubviews: [reposButton, separator, usersButton])
-        reposButton.widthAnchor.constraint(equalTo: usersButton.widthAnchor).isActive = true
         hStackView.axis = .horizontal
         hStackView.alignment = .fill
         hStackView.distribution = .fill
@@ -76,15 +74,21 @@ class SegmentHeaderView: UIView {
         
         let margins = layoutMarginsGuide
         
-        titleLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 10).isActive = true
-        titleLabel.bottomAnchor.constraint(equalTo: hStackView.topAnchor, constant: -12).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 8).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8).isActive = true
-        
-        hStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 1).isActive = true
-        hStackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        hStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        hStackView.heightAnchor.constraint(equalToConstant: 43).isActive = true
+        NSLayoutConstraint.activate([
+            separator.widthAnchor.constraint(equalToConstant: 1),
+            
+            reposButton.widthAnchor.constraint(equalTo: usersButton.widthAnchor),
+            
+            titleLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 10),
+            titleLabel.bottomAnchor.constraint(equalTo: hStackView.topAnchor, constant: -12),
+            titleLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 8),
+            titleLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8),
+            
+            hStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 1),
+            hStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            hStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            hStackView.heightAnchor.constraint(equalToConstant: 43)
+        ])
     }
     
     func buttonTouched(_ button: UIButton) {
@@ -127,15 +131,17 @@ class SegmentHeaderView: UIView {
             bottomBorder.backgroundColor = UIColor(netHex: 0xDDDDDD)
             self.addSubviews([topBorder, bottomBorder])
             
-            topBorder.topAnchor.constraint(equalTo: topAnchor).isActive = true
-            topBorder.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-            topBorder.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-            topBorder.heightAnchor.constraint(equalToConstant: 2).isActive = true
-            
-            bottomBorder.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-            bottomBorder.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-            bottomBorder.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-            bottomBorder.heightAnchor.constraint(equalToConstant: 1).isActive = true
+            NSLayoutConstraint.activate([
+                topBorder.topAnchor.constraint(equalTo: topAnchor),
+                topBorder.leadingAnchor.constraint(equalTo: leadingAnchor),
+                topBorder.trailingAnchor.constraint(equalTo: trailingAnchor),
+                topBorder.heightAnchor.constraint(equalToConstant: 2),
+                
+                bottomBorder.bottomAnchor.constraint(equalTo: bottomAnchor),
+                bottomBorder.leadingAnchor.constraint(equalTo: leadingAnchor),
+                bottomBorder.trailingAnchor.constraint(equalTo: trailingAnchor),
+                bottomBorder.heightAnchor.constraint(equalToConstant: 1)
+            ])
         }
     }
 }
