@@ -16,7 +16,6 @@ class RepositoryCell: UITableViewCell {
     fileprivate let languageLabel = UILabel()
     fileprivate let stargazersCountLabel = UILabel()
     fileprivate let forksCountLabel = UILabel()
-    fileprivate let watchersCountLabel = UILabel()
     
     var shouldDisplayFullName = true
 
@@ -35,7 +34,7 @@ class RepositoryCell: UITableViewCell {
     }
     
     func configureSubviews() {
-        for label in [languageLabel, stargazersCountLabel, forksCountLabel, watchersCountLabel] {
+        for label in [languageLabel, stargazersCountLabel, forksCountLabel] {
             label.textColor = UIColor(netHex: 0x888888)
             label.font = UIFont.systemFont(ofSize: 14)
         }
@@ -53,7 +52,7 @@ class RepositoryCell: UITableViewCell {
     }
     
     func layout() {
-        let hStackView = UIStackView(arrangedSubviews: [languageLabel, stargazersCountLabel, forksCountLabel, watchersCountLabel])
+        let hStackView = UIStackView(arrangedSubviews: [languageLabel, stargazersCountLabel, forksCountLabel])
         hStackView.axis = .horizontal
         hStackView.alignment = .center
         hStackView.distribution = .equalSpacing
@@ -70,13 +69,13 @@ class RepositoryCell: UITableViewCell {
         let margins = contentView.layoutMarginsGuide
         
         NSLayoutConstraint.activate([
-            iconLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8),
-            iconLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5),
+            iconLabel.topAnchor.constraint(equalTo: margins.topAnchor),
+            iconLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             
             vStackView.topAnchor.constraint(equalTo: iconLabel.topAnchor),
-            vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8),
-            vStackView.leadingAnchor.constraint(equalTo: iconLabel.trailingAnchor, constant: 8),
-            vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8)
+            vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
+            vStackView.leadingAnchor.constraint(equalTo: iconLabel.trailingAnchor, constant: 5),
+            vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
         ])
     }
     
@@ -90,9 +89,11 @@ class RepositoryCell: UITableViewCell {
             languageLabel.text = entity.language
             languageLabel.isHidden = entity.language == nil
             
-            stargazersCountLabel.attributedText = Octicon.star.iconString("\(entity.stargazersCount!)")
-            forksCountLabel.attributedText = Octicon.repoforked.iconString("\(entity.forksCount!)")
-            watchersCountLabel.attributedText = Octicon.eye.iconString("\(entity.watchersCount!)")
+            let formatter = NumberFormatter()
+            formatter.numberStyle = NumberFormatter.Style.decimal
+            
+            stargazersCountLabel.attributedText = Octicon.star.iconString(formatter.string(from: NSNumber(value: entity.stargazersCount!))!)
+            forksCountLabel.attributedText = Octicon.gitbranch.iconString(formatter.string(from: NSNumber(value: entity.stargazersCount!))!)
             
             if entity.isPrivate! {
                 iconLabel.text = Octicon.lock.rawValue

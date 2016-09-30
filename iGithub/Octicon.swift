@@ -177,7 +177,7 @@ enum Octicon : String, CustomStringConvertible {
     case x = "\u{f081}"
     case zap = "\u{26a1}"
     
-    func iconString(_ text: String, iconSize: CGFloat = 14, iconColor: UIColor? = nil, attributes: [String: AnyObject]? = nil) -> NSAttributedString {
+    func iconString(_ text: String, iconSize: CGFloat = 14, iconColor: UIColor? = nil, attributes: [String: AnyObject]? = nil) -> NSMutableAttributedString {
         
         var iconAttributes: [String: AnyObject] = [NSFontAttributeName: UIFont.OcticonOfSize(iconSize)]
         if iconColor != nil {
