@@ -26,17 +26,8 @@ class OrganizationViewModel: UserViewModel {
         guard userLoaded else {
             return 1
         }
-        var sections = 1
-        let o = user.value
         
-        if o.company != nil {details.append(.company)}
-        if o.location != nil {details.append(.location)}
-        if o.email != nil {details.append(.email)}
-        if o.blog != nil {details.append(.blog)}
-        
-        if details.count > 0 {sections += 1}
-        
-        return sections
+        return details.count > 0 ? 2 : 1
     }
     
     override func numberOfRowsInSection(_ section: Int) -> Int {

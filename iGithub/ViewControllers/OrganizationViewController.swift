@@ -66,7 +66,7 @@ class OrganizationViewController: BaseTableViewController {
             cell.textLabel?.text = ["Public activity", "Repositories", "Members"][(indexPath as NSIndexPath).row]
             
             return cell
-        case (0, 1...4):
+        default:
             switch viewModel.details[(indexPath as NSIndexPath).row] {
             case .company:
                 cell.textLabel?.text = "Company     \(viewModel.user.value.company!)"
@@ -76,10 +76,9 @@ class OrganizationViewController: BaseTableViewController {
                 cell.textLabel?.text = "Email       \(viewModel.user.value.email!)"
             case .blog:
                 cell.textLabel?.text = "Blog        \(viewModel.user.value.blog!)"
+                cell.accessoryType = .disclosureIndicator
             }
             
-            return cell
-        default:
             return cell
         }
     }
@@ -107,7 +106,9 @@ class OrganizationViewController: BaseTableViewController {
                 break
             }
         default:
-            return
+            if viewModel.details[(indexPath as NSIndexPath).row] == .blog {
+                navigationController?.pushViewController(URLRouter.viewControllerForURL(viewModel.user.value.blog!), animated: true)
+            }
         }
     }
 

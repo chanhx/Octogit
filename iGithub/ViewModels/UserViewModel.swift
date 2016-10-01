@@ -20,6 +20,7 @@ enum VcardDetail {
 class UserViewModel {
     
     var user: Variable<User>
+    var organizations: Variable<[User]> = Variable([])
     let disposeBag = DisposeBag()
     var token: GithubAPI
     
@@ -46,7 +47,19 @@ class UserViewModel {
             .mapJSON()
             .subscribe(onNext: {
                 self.userLoaded = true
-                self.user.value = Mapper<User>().map(JSONObject: $0)!
+                let user = Mapper<User>().map(JSONObject: $0)!
+                self.setDetails(user: user)
+                self.user.value = user
+            })
+            .addDisposableTo(disposeBag)
+    }
+    
+    func fetchOrganizations() {
+        GithubProvider
+            .request(.organizations(user: user.value.login!))
+            .mapJSON()
+            .subscribe(onNext: {
+                self.organizations.value = Mapper<User>().mapArray(JSONObject: $0)!
             })
             .addDisposableTo(disposeBag)
     }
@@ -55,17 +68,25 @@ class UserViewModel {
         guard userLoaded else {
             return 1
         }
-        var sections = 2
-        let u = user.value
-        
-        if u.company != nil {details.append(.company)}
-        if u.location != nil {details.append(.location)}
-        if u.email != nil {details.append(.email)}
-        if u.blog != nil {details.append(.blog)}
 
-        if details.count > 0 {sections += 1}
+        return details.count > 0 ? 3 : 2
+    }
+    
+    private func setDetails(user: User) {
+        details.removeAll()
         
-        return sections
+        if let company = user.company, company.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
+            details.append(.company)
+        }
+        if let location = user.location, location.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
+            details.append(.location)
+        }
+        if let email = user.email, email.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
+            details.append(.email)
+        }
+        if let blog = user.blog, blog.absoluteString.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
+            details.append(.blog)
+        }
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
@@ -79,7 +100,7 @@ class UserViewModel {
         case (0, 0), (1, 1...4):
             return 3
         case (1, 0), (2, _):
-            return 1
+            return organizations.value.count
         default:
             return 0
         }

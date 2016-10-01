@@ -382,7 +382,7 @@
             <objects>
                 <navigationController id="kKU-nz-ls6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Explore" id="X8P-RG-3R3"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ab1-9h-7e9">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ab1-9h-7e9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -570,7 +570,7 @@
             <objects>
                 <navigationController id="aew-JJ-rZQ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Me" id="7qu-ws-8WL"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Fk0-nu-VPZ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Fk0-nu-VPZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -645,7 +645,7 @@
                                 <constraint firstAttribute="trailingMargin" secondItem="4im-D1-l8C" secondAttribute="trailing" constant="8" id="cq7-oP-N7M"/>
                                 <constraint firstItem="4im-D1-l8C" firstAttribute="leading" secondItem="eyx-hG-atJ" secondAttribute="trailing" constant="10" id="dl0-M3-f2T"/>
                                 <constraint firstAttribute="bottomMargin" secondItem="cL0-5r-8gj" secondAttribute="bottom" constant="10" id="g3I-vQ-4kb"/>
-                                <constraint firstItem="eyx-hG-atJ" firstAttribute="leading" secondItem="Icc-l2-arz" secondAttribute="leading" constant="8" id="gux-eC-FlL"/>
+                                <constraint firstItem="eyx-hG-atJ" firstAttribute="leading" secondItem="Icc-l2-arz" secondAttribute="leadingMargin" constant="6" id="gux-eC-FlL"/>
                                 <constraint firstItem="Q3v-cX-cIP" firstAttribute="trailing" secondItem="4im-D1-l8C" secondAttribute="trailing" id="o2g-xt-PZV"/>
                             </constraints>
                         </view>
@@ -655,6 +655,14 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u7h-xb-saK" id="1Kq-Se-F7r">
                                     <frame key="frameInset" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="UserCell" id="MwF-jP-nVQ" customClass="UserCell" customModule="iGithub" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="236.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MwF-jP-nVQ" id="nwq-nJ-gsK">
+                                    <frame key="frameInset" width="342" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -841,7 +849,7 @@
             <objects>
                 <navigationController id="AnM-2y-q4M" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="News" id="C42-aT-OFm"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9uX-Om-Uym">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="9uX-Om-Uym">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

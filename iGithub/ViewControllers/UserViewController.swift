@@ -43,6 +43,18 @@ class UserViewController: BaseTableViewController {
                     }
                 })
                 .addDisposableTo(viewModel.disposeBag)
+            
+            viewModel.organizations.asObservable()
+                .skipWhile { $0.count <= 0 }
+                .subscribe { _ in
+                    guard self.viewModel.userLoaded else {
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+                .addDisposableTo(viewModel.disposeBag)
         }
     }
 
@@ -52,6 +64,7 @@ class UserViewController: BaseTableViewController {
         self.navigationItem.title = self.viewModel.title
         
         self.viewModel.fetchUser()
+        self.viewModel.fetchOrganizations()
     }
 
     // MARK: - Table view data source
@@ -62,6 +75,14 @@ class UserViewController: BaseTableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRowsInSection(section)
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == viewModel.numberOfSections - 1 && viewModel.organizations.value.count > 0 {
+            return "Organizations"
+        } else {
+            return nil
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -102,8 +123,9 @@ class UserViewController: BaseTableViewController {
             
             return cell
         case (1, 0), (2, _):
-            cell.textLabel?.text = "Organization"
-            return cell
+            let userCell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
+            userCell.entity = viewModel.organizations.value[indexPath.row]
+            return userCell
         default:
             return cell
         }
@@ -114,11 +136,8 @@ class UserViewController: BaseTableViewController {
         
         switch ((indexPath as NSIndexPath).section, viewModel.details.count) {
         case (0, 1...4):
-            switch viewModel.details[(indexPath as NSIndexPath).row] {
-            case .blog:
+            if viewModel.details[(indexPath as NSIndexPath).row] == .blog {
                 navigationController?.pushViewController(URLRouter.viewControllerForURL(viewModel.user.value.blog!), animated: true)
-            default:
-                break
             }
         case (0, 0), (1, 1...4):
             switch (indexPath as NSIndexPath).row {
@@ -134,7 +153,10 @@ class UserViewController: BaseTableViewController {
                 break
             }
         case (1, 0), (2, _):
-            break
+            let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrgVC") as! OrganizationViewController
+            let organization = self.viewModel.organizations.value[indexPath.row]
+            orgVC.viewModel = OrganizationViewModel(organization)
+            self.navigationController?.pushViewController(orgVC, animated: true)
         default:
             break
         }
