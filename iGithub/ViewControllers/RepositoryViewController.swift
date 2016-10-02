@@ -30,7 +30,7 @@ class RepositoryViewController: BaseTableViewController {
                         if repo.isPrivate! {
                             self.iconLabel.text = Octicon.lock.rawValue
                         } else {
-                            self.iconLabel.text = repo.isAFork! ? Octicon.repoforked.rawValue : Octicon.repo.rawValue
+                            self.iconLabel.text = repo.isAFork! ? Octicon.repoForked.rawValue : Octicon.repo.rawValue
                         }
                         self.updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString)"
                     } else {
@@ -92,7 +92,7 @@ class RepositoryViewController: BaseTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
             switch (indexPath as NSIndexPath).row {
             case 0:
-                cell.textLabel?.attributedText = Octicon.issueopened.iconString(" Issues", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
+                cell.textLabel?.attributedText = Octicon.issueOpened.iconString(" Issues", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             case 1:
                 cell.textLabel?.attributedText = Octicon.tag.iconString(" Releases", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             case 2:
@@ -100,7 +100,7 @@ class RepositoryViewController: BaseTableViewController {
             case 3:
                 cell.textLabel?.attributedText = Octicon.organization.iconString(" Contributors", iconSize: 18, iconColor: .lightGray)
             case 4:
-                cell.textLabel?.attributedText = Octicon.gitpullrequest.iconString(" Pull Requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
+                cell.textLabel?.attributedText = Octicon.gitPullrequest.iconString(" Pull Requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             default: break
             }
             return cell
@@ -111,7 +111,7 @@ class RepositoryViewController: BaseTableViewController {
             case 0:
                 cell.textLabel?.attributedText = Octicon.code.iconString(" Code", iconSize: 18, iconColor: .lightGray)
             case 1:
-                cell.textLabel?.attributedText = Octicon.gitcommit.iconString(" Commits", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.gitCommit.iconString(" Commits", iconSize: 18, iconColor: .lightGray)
             default:
                 break
             }
@@ -154,6 +154,10 @@ class RepositoryViewController: BaseTableViewController {
             let memberTVC = UserTableViewController()
             memberTVC.viewModel = UserTableViewModel(repo: viewModel.repository.value)
             self.navigationController?.pushViewController(memberTVC, animated: true)
+        case (1, 4):
+            let pullRequestTVC = PullRequestTableViewController()
+            pullRequestTVC.viewModel = PullRequestTableViewModel(repo: viewModel.repository.value)
+            self.navigationController?.pushViewController(pullRequestTVC, animated: true)
         case (2, 0):
             let fileTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FileTVC") as! FileTableViewController
             fileTableVC.viewModel = viewModel.filesTableViewModel

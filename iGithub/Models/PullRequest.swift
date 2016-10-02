@@ -9,28 +9,15 @@
 import Foundation
 import ObjectMapper
 
-enum PullRequestState : String {
-    case open = "open"
-    case closed = "closed"
-    case all = "all"
-}
-
-class PullRequest : BaseModel {
+class PullRequest : Issue {
     
-    var id: Int?
-    var number: Int?
-    var title: String?
-    var body: String?
     var isMerged: Bool?
-    var state: PullRequestState?
-    var assignees: [User]?
+    var mergedAt: Date?
     
     override func mapping(map: Map) {
-        id       <- map["id"]
-        number   <- map["number"]
-        title    <- map["title"]
-        body     <- map["body"]
+        super.mapping(map: map)
+        
         isMerged <- map["merged"]
-        state    <- map["state"]
+        mergedAt <- (map["merged_at"], DateTransform())
     }
 }

@@ -19,29 +19,29 @@ class FileCell: UITableViewCell {
             
             switch entity.type! {
             case .directory:
-                iconLabel.text = Octicon.filedirectory.rawValue
+                iconLabel.text = Octicon.fileDirectory.rawValue
                 iconLabel.textColor = UIColor(netHex: 0x80A6CD)
             case .file:
                 iconLabel.textColor = UIColor(netHex: 0x767676)
                 
                 switch entity.name!.pathExtension {
                 case "jpg", "png", "gif", "mp3", "mp4":
-                    iconLabel.text = Octicon.filemedia.rawValue
+                    iconLabel.text = Octicon.fileMedia.rawValue
                 case "pdf":
-                    iconLabel.text = Octicon.filepdf.rawValue
+                    iconLabel.text = Octicon.filePDF.rawValue
                 case "md", "markdown", "adoc":
                     iconLabel.text = Octicon.book.rawValue
                 case "rar", "zip":
-                    iconLabel.text = Octicon.filezip.rawValue
+                    iconLabel.text = Octicon.fileZip.rawValue
                 default:
-                    iconLabel.text = Octicon.filetext.rawValue
+                    iconLabel.text = Octicon.fileText.rawValue
                 }
             case .submodule:
-                iconLabel.text = Octicon.filesubmodule.rawValue
+                iconLabel.text = Octicon.fileSubmodule.rawValue
                 nameLabel.text = "\(entity.name!) @ \(entity.shortenSHA)"
                 iconLabel.textColor = UIColor(netHex: 0x767676)
             case .symlink:
-                iconLabel.text = Octicon.filesymlinkdirectory.rawValue
+                iconLabel.text = Octicon.fileSymlinkDirectory.rawValue
                 iconLabel.textColor = UIColor(netHex: 0x767676)
             }
         }

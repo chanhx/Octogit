@@ -63,10 +63,10 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
         
         switch viewModel.issue.state! {
         case .closed:
-            statusLabel.text = Octicon.issueclosed.rawValue
+            statusLabel.text = Octicon.issueClosed.rawValue
             statusLabel.textColor = UIColor(netHex: 0xBD2C00)
         case .open:
-            statusLabel.text = Octicon.issueopened.rawValue
+            statusLabel.text = Octicon.issueOpened.rawValue
             statusLabel.textColor = UIColor(netHex: 0x6CC644)
         }
         

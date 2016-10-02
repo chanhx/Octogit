@@ -84,6 +84,8 @@
 		C5C4D9511D49B1C5007C1891 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4D9501D49B1C5007C1891 /* UserViewModel.swift */; };
 		C5C4D9531D49B3FD007C1891 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4D9521D49B3FD007C1891 /* UserViewController.swift */; };
 		C5C4D9551D4A27B2007C1891 /* CountButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4D9541D4A27B2007C1891 /* CountButton.swift */; };
+		C5DB700B1DA1173000D96248 /* PullRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB700A1DA1173000D96248 /* PullRequestTableViewController.swift */; };
+		C5DB700D1DA1177400D96248 /* PullRequestTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB700C1DA1177400D96248 /* PullRequestTableViewModel.swift */; };
 		C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB94621D3F842000887E81 /* AppDelegate.swift */; };
 		C5DB94681D3F842000887E81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5DB94661D3F842000887E81 /* Main.storyboard */; };
 		C5DB946A1D3F842000887E81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5DB94691D3F842000887E81 /* Assets.xcassets */; };
@@ -215,6 +217,8 @@
 		C5C4D9501D49B1C5007C1891 /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		C5C4D9521D49B3FD007C1891 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		C5C4D9541D4A27B2007C1891 /* CountButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountButton.swift; sourceTree = "<group>"; };
+		C5DB700A1DA1173000D96248 /* PullRequestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestTableViewController.swift; sourceTree = "<group>"; };
+		C5DB700C1DA1177400D96248 /* PullRequestTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestTableViewModel.swift; sourceTree = "<group>"; };
 		C5DB945F1D3F842000887E81 /* iGithub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGithub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5DB94621D3F842000887E81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5DB94671D3F842000887E81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -333,6 +337,7 @@
 				C5819ABC1D4DD279009D7772 /* RepositoryTableViewModel.swift */,
 				C5819AC21D4EF0C0009D7772 /* IssueTableViewModel.swift */,
 				C5819AC91D4F6C6A009D7772 /* IssueViewModel.swift */,
+				C5DB700C1DA1177400D96248 /* PullRequestTableViewModel.swift */,
 				C5E7337A1D5D642900913A66 /* ExploreViewModel.swift */,
 				C5E733891D62292000913A66 /* SearchViewModel.swift */,
 			);
@@ -526,6 +531,7 @@
 				C5819ABE1D4DD2B7009D7772 /* RepositoryTableViewController.swift */,
 				C5819AC01D4EF086009D7772 /* IssueTableViewController.swift */,
 				C5819AC61D4F6C3E009D7772 /* IssueViewController.swift */,
+				C5DB700A1DA1173000D96248 /* PullRequestTableViewController.swift */,
 				C52013CD1D57361A00FDCC30 /* WebViewController.swift */,
 				C5E7337E1D5D9FE900913A66 /* ExplorationViewController.swift */,
 				C5E733871D61C90000913A66 /* SearchViewController.swift */,
@@ -768,6 +774,7 @@
 				C538FD0B1D40A30F003A559E /* Event.swift in Sources */,
 				C538FD251D40DB70003A559E /* EventCell.swift in Sources */,
 				C538FD191D40A455003A559E /* Repository.swift in Sources */,
+				C5DB700D1DA1177400D96248 /* PullRequestTableViewModel.swift in Sources */,
 				C538FD571D461852003A559E /* FileViewController.swift in Sources */,
 				C538FD0F1D40A349003A559E /* PullRequest.swift in Sources */,
 				C571EF581D64836100F752EE /* OptionPickerView.swift in Sources */,
@@ -789,6 +796,7 @@
 				C538FD151D40A40B003A559E /* IssueComment.swift in Sources */,
 				C538FD4C1D44FB2E003A559E /* FileViewModel.swift in Sources */,
 				C538FD4E1D44FB79003A559E /* File.swift in Sources */,
+				C5DB700B1DA1173000D96248 /* PullRequestTableViewController.swift in Sources */,
 				C55791591D76E50900FBBD41 /* LoadingIndicator.swift in Sources */,
 				C5F79AD71D957732006B0466 /* MessageManager.swift in Sources */,
 				C526EE101D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift in Sources */,

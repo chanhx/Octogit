@@ -43,45 +43,71 @@ class IssueCell: UITableViewCell {
     
     func layout() {
         let margins = contentView.layoutMarginsGuide
+        
         let hStackView = UIStackView(arrangedSubviews: [infoLabel, commentsLabel])
         hStackView.axis = .horizontal
         hStackView.alignment = .fill
         hStackView.distribution = .equalSpacing
         hStackView.spacing = 10
         
-        contentView.addSubviews([statusLabel, titleLabel, hStackView])
+        let vStackView = UIStackView(arrangedSubviews: [titleLabel, hStackView])
+        vStackView.axis = .vertical
+        vStackView.alignment = .fill
+        vStackView.distribution = .fill
+        vStackView.spacing = 5
+        
+        contentView.addSubviews([statusLabel, vStackView])
         
         NSLayoutConstraint.activate([
-            statusLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8),
-            statusLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5),
+            statusLabel.topAnchor.constraint(equalTo: margins.topAnchor),
+            statusLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: statusLabel.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: statusLabel.trailingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -8),
-            
-            hStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
-            hStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -8),
-            hStackView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            hStackView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor)
+            vStackView.topAnchor.constraint(equalTo: statusLabel.topAnchor),
+            vStackView.leadingAnchor.constraint(equalTo: statusLabel.trailingAnchor, constant: 5),
+            vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
         ])
     }
     
     var entity: Issue! {
         didSet {
             titleLabel.text = entity.title
-            commentsLabel.attributedText = Octicon.comment.iconString("\(entity.comments!)")
-            commentsLabel.isHidden = entity.comments == 0
+            
+            if let comments = entity.comments, comments > 0 {
+                commentsLabel.attributedText = Octicon.comment.iconString("\(comments)")
+                commentsLabel.isHidden = false
+            } else {
+                commentsLabel.isHidden = true
+            }
+            
             let info = "#\(entity.number!) by \(entity.user!)"
             
-            switch entity.state! {
-            case .closed:
-                statusLabel.text = Octicon.issueclosed.rawValue
-                statusLabel.textColor = UIColor(netHex: 0xBD2C00)
-                infoLabel.text = "\(info) - \(entity.closedAt!.naturalString)"
-            case .open:
-                statusLabel.text = Octicon.issueopened.rawValue
-                statusLabel.textColor = UIColor(netHex: 0x6CC644)
-                infoLabel.text = "\(info) - \(entity.createdAt!.naturalString)"
+            if let pullRequest = entity as? PullRequest {
+                statusLabel.text = Octicon.gitPullrequest.rawValue
+                switch entity.state! {
+                case .closed:
+                    if let mergedAt = pullRequest.mergedAt {
+                        statusLabel.textColor = UIColor(netHex: 0x6e5494)
+                        infoLabel.text = "\(info) - \(mergedAt.naturalString)"
+                    } else {
+                        statusLabel.textColor = UIColor(netHex: 0xbd2c00)
+                        infoLabel.text = "\(info) - \(pullRequest.closedAt!.naturalString)"
+                    }
+                case .open:
+                    statusLabel.textColor = UIColor(netHex: 0x6cc644)
+                    infoLabel.text = "\(info) - \(entity.createdAt!.naturalString)"
+                }
+            } else {
+                switch entity.state! {
+                case .closed:
+                    statusLabel.text = Octicon.issueClosed.rawValue
+                    statusLabel.textColor = UIColor(netHex: 0xbd2c00)
+                    infoLabel.text = "\(info) - \(entity.closedAt!.naturalString)"
+                case .open:
+                    statusLabel.text = Octicon.issueOpened.rawValue
+                    statusLabel.textColor = UIColor(netHex: 0x6cc644)
+                    infoLabel.text = "\(info) - \(entity.createdAt!.naturalString)"
+                }
             }
         }
     }

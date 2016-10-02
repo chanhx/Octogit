@@ -93,12 +93,12 @@ class RepositoryCell: UITableViewCell {
             formatter.numberStyle = NumberFormatter.Style.decimal
             
             stargazersCountLabel.attributedText = Octicon.star.iconString(formatter.string(from: NSNumber(value: entity.stargazersCount!))!)
-            forksCountLabel.attributedText = Octicon.gitbranch.iconString(formatter.string(from: NSNumber(value: entity.stargazersCount!))!)
+            forksCountLabel.attributedText = Octicon.gitBranch.iconString(formatter.string(from: NSNumber(value: entity.forksCount!))!)
             
             if entity.isPrivate! {
                 iconLabel.text = Octicon.lock.rawValue
             } else if entity.isAFork! {
-                iconLabel.text = Octicon.repoforked.rawValue
+                iconLabel.text = Octicon.repoForked.rawValue
             } else {
                 iconLabel.text = Octicon.repo.rawValue
             }

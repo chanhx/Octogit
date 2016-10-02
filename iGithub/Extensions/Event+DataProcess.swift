@@ -131,26 +131,26 @@ extension Event {
             let e = self as! CreateEvent
             switch e.refType! {
             case .Branch:
-                icon = Octicon.gitbranch
+                icon = Octicon.gitBranch
             case .Repository:
                 icon = Octicon.repo
             case .Tag:
                 icon = Octicon.tag
             }
         case .deleteEvent:
-            icon = Octicon.diffremoved
+            icon = Octicon.diffRemoved
         case .forkEvent:
-            icon = Octicon.repoforked
+            icon = Octicon.repoForked
         case .gollumEvent:
             icon = Octicon.book
         case .issuesEvent:
             let e = self as! IssueEvent
             switch e.action! {
             case .Closed:
-                icon = Octicon.issueclosed
+                icon = Octicon.issueClosed
                 color = UIColor(netHex: 0xBD2C00)
             default:
-                icon = Octicon.issueopened
+                icon = Octicon.issueOpened
                 color = UIColor(netHex: 0x6CB644)
             }
         case .memberEvent:
@@ -159,7 +159,7 @@ extension Event {
             icon = Octicon.repo
         case .pullRequestEvent:
             let e = self as! PullRequestEvent
-            icon = Octicon.gitpullrequest
+            icon = Octicon.gitPullrequest
             if e.action! == .Closed && e.pullRequest!.isMerged! {
                 color = UIColor(netHex: 0x6E5494)
             } else if e.action! == .Closed {
@@ -168,7 +168,7 @@ extension Event {
                 color = UIColor(netHex: 0x6BB644)
             }
         case .pushEvent:
-            icon = Octicon.gitcommit
+            icon = Octicon.gitCommit
         case .releaseEvent:
             icon = Octicon.tag
         case .watchEvent:
