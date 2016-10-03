@@ -16,7 +16,7 @@ extension Date {
         let date = Date()
         
         if self < date - 1.months {
-            return self.toString(dateStyle: .short, timeStyle: .none)!
+            return self.toString(dateStyle: .medium, timeStyle: .none)!
         }
         
         let formatter = DateFormatter(componentsStyle: .full)

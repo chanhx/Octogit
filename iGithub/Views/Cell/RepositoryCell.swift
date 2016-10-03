@@ -10,12 +10,13 @@ import UIKit
 
 class RepositoryCell: UITableViewCell {
     
-    fileprivate let iconLabel = UILabel()
-    fileprivate let nameLabel = UILabel()
-    fileprivate let descriptionLabel = UILabel()
-    fileprivate let languageLabel = UILabel()
-    fileprivate let stargazersCountLabel = UILabel()
-    fileprivate let forksCountLabel = UILabel()
+    private let iconLabel = UILabel()
+    private let nameLabel = UILabel()
+    private let descriptionLabel = UILabel()
+    private let languageLabel = UILabel()
+    private let stargazersCountLabel = UILabel()
+    private let forksCountLabel = UILabel()
+    private let timeLabel = UILabel()
     
     var shouldDisplayFullName = true
 
@@ -34,12 +35,13 @@ class RepositoryCell: UITableViewCell {
     }
     
     func configureSubviews() {
-        for label in [languageLabel, stargazersCountLabel, forksCountLabel] {
+        for label in [timeLabel, languageLabel, stargazersCountLabel, forksCountLabel] {
             label.textColor = UIColor(netHex: 0x888888)
             label.font = UIFont.systemFont(ofSize: 14)
         }
         
         iconLabel.font = UIFont.OcticonOfSize(23)
+        iconLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
         nameLabel.textColor = UIColor(netHex: 0x4078C0)
@@ -58,7 +60,7 @@ class RepositoryCell: UITableViewCell {
         hStackView.distribution = .equalSpacing
         hStackView.spacing = 12
         
-        let vStackView = UIStackView(arrangedSubviews: [nameLabel, descriptionLabel, hStackView])
+        let vStackView = UIStackView(arrangedSubviews: [timeLabel, nameLabel, descriptionLabel, hStackView])
         vStackView.axis = .vertical
         vStackView.alignment = .leading
         vStackView.distribution = .fill
@@ -69,10 +71,10 @@ class RepositoryCell: UITableViewCell {
         let margins = contentView.layoutMarginsGuide
         
         NSLayoutConstraint.activate([
-            iconLabel.topAnchor.constraint(equalTo: margins.topAnchor),
+            iconLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor),
             iconLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             
-            vStackView.topAnchor.constraint(equalTo: iconLabel.topAnchor),
+            vStackView.topAnchor.constraint(equalTo: margins.topAnchor),
             vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
             vStackView.leadingAnchor.constraint(equalTo: iconLabel.trailingAnchor, constant: 5),
             vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
@@ -81,6 +83,7 @@ class RepositoryCell: UITableViewCell {
     
     var entity: Repository! {
         didSet {
+            timeLabel.text = entity.updatedAt?.naturalString
             nameLabel.text = shouldDisplayFullName ? entity.fullName! : entity.name!
             
             descriptionLabel.text = entity.repoDescription
