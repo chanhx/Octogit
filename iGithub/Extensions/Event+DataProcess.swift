@@ -15,8 +15,8 @@ extension Event {
         case .commitCommentEvent:
             let e = self as! CommitCommentEvent
             let commitID = e.comment!.commitID!
-            let shortenedSHA = commitID.substring(to: commitID.characters.index(commitID.startIndex, offsetBy: 7))
-            return "\(e.actor!) commented on \(shortenedSHA) at \(e.repository!)"
+            let shortSHA = commitID.substring(to: commitID.characters.index(commitID.startIndex, offsetBy: 7))
+            return "\(e.actor!) commented on \(shortSHA) at \(e.repository!)"
         case .createEvent:
             let e = self as! CreateEvent
             switch e.refType! {
@@ -109,8 +109,8 @@ extension Event {
             var messages: [String] = []
             for commit in e.commits! {
                 let sha = commit.sha!
-                let shortenedSHA = sha.substring(to: sha.characters.index(sha.startIndex, offsetBy: 7))
-                let message = "\(shortenedSHA) \(commit.message!.components(separatedBy: "\n")[0])"
+                let shortSHA = sha.substring(to: sha.characters.index(sha.startIndex, offsetBy: 7))
+                let message = "\(shortSHA) \(commit.message!.components(separatedBy: "\n")[0])"
                 messages.append(message)
             }
             return messages.joined(separator: "\n")

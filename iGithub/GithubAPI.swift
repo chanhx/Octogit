@@ -70,6 +70,7 @@ enum GithubAPI {
     
     case receivedEvents(user: String, page: Int)
     
+    case repositoryCommits(repo: String, branch: String)
     case repositoryContributors(repo: String)
     case repositoryEvents(repo: String, page: Int)
     case repositoryIssues(repo: String)
@@ -125,6 +126,8 @@ extension GithubAPI: TargetType {
         case .receivedEvents(let user, _):
             return "/users/\(user)/received_events"
             
+        case .repositoryCommits(let repo, _):
+            return "/repos/\(repo)/commits"
         case .repositoryContributors(let repo):
             return "/repos/\(repo)/contributors"
         case .repositoryEvents(let repo):
@@ -159,14 +162,22 @@ extension GithubAPI: TargetType {
         switch self {
         case .oAuthUser(let accessToken):
             return ["access_token": accessToken as AnyObject]
+            
         case .receivedEvents(_, let page):
             return ["page": page as AnyObject]
+            
+        case .repositoryCommits(_, let branch):
+            return ["sha": branch]
+            
         case .searchRepositories(let q, let sort):
             return ["q": q as AnyObject, "sort": sort.rawValue as AnyObject]
+            
         case .searchUsers(let q, let sort):
             return ["q": q as AnyObject, "sort": sort.rawValue as AnyObject]
+            
         case .userEvents(_, let page):
             return ["page": page as AnyObject]
+            
         default:
             return nil
         }

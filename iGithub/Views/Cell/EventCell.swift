@@ -95,9 +95,7 @@ class EventCell: UITableViewCell {
         if entity.type! == .pushEvent {
             let e = entity as! PushEvent
             for commit in e.commits! {
-                let sha = commit.sha!
-                let shortenedSHA = sha.substring(to: sha.characters.index(sha.startIndex, offsetBy: 7))
-                contentLabel.addLink(URL(string: "/\(entity.repository!)/commit/\(sha)")!, toText: shortenedSHA)
+                contentLabel.addLink(URL(string: "/\(entity.repository!)/commit/\(commit.sha!)")!, toText:  commit.shortSHA)
             }
         }
     }

@@ -69,7 +69,7 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" ambiguous="YES" text="title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="saC-qP-kih" customClass="TTTAttributedLabel">
                                                             <frame key="frameInset" minX="44" minY="8" width="309" height="20"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -382,7 +382,7 @@
             <objects>
                 <navigationController id="kKU-nz-ls6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Explore" id="X8P-RG-3R3"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ab1-9h-7e9">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ab1-9h-7e9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -570,7 +570,7 @@
             <objects>
                 <navigationController id="aew-JJ-rZQ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Me" id="7qu-ws-8WL"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Fk0-nu-VPZ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Fk0-nu-VPZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -849,7 +849,7 @@
             <objects>
                 <navigationController id="AnM-2y-q4M" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="News" id="C42-aT-OFm"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="9uX-Om-Uym">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9uX-Om-Uym">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

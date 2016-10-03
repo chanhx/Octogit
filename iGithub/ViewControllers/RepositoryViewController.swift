@@ -162,6 +162,10 @@ class RepositoryViewController: BaseTableViewController {
             let fileTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FileTVC") as! FileTableViewController
             fileTableVC.viewModel = viewModel.filesTableViewModel
             self.navigationController?.pushViewController(fileTableVC, animated: true)
+        case (2, 1):
+            let commitTVC = CommitTableViewController()
+            commitTVC.viewModel = CommitTableViewModel(repo: viewModel.repository.value)
+            self.navigationController?.pushViewController(commitTVC, animated: true)
         default:
             break
         }

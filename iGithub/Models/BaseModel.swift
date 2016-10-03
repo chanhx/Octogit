@@ -63,9 +63,9 @@ class RepositoryTransform: TransformOf<Repository, String> {
     }
 }
 
-class CommitItemTransform: TransformOf<CommitsItem, String> {
+class EventCommitTransform: TransformOf<EventCommit, String> {
     init() {
-        super.init(fromJSON: { Mapper<CommitsItem>().map(JSONObject: $0) }, toJSON: { String(describing: $0) })
+        super.init(fromJSON: { Mapper<EventCommit>().map(JSONObject: $0) }, toJSON: { String(describing: $0) })
     }
 }
 

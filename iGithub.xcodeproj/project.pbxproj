@@ -86,6 +86,9 @@
 		C5C4D9551D4A27B2007C1891 /* CountButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4D9541D4A27B2007C1891 /* CountButton.swift */; };
 		C5DB700B1DA1173000D96248 /* PullRequestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB700A1DA1173000D96248 /* PullRequestTableViewController.swift */; };
 		C5DB700D1DA1177400D96248 /* PullRequestTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB700C1DA1177400D96248 /* PullRequestTableViewModel.swift */; };
+		C5DB700F1DA22D3B00D96248 /* CommitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB700E1DA22D3B00D96248 /* CommitCell.swift */; };
+		C5DB70131DA27B9D00D96248 /* CommitTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB70121DA27B9D00D96248 /* CommitTableViewController.swift */; };
+		C5DB70151DA27BD900D96248 /* CommitTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB70141DA27BD900D96248 /* CommitTableViewModel.swift */; };
 		C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB94621D3F842000887E81 /* AppDelegate.swift */; };
 		C5DB94681D3F842000887E81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5DB94661D3F842000887E81 /* Main.storyboard */; };
 		C5DB946A1D3F842000887E81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5DB94691D3F842000887E81 /* Assets.xcassets */; };
@@ -219,6 +222,9 @@
 		C5C4D9541D4A27B2007C1891 /* CountButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountButton.swift; sourceTree = "<group>"; };
 		C5DB700A1DA1173000D96248 /* PullRequestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestTableViewController.swift; sourceTree = "<group>"; };
 		C5DB700C1DA1177400D96248 /* PullRequestTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestTableViewModel.swift; sourceTree = "<group>"; };
+		C5DB700E1DA22D3B00D96248 /* CommitCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitCell.swift; sourceTree = "<group>"; };
+		C5DB70121DA27B9D00D96248 /* CommitTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitTableViewController.swift; sourceTree = "<group>"; };
+		C5DB70141DA27BD900D96248 /* CommitTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitTableViewModel.swift; sourceTree = "<group>"; };
 		C5DB945F1D3F842000887E81 /* iGithub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGithub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5DB94621D3F842000887E81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5DB94671D3F842000887E81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -332,6 +338,7 @@
 				C538FD511D459DC7003A559E /* FileTableViewModel.swift */,
 				C538FD4B1D44FB2E003A559E /* FileViewModel.swift */,
 				C5C4D9501D49B1C5007C1891 /* UserViewModel.swift */,
+				C5DB70141DA27BD900D96248 /* CommitTableViewModel.swift */,
 				C5373C481D4B4493006CFB83 /* OrganizationViewModel.swift */,
 				C5373C4E1D4B97F6006CFB83 /* UserTableViewModel.swift */,
 				C5819ABC1D4DD279009D7772 /* RepositoryTableViewModel.swift */,
@@ -392,6 +399,7 @@
 				C52474271D50F06A0001D9CD /* WebViewCell.swift */,
 				C59730E11D98AFD400DADF01 /* CommentCell.swift */,
 				C5E733821D5EEE8C00913A66 /* TrendingRepoCell.swift */,
+				C5DB700E1DA22D3B00D96248 /* CommitCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -523,6 +531,7 @@
 				C538FD261D40E86B003A559E /* BaseTableViewController.swift */,
 				C538FD1A1D40C97B003A559E /* EventTableViewController.swift */,
 				C538FD3C1D431C35003A559E /* RepositoryViewController.swift */,
+				C5DB70121DA27B9D00D96248 /* CommitTableViewController.swift */,
 				C538FD4F1D459C71003A559E /* FileTableViewController.swift */,
 				C538FD561D461852003A559E /* FileViewController.swift */,
 				C5C4D9521D49B3FD007C1891 /* UserViewController.swift */,
@@ -769,6 +778,7 @@
 				C55791551D74392600FBBD41 /* UIScrollView+RefreshComponent.swift in Sources */,
 				C5819ABB1D4CF3D4009D7772 /* RepositoryCell.swift in Sources */,
 				C5F4BDF71D3FB37A009DF758 /* WebAPI.swift in Sources */,
+				C5DB70151DA27BD900D96248 /* CommitTableViewModel.swift in Sources */,
 				C5373C4F1D4B97F6006CFB83 /* UserTableViewModel.swift in Sources */,
 				C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */,
 				C538FD0B1D40A30F003A559E /* Event.swift in Sources */,
@@ -785,12 +795,14 @@
 				C538FD021D406638003A559E /* User.swift in Sources */,
 				C538FD431D43BDE5003A559E /* StatusCell.swift in Sources */,
 				C5E7337B1D5D642900913A66 /* ExploreViewModel.swift in Sources */,
+				C5DB700F1DA22D3B00D96248 /* CommitCell.swift in Sources */,
 				C538FD171D40A42C003A559E /* CommitComment.swift in Sources */,
 				C538FD3D1D431C35003A559E /* RepositoryViewController.swift in Sources */,
 				C5373C491D4B4493006CFB83 /* OrganizationViewModel.swift in Sources */,
 				C538FD081D406BE8003A559E /* AccountManager.swift in Sources */,
 				C5F4BDE71D3F95E5009DF758 /* Octicon.swift in Sources */,
 				C538FCFF1D3FBFDC003A559E /* GithubAPI.swift in Sources */,
+				C5DB70131DA27B9D00D96248 /* CommitTableViewController.swift in Sources */,
 				C5373C4D1D4B9603006CFB83 /* UserTableViewController.swift in Sources */,
 				C5C4D9551D4A27B2007C1891 /* CountButton.swift in Sources */,
 				C538FD151D40A40B003A559E /* IssueComment.swift in Sources */,

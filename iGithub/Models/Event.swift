@@ -263,7 +263,7 @@ class PushEvent : Event {
     var previousHeadSHA: String?
     var currentHeadSHA: String?
     var branchName: String?
-    var commits: [CommitsItem]?
+    var commits: [EventCommit]?
     
     override func mapping(map: Map) {
         super.mapping(map: map)
@@ -274,7 +274,7 @@ class PushEvent : Event {
         previousHeadSHA     <- map["payload.before"]
         currentHeadSHA      <- map["payload.head"]
         branchName          <- map["payload.ref"]
-        commits             <- (map["payload.commits"], CommitItemTransform())
+        commits             <- (map["payload.commits"], EventCommitTransform())
     }
 }
 

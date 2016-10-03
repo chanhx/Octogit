@@ -38,7 +38,7 @@ class FileCell: UITableViewCell {
                 }
             case .submodule:
                 iconLabel.text = Octicon.fileSubmodule.rawValue
-                nameLabel.text = "\(entity.name!) @ \(entity.shortenSHA)"
+                nameLabel.text = "\(entity.name!) @ \(entity.shortSHA)"
                 iconLabel.textColor = UIColor(netHex: 0x767676)
             case .symlink:
                 iconLabel.text = Octicon.fileSymlinkDirectory.rawValue

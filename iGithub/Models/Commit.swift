@@ -15,19 +15,25 @@ class Commit: BaseModel {
     var message: String?
     var commitDate: Date?
     var countOfChanges: Int?
+    var author: User?
     var authorName: String?
-    var committerName: String?
+    var committer: User?
     
     override func mapping(map: Map) {
-        sha             <- map["sha"]
-        message         <- map["commit.message"]
-        commitDate      <- (map["commit.author.date"], DateTransform())
-        authorName      <- map["commit.author.name"]
-        committerName   <- map["commit.committer.name"]
+        sha         <- map["sha"]
+        message     <- map["commit.message"]
+        commitDate  <- (map["commit.committer.date"], DateTransform())
+        author      <- map["author"]
+        authorName  <- map["commit.author.name"]
+        committer   <- map["committer"]
     }
+    
+    lazy var shortSHA: String = {
+        return self.sha!.substring(to: self.sha!.characters.index(self.sha!.startIndex, offsetBy: 7))
+    }()
 }
 
-class CommitsItem: BaseModel {
+class EventCommit: BaseModel {
     
     var sha: String?
     var message: String?
@@ -36,4 +42,8 @@ class CommitsItem: BaseModel {
         sha             <- map["sha"]
         message         <- map["message"]
     }
+    
+    lazy var shortSHA: String = {
+        return self.sha!.substring(to: self.sha!.characters.index(self.sha!.startIndex, offsetBy: 7))
+    }()
 }
