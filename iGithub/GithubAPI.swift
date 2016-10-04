@@ -81,7 +81,9 @@ enum GithubAPI {
     
     case starredRepos(user: String)
     case user(user: String)
+    
     case userEvents(user: String, page: Int)
+    case userGists(user: String)
     case userRepos(user: String)
 }
 
@@ -146,6 +148,9 @@ extension GithubAPI: TargetType {
             return "/users/\(user)/starred"
         case .user(let user):
             return "/users/\(user)"
+            
+        case .userGists(let user):
+            return "/users/\(user)/gists"
         case .userEvents(let user, _):
             return "/users/\(user)/events"
         case .userRepos(let user):

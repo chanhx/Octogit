@@ -74,3 +74,28 @@ class LabelTransform: TransformOf<Label, String> {
         super.init(fromJSON: { Mapper<Label>().map(JSONObject: $0) }, toJSON: { String(describing: $0) })
     }
 }
+
+class GistFileTransform: TransformOf<GistFile, String> {
+    init() {
+        super.init(fromJSON: { Mapper<GistFile>().map(JSONObject: $0) }, toJSON: { String(describing: $0) })
+    }
+}
+
+class GistFilesTransform: TransformOf<[GistFile], AnyObject> {
+    init() {
+        super.init(
+            fromJSON: {
+                Mapper<GistFile>().mapDictionary(JSON: $0 as! [String : [String : Any]])?
+                    .values
+                    .sorted { (f1, f2) -> Bool in
+                        f1.name! < f2.name!
+                    }
+            }, toJSON: {
+//                $0?.reduce([String: GistFile]()) { (var dict, file) in
+//                    dict[file.name!] = file
+//                    return dict
+//                } as AnyObject
+                 String(describing: $0) as AnyObject
+        })
+    }
+}

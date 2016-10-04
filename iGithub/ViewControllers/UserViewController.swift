@@ -149,6 +149,10 @@ class UserViewController: BaseTableViewController {
                 let repositoryTVC = RepositoryTableViewController()
                 repositoryTVC.viewModel = RepositoryTableViewModel(stargazer: viewModel.user.value)
                 navigationController?.pushViewController(repositoryTVC, animated: true)
+            case 2:
+                let gistTVC = GistTableViewController()
+                gistTVC.viewModel = GistTableViewModel(user: viewModel.user.value)
+                navigationController?.pushViewController(gistTVC, animated: true)
             default:
                 break
             }

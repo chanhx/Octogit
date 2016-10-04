@@ -96,11 +96,11 @@ class RepositoryViewController: BaseTableViewController {
             case 1:
                 cell.textLabel?.attributedText = Octicon.tag.iconString(" Releases", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             case 2:
-                cell.textLabel?.attributedText = Octicon.rss.iconString(" Recent Activity", iconSize: 18, iconColor: .gray)
+                cell.textLabel?.attributedText = Octicon.rss.iconString(" Recent activity", iconSize: 18, iconColor: .gray)
             case 3:
                 cell.textLabel?.attributedText = Octicon.organization.iconString(" Contributors", iconSize: 18, iconColor: .lightGray)
             case 4:
-                cell.textLabel?.attributedText = Octicon.gitPullrequest.iconString(" Pull Requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
+                cell.textLabel?.attributedText = Octicon.gitPullrequest.iconString(" Pull requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             default: break
             }
             return cell
