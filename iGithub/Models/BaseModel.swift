@@ -75,6 +75,16 @@ class LabelTransform: TransformOf<Label, String> {
     }
 }
 
+class MilestoneTransform: TransformOf<Milestone, AnyObject> {
+    init() {
+        super.init(fromJSON: {
+            guard $0 != nil else { return nil }
+            return Mapper<Milestone>().map(JSON: $0 as! [String: Any])
+            },
+                   toJSON: { String(describing: $0) as AnyObject })
+    }
+}
+
 class GistFileTransform: TransformOf<GistFile, String> {
     init() {
         super.init(fromJSON: { Mapper<GistFile>().map(JSONObject: $0) }, toJSON: { String(describing: $0) })

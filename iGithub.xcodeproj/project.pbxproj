@@ -93,6 +93,7 @@
 		C5DB70191DA2AC3500D96248 /* Gist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB70181DA2AC3500D96248 /* Gist.swift */; };
 		C5DB701B1DA339AA00D96248 /* GistTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB701A1DA339AA00D96248 /* GistTableViewModel.swift */; };
 		C5DB701D1DA33BA900D96248 /* GistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB701C1DA33BA900D96248 /* GistTableViewController.swift */; };
+		C5DB701F1DA3A6BB00D96248 /* TitleHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB701E1DA3A6BB00D96248 /* TitleHeaderView.swift */; };
 		C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB94621D3F842000887E81 /* AppDelegate.swift */; };
 		C5DB94681D3F842000887E81 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5DB94661D3F842000887E81 /* Main.storyboard */; };
 		C5DB946A1D3F842000887E81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5DB94691D3F842000887E81 /* Assets.xcassets */; };
@@ -233,6 +234,7 @@
 		C5DB70181DA2AC3500D96248 /* Gist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gist.swift; sourceTree = "<group>"; };
 		C5DB701A1DA339AA00D96248 /* GistTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistTableViewModel.swift; sourceTree = "<group>"; };
 		C5DB701C1DA33BA900D96248 /* GistTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GistTableViewController.swift; sourceTree = "<group>"; };
+		C5DB701E1DA3A6BB00D96248 /* TitleHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleHeaderView.swift; sourceTree = "<group>"; };
 		C5DB945F1D3F842000887E81 /* iGithub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGithub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5DB94621D3F842000887E81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5DB94671D3F842000887E81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				C5E733841D603A8E00913A66 /* SegmentHeaderView.swift */,
 				C571EF571D64836100F752EE /* OptionPickerView.swift */,
 				C55791581D76E50900FBBD41 /* LoadingIndicator.swift */,
+				C5DB701E1DA3A6BB00D96248 /* TitleHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -791,6 +794,7 @@
 				C55791551D74392600FBBD41 /* UIScrollView+RefreshComponent.swift in Sources */,
 				C5819ABB1D4CF3D4009D7772 /* RepositoryCell.swift in Sources */,
 				C5F4BDF71D3FB37A009DF758 /* WebAPI.swift in Sources */,
+				C5DB701F1DA3A6BB00D96248 /* TitleHeaderView.swift in Sources */,
 				C5DB70151DA27BD900D96248 /* CommitTableViewModel.swift in Sources */,
 				C5373C4F1D4B97F6006CFB83 /* UserTableViewModel.swift in Sources */,
 				C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */,

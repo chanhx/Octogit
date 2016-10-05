@@ -92,6 +92,7 @@ class UserViewController: BaseTableViewController {
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        cell.textLabel?.textColor = UIColor(netHex: 0x333333)
         
         switch ((indexPath as NSIndexPath).section, viewModel.details.count) {
         case (0, 1...4):

@@ -24,6 +24,7 @@ class UserCell: UITableViewCell {
     }
     
     func commonInit() {
+        nameLabel.textColor = UIColor(netHex: 0x333333)
         contentView.addSubviews([avatarView, nameLabel])
         
         let margins = contentView.layoutMarginsGuide

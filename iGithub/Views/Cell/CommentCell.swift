@@ -18,13 +18,19 @@ class CommentCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.contentView.backgroundColor = UIColor(netHex: 0xFAFAFA)
-        self.configureSubviews()
-        self.layout()
+        commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        
+        commonInit()
+    }
+    
+    func commonInit() {
+        self.contentView.backgroundColor = UIColor(netHex: 0xFAFAFA)
+        self.configureSubviews()
+        self.layout()
     }
     
     func configureSubviews() {

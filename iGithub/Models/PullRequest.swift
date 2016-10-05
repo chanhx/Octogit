@@ -20,4 +20,21 @@ class PullRequest : Issue {
         isMerged <- map["merged"]
         mergedAt <- (map["merged_at"], DateTransform())
     }
+    
+    override var icon: Octicon {
+        return .gitPullrequest
+    }
+    
+    override var iconColor: UIColor {
+        switch state! {
+        case .closed:
+            if mergedAt != nil {
+                return UIColor(netHex: 0x6e5494)
+            } else {
+                return UIColor(netHex: 0xbd2c00)
+            }
+        case .open:
+            return UIColor(netHex: 0x6cc644)
+        }
+    }
 }

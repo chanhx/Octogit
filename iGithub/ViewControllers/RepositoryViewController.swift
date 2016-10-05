@@ -76,8 +76,8 @@ class RepositoryViewController: BaseTableViewController {
                 
                 return cell
             case viewModel.numberOfRowsInSection(0) - 1:
-                let cell = UITableViewCell()
-                cell.accessoryType = .disclosureIndicator
+                let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
+                cell.textLabel?.textColor = UIColor(netHex: 0x333333)
                 cell.textLabel?.attributedText = Octicon.book.iconString(" README", iconSize: 18, iconColor: .gray)
                 return cell
             default:
@@ -85,11 +85,14 @@ class RepositoryViewController: BaseTableViewController {
                 cell.selectionStyle = .none
                 cell.textLabel?.numberOfLines = 0
                 cell.textLabel?.lineBreakMode = .byWordWrapping
+                cell.textLabel?.textColor = UIColor(netHex: 0x333333)
                 cell.textLabel?.text = viewModel.repository.value.repoDescription!
                 return cell
             }
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
+            cell.textLabel?.textColor = UIColor(netHex: 0x333333)
+            
             switch (indexPath as NSIndexPath).row {
             case 0:
                 cell.textLabel?.attributedText = Octicon.issueOpened.iconString(" Issues", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
@@ -105,8 +108,9 @@ class RepositoryViewController: BaseTableViewController {
             }
             return cell
         case 2:
-            let cell = UITableViewCell()
-            cell.accessoryType = .disclosureIndicator
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
+            cell.textLabel?.textColor = UIColor(netHex: 0x333333)
+            
             switch (indexPath as NSIndexPath).row {
             case 0:
                 cell.textLabel?.attributedText = Octicon.code.iconString(" Code", iconSize: 18, iconColor: .lightGray)

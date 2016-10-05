@@ -11,10 +11,13 @@ import ObjectMapper
 
 class Milestone: BaseModel {
     
+    typealias MilestoneState = IssueState
+    
     var number: Int?
-    var state: IssueState?
+    var state: MilestoneState?
     var title: String?
     var milestoneDesc: String?
+    var creator: User?
     var openIssues: Int?
     var closedIssues: Int?
     
@@ -23,6 +26,7 @@ class Milestone: BaseModel {
         state           <- map["state"]
         title           <- map["title"]
         milestoneDesc   <- map["description"]
+        creator         <- (map["creator"], UserTransform())
         openIssues      <- map["open_issues"]
         closedIssues    <- map["closed_issues"]
     }

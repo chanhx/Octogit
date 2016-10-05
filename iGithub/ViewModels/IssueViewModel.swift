@@ -14,30 +14,47 @@ import ObjectMapper
 
 class IssueViewModel: BaseTableViewModel<IssueComment> {
     
-    enum ContentType {
-        case body
-        case label
+    enum SectionType {
+        case content
         case milestone
+        case asignees
+        case changes
+        case timeline
     }
 
     var token: GithubAPI
     var issue: Issue
     
-    var contentTypes = [ContentType]()
+    private var sectionTypes = [SectionType]()
     
     init(repo: String, issue: Issue) {
         token = .issueComments(repo: repo, number: issue.number!)
         self.issue = issue
         
-        if let count = issue.body?.characters.count, count > 0 {
-            contentTypes.append(.body)
+        super.init()
+        
+        setSectionTypes()
+    }
+    
+    func setSectionTypes() {
+        if let body = issue.body,
+            body.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
+            sectionTypes.append(.content)
         }
-        if let count = issue.labels?.count, count > 0 {
-            contentTypes.append(.label)
+        
+        if let _ = issue.milestone {
+            sectionTypes.append(.milestone)
         }
-        if issue.milestone != nil {
-            contentTypes.append(.milestone)
+        
+        if let assignees = issue.assignees, assignees.count > 0 {
+            sectionTypes.append(.asignees)
         }
+        
+        if let _ = issue as? PullRequest {
+            sectionTypes.append(.changes)
+        }
+        
+        sectionTypes.append(.timeline)
     }
     
     override func fetchData() {
@@ -58,25 +75,25 @@ class IssueViewModel: BaseTableViewModel<IssueComment> {
     }
     
     var numberOfSections: Int {
-        if let count = issue.assignees?.count, count > 0 {
-            return contentTypes.count > 0 ? 2 : 1
-        } else {
-            return contentTypes.count > 0 ? 1 : 0
-        }
+        return sectionTypes.count
+    }
+    
+    func sectionType(for section: Int) -> SectionType {
+        return sectionTypes[section]
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
-        switch section {
-        case 0:
-            if contentTypes.count > 0 {
-                return contentTypes.count
-            } else {
-                return issue.assignees!.count
-            }
-        case 1:
+        switch sectionTypes[section] {
+        case .content:
+            return 1
+        case .milestone:
+            return 1
+        case .asignees:
             return issue.assignees!.count
-        default:
-            return 0
+        case .changes:
+            return 3
+        case .timeline:
+            return dataSource.value.count
         }
     }
     

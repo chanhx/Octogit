@@ -10,7 +10,7 @@ import UIKit
 
 class IssueCell: UITableViewCell {
     
-    fileprivate let statusLabel = UILabel()
+    fileprivate let iconLabel = UILabel()
     fileprivate let titleLabel = UILabel()
     fileprivate let infoLabel = UILabel()
     fileprivate let commentsLabel = UILabel()
@@ -27,8 +27,8 @@ class IssueCell: UITableViewCell {
     }
 
     func configureSubviews() {
-        statusLabel.font = UIFont.OcticonOfSize(23)
-        statusLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+        iconLabel.font = UIFont.OcticonOfSize(23)
+        iconLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
         
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
         titleLabel.numberOfLines = 0
@@ -56,14 +56,14 @@ class IssueCell: UITableViewCell {
         vStackView.distribution = .fill
         vStackView.spacing = 5
         
-        contentView.addSubviews([statusLabel, vStackView])
+        contentView.addSubviews([iconLabel, vStackView])
         
         NSLayoutConstraint.activate([
-            statusLabel.topAnchor.constraint(equalTo: margins.topAnchor),
-            statusLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            iconLabel.topAnchor.constraint(equalTo: margins.topAnchor),
+            iconLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             
-            vStackView.topAnchor.constraint(equalTo: statusLabel.topAnchor),
-            vStackView.leadingAnchor.constraint(equalTo: statusLabel.trailingAnchor, constant: 5),
+            vStackView.topAnchor.constraint(equalTo: iconLabel.topAnchor),
+            vStackView.leadingAnchor.constraint(equalTo: iconLabel.trailingAnchor, constant: 5),
             vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
         ])
@@ -80,32 +80,27 @@ class IssueCell: UITableViewCell {
                 commentsLabel.isHidden = true
             }
             
+            iconLabel.text = entity.icon.rawValue
+            iconLabel.textColor = entity.iconColor
+            
             let info = "#\(entity.number!) by \(entity.user!)"
             
             if let pullRequest = entity as? PullRequest {
-                statusLabel.text = Octicon.gitPullrequest.rawValue
                 switch entity.state! {
                 case .closed:
                     if let mergedAt = pullRequest.mergedAt {
-                        statusLabel.textColor = UIColor(netHex: 0x6e5494)
                         infoLabel.text = "\(info) - \(mergedAt.naturalString)"
                     } else {
-                        statusLabel.textColor = UIColor(netHex: 0xbd2c00)
                         infoLabel.text = "\(info) - \(pullRequest.closedAt!.naturalString)"
                     }
                 case .open:
-                    statusLabel.textColor = UIColor(netHex: 0x6cc644)
                     infoLabel.text = "\(info) - \(entity.createdAt!.naturalString)"
                 }
             } else {
                 switch entity.state! {
                 case .closed:
-                    statusLabel.text = Octicon.issueClosed.rawValue
-                    statusLabel.textColor = UIColor(netHex: 0xbd2c00)
                     infoLabel.text = "\(info) - \(entity.closedAt!.naturalString)"
                 case .open:
-                    statusLabel.text = Octicon.issueOpened.rawValue
-                    statusLabel.textColor = UIColor(netHex: 0x6cc644)
                     infoLabel.text = "\(info) - \(entity.createdAt!.naturalString)"
                 }
             }

@@ -38,9 +38,28 @@ class Issue : BaseModel {
         state       <- map["state"]
         user        <- (map["user"], UserTransform())
         assignees   <- (map["assignees"], UserTransform())
+        milestone   <- (map["milestone"], MilestoneTransform())
         labels      <- (map["labels"], LabelTransform())
         createdAt   <- (map["created_at"], DateTransform())
         closedAt    <- (map["closed_at"], DateTransform())
         comments    <- map["comments"]
+    }
+    
+    var icon: Octicon {
+        switch state! {
+        case .closed:
+            return .issueClosed
+        case .open:
+            return .issueOpened
+        }
+    }
+    
+    var iconColor: UIColor {
+        switch state! {
+        case .closed:
+            return UIColor(netHex: 0xbd2c00)
+        case .open:
+            return UIColor(netHex: 0x6cc644)
+        }
     }
 }
