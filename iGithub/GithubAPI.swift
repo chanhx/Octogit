@@ -75,6 +75,7 @@ enum GithubAPI {
     case repositoryEvents(repo: String, page: Int)
     case repositoryIssues(repo: String)
     case repositoryPullRequests(repo: String)
+    case repositoryReleases(repo: String)
     
     case searchRepositories(q: String, sort: RepositoriesSearchSort)
     case searchUsers(q: String, sort: UsersSearchSort)
@@ -138,6 +139,8 @@ extension GithubAPI: TargetType {
             return "/repos/\(repo)/issues"
         case .repositoryPullRequests(let repo):
             return "/repos/\(repo)/pulls"
+        case .repositoryReleases(let repo):
+            return "/repos/\(repo)/releases"
             
         case .searchRepositories(_, _):
             return "/search/repositories"

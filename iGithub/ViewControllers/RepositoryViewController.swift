@@ -152,7 +152,12 @@ class RepositoryViewController: BaseTableViewController {
             let issueTVC = IssueTableViewController()
             issueTVC.viewModel = IssueTableViewModel(repo: viewModel.repository.value)
             self.navigationController?.pushViewController(issueTVC, animated: true)
-            
+        
+        case (1, 1):
+            let releaseTVC = ReleaseTableViewController()
+            releaseTVC.viewModel = ReleaseTableViewModel(repo: viewModel.repository.value)
+            self.navigationController?.pushViewController(releaseTVC, animated: true)
+        
         case (1, 2):
             let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventTVC") as! EventTableViewController
             eventTVC.viewModel = EventTableViewModel(repo: viewModel.repository.value)

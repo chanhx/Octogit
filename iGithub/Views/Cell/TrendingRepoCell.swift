@@ -10,7 +10,6 @@ import UIKit
 
 class TrendingRepoCell: UITableViewCell {
     
-//    let numberLabel = UILabel()
     let nameLabel = UILabel()
     let descriptionLabel = UILabel()
     let metaLabel = UILabel()
@@ -31,6 +30,8 @@ class TrendingRepoCell: UITableViewCell {
     
     func configureSubviews() {
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
+        nameLabel.numberOfLines = 0
+        nameLabel.lineBreakMode = .byWordWrapping
         nameLabel.textColor = UIColor(netHex: 0x4078C0)
         
         descriptionLabel.numberOfLines = 0

@@ -21,6 +21,10 @@
 		C526EE121D7C62B6008C0D72 /* sample in Resources */ = {isa = PBXBuildFile; fileRef = C526EE111D7C62B6008C0D72 /* sample */; };
 		C526EE141D7D1954008C0D72 /* themes.plist in Resources */ = {isa = PBXBuildFile; fileRef = C526EE131D7D1954008C0D72 /* themes.plist */; };
 		C526EE161D7D7E36008C0D72 /* Prism in Resources */ = {isa = PBXBuildFile; fileRef = C526EE151D7D7E36008C0D72 /* Prism */; };
+		C52D1ADC1DA606740033AC49 /* Release.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52D1ADB1DA606740033AC49 /* Release.swift */; };
+		C52D1ADE1DA6081E0033AC49 /* ReleaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52D1ADD1DA6081E0033AC49 /* ReleaseCell.swift */; };
+		C52D1AE21DA64D0F0033AC49 /* ReleaseTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52D1AE11DA64D0F0033AC49 /* ReleaseTableViewModel.swift */; };
+		C52D1AE41DA64DC40033AC49 /* ReleaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52D1AE31DA64DC40033AC49 /* ReleaseTableViewController.swift */; };
 		C5373C451D4AF5FD006CFB83 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C441D4AF5FD006CFB83 /* UserCell.swift */; };
 		C5373C491D4B4493006CFB83 /* OrganizationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C481D4B4493006CFB83 /* OrganizationViewModel.swift */; };
 		C5373C4B1D4B7C2D006CFB83 /* OrganizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5373C4A1D4B7C2D006CFB83 /* OrganizationViewController.swift */; };
@@ -162,6 +166,10 @@
 		C526EE111D7C62B6008C0D72 /* sample */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample; sourceTree = "<group>"; };
 		C526EE131D7D1954008C0D72 /* themes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = themes.plist; sourceTree = "<group>"; };
 		C526EE151D7D7E36008C0D72 /* Prism */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Prism; sourceTree = "<group>"; };
+		C52D1ADB1DA606740033AC49 /* Release.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Release.swift; sourceTree = "<group>"; };
+		C52D1ADD1DA6081E0033AC49 /* ReleaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseCell.swift; sourceTree = "<group>"; };
+		C52D1AE11DA64D0F0033AC49 /* ReleaseTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTableViewModel.swift; sourceTree = "<group>"; };
+		C52D1AE31DA64DC40033AC49 /* ReleaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTableViewController.swift; sourceTree = "<group>"; };
 		C5373C441D4AF5FD006CFB83 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCell.swift; path = Cell/UserCell.swift; sourceTree = "<group>"; };
 		C5373C481D4B4493006CFB83 /* OrganizationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationViewModel.swift; sourceTree = "<group>"; };
 		C5373C4A1D4B7C2D006CFB83 /* OrganizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationViewController.swift; sourceTree = "<group>"; };
@@ -336,6 +344,7 @@
 				C524742C1D519CBB0001D9CD /* Label.swift */,
 				C524742E1D51A1500001D9CD /* Milestone.swift */,
 				C5DB70181DA2AC3500D96248 /* Gist.swift */,
+				C52D1ADB1DA606740033AC49 /* Release.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -359,6 +368,7 @@
 				C5E7337A1D5D642900913A66 /* ExploreViewModel.swift */,
 				C5E733891D62292000913A66 /* SearchViewModel.swift */,
 				C5DB701A1DA339AA00D96248 /* GistTableViewModel.swift */,
+				C52D1AE11DA64D0F0033AC49 /* ReleaseTableViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -414,6 +424,7 @@
 				C5E733821D5EEE8C00913A66 /* TrendingRepoCell.swift */,
 				C5DB700E1DA22D3B00D96248 /* CommitCell.swift */,
 				C5DB70161DA2AB4C00D96248 /* GistCell.swift */,
+				C52D1ADD1DA6081E0033AC49 /* ReleaseCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -560,6 +571,7 @@
 				C5E733871D61C90000913A66 /* SearchViewController.swift */,
 				C526EE0F1D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift */,
 				C5DB701C1DA33BA900D96248 /* GistTableViewController.swift */,
+				C52D1AE31DA64DC40033AC49 /* ReleaseTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -759,6 +771,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C52D1ADE1DA6081E0033AC49 /* ReleaseCell.swift in Sources */,
 				C5E7337F1D5D9FE900913A66 /* ExplorationViewController.swift in Sources */,
 				C538FD501D459C71003A559E /* FileTableViewController.swift in Sources */,
 				C52013CE1D57361A00FDCC30 /* WebViewController.swift in Sources */,
@@ -816,6 +829,7 @@
 				C5DB70191DA2AC3500D96248 /* Gist.swift in Sources */,
 				C538FD171D40A42C003A559E /* CommitComment.swift in Sources */,
 				C538FD3D1D431C35003A559E /* RepositoryViewController.swift in Sources */,
+				C52D1ADC1DA606740033AC49 /* Release.swift in Sources */,
 				C5373C491D4B4493006CFB83 /* OrganizationViewModel.swift in Sources */,
 				C538FD081D406BE8003A559E /* AccountManager.swift in Sources */,
 				C5F4BDE71D3F95E5009DF758 /* Octicon.swift in Sources */,
@@ -832,12 +846,14 @@
 				C55791591D76E50900FBBD41 /* LoadingIndicator.swift in Sources */,
 				C5F79AD71D957732006B0466 /* MessageManager.swift in Sources */,
 				C526EE101D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift in Sources */,
+				C52D1AE21DA64D0F0033AC49 /* ReleaseTableViewModel.swift in Sources */,
 				C5ABDF4E1D7DC8A800F07DC2 /* Renderer.swift in Sources */,
 				C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */,
 				C55791571D743A2D00FBBD41 /* RefreshFooter.swift in Sources */,
 				C538FD471D4491DE003A559E /* Event+DataProcess.swift in Sources */,
 				C538FD391D430FB3003A559E /* RepositoryViewModel.swift in Sources */,
 				C52474281D50F06A0001D9CD /* WebViewCell.swift in Sources */,
+				C52D1AE41DA64DC40033AC49 /* ReleaseTableViewController.swift in Sources */,
 				C5819AC51D4EF7AC009D7772 /* IssueCell.swift in Sources */,
 				C5819ABF1D4DD2B7009D7772 /* RepositoryTableViewController.swift in Sources */,
 				C5C4D9511D49B1C5007C1891 /* UserViewModel.swift in Sources */,
