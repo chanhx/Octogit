@@ -42,7 +42,7 @@ class FileTableViewController: BaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         super.tableView(tableView, didSelectRowAt: indexPath)
         
-        let file = viewModel.dataSource.value[(indexPath as NSIndexPath).row]
+        let file = viewModel.dataSource.value[indexPath.row]
         if file.type! == .file {
             let fileVC = FileViewController()
             fileVC.viewModel = viewModel.fileViewModel(file)

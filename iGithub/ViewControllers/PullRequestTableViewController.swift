@@ -32,7 +32,7 @@ class PullRequestTableViewController: BaseTableViewController {
         super.tableView(tableView, didSelectRowAt: indexPath)
         
         let pullRequestVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "IssueVC") as! IssueViewController
-        pullRequestVC.viewModel = viewModel.viewModelForIndex((indexPath as NSIndexPath).row)
+        pullRequestVC.viewModel = viewModel.viewModelForIndex(indexPath.row)
         self.navigationController?.pushViewController(pullRequestVC, animated: true)
     }
     

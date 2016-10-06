@@ -65,7 +65,7 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard (indexPath as NSIndexPath).row == 0 else {
+        guard indexPath.row == 0 else {
             return
         }
         

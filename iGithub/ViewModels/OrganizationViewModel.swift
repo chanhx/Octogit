@@ -27,18 +27,18 @@ class OrganizationViewModel: UserViewModel {
             return 1
         }
         
-        return details.count > 0 ? 2 : 1
+        return sectionTypes.count
     }
     
-    override func numberOfRowsInSection(_ section: Int) -> Int {
+    override func numberOfRowsIn(section: Int) -> Int {
         guard userLoaded else {
             return 1
         }
         
-        switch (section, details.count) {
-        case (0, 1...4):
-            return details.count
-        case (0, 0), (1, _):
+        switch sectionTypes[section] {
+        case .vcards:
+            return vcardDetails.count
+        case .general:
             return 3
         default:
             return 0

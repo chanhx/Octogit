@@ -10,14 +10,20 @@ import RxMoya
 import RxSwift
 import ObjectMapper
 
-enum VcardDetail {
-    case company
-    case location
-    case email
-    case blog
-}
-
 class UserViewModel {
+    
+    enum SectionType {
+        case vcards
+        case general
+        case organizations
+    }
+    
+    enum VcardDetail {
+        case company
+        case location
+        case email
+        case blog
+    }
     
     var user: Variable<User>
     var organizations: Variable<[User]> = Variable([])
@@ -25,7 +31,8 @@ class UserViewModel {
     var token: GithubAPI
     
     var userLoaded = false
-    var details = [VcardDetail]()
+    var sectionTypes = [SectionType]()
+    var vcardDetails = [VcardDetail]()
     
     init(_ user: User) {
         self.user = Variable(user)
@@ -48,7 +55,7 @@ class UserViewModel {
             .subscribe(onNext: {
                 self.userLoaded = true
                 let user = Mapper<User>().map(JSONObject: $0)!
-                self.setDetails(user: user)
+                self.setSectionTypes(user: user)
                 self.user.value = user
             })
             .addDisposableTo(disposeBag)
@@ -69,40 +76,54 @@ class UserViewModel {
             return 1
         }
 
-        return details.count > 0 ? 3 : 2
+        return sectionTypes.count
     }
     
-    private func setDetails(user: User) {
-        details.removeAll()
+    private func setSectionTypes(user: User) {
+        sectionTypes.removeAll()
+        
+        setVcardDetails(user: user)
+        
+        if vcardDetails.count > 0 {
+            sectionTypes.append(.vcards)
+        }
+        
+        sectionTypes.append(.general)
+        
+        if user.type! == .user {
+            sectionTypes.append(.organizations)
+        }
+    }
+    
+    private func setVcardDetails(user: User) {
+        vcardDetails.removeAll()
         
         if let company = user.company, company.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
-            details.append(.company)
+            vcardDetails.append(.company)
         }
         if let location = user.location, location.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
-            details.append(.location)
+            vcardDetails.append(.location)
         }
         if let email = user.email, email.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
-            details.append(.email)
+            vcardDetails.append(.email)
         }
         if let blog = user.blog, blog.absoluteString.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
-            details.append(.blog)
+            vcardDetails.append(.blog)
         }
     }
     
-    func numberOfRowsInSection(_ section: Int) -> Int {
+    func numberOfRowsIn(section: Int) -> Int {
         guard userLoaded else {
             return 1
         }
         
-        switch (section, details.count) {
-        case (0, 1...4):
-            return details.count
-        case (0, 0), (1, 1...4):
+        switch sectionTypes[section] {
+        case .vcards:
+            return vcardDetails.count
+        case .general:
             return 3
-        case (1, 0), (2, _):
+        case .organizations:
             return organizations.value.count
-        default:
-            return 0
         }
     }
 }

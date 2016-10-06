@@ -32,7 +32,7 @@ class IssueTableViewController: BaseTableViewController {
         super.tableView(tableView, didSelectRowAt: indexPath)
         
         let issueVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "IssueVC") as! IssueViewController
-        issueVC.viewModel = viewModel.viewModelForIndex((indexPath as NSIndexPath).row)
+        issueVC.viewModel = viewModel.viewModelForIndex(indexPath.row)
         self.navigationController?.pushViewController(issueVC, animated: true)
     }
 

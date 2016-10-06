@@ -63,12 +63,12 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
         
         switch viewModel.type {
         case .repositories:
-            let repo = self.viewModel.repoTVM.repositories.value[(indexPath as NSIndexPath).row]
+            let repo = self.viewModel.repoTVM.repositories.value[indexPath.row]
             let repoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RepositoryVC") as! RepositoryViewController
             repoVC.viewModel = RepositoryViewModel(fullName: repo.name)
             self.navigationController?.pushViewController(repoVC, animated: true)
         case .users:
-            let user = viewModel.userTVM.users.value[(indexPath as NSIndexPath).row]
+            let user = viewModel.userTVM.users.value[indexPath.row]
             switch user.type! {
             case .user:
                 let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC") as! UserViewController

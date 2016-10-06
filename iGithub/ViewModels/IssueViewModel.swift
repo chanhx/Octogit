@@ -82,7 +82,7 @@ class IssueViewModel: BaseTableViewModel<IssueComment> {
         return sectionTypes[section]
     }
     
-    func numberOfRowsInSection(_ section: Int) -> Int {
+    func numberOfRowsIn(section: Int) -> Int {
         switch sectionTypes[section] {
         case .content:
             return 1

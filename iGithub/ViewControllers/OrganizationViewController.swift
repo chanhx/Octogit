@@ -48,7 +48,7 @@ class OrganizationViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRowsInSection(section)
+        return viewModel.numberOfRowsIn(section: section)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,27 +58,41 @@ class OrganizationViewController: BaseTableViewController {
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        cell.textLabel?.textColor = UIColor(netHex: 0x333333)
         
-        switch ((indexPath as NSIndexPath).section, viewModel.details.count) {
-        case (0, 0), (1, 1...4):
-            
-            cell.accessoryType = .disclosureIndicator
-            cell.textLabel?.text = ["Public activity", "Repositories", "Members"][(indexPath as NSIndexPath).row]
-            
-            return cell
-        default:
-            switch viewModel.details[(indexPath as NSIndexPath).row] {
+        switch viewModel.sectionTypes[indexPath.section] {
+        case .vcards:
+            switch viewModel.vcardDetails[indexPath.row] {
             case .company:
-                cell.textLabel?.text = "Company     \(viewModel.user.value.company!)"
+                cell.textLabel?.attributedText = Octicon.organization.iconString(" \(viewModel.user.value.company!)", iconSize: 18, iconColor: .lightGray)
             case .location:
-                cell.textLabel?.text = "Location    \(viewModel.user.value.location!)"
+                cell.textLabel?.attributedText = Octicon.location.iconString(" \(viewModel.user.value.location!)", iconSize: 18, iconColor: .lightGray)
             case .email:
-                cell.textLabel?.text = "Email       \(viewModel.user.value.email!)"
+                cell.textLabel?.attributedText = Octicon.mail.iconString(" \(viewModel.user.value.email!)", iconSize: 18, iconColor: .lightGray)
             case .blog:
-                cell.textLabel?.text = "Blog        \(viewModel.user.value.blog!)"
+                cell.textLabel?.attributedText = Octicon.link.iconString(" \(viewModel.user.value.blog!)", iconSize: 18, iconColor: .lightGray)
                 cell.accessoryType = .disclosureIndicator
             }
             
+            return cell
+            
+        case .general:
+            cell.accessoryType = .disclosureIndicator
+            cell.textLabel?.text = ["Public activity", "Repositories", "Members"][indexPath.row]
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.attributedText = Octicon.rss.iconString(" Public activity", iconSize: 18, iconColor: .lightGray)
+            case 1:
+                cell.textLabel?.attributedText = Octicon.repo.iconString(" Repositories", iconSize: 18, iconColor: .lightGray)
+            case 2:
+                cell.textLabel?.attributedText = Octicon.organization.iconString(" Members", iconSize: 18, iconColor: .lightGray)
+            default:
+                break
+            }
+            
+            return cell
+            
+        default:
             return cell
         }
     }
@@ -86,10 +100,13 @@ class OrganizationViewController: BaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         super.tableView(tableView, didSelectRowAt: indexPath)
         
-        switch ((indexPath as NSIndexPath).section, viewModel.details.count) {
-        case (0, 0), (1, 1...4):
-            
-            switch (indexPath as NSIndexPath).row {
+        switch viewModel.sectionTypes[indexPath.section] {
+        case .vcards:
+            if viewModel.vcardDetails[indexPath.row] == .blog {
+                navigationController?.pushViewController(URLRouter.viewControllerForURL(viewModel.user.value.blog!), animated: true)
+            }
+        case .general:
+            switch indexPath.row {
             case 0:
                 let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventTVC") as! EventTableViewController
                 eventTVC.viewModel = EventTableViewModel(org: viewModel.user.value)
@@ -105,10 +122,7 @@ class OrganizationViewController: BaseTableViewController {
             default:
                 break
             }
-        default:
-            if viewModel.details[(indexPath as NSIndexPath).row] == .blog {
-                navigationController?.pushViewController(URLRouter.viewControllerForURL(viewModel.user.value.blog!), animated: true)
-            }
+        default: break
         }
     }
 

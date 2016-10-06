@@ -74,7 +74,7 @@ class UserViewController: BaseTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRowsInSection(section)
+        return viewModel.numberOfRowsIn(section: section)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -94,9 +94,9 @@ class UserViewController: BaseTableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
         cell.textLabel?.textColor = UIColor(netHex: 0x333333)
         
-        switch ((indexPath as NSIndexPath).section, viewModel.details.count) {
-        case (0, 1...4):
-            switch viewModel.details[(indexPath as NSIndexPath).row] {
+        switch viewModel.sectionTypes[indexPath.section] {
+        case .vcards:
+            switch viewModel.vcardDetails[indexPath.row] {
             case .company:
                 cell.textLabel?.attributedText = Octicon.organization.iconString(" \(viewModel.user.value.company!)", iconSize: 18, iconColor: .lightGray)
             case .location:
@@ -109,9 +109,9 @@ class UserViewController: BaseTableViewController {
             }
             
             return cell
-        case (0, 0), (1, 1...4):
+        case .general:
             cell.accessoryType = .disclosureIndicator
-            switch (indexPath as NSIndexPath).row {
+            switch indexPath.row {
             case 0:
                 cell.textLabel?.attributedText = Octicon.rss.iconString(" Public activity", iconSize: 18, iconColor: .lightGray)
             case 1:
@@ -123,25 +123,23 @@ class UserViewController: BaseTableViewController {
             }
             
             return cell
-        case (1, 0), (2, _):
+        case .organizations:
             let userCell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
             userCell.entity = viewModel.organizations.value[indexPath.row]
             return userCell
-        default:
-            return cell
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         super.tableView(tableView, didSelectRowAt: indexPath)
         
-        switch ((indexPath as NSIndexPath).section, viewModel.details.count) {
-        case (0, 1...4):
-            if viewModel.details[(indexPath as NSIndexPath).row] == .blog {
+        switch viewModel.sectionTypes[indexPath.section] {
+        case .vcards:
+            if viewModel.vcardDetails[indexPath.row] == .blog {
                 navigationController?.pushViewController(URLRouter.viewControllerForURL(viewModel.user.value.blog!), animated: true)
             }
-        case (0, 0), (1, 1...4):
-            switch (indexPath as NSIndexPath).row {
+        case .general:
+            switch indexPath.row {
             case 0:
                 let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventTVC") as! EventTableViewController
                 eventTVC.viewModel = EventTableViewModel(user: viewModel.user.value, type: .performed)
@@ -157,13 +155,11 @@ class UserViewController: BaseTableViewController {
             default:
                 break
             }
-        case (1, 0), (2, _):
+        case .organizations:
             let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrgVC") as! OrganizationViewController
             let organization = self.viewModel.organizations.value[indexPath.row]
             orgVC.viewModel = OrganizationViewModel(organization)
             self.navigationController?.pushViewController(orgVC, animated: true)
-        default:
-            break
         }
     }
     

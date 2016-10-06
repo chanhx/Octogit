@@ -100,7 +100,7 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRowsInSection(section)
+        return viewModel.numberOfRowsIn(section: section)
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
