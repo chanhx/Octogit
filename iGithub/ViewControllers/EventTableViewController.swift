@@ -15,6 +15,11 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
     var viewModel: EventTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
+                .skip(1)
+                .do(onNext: { _ in
+                    self.tableView.refreshHeader?.endRefreshing()
+                    self.tableView.refreshFooter?.endRefreshing()
+                })
                 .bindTo(tableView.rx.items(cellIdentifier: "EventCell", cellType: EventCell.self)) { row, element, cell in
                     cell.entity = element
                     cell.titleLabel.delegate = self
@@ -26,16 +31,6 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                     cell.avatarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.avatarTapped)))
                 }
                 .addDisposableTo(viewModel.disposeBag)
-            
-            viewModel.dataSource.asObservable().subscribe { _ in
-                if let header = self.tableView.refreshHeader {
-                    header.endRefreshing()
-                }
-                
-                if let footer = self.tableView.refreshFooter {
-                    footer.endRefreshing()
-                }
-            }.addDisposableTo(viewModel.disposeBag)
         }
     }
     
@@ -44,10 +39,10 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
         
         self.navigationItem.title = viewModel.title
         
-        viewModel.fetchData()
-        
         tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
         tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
+        
+        tableView.refreshHeader?.beginRefreshing()
     }
     
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {

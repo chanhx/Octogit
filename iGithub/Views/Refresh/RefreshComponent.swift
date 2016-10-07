@@ -86,12 +86,14 @@ class RefreshHeader: RefreshComponent {
             case .refreshing:
                 indicator.startAnimating()
                 UIView.animate(withDuration: AnimationDuration, animations: {
-                    self.scrollView.contentInset.top += RefreshComponentHeight
+                    let top = self.scrollView.contentInset.top + RefreshComponentHeight
+                    self.scrollView.contentInset.top = top
+                    self.scrollView.setContentOffset(CGPoint(x: 0, y: -top), animated: false)
                 }, completion: { _ in
                     if let selector = self.selector {
                         _ = self.target?.perform(selector)
                     }
-                }) 
+                })
             }
         }
     }
@@ -139,13 +141,19 @@ class RefreshHeader: RefreshComponent {
                 yPercent = yPercent >= 1 ? 1 : yPercent
                 indicator.updateStrokeEnd(yPercent * 0.95)
                 
-                if yPercent >= 1 && !scrollView.isDragging {
+                if yPercent >= 1 {
                     state = .refreshing
                 }
             } else if scrollView?.isDragging == true {
                 state = .draging
             }
         }
+    }
+    
+    func beginRefreshing() {
+        isHidden = false
+        indicator.updateStrokeEnd(0.95)
+        state = .refreshing
     }
 }
 
@@ -237,7 +245,7 @@ class RefreshFooter: RefreshComponent {
                     if yPercent >= 1 {
                         state = .refreshing
                     }
-                } else  {
+                } else if scrollView.dataCount > 0 {
                     state = .draging
                 }
             }

@@ -16,5 +16,17 @@ class BaseTableViewModel<T: BaseModel> {
     var dataSource: Variable<[T]> = Variable([])
     let disposeBag = DisposeBag()
     
+    var page: Int = 1
+    
     func fetchData() {}
+    
+    @objc func refresh() {
+        page = 1
+        fetchData()
+    }
+    
+    @objc func fetchNextPage() {
+        page = dataSource.value.count / 30 + 1
+        fetchData()
+    }
 }

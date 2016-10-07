@@ -18,41 +18,44 @@ enum UserEventType {
 class EventTableViewModel: BaseTableViewModel<Event> {
     
     fileprivate var token: GithubAPI
-    var page: Int = 1 {
-        didSet {
-            switch token {
-            case .userEvents(let user, _):
-                token = .userEvents(user: user, page: page)
-            case .receivedEvents(let user, _):
-                token = .receivedEvents(user: user, page: page)
-            case .repositoryEvents(let repo, _):
-                token = .repositoryEvents(repo: repo, page: page)
-            case .organizationEvents(let org, _):
-                token = .organizationEvents(org: org, page: page)
-            default:
-                break
-            }
-        }
-    }
     
     init(user: User, type: UserEventType) {
         switch type {
         case .performed:
-            token = .userEvents(user: user.login!, page: page)
+            token = .userEvents(user: user.login!, page: 1)
         case .received:
-            token = .receivedEvents(user: user.login!, page: page)
+            token = .receivedEvents(user: user.login!, page: 1)
         }
+        
+        super.init()
     }
     
     init(repo: Repository) {
-        token = .repositoryEvents(repo: repo.fullName!, page: page)
+        token = .repositoryEvents(repo: repo.fullName!, page: 1)
+        
+        super.init()
     }
     
     init(org: User) {
-        token = .organizationEvents(org: org.login!, page: page)
+        token = .organizationEvents(org: org.login!, page: 1)
+        
+        super.init()
     }
     
     override func fetchData() {
+        switch token {
+        case .userEvents(let user, _):
+            token = .userEvents(user: user, page: page)
+        case .receivedEvents(let user, _):
+            token = .receivedEvents(user: user, page: page)
+        case .repositoryEvents(let repo, _):
+            token = .repositoryEvents(repo: repo, page: page)
+        case .organizationEvents(let org, _):
+            token = .organizationEvents(org: org, page: page)
+        default:
+            break
+        }
+        
         GithubProvider
             .request(token)
             .filterSuccessfulStatusAndRedirectCodes()
@@ -72,16 +75,6 @@ class EventTableViewModel: BaseTableViewModel<Event> {
                 }
             )
             .addDisposableTo(disposeBag)
-    }
-    
-    @objc func refresh() {
-        page = 1
-        fetchData()
-    }
-    
-    @objc func fetchNextPage() {
-        page = dataSource.value.count / 30 + 1
-        fetchData()
     }
     
     var title: String {

@@ -89,6 +89,7 @@ class LoadingIndicator: UIView {
         rotate.fromValue = 0
         rotate.toValue = 2 * M_PI
         rotate.repeatCount = HUGE
+        rotate.isRemovedOnCompletion = false
         layer.add(rotate, forKey: nil)
     }
     
