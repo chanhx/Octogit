@@ -40,6 +40,8 @@ class FileTableViewController: BaseTableViewController {
         
         navigationItem.title = viewModel.title
         
+        tableView.register(FileCell.self, forCellReuseIdentifier: "FileCell")
+        
         tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
         
         tableView.refreshHeader?.beginRefreshing()
@@ -54,7 +56,7 @@ class FileTableViewController: BaseTableViewController {
             fileVC.viewModel = viewModel.fileViewModel(file)
             self.navigationController?.pushViewController(fileVC, animated: true)
         } else {
-            let fileTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FileTVC") as! FileTableViewController
+            let fileTVC = FileTableViewController()
             fileTVC.viewModel = viewModel.subDirectoryViewModel(file)
             self.navigationController?.pushViewController(fileTVC, animated: true)
         }

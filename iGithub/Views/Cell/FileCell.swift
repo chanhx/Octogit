@@ -10,8 +10,47 @@ import UIKit
 
 class FileCell: UITableViewCell {
 
-    @IBOutlet weak var iconLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
+    private let iconLabel = UILabel()
+    private let nameLabel = UILabel()
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.configureSubviews()
+        self.layout()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configureSubviews() {
+        iconLabel.font = UIFont.OcticonOfSize(20)
+        
+        nameLabel.numberOfLines = 3
+        nameLabel.lineBreakMode = .byTruncatingTail
+        nameLabel.font = UIFont.systemFont(ofSize: 17)
+        nameLabel.textColor = UIColor(netHex: 0x4078C0)
+        
+        contentView.addSubviews([iconLabel, nameLabel])
+    }
+    
+    func layout() {
+        let margins = contentView.layoutMarginsGuide
+        
+        iconLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        iconLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        
+        NSLayoutConstraint.activate([
+            iconLabel.topAnchor.constraint(equalTo: margins.topAnchor),
+            iconLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 3),
+            
+            nameLabel.topAnchor.constraint(equalTo: iconLabel.topAnchor, constant: 1),
+            nameLabel.leadingAnchor.constraint(equalTo: iconLabel.trailingAnchor, constant: 8),
+            nameLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            nameLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
+        ])
+    }
     
     var entity: File! {
         didSet {

@@ -174,7 +174,7 @@ class RepositoryViewController: BaseTableViewController {
             self.navigationController?.pushViewController(pullRequestTVC, animated: true)
             
         case (2, 0):
-            let fileTableVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FileTVC") as! FileTableViewController
+            let fileTableVC = FileTableViewController()
             fileTableVC.viewModel = viewModel.filesTableViewModel
             self.navigationController?.pushViewController(fileTableVC, animated: true)
             
