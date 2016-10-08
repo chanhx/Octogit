@@ -60,6 +60,12 @@ class RefreshComponent: UIView {
             self.state = .idle
         }
     }
+    
+    func endRefreshingWithNoMoreData() {
+        DispatchQueue.main.async {
+            self.state = .noMoreData
+        }
+    }
 }
 
 class RefreshHeader: RefreshComponent {

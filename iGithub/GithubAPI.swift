@@ -49,8 +49,8 @@ enum UsersSearchSort: String {
 }
 
 enum GithubAPI {
-    case followedBy(user: String)
-    case followersOf(user: String)
+    case followedBy(user: String, page: Int)
+    case followersOf(user: String, page: Int)
     
     case getABlob(repo: String, sha: String)
     case getARepository(repo: String)
@@ -62,30 +62,31 @@ enum GithubAPI {
     
     case oAuthUser(accessToken: String)
     
-    case members(org: String)
     case organization(org: String)
     case organizations(user: String)
-    case organizationEvents(org: String, page: Int)
-    case organizationRepos(org: String)
+    case organizationMembers(org: String, page: Int)
     
     case receivedEvents(user: String, page: Int)
-    
-    case repositoryCommits(repo: String, branch: String)
-    case repositoryContributors(repo: String)
+    case userEvents(user: String, page: Int)
+    case organizationEvents(org: String, page: Int)
     case repositoryEvents(repo: String, page: Int)
-    case repositoryIssues(repo: String)
-    case repositoryPullRequests(repo: String)
-    case repositoryReleases(repo: String)
+    
+    case repositoryCommits(repo: String, branch: String, page: Int)
+    case repositoryContributors(repo: String, page: Int)
+    case repositoryIssues(repo: String, page: Int)
+    case repositoryPullRequests(repo: String, page: Int)
+    case repositoryReleases(repo: String, page: Int)
     
     case searchRepositories(q: String, sort: RepositoriesSearchSort)
     case searchUsers(q: String, sort: UsersSearchSort)
     
-    case starredRepos(user: String)
+    case userRepos(user: String, page: Int)
+    case starredRepos(user: String, page: Int)
+    case organizationRepos(org: String, page: Int)
+    
     case user(user: String)
     
-    case userEvents(user: String, page: Int)
-    case userGists(user: String)
-    case userRepos(user: String)
+    case userGists(user: String, page: Int)
 }
 
 extension GithubAPI: TargetType {
@@ -93,9 +94,9 @@ extension GithubAPI: TargetType {
     var baseURL: URL { return URL(string: "https://api.github.com")! }
     var path: String {
         switch self {
-        case .followedBy(let user):
+        case .followedBy(let user, _):
             return "/users/\(user)/following"
-        case .followersOf(let user):
+        case .followersOf(let user, _):
             return "/users/\(user)/followers"
             
         case .getABlob(let repo, let sha):
@@ -115,48 +116,49 @@ extension GithubAPI: TargetType {
         case .oAuthUser:
             return "/user"
 
-        case .members(let org):
-            return "/orgs/\(org)/members"
         case .organization(let org):
             return "/orgs/\(org)"
         case .organizations(let user):
             return "/users/\(user)/orgs"
-        case .organizationEvents(let org):
+        case .organizationMembers(let org, _):
+            return "/orgs/\(org)/members"
+            
+        case .organizationEvents(let org, _):
             return "/orgs/\(org)/events"
-        case .organizationRepos(let org):
+        case .organizationRepos(let org, _):
             return "/orgs/\(org)/repos"
             
         case .receivedEvents(let user, _):
             return "/users/\(user)/received_events"
             
-        case .repositoryCommits(let repo, _):
+        case .repositoryCommits(let repo, _, _):
             return "/repos/\(repo)/commits"
-        case .repositoryContributors(let repo):
+        case .repositoryContributors(let repo, _):
             return "/repos/\(repo)/contributors"
-        case .repositoryEvents(let repo):
+        case .repositoryEvents(let repo, _):
             return "/repos/\(repo)/events"
-        case .repositoryIssues(let repo):
+        case .repositoryIssues(let repo, _):
             return "/repos/\(repo)/issues"
-        case .repositoryPullRequests(let repo):
+        case .repositoryPullRequests(let repo, _):
             return "/repos/\(repo)/pulls"
-        case .repositoryReleases(let repo):
+        case .repositoryReleases(let repo, _):
             return "/repos/\(repo)/releases"
             
-        case .searchRepositories(_, _):
+        case .searchRepositories:
             return "/search/repositories"
         case .searchUsers:
             return "/search/users"
             
-        case .starredRepos(let user):
+        case .starredRepos(let user, _):
             return "/users/\(user)/starred"
         case .user(let user):
             return "/users/\(user)"
             
-        case .userGists(let user):
+        case .userGists(let user, _):
             return "/users/\(user)/gists"
         case .userEvents(let user, _):
             return "/users/\(user)/events"
-        case .userRepos(let user):
+        case .userRepos(let user, _):
             return "/users/\(user)/repos"
         }
     }
@@ -169,22 +171,39 @@ extension GithubAPI: TargetType {
     var parameters: [String: Any]? {
         switch self {
         case .oAuthUser(let accessToken):
-            return ["access_token": accessToken as AnyObject]
+            return ["access_token": accessToken]
             
-        case .receivedEvents(_, let page):
-            return ["page": page as AnyObject]
-            
-        case .repositoryCommits(_, let branch):
-            return ["sha": branch]
+        case .repositoryCommits(_, let branch, let page):
+            return ["sha": branch, "page": page]
             
         case .searchRepositories(let q, let sort):
-            return ["q": q as AnyObject, "sort": sort.rawValue as AnyObject]
+            return ["q": q, "sort": sort.rawValue]
             
         case .searchUsers(let q, let sort):
-            return ["q": q as AnyObject, "sort": sort.rawValue as AnyObject]
+            return ["q": q, "sort": sort.rawValue]
             
-        case .userEvents(_, let page):
-            return ["page": page as AnyObject]
+        case .followedBy(_, let page),
+             .followersOf(_, let page),
+             
+             .organizationMembers(_, let page),
+             
+             .receivedEvents(_, let page),
+             .userEvents(_, let page),
+             .organizationEvents(_, let page),
+             .repositoryEvents(_, let page),
+             
+             .repositoryContributors(_, let page),
+             .repositoryIssues(_, let page),
+             .repositoryPullRequests(_, let page),
+             .repositoryReleases(_, let page),
+             
+             .userGists(_, let page),
+             .starredRepos(_, let page),
+             .organizationRepos(_, let page),
+             
+             .userRepos(_, let page):
+             
+            return ["page": page]
             
         default:
             return nil

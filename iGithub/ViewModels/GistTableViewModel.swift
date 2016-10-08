@@ -14,7 +14,7 @@ class GistTableViewModel: BaseTableViewModel<Gist> {
     var token: GithubAPI
     
     init(user: User) {
-        token = .userGists(user: user.login!)
+        token = .userGists(user: user.login!, page: 1)
         
         super.init()
     }
@@ -22,6 +22,11 @@ class GistTableViewModel: BaseTableViewModel<Gist> {
     override func fetchData() {
         GithubProvider
             .request(token)
+            .do(onNext: {
+                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                    self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
+                }
+            })
             .mapJSON()
             .subscribe(
                 onNext: {                    

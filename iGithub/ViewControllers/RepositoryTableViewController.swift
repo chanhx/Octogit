@@ -13,6 +13,14 @@ class RepositoryTableViewController: BaseTableViewController {
     var viewModel: RepositoryTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
+                .skip(1)
+                .do(onNext: { _ in
+                    self.tableView.refreshHeader?.endRefreshing()
+                    
+                    self.viewModel.hasNextPage ?
+                        self.tableView.refreshFooter?.endRefreshing() :
+                        self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
+                })
                 .bindTo(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) { row, element, cell in
                     cell.shouldDisplayFullName = self.viewModel.shouldDisplayFullName
                     cell.entity = element
@@ -35,9 +43,12 @@ class RepositoryTableViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.register(RepositoryCell.self, forCellReuseIdentifier: "RepositoryCell")
+        tableView.register(RepositoryCell.self, forCellReuseIdentifier: "RepositoryCell")
         
-        viewModel.fetchData()
+        tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
+        tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
+        
+        tableView.refreshHeader?.beginRefreshing()
     }
 
 }

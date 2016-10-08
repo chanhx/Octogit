@@ -13,6 +13,14 @@ class CommitTableViewController: BaseTableViewController {
     var viewModel: CommitTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
+                .skip(1)
+                .do(onNext: { _ in
+                    self.tableView.refreshHeader?.endRefreshing()
+                    
+                    self.viewModel.hasNextPage ?
+                        self.tableView.refreshFooter?.endRefreshing() :
+                        self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
+                })
                 .bindTo(tableView.rx.items(cellIdentifier: "CommitCell", cellType: CommitCell.self)) { row, element, cell in
                     cell.entity = element
                 }
@@ -32,9 +40,12 @@ class CommitTableViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.register(CommitCell.self, forCellReuseIdentifier: "CommitCell")
+        tableView.register(CommitCell.self, forCellReuseIdentifier: "CommitCell")
         
-        viewModel.fetchData()
+        tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
+        tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
+        
+        tableView.refreshHeader?.beginRefreshing()
     }
     
 }

@@ -14,6 +14,14 @@ class GistTableViewController: BaseTableViewController {
     var viewModel: GistTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
+                .skip(1)
+                .do(onNext: { _ in
+                    self.tableView.refreshHeader?.endRefreshing()
+                    
+                    self.viewModel.hasNextPage ?
+                        self.tableView.refreshFooter?.endRefreshing() :
+                        self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
+                })
                 .bindTo(tableView.rx.items(cellIdentifier: "GistCell", cellType: GistCell.self)) { row, element, cell in
                     cell.entity = element
                 }
@@ -27,7 +35,10 @@ class GistTableViewController: BaseTableViewController {
         navigationItem.title = "Gist"
         tableView.register(GistCell.self, forCellReuseIdentifier: "GistCell")
         
-        viewModel.fetchData()
+        tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
+        tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
+        
+        tableView.refreshHeader?.beginRefreshing()
     }
     
 }

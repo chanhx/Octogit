@@ -14,6 +14,10 @@ class FileTableViewController: BaseTableViewController {
     var viewModel: FileTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
+                .skip(1)
+                .do(onNext: { _ in
+                    self.tableView.refreshHeader?.endRefreshing()
+                })
                 .bindTo(tableView.rx.items(cellIdentifier: "FileCell", cellType: FileCell.self)) { row, element, cell in
                     cell.entity = element
                 }
@@ -34,9 +38,11 @@ class FileTableViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = viewModel.title
+        navigationItem.title = viewModel.title
         
-        viewModel.fetchData()
+        tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
+        
+        tableView.refreshHeader?.beginRefreshing()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

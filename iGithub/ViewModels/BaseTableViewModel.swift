@@ -17,6 +17,7 @@ class BaseTableViewModel<T: BaseModel> {
     let disposeBag = DisposeBag()
     
     var page: Int = 1
+    var hasNextPage = true
     
     func fetchData() {}
     
@@ -26,7 +27,7 @@ class BaseTableViewModel<T: BaseModel> {
     }
     
     @objc func fetchNextPage() {
-        page = dataSource.value.count / 30 + 1
+        page += 1
         fetchData()
     }
 }

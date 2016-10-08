@@ -10,18 +10,23 @@ import ObjectMapper
 
 class IssueTableViewModel: BaseTableViewModel<Issue> {
     
-    fileprivate var repo: String
-    fileprivate var token: GithubAPI
+    private var repo: String
     
     init(repo: Repository) {
         self.repo = repo.fullName!
-        token = .repositoryIssues(repo: repo.fullName!)
         super.init()
     }
     
     override func fetchData() {
+        let token = GithubAPI.repositoryIssues(repo: repo, page: page)
+        
         GithubProvider
             .request(token)
+            .do(onNext: {
+                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                    self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
+                }
+            })
             .mapJSON()
             .subscribe(
                 onNext: {

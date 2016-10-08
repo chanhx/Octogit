@@ -11,17 +11,24 @@ import ObjectMapper
 
 class ReleaseTableViewModel: BaseTableViewModel<Release> {
     
-    var token: GithubAPI
+    var repo: String
     
     init(repo: Repository) {
-        token = .repositoryReleases(repo: repo.fullName!)
+        self.repo = repo.fullName!
         
         super.init()
     }
     
     override func fetchData() {
+        let token = GithubAPI.repositoryReleases(repo: repo, page: page)
+        
         GithubProvider
             .request(token)
+            .do(onNext: {
+                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                    self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
+                }
+            })
             .mapJSON()
             .subscribe(
                 onNext: {

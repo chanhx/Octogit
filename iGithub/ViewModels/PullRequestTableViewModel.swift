@@ -10,18 +10,23 @@ import ObjectMapper
 
 class PullRequestTableViewModel: BaseTableViewModel<PullRequest> {
     
-    fileprivate var repo: String
-    fileprivate var token: GithubAPI
+    private var repo: String
     
     init(repo: Repository) {
         self.repo = repo.fullName!
-        token = .repositoryPullRequests(repo: repo.fullName!)
         super.init()
     }
     
     override func fetchData() {
+        let token = GithubAPI.repositoryPullRequests(repo: repo, page: page)
+        
         GithubProvider
             .request(token)
+            .do(onNext: {
+                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                    self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
+                }
+            })
             .mapJSON()
             .subscribe(
                 onNext: {

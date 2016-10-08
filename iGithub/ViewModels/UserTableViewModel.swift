@@ -13,12 +13,12 @@ class UserTableViewModel: BaseTableViewModel<User> {
     fileprivate var token: GithubAPI
     
     init(repo: Repository) {
-        token = .repositoryContributors(repo: repo.fullName!)
+        token = .repositoryContributors(repo: repo.fullName!, page: 1)
         super.init()
     }
     
     init(organization: User) {
-        token = .members(org: organization.login!)
+        token = .organizationMembers(org: organization.login!, page: 1)
         super.init()
     }
     
@@ -28,18 +28,38 @@ class UserTableViewModel: BaseTableViewModel<User> {
     }
     
     init(followedBy user: User) {
-        token = .followedBy(user: user.login!)
+        token = .followedBy(user: user.login!, page: 1)
         super.init()
     }
     
     init(followersOf user: User) {
-        token = .followersOf(user: user.login!)
+        token = .followersOf(user: user.login!, page: 1)
         super.init()
+    }
+    
+    func updateToken() {
+        switch token {
+        case .repositoryContributors(let repo, _):
+            token = .repositoryContributors(repo: repo, page: page)
+        case .organizationMembers(let org, _):
+            token = .organizationMembers(org: org, page: page)
+        case .followedBy(let user, _):
+            token = .followedBy(user: user, page: page)
+        case .followersOf(let user, _):
+            token = .followersOf(user: user, page: page)
+        default:
+            break
+        }
     }
     
     override func fetchData() {
         GithubProvider
             .request(token)
+            .do(onNext: {
+                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                    self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
+                }
+            })
             .mapJSON()
             .subscribe(
                 onNext: {

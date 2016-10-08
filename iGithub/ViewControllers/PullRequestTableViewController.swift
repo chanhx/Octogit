@@ -13,6 +13,14 @@ class PullRequestTableViewController: BaseTableViewController {
     var viewModel: PullRequestTableViewModel! {
         didSet {
             viewModel.dataSource.asObservable()
+                .skip(1)
+                .do(onNext: { _ in
+                    self.tableView.refreshHeader?.endRefreshing()
+                    
+                    self.viewModel.hasNextPage ?
+                        self.tableView.refreshFooter?.endRefreshing() :
+                        self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
+                })
                 .bindTo(tableView.rx.items(cellIdentifier: "IssueCell", cellType: IssueCell.self)) { row, element, cell in
                     cell.entity = element
                 }
@@ -23,9 +31,12 @@ class PullRequestTableViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.register(IssueCell.self, forCellReuseIdentifier: "IssueCell")
+        tableView.register(IssueCell.self, forCellReuseIdentifier: "IssueCell")
         
-        viewModel.fetchData()
+        tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
+        tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
+        
+        tableView.refreshHeader?.beginRefreshing()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -11,16 +11,26 @@ import ObjectMapper
 
 class CommitTableViewModel: BaseTableViewModel<Commit> {
     
-    fileprivate var token: GithubAPI
+    var repo: String
+    var branch: String
     
     init(repo: Repository, branch: String? = nil) {
-        token = .repositoryCommits(repo: repo.fullName!, branch: branch ?? repo.defaultBranch!)
+        self.repo = repo.fullName!
+        self.branch = branch ?? repo.defaultBranch!
+        
         super.init()
     }
     
     override func fetchData() {
+        let token = GithubAPI.repositoryCommits(repo: repo, branch: branch, page: page)
+        
         GithubProvider
             .request(token)
+            .do(onNext: {
+                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                    self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
+                }
+            })
             .mapJSON()
             .subscribe(
                 onNext: {
