@@ -64,7 +64,11 @@ class UserTableViewModel: BaseTableViewModel<User> {
             .subscribe(
                 onNext: {
                     if let newUsers = Mapper<User>().mapArray(JSONObject: $0) {
-                        self.dataSource.value.append(contentsOf: newUsers)
+                        if self.page == 1 {
+                            self.dataSource.value = newUsers
+                        } else {
+                            self.dataSource.value.append(contentsOf: newUsers)
+                        }
                     }
                 },
                 onError: {

@@ -35,7 +35,11 @@ class CommitTableViewModel: BaseTableViewModel<Commit> {
             .subscribe(
                 onNext: {
                     if let newCommits = Mapper<Commit>().mapArray(JSONObject: $0) {
-                        self.dataSource.value.append(contentsOf: newCommits)
+                        if self.page == 1 {
+                            self.dataSource.value = newCommits
+                        } else {
+                            self.dataSource.value.append(contentsOf: newCommits)
+                        }
                     }
                 },
                 onError: {

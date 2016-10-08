@@ -31,7 +31,11 @@ class PullRequestTableViewModel: BaseTableViewModel<PullRequest> {
             .subscribe(
                 onNext: {
                     if let newPullRequests = Mapper<PullRequest>().mapArray(JSONObject: $0) {
-                        self.dataSource.value.append(contentsOf: newPullRequests)
+                        if self.page == 1 {
+                            self.dataSource.value = newPullRequests
+                        } else {
+                            self.dataSource.value.append(contentsOf: newPullRequests)
+                        }
                     }
                 },
                 onError: {

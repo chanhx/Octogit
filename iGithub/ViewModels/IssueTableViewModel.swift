@@ -31,7 +31,11 @@ class IssueTableViewModel: BaseTableViewModel<Issue> {
             .subscribe(
                 onNext: {
                     if let newIssues = Mapper<Issue>().mapArray(JSONObject: $0) {
-                        self.dataSource.value.append(contentsOf: newIssues)
+                        if self.page == 1 {
+                            self.dataSource.value = newIssues
+                        } else {
+                            self.dataSource.value.append(contentsOf: newIssues)
+                        }
                     }
                 },
                 onError: {

@@ -55,7 +55,11 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
             .subscribe(
                 onNext: {
                     if let newRepos = Mapper<Repository>().mapArray(JSONObject: $0) {
-                        self.dataSource.value.append(contentsOf: newRepos)
+                        if self.page == 1 {
+                            self.dataSource.value = newRepos
+                        } else {
+                            self.dataSource.value.append(contentsOf: newRepos)
+                        }
                     }
                 },
                 onError: {

@@ -130,7 +130,7 @@ class RefreshHeader: RefreshComponent {
         }
         
         switch state {
-        case .refreshing:
+        case .refreshing, .noMoreData:
             return
         default:
             break

@@ -16,7 +16,7 @@ class FileTableViewController: BaseTableViewController {
             viewModel.dataSource.asObservable()
                 .skip(1)
                 .do(onNext: { _ in
-                    self.tableView.refreshHeader?.endRefreshing()
+                    self.tableView.refreshHeader?.endRefreshingWithNoMoreData()
                 })
                 .bindTo(tableView.rx.items(cellIdentifier: "FileCell", cellType: FileCell.self)) { row, element, cell in
                     cell.entity = element

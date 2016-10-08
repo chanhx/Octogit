@@ -30,9 +30,13 @@ class GistTableViewModel: BaseTableViewModel<Gist> {
             .mapJSON()
             .subscribe(
                 onNext: {                    
-                    let newGists = Mapper<Gist>().mapArray(JSONObject: $0)!
-                    
-                    self.dataSource.value.append(contentsOf: newGists)
+                    if let newGists = Mapper<Gist>().mapArray(JSONObject: $0) {
+                        if self.page == 1 {
+                            self.dataSource.value = newGists
+                        } else {
+                            self.dataSource.value.append(contentsOf: newGists)
+                        }
+                    }
                 },
                 onError: {
                     MessageManager.show(error: $0)
