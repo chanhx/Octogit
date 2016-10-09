@@ -33,27 +33,27 @@ class DateTransform: TransformOf<Date, String> {
     }
 }
 
-class IssueTransform: TransformOf<Issue, String> {
+class IssueTransform: TransformOf<Issue, AnyObject> {
     init() {
-        super.init(fromJSON: { Mapper<Issue>().map(JSONObject: $0) }, toJSON: { String(describing: $0) })
+        super.init(fromJSON: { Mapper<Issue>().map(JSON: $0 as! [String : Any]) }, toJSON: { String(describing: $0) as AnyObject })
     }
 }
 
-class IssueCommentTransform: TransformOf<IssueComment, String> {
+class IssueCommentTransform: TransformOf<IssueComment, AnyObject> {
     init() {
-        super.init(fromJSON: { Mapper<IssueComment>().map(JSONObject: $0) }, toJSON: { String(describing: $0) })
+        super.init(fromJSON: { Mapper<IssueComment>().map(JSON: $0 as! [String : Any]) }, toJSON: { String(describing: $0) as AnyObject })
     }
 }
 
-class PullRequestTransform: TransformOf<PullRequest, String> {
+class PullRequestTransform: TransformOf<PullRequest, AnyObject> {
     init() {
-        super.init(fromJSON: { Mapper<PullRequest>().map(JSONObject: $0) }, toJSON: { String(describing: $0) })
+        super.init(fromJSON: { Mapper<PullRequest>().map(JSON: $0 as! [String : Any]) }, toJSON: { String(describing: $0) as AnyObject })
     }
 }
 
-class PullRequestCommentTransform: TransformOf<PullRequestComment, String> {
+class PullRequestCommentTransform: TransformOf<PullRequestComment, AnyObject> {
     init() {
-        super.init(fromJSON: { Mapper<PullRequestComment>().map(JSONObject: $0) }, toJSON: { String(describing: $0) })
+        super.init(fromJSON: { Mapper<PullRequestComment>().map(JSON: $0 as! [String : Any]) }, toJSON: { String(describing: $0) as AnyObject })
     }
 }
 
@@ -63,9 +63,9 @@ class RepositoryTransform: TransformOf<Repository, String> {
     }
 }
 
-class EventCommitTransform: TransformOf<EventCommit, String> {
+class EventCommitTransform: TransformOf<EventCommit, AnyObject> {
     init() {
-        super.init(fromJSON: { Mapper<EventCommit>().map(JSONObject: $0) }, toJSON: { String(describing: $0) })
+        super.init(fromJSON: { Mapper<EventCommit>().map(JSON: $0 as! [String : Any]) }, toJSON: { String(describing: $0) as AnyObject })
     }
 }
 

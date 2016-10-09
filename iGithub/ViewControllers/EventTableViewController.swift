@@ -18,7 +18,9 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                 .skip(1)
                 .do(onNext: { _ in
                     self.tableView.refreshHeader?.endRefreshing()
-                    self.tableView.refreshFooter?.endRefreshing()
+                    self.viewModel.hasNextPage ?
+                        self.tableView.refreshFooter?.endRefreshing() :
+                        self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
                 })
                 .bindTo(tableView.rx.items(cellIdentifier: "EventCell", cellType: EventCell.self)) { row, element, cell in
                     cell.entity = element
