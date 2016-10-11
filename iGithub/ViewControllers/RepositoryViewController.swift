@@ -97,13 +97,13 @@ class RepositoryViewController: BaseTableViewController {
             case 0:
                 cell.textLabel?.attributedText = Octicon.issueOpened.iconString(" Issues", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             case 1:
-                cell.textLabel?.attributedText = Octicon.tag.iconString(" Releases", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
+                cell.textLabel?.attributedText = Octicon.gitPullrequest.iconString(" Pull requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             case 2:
-                cell.textLabel?.attributedText = Octicon.rss.iconString(" Recent activity", iconSize: 18, iconColor: .gray)
+                cell.textLabel?.attributedText = Octicon.tag.iconString(" Releases", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
             case 3:
                 cell.textLabel?.attributedText = Octicon.organization.iconString(" Contributors", iconSize: 18, iconColor: .lightGray)
             case 4:
-                cell.textLabel?.attributedText = Octicon.gitPullrequest.iconString(" Pull requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
+                cell.textLabel?.attributedText = Octicon.rss.iconString(" Recent activity", iconSize: 18, iconColor: .gray)
             default: break
             }
             return cell
@@ -149,19 +149,37 @@ class RepositoryViewController: BaseTableViewController {
             self.navigationController?.pushViewController(fileVC, animated: true)
             
         case (1, 0):
-            let issueTVC = IssueTableViewController()
-            issueTVC.viewModel = IssueTableViewModel(repo: viewModel.repository.value)
-            self.navigationController?.pushViewController(issueTVC, animated: true)
+            let repo = viewModel.repository.value
+            
+            let openIssueTVC = IssueTableViewController()
+            openIssueTVC.viewModel = IssueTableViewModel(repo: repo)
+            
+            let closedIssueTVC = IssueTableViewController()
+            closedIssueTVC.viewModel = IssueTableViewModel(repo: repo, state: .closed)
+            
+            let issueSVC = SegmentViewController(viewControllers: [openIssueTVC, closedIssueTVC], titles: ["Open", "Closed"])
+            issueSVC.navigationItem.title = "Issues"
+            
+            self.navigationController?.pushViewController(issueSVC, animated: true)
         
         case (1, 1):
+            let repo = viewModel.repository.value
+            
+            let openPullRequestTVC = PullRequestTableViewController()
+            openPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo)
+            
+            let closedPullRequestTVC = PullRequestTableViewController()
+            closedPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo, state: .closed)
+            
+            let pullRequestSVC = SegmentViewController(viewControllers: [openPullRequestTVC, closedPullRequestTVC], titles: ["Open", "Closed"])
+            pullRequestSVC.navigationItem.title = "Pull requests"
+            
+            self.navigationController?.pushViewController(pullRequestSVC, animated: true)
+
+        case (1, 2):
             let releaseTVC = ReleaseTableViewController()
             releaseTVC.viewModel = ReleaseTableViewModel(repo: viewModel.repository.value)
             self.navigationController?.pushViewController(releaseTVC, animated: true)
-        
-        case (1, 2):
-            let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventTVC") as! EventTableViewController
-            eventTVC.viewModel = EventTableViewModel(repo: viewModel.repository.value)
-            self.navigationController?.pushViewController(eventTVC, animated: true)
             
         case (1, 3):
             let memberTVC = UserTableViewController()
@@ -169,9 +187,9 @@ class RepositoryViewController: BaseTableViewController {
             self.navigationController?.pushViewController(memberTVC, animated: true)
             
         case (1, 4):
-            let pullRequestTVC = PullRequestTableViewController()
-            pullRequestTVC.viewModel = PullRequestTableViewModel(repo: viewModel.repository.value)
-            self.navigationController?.pushViewController(pullRequestTVC, animated: true)
+            let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventTVC") as! EventTableViewController
+            eventTVC.viewModel = EventTableViewModel(repo: viewModel.repository.value)
+            self.navigationController?.pushViewController(eventTVC, animated: true)
             
         case (2, 0):
             let fileTableVC = FileTableViewController()
@@ -186,17 +204,5 @@ class RepositoryViewController: BaseTableViewController {
         default:
             break
         }
-        
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

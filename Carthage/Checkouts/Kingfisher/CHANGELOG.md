@@ -2,6 +2,26 @@
 
 -----
 
+## [3.1.3 - Collocalia](https://github.com/onevcat/Kingfisher/releases/tag/3.1.3) (2016-10-06)
+
+#### Fix
+* A compiling time issue. Now the compile time of Kingfisher should drop dramatically. [#467](https://github.com/onevcat/Kingfisher/pull/467)
+* kf wrapper of all Kingfisher compatible types now a class instead of struct, to make mutating opearation on it possible. [#469](https://github.com/onevcat/Kingfisher/issues/469)
+
+#### Remove
+* requestModifier of `ImageDownloader` is removed to prevent leading to misunderstanding.
+
+---
+
+## [3.1.1 - Kingfisher likes more](https://github.com/onevcat/Kingfisher/releases/tag/3.1.1) (2016-09-28)
+
+#### Fix
+* An issue which prevents using multiple image processors at the same time. Now you can use different `ImageProcessor` at the same time for an image, while keeping high performance since only one downloading process would be fired. [#460](https://github.com/onevcat/Kingfisher/pull/460)
+* A crash when processing some images with built-in `ResizingImageProcessor` and `OverlayImageProcessor` while the input images not having a standard format. [#440](https://github.com/onevcat/Kingfisher/issues/440), [#461](https://github.com/onevcat/Kingfisher/pull/461)
+* ImageCache could accept a path extension as key now. [#456](https://github.com/onevcat/Kingfisher/pull/456)
+
+---
+
 ## [3.1.0 - Namespace](https://github.com/onevcat/Kingfisher/releases/tag/3.1.0) (2016-09-21)
 
 #### Add
@@ -470,3 +490,5 @@
 ## [1.0.0 - Kingfisher, take off](https://github.com/onevcat/Kingfisher/releases/tag/1.0.0) (2015-04-13)
 
 First public release.
+
+

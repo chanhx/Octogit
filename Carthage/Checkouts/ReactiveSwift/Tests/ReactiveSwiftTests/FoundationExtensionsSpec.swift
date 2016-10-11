@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 GitHub. All rights reserved.
 //
 
+import Foundation
+
 import Result
 import Nimble
 import Quick
@@ -18,11 +20,11 @@ extension Notification.Name {
 
 class FoundationExtensionsSpec: QuickSpec {
 	override func spec() {
-		describe("NSNotificationCenter.rac_notifications") {
+		describe("NotificationCenter.reactive.notifications") {
 			let center = NotificationCenter.default
 
 			it("should send notifications on the producer") {
-				let producer = center.rac_notifications(forName: .racFirst)
+				let producer = center.reactive.notifications(forName: .racFirst)
 
 				var notif: Notification? = nil
 				let disposable = producer.startWithValues { notif = $0 }
@@ -42,7 +44,7 @@ class FoundationExtensionsSpec: QuickSpec {
 
 			it("should send Interrupted when the observed object is freed") {
 				var observedObject: AnyObject? = NSObject()
-				let producer = center.rac_notifications(forName: nil, object: observedObject)
+				let producer = center.reactive.notifications(forName: nil, object: observedObject)
 				observedObject = nil
 
 				var interrupted = false

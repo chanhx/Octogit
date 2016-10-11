@@ -11,17 +11,21 @@ import ObjectMapper
 class IssueTableViewModel: BaseTableViewModel<Issue> {
     
     private var repo: String
+    var state: IssueState
     
-    init(repo: Repository) {
+    init(repo: Repository, state: IssueState = .open) {
         self.repo = repo.fullName!
+        self.state = state
+        
         super.init()
     }
     
     override func fetchData() {
-        let token = GithubAPI.repositoryIssues(repo: repo, page: page)
+        let token = GithubAPI.repositoryIssues(repo: repo, page: page, state: state)
         
         GithubProvider
             .request(token)
+            .filterSuccessfulStatusCodes()
             .do(onNext: {
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil

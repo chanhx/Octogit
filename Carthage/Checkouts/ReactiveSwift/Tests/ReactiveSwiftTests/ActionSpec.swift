@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 GitHub. All rights reserved.
 //
 
+import Foundation
+
 import Result
 import Nimble
 import Quick
@@ -61,11 +63,18 @@ class ActionSpec: QuickSpec {
 
 			it("should error if executed while disabled") {
 				var receivedError: ActionError<NSError>?
+				var disabledErrorsTriggered = false
+
+				action.disabledErrors.observeValues {
+					disabledErrorsTriggered = true
+				}
+
 				action.apply(0).startWithFailed {
 					receivedError = $0
 				}
 
 				expect(receivedError).notTo(beNil())
+				expect(disabledErrorsTriggered) == true
 				if let error = receivedError {
 					let expectedError = ActionError<NSError>.disabled
 					expect(error == expectedError) == true
@@ -135,6 +144,40 @@ class ActionSpec: QuickSpec {
 
 					expect(values) == []
 					expect(errors) == [ testError ]
+				}
+			}
+
+			describe("bindings") {
+				it("should execute successfully") {
+					var receivedValue: String?
+					let (signal, observer) = Signal<Int, NoError>.pipe()
+
+					action.values.observeValues { receivedValue = $0 }
+
+					action <~ signal
+
+					enabled.value = true
+
+					expect(executionCount) == 0
+					expect(action.isExecuting.value) == false
+					expect(action.isEnabled.value) == true
+
+					observer.send(value: 0)
+
+					expect(executionCount) == 1
+					expect(action.isExecuting.value) == true
+					expect(action.isEnabled.value) == false
+
+					expect(receivedValue) == "00"
+					expect(values) == [ "0", "00" ]
+					expect(errors) == []
+
+					scheduler.run()
+					expect(action.isExecuting.value) == false
+					expect(action.isEnabled.value) == true
+
+					expect(values) == [ "0", "00" ]
+					expect(errors) == []
 				}
 			}
 		}

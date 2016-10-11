@@ -71,10 +71,11 @@ enum GithubAPI {
     case organizationEvents(org: String, page: Int)
     case repositoryEvents(repo: String, page: Int)
     
+    case repositoryIssues(repo: String, page: Int, state: IssueState)
+    case repositoryPullRequests(repo: String, page: Int, state: IssueState)
+    
     case repositoryCommits(repo: String, branch: String, page: Int)
     case repositoryContributors(repo: String, page: Int)
-    case repositoryIssues(repo: String, page: Int)
-    case repositoryPullRequests(repo: String, page: Int)
     case repositoryReleases(repo: String, page: Int)
     
     case searchRepositories(q: String, sort: RepositoriesSearchSort)
@@ -137,9 +138,9 @@ extension GithubAPI: TargetType {
             return "/repos/\(repo)/contributors"
         case .repositoryEvents(let repo, _):
             return "/repos/\(repo)/events"
-        case .repositoryIssues(let repo, _):
+        case .repositoryIssues(let repo, _, _):
             return "/repos/\(repo)/issues"
-        case .repositoryPullRequests(let repo, _):
+        case .repositoryPullRequests(let repo, _, _):
             return "/repos/\(repo)/pulls"
         case .repositoryReleases(let repo, _):
             return "/repos/\(repo)/releases"
@@ -182,6 +183,10 @@ extension GithubAPI: TargetType {
         case .searchUsers(let q, let sort):
             return ["q": q, "sort": sort.rawValue]
             
+        case .repositoryIssues(_, let page, let state),
+             .repositoryPullRequests(_, let page, let state):
+            return ["page": page, "state": state.rawValue]
+            
         case .followedBy(_, let page),
              .followersOf(_, let page),
              
@@ -193,8 +198,6 @@ extension GithubAPI: TargetType {
              .repositoryEvents(_, let page),
              
              .repositoryContributors(_, let page),
-             .repositoryIssues(_, let page),
-             .repositoryPullRequests(_, let page),
              .repositoryReleases(_, let page),
              
              .userGists(_, let page),

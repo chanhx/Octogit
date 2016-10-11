@@ -1,7 +1,7 @@
 github "Moya/Moya" "8.0.0-beta.2"
-github "Hearst-DD/ObjectMapper" ~> 2.0
+github "Hearst-DD/ObjectMapper" ~> 2.1.0
 github "onevcat/Kingfisher" ~> 3.1.0
-github "malcommac/SwiftDate" "feature/swift-3.0"
+github "malcommac/SwiftDate" ~> 4.0.0
 github "groue/GRMustache.swift" "Swift3"
 github "kishikawakatsumi/KeychainAccess"
 github "TTTAttributedLabel/TTTAttributedLabel"

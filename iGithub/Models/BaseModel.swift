@@ -29,7 +29,7 @@ class UserTransform: TransformOf<User, AnyObject> {
 
 class DateTransform: TransformOf<Date, String> {
     init() {
-        super.init(fromJSON: { $0?.toDate(format: .iso8601Format(.full)) }, toJSON: { String(describing: $0) })
+        super.init(fromJSON: { try! $0?.date(format: .iso8601(options: .withInternetDateTime)).absoluteDate }, toJSON: { String(describing: $0) })
     }
 }
 

@@ -14,15 +14,16 @@ import TTTAttributedLabel
 extension Date {
     var naturalString: String {
         let date = Date()
+        let timeInterval = date.timeIntervalSince(self)
         
-        if self < date - 1.months {
-            return self.toString(dateStyle: .medium, timeStyle: .none)!
+        if timeInterval.in(.month)! >= 1 {
+            return self.string(dateStyle: .medium, timeStyle: .none)
+        } else {
+            let suffix = timeInterval > 0 ? "ago" : "later"
+            var options = ComponentsFormatterOptions(allowedUnits: [.second, .minute, .hour, .day], style: .full, zero: .dropAll)
+            options.maxUnitCount = 1
+            return try! "\(timeInterval.string(options: options)) \(suffix)"
         }
-        
-        let formatter = DateFormatter(componentsStyle: .full)
-        formatter.maxComponentCount = 1
-        let suffix = self < date ? "ago" : "later"
-        return "\(formatter.toString(interval: date.timeIntervalSince(self))!) \(suffix)"
     }
 }
 

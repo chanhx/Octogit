@@ -60,6 +60,7 @@ class IssueViewModel: BaseTableViewModel<IssueComment> {
     override func fetchData() {
         GithubProvider
             .request(token)
+            .filterSuccessfulStatusCodes()
             .mapJSON()
             .subscribe(
                 onNext: {
