@@ -11,18 +11,37 @@ import ObjectMapper
 
 class CommitTableViewModel: BaseTableViewModel<Commit> {
     
-    var repo: String
-    var branch: String
+    var token: GithubAPI
     
     init(repo: Repository, branch: String? = nil) {
-        self.repo = repo.fullName!
-        self.branch = branch ?? repo.defaultBranch!
+        token = .repositoryCommits(repo: repo.fullName!,
+                                   branch: branch ?? repo.defaultBranch!,
+                                   page: 1)
         
         super.init()
     }
     
+    init(repo: String, pullRequestNumber: Int) {
+        token = .pullRequestCommits(repo: repo,
+                                    number: pullRequestNumber,
+                                    page: 1)
+        
+        super.init()
+    }
+    
+    func updateToken() {
+        switch token {
+        case .repositoryCommits(let repo, let branch, _):
+            token = .repositoryCommits(repo: repo, branch: branch, page: page)
+        case .pullRequestCommits(let repo, let number, _):
+            token = .pullRequestCommits(repo: repo, number: number, page: page)
+        default:
+            break
+        }
+    }
+    
     override func fetchData() {
-        let token = GithubAPI.repositoryCommits(repo: repo, branch: branch, page: page)
+        updateToken()
         
         GithubProvider
             .request(token)

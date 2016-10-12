@@ -176,6 +176,19 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
             let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC") as! UserViewController
             userVC.viewModel = UserViewModel(viewModel.issue.assignees![indexPath.row])
             navigationController?.pushViewController(userVC, animated: true)
+        case .changes:
+            switch indexPath.row {
+            case 0:
+                let commitTVC = CommitTableViewController()
+                commitTVC.viewModel = CommitTableViewModel(repo: viewModel.repo, pullRequestNumber: viewModel.issue.number!)
+                navigationController?.pushViewController(commitTVC, animated: true)
+            case 1:
+                let fileTVC = PullRequestFileTableViewController()
+                fileTVC.viewModel = PullRequestFileTableViewModel(repo: viewModel.repo, pullRequestNumber: viewModel.issue.number!)
+                navigationController?.pushViewController(fileTVC, animated: true)
+            default:
+                break
+            }
         default: break
         }
     }

@@ -62,7 +62,7 @@ class CommitCell: UITableViewCell {
     var entity: Commit! {
         didSet {
             avatarView.setAvatar(with: entity.author?.avatarURL)
-            titleLabel.text = entity.message
+            titleLabel.text = entity.message?.replacingOccurrences(of: "\n\n", with: "\n")
             
             let author = entity.author?.login ?? entity.authorName
             infoLabel.text = "\(entity.shortSHA) by \(author!) \(entity.commitDate!.naturalString)"

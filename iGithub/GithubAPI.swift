@@ -75,6 +75,10 @@ enum GithubAPI {
     case repositoryPullRequests(repo: String, page: Int, state: IssueState)
     
     case repositoryCommits(repo: String, branch: String, page: Int)
+    case pullRequestCommits(repo: String, number: Int, page: Int)
+    
+    case pullRequestFiles(repo: String, number: Int, page: Int)
+    
     case repositoryContributors(repo: String, page: Int)
     case repositoryReleases(repo: String, page: Int)
     
@@ -134,6 +138,12 @@ extension GithubAPI: TargetType {
             
         case .repositoryCommits(let repo, _, _):
             return "/repos/\(repo)/commits"
+        case .pullRequestCommits(let repo, let number, _):
+            return "/repos/\(repo)/pulls/\(number)/commits"
+            
+        case .pullRequestFiles(let repo, let number, _):
+            return "/repos/\(repo)/pulls/\(number)/files"
+            
         case .repositoryContributors(let repo, _):
             return "/repos/\(repo)/contributors"
         case .repositoryEvents(let repo, _):
@@ -196,6 +206,9 @@ extension GithubAPI: TargetType {
              .userEvents(_, let page),
              .organizationEvents(_, let page),
              .repositoryEvents(_, let page),
+             
+             .pullRequestCommits(_, _, let page),
+             .pullRequestFiles(_, _, let page),
              
              .repositoryContributors(_, let page),
              .repositoryReleases(_, let page),

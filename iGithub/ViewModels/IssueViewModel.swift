@@ -23,11 +23,13 @@ class IssueViewModel: BaseTableViewModel<IssueComment> {
     }
 
     var token: GithubAPI
+    var repo: String
     var issue: Issue
     
     private var sectionTypes = [SectionType]()
     
     init(repo: String, issue: Issue) {
+        self.repo = repo
         token = .issueComments(repo: repo, number: issue.number!)
         self.issue = issue
         
