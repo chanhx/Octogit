@@ -37,4 +37,8 @@ class PullRequest : Issue {
             return UIColor(netHex: 0x6cc644)
         }
     }
+    
+    override var isPullRequest: Bool {
+        return true
+    }
 }

@@ -28,7 +28,7 @@ class Issue : BaseModel {
     var createdAt: Date?
     var closedAt: Date?
     var comments: Int?
-    var pullRequest: PullRequest?
+    var pullRequest: [String: String]?
     
     override func mapping(map: Map) {
         id          <- map["id"]
@@ -43,6 +43,7 @@ class Issue : BaseModel {
         createdAt   <- (map["created_at"], DateTransform())
         closedAt    <- (map["closed_at"], DateTransform())
         comments    <- map["comments"]
+        pullRequest <- map["pull_request"]
     }
     
     var icon: Octicon {
@@ -61,5 +62,13 @@ class Issue : BaseModel {
         case .open:
             return UIColor(netHex: 0x6cc644)
         }
+    }
+    
+    var isPullRequest: Bool {
+        if let _ = pullRequest {
+            return true
+        }
+        
+        return false
     }
 }

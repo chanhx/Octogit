@@ -35,10 +35,15 @@ class IssueTableViewModel: BaseTableViewModel<Issue> {
             .subscribe(
                 onNext: {
                     if let newIssues = Mapper<Issue>().mapArray(JSONObject: $0) {
+                        
+                        let filteredIssues = newIssues.filter {
+                            !$0.isPullRequest
+                        }
+                        
                         if self.page == 1 {
-                            self.dataSource.value = newIssues
+                            self.dataSource.value = filteredIssues
                         } else {
-                            self.dataSource.value.append(contentsOf: newIssues)
+                            self.dataSource.value.append(contentsOf: filteredIssues)
                         }
                     }
                 },

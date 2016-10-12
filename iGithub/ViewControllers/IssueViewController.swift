@@ -68,7 +68,9 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
         
         userAvatar.setAvatar(with: viewModel.issue.user?.avatarURL)
         
-        let attrInfo = NSMutableAttributedString(string: "\(viewModel.issue.user!) opened this issue \(viewModel.issue.createdAt!.naturalString)")
+        let object = viewModel.issue.isPullRequest ? "pull request" : "issue"
+        
+        let attrInfo = NSMutableAttributedString(string: "\(viewModel.issue.user!) opened this \(object) \(viewModel.issue.createdAt!.naturalString)")
         attrInfo.addAttributes([
             NSForegroundColorAttributeName: UIColor(netHex: 0x555555),
             NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightMedium)
@@ -93,7 +95,10 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
         case .changes:
             return "Changes"
         case .timeline:
-            return "Comments"
+            if viewModel.dataSource.value.count > 0 {
+                return "Comments"
+            }
+            return nil
         default:
             return nil
         }
@@ -108,9 +113,10 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (indexPath.section, indexPath.row) == (0, 0) {
+        switch viewModel.sectionType(for: indexPath.section) {
+        case .content:
             return contentHeight.value
-        } else {
+        default:
             return super.tableView(tableView, heightForRowAt: indexPath)
         }
     }
