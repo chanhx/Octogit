@@ -19,31 +19,52 @@ class FileViewModel {
         return (NSDictionary(contentsOfFile: path!) as! [String: String])
     }()
     
-    var repo: String
-    var file: File
+    var repo: String?
+    var file: File?
+    var fileName: String
+    var filePath: String?
     var html = Variable("")
     var contentData = Variable(Data())
+    var mimeType: String {
+        return self.file!.MIMEType
+    }
+    var shouldFetchData: Bool
     let disposeBag = DisposeBag()
     
     init(repository: String, file: File) {
         repo = repository
         self.file = file
+        fileName = file.name!
+        filePath = file.path!.components(separatedBy: "/").dropLast().joined(separator: "/")
+        
+        shouldFetchData = true
     }
     
     init(repository: String) {
         repo = repository
         file = Mapper<File>().map(JSON: ["name": "README"])!
+        fileName = "README"
+        
+        shouldFetchData = true
+    }
+    
+    init(file: PullRequestFile) {
+        html.value = Renderer.render(file.patch!, language: "diff")
+        fileName = file.name
+        filePath = file.path!.components(separatedBy: "/").dropLast().joined(separator: "/")
+        
+        shouldFetchData = false
     }
     
     func fetch() {
-        switch self.file.name! {
+        switch self.file!.name! {
         case "README", "LICENSE":
             fetchHTMLContent()
             return
         default: break
         }
         
-        switch self.file.name!.pathExtension {
+        switch self.file!.name!.pathExtension {
         case "md", "markdown", "adoc", "txt":
             fetchHTMLContent()
             return
@@ -53,7 +74,7 @@ class FileViewModel {
     }
     
     func fetchContent() {
-        let token = GithubAPI.getContents(repo: repo, path: file.path!)
+        let token = GithubAPI.getContents(repo: repo!, path: file!.path!)
         
         GithubProvider
             .request(token)
@@ -62,12 +83,12 @@ class FileViewModel {
                 onNext: {
                     self.file = Mapper<File>().map(JSONObject: $0)!
                     
-                    let type = self.file.MIMEType.components(separatedBy: "/")[0]
+                    let type = self.mimeType.components(separatedBy: "/")[0]
                     switch type {
                     case "image":
-                        self.contentData.value = Data.dataFromGHBase64String(self.file.content!)!
+                        self.contentData.value = Data.dataFromGHBase64String(self.file!.content!)!
                     default:
-                        self.html.value = self.htmlForRawFile(self.file.content!)
+                        self.html.value = self.htmlForRawFile(self.file!.content!)
                     }
                 },
                 onError: {
@@ -79,10 +100,10 @@ class FileViewModel {
     
     func fetchHTMLContent() {
         let token: GithubAPI
-        if let path = file.path {
-            token = GithubAPI.getHTMLContents(repo: repo, path: path)
+        if let path = file!.path {
+            token = GithubAPI.getHTMLContents(repo: repo!, path: path)
         } else {
-            token = GithubAPI.getTheREADME(repo: repo)
+            token = GithubAPI.getTheREADME(repo: repo!)
         }
         
         GithubProvider
@@ -116,7 +137,7 @@ class FileViewModel {
     }
     
     var languageOfFile: String? {
-        let fileExtension = file.name?.components(separatedBy: ".").last!
-        return FileViewModel.fileExtensionsDict[fileExtension!]
+        let fileExtension = file!.name!.components(separatedBy: ".").last!
+        return FileViewModel.fileExtensionsDict[fileExtension]
     }
 }

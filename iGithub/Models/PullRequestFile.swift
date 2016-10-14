@@ -17,7 +17,7 @@ class PullRequestFile: BaseModel {
         case modified = "modified"
     }
     
-    var name: String?
+    var path: String?
     var sha: String?
     var status: Status?
     var additions: Int?
@@ -26,12 +26,16 @@ class PullRequestFile: BaseModel {
     var patch: String?
     
     override func mapping(map: Map) {
-        name        <- map["filename"]
+        path        <- map["filename"]
         sha         <- map["sha"]
         status      <- map["status"]
         additions   <- map["additions"]
         deletions   <- map["deletions"]
         changes     <- map["changes"]
         patch       <- map["patch"]
+    }
+    
+    var name: String {
+        return path!.components(separatedBy: "/").last!
     }
 }

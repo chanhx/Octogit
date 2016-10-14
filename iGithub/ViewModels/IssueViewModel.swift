@@ -94,7 +94,7 @@ class IssueViewModel: BaseTableViewModel<IssueComment> {
         case .asignees:
             return issue.assignees!.count
         case .changes:
-            return 3
+            return 2
         case .timeline:
             return dataSource.value.count
         }

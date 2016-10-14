@@ -156,9 +156,7 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
             case 0:
                 cell.textLabel?.attributedText = Octicon.gitCommit.iconString(" Commits", iconSize: 18, iconColor: iconColor)
             case 1:
-                cell.textLabel?.attributedText = Octicon.fileText.iconString(" Files", iconSize: 18, iconColor: iconColor)
-            case 2:
-                cell.textLabel?.attributedText = Octicon.diff.iconString(" Diff", iconSize: 18, iconColor: iconColor)
+                cell.textLabel?.attributedText = Octicon.diff.iconString(" Files changed", iconSize: 18, iconColor: iconColor)
             default:
                 break
             }

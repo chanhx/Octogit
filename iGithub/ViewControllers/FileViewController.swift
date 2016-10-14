@@ -26,7 +26,7 @@ class FileViewController: UIViewController {
             viewModel.contentData.asObservable()
                 .skipWhile { $0.count <= 0 }
                 .subscribe(onNext: { data in
-                    self.webView.load(data, mimeType: self.viewModel.file.MIMEType, characterEncodingName: "utf-8", baseURL: Bundle.main.resourceURL!)
+                    self.webView.load(data, mimeType: self.viewModel.mimeType, characterEncodingName: "utf-8", baseURL: Bundle.main.resourceURL!)
                 })
                 .addDisposableTo(viewModel.disposeBag)
         }
@@ -36,11 +36,16 @@ class FileViewController: UIViewController {
         super.viewDidLoad()
 
         webView.frame = self.view.bounds
-        self.view.addSubview(webView)
+        view.addSubview(webView)
         
-        self.navigationItem.title = viewModel.file.name
-        
-        viewModel.fetch()
+        navigationItem.title = viewModel.fileName
+        if let path = viewModel.filePath, path.characters.count > 0 {
+            navigationItem.prompt = path
+        }
+
+        if viewModel.shouldFetchData {
+            viewModel.fetch()
+        }
     }
     
 }

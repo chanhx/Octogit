@@ -9,14 +9,15 @@
 import Foundation
 import ObjectMapper
 
-enum FileType: String {
-    case directory = "dir"
-    case file = "file"
-    case submodule = "submodule"
-    case symlink = "symlink"
-}
-
 class File: BaseModel {
+    
+    enum FileType: String {
+        case directory = "dir"
+        case file = "file"
+        case submodule = "submodule"
+        case symlink = "symlink"
+    }
+
     var type: FileType?
     var encoding: String?
     var size: Int?

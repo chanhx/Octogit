@@ -23,6 +23,12 @@ class PullRequestFileTableViewModel: BaseTableViewModel<PullRequestFile> {
 
         GithubProvider
             .request(token)
+            .filterSuccessfulStatusAndRedirectCodes()
+            .do(onNext: {
+                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                    self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
+                }
+            })
             .mapJSON()
             .subscribe(
                 onNext: {
