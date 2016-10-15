@@ -11,9 +11,11 @@ import ObjectMapper
 
 class CommitTableViewModel: BaseTableViewModel<Commit> {
     
+    var repo: String
     var token: GithubAPI
     
     init(repo: Repository, branch: String? = nil) {
+        self.repo = repo.fullName!
         token = .repositoryCommits(repo: repo.fullName!,
                                    branch: branch ?? repo.defaultBranch!,
                                    page: 1)
@@ -22,6 +24,7 @@ class CommitTableViewModel: BaseTableViewModel<Commit> {
     }
     
     init(repo: String, pullRequestNumber: Int) {
+        self.repo = repo
         token = .pullRequestCommits(repo: repo,
                                     number: pullRequestNumber,
                                     page: 1)
@@ -66,5 +69,10 @@ class CommitTableViewModel: BaseTableViewModel<Commit> {
                 }
             )
             .addDisposableTo(disposeBag)
+    }
+    
+    func commitViewModel(forRow row: Int) -> CommitViewModel {
+        let commit = dataSource.value[row]
+        return CommitViewModel(repo: repo, commit: commit)
     }
 }

@@ -39,9 +39,9 @@ class IssueTransform: TransformOf<Issue, AnyObject> {
     }
 }
 
-class IssueCommentTransform: TransformOf<IssueComment, AnyObject> {
+class CommentTransform: TransformOf<Comment, AnyObject> {
     init() {
-        super.init(fromJSON: { Mapper<IssueComment>().map(JSON: $0 as! [String : Any]) }, toJSON: { String(describing: $0) as AnyObject })
+        super.init(fromJSON: { Mapper<Comment>().map(JSON: $0 as! [String : Any]) }, toJSON: { String(describing: $0) as AnyObject })
     }
 }
 
@@ -107,5 +107,11 @@ class GistFilesTransform: TransformOf<[GistFile], AnyObject> {
 //                } as AnyObject
                  String(describing: $0) as AnyObject
         })
+    }
+}
+
+class CommitFileTransform: TransformOf<CommitFile, AnyObject> {
+    init() {
+        super.init(fromJSON: { Mapper<CommitFile>().map(JSON: $0 as! [String: Any]) }, toJSON: { String(describing: $0) as AnyObject })
     }
 }

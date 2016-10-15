@@ -1,5 +1,5 @@
 //
-//  PullRequestFileTableViewModel.swift
+//  CommitFileTableViewModel.swift
 //  iGithub
 //
 //  Created by Chan Hocheung on 10/12/16.
@@ -9,17 +9,26 @@
 import Foundation
 import ObjectMapper
 
-class PullRequestFileTableViewModel: BaseTableViewModel<PullRequestFile> {
+class CommitFileTableViewModel: BaseTableViewModel<CommitFile> {
     
-    var token: GithubAPI
+    var repo: String?
+    var pullRequestNumber: Int?
     
     init(repo: String, pullRequestNumber: Int) {
-        token = .pullRequestFiles(repo: repo, number: pullRequestNumber, page: 1)
+        self.repo = repo
+        self.pullRequestNumber = pullRequestNumber
         
         super.init()
     }
     
+    init(files: [CommitFile]) {
+        super.init()
+        
+        self.dataSource.value = files
+    }
+    
     override func fetchData() {
+        let token = GithubAPI.pullRequestFiles(repo: repo!, number: pullRequestNumber!, page: page)
 
         GithubProvider
             .request(token)
@@ -32,7 +41,7 @@ class PullRequestFileTableViewModel: BaseTableViewModel<PullRequestFile> {
             .mapJSON()
             .subscribe(
                 onNext: {
-                    if let newFiles = Mapper<PullRequestFile>().mapArray(JSONObject: $0) {
+                    if let newFiles = Mapper<CommitFile>().mapArray(JSONObject: $0) {
                         self.dataSource.value.append(contentsOf: newFiles)
                     }
                 },
@@ -41,5 +50,9 @@ class PullRequestFileTableViewModel: BaseTableViewModel<PullRequestFile> {
                 }
             )
             .addDisposableTo(disposeBag)
+    }
+    
+    func fileViewModel(forRow row: Int) -> FileViewModel {
+        return FileViewModel(file: dataSource.value[row])
     }
 }

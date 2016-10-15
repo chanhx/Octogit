@@ -58,7 +58,10 @@ enum GithubAPI {
     case getHTMLContents(repo: String, path: String)
     case getTheREADME(repo: String)
     
-    case issueComments(repo: String, number: Int)
+    // MARK: Comments
+    
+    case issueComments(repo: String, number: Int, page: Int)
+    case commitComment(repo: String, sha: String, page: Int)
     
     case oAuthUser(accessToken: String)
     
@@ -76,6 +79,7 @@ enum GithubAPI {
     
     case repositoryCommits(repo: String, branch: String, page: Int)
     case pullRequestCommits(repo: String, number: Int, page: Int)
+    case getACommit(repo: String, sha: String)
     
     case pullRequestFiles(repo: String, number: Int, page: Int)
     
@@ -115,8 +119,12 @@ extension GithubAPI: TargetType {
         case .getTheREADME(let repo):
             return "/repos/\(repo)/readme"
             
-        case .issueComments(let repo, let number):
+        // MARK: Comments
+            
+        case .issueComments(let repo, let number, _):
             return "/repos/\(repo)/issues/\(number)/comments"
+        case .commitComment(let repo, let sha, _):
+            return "/repos/\(repo)/commits/\(sha)/comments"
             
         case .oAuthUser:
             return "/user"
@@ -140,6 +148,8 @@ extension GithubAPI: TargetType {
             return "/repos/\(repo)/commits"
         case .pullRequestCommits(let repo, let number, _):
             return "/repos/\(repo)/pulls/\(number)/commits"
+        case .getACommit(let repo, let sha):
+            return "/repos/\(repo)/commits/\(sha)"
             
         case .pullRequestFiles(let repo, let number, _):
             return "/repos/\(repo)/pulls/\(number)/files"
@@ -201,6 +211,9 @@ extension GithubAPI: TargetType {
              .followersOf(_, let page),
              
              .organizationMembers(_, let page),
+             
+             .issueComments(_, _, let page),
+             .commitComment(_, _, let page),
              
              .receivedEvents(_, let page),
              .userEvents(_, let page),

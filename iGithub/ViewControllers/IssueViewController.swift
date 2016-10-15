@@ -187,8 +187,8 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
                 commitTVC.viewModel = CommitTableViewModel(repo: viewModel.repo, pullRequestNumber: viewModel.issue.number!)
                 navigationController?.pushViewController(commitTVC, animated: true)
             case 1:
-                let fileTVC = PullRequestFileTableViewController()
-                fileTVC.viewModel = PullRequestFileTableViewModel(repo: viewModel.repo, pullRequestNumber: viewModel.issue.number!)
+                let fileTVC = CommitFileTableViewController()
+                fileTVC.viewModel = CommitFileTableViewModel(repo: viewModel.repo, pullRequestNumber: viewModel.issue.number!)
                 navigationController?.pushViewController(fileTVC, animated: true)
             default:
                 break

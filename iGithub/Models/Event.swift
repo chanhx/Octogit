@@ -165,14 +165,14 @@ class GollumEvent: Event {
 class IssueCommentEvent : Event {
     var action: String?
     var issue: Issue?
-    var comment: IssueComment?
+    var comment: Comment?
     
     override func mapping(map: Map) {
         super.mapping(map: map)
         
         action <- map["payload.action"]
         issue <- (map["payload.issue"], IssueTransform())
-        comment <- (map["payload.comment"], IssueCommentTransform())
+        comment <- (map["payload.comment"], CommentTransform())
     }
 }
 

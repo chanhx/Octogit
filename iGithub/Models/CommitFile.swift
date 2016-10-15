@@ -1,5 +1,5 @@
 //
-//  PullRequestFile.swift
+//  CommitFile.swift
 //  iGithub
 //
 //  Created by Chan Hocheung on 10/12/16.
@@ -9,12 +9,13 @@
 import Foundation
 import ObjectMapper
 
-class PullRequestFile: BaseModel {
+class CommitFile: BaseModel {
     
     enum Status: String {
         case added = "added"
         case removed = "removed"
         case modified = "modified"
+        case renamed = "renamed"
     }
     
     var path: String?

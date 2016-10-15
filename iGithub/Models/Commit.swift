@@ -18,14 +18,16 @@ class Commit: BaseModel {
     var author: User?
     var authorName: String?
     var committer: User?
+    var files: [CommitFile]?
     
     override func mapping(map: Map) {
         sha         <- map["sha"]
         message     <- map["commit.message"]
-        commitDate  <- (map["commit.committer.date"], DateTransform())
+        commitDate  <- (map["commit.author.date"], DateTransform())
         author      <- map["author"]
         authorName  <- map["commit.author.name"]
         committer   <- map["committer"]
+        files       <- (map["files"], CommitFileTransform())
     }
     
     lazy var shortSHA: String = {

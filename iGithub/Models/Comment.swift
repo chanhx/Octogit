@@ -1,5 +1,5 @@
 //
-//  IssueComment.swift
+//  Comment.swift
 //  iGithub
 //
 //  Created by Chan Hocheung on 7/21/16.
@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class IssueComment : BaseModel {
+class Comment: BaseModel {
     
     var id: Int?
     var user: User?

@@ -70,7 +70,7 @@ class CommentCell: UITableViewCell {
         ])
     }
     
-    var entity: IssueComment! {
+    var entity: Comment! {
         didSet {
             avatarView.setAvatar(with: entity.user?.avatarURL)
             nameLabel.text = entity.user?.login

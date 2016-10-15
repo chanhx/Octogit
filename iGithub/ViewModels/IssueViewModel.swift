@@ -12,7 +12,7 @@ import Mustache
 import RxSwift
 import ObjectMapper
 
-class IssueViewModel: BaseTableViewModel<IssueComment> {
+class IssueViewModel: BaseTableViewModel<Comment> {
     
     enum SectionType {
         case content
@@ -22,7 +22,6 @@ class IssueViewModel: BaseTableViewModel<IssueComment> {
         case timeline
     }
 
-    var token: GithubAPI
     var repo: String
     var issue: Issue
     
@@ -30,7 +29,6 @@ class IssueViewModel: BaseTableViewModel<IssueComment> {
     
     init(repo: String, issue: Issue) {
         self.repo = repo
-        token = .issueComments(repo: repo, number: issue.number!)
         self.issue = issue
         
         super.init()
@@ -60,13 +58,15 @@ class IssueViewModel: BaseTableViewModel<IssueComment> {
     }
     
     override func fetchData() {
+        let token = GithubAPI.issueComments(repo: repo, number: issue.number!, page: page)
+        
         GithubProvider
             .request(token)
             .filterSuccessfulStatusCodes()
             .mapJSON()
             .subscribe(
                 onNext: {
-                    if let newComments = Mapper<IssueComment>().mapArray(JSONObject: $0) {
+                    if let newComments = Mapper<Comment>().mapArray(JSONObject: $0) {
                         self.dataSource.value.append(contentsOf: newComments)
                     }
                 },

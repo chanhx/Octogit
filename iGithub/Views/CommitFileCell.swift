@@ -1,5 +1,5 @@
 //
-//  PullRequestFileCell.swift
+//  CommitFileCell.swift
 //  iGithub
 //
 //  Created by Chan Hocheung on 10/12/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PullRequestFileCell: UITableViewCell {
+class CommitFileCell: UITableViewCell {
     
     private let iconLabel = UILabel()
     private let nameLabel = UILabel()
@@ -61,7 +61,7 @@ class PullRequestFileCell: UITableViewCell {
         ])
     }
     
-    var entity: PullRequestFile! {
+    var entity: CommitFile! {
         didSet {
             nameLabel.text = entity.name
             
@@ -82,7 +82,7 @@ class PullRequestFileCell: UITableViewCell {
                 iconLabel.text = Octicon.diffAdded.rawValue
             case .removed:
                 iconLabel.text = Octicon.diffRemoved.rawValue
-            case .modified:
+            case .modified, .renamed:
                 iconLabel.text = Octicon.diffModified.rawValue
             }
         }

@@ -48,7 +48,7 @@ class FileViewModel {
         shouldFetchData = true
     }
     
-    init(file: PullRequestFile) {
+    init(file: CommitFile) {
         html.value = Renderer.render(file.patch!, language: "diff")
         fileName = file.name
         filePath = file.path!.components(separatedBy: "/").dropLast().joined(separator: "/")
