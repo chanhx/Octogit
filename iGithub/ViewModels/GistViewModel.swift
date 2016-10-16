@@ -1,26 +1,27 @@
 //
-//  GistTableViewModel.swift
+//  GistViewModel.swift
 //  iGithub
 //
-//  Created by Chan Hocheung on 10/4/16.
+//  Created by Chan Hocheung on 10/15/16.
 //  Copyright © 2016 Hocheung. All rights reserved.
 //
 
 import Foundation
+import RxSwift
 import ObjectMapper
 
-class GistTableViewModel: BaseTableViewModel<Gist> {
+class GistViewModel: BaseTableViewModel<Comment> {
     
-    var user: String
+    var gist: Gist
     
-    init(user: User) {
-        self.user = user.login!
+    init(gist: Gist) {
+        self.gist = gist
         
         super.init()
     }
     
     override func fetchData() {
-        let token = GithubAPI.userGists(user: user, page: page)
+        let token = GithubAPI.gistComments(gistID: gist.id!, page: page)
         
         GithubProvider
             .request(token)
@@ -31,13 +32,9 @@ class GistTableViewModel: BaseTableViewModel<Gist> {
             })
             .mapJSON()
             .subscribe(
-                onNext: {                    
-                    if let newGists = Mapper<Gist>().mapArray(JSONObject: $0) {
-                        if self.page == 1 {
-                            self.dataSource.value = newGists
-                        } else {
-                            self.dataSource.value.append(contentsOf: newGists)
-                        }
+                onNext: {
+                    if let newComments = Mapper<Comment>().mapArray(JSONObject: $0) {
+                        self.dataSource.value.append(contentsOf: newComments)
                     }
                 },
                 onError: {
@@ -47,4 +44,12 @@ class GistTableViewModel: BaseTableViewModel<Gist> {
             .addDisposableTo(disposeBag)
     }
     
+    func numberOfRows(inSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return gist.files!.count
+        default:
+            return dataSource.value.count
+        }
+    }
 }

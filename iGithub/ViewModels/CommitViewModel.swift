@@ -56,7 +56,7 @@ class CommitViewModel: BaseTableViewModel<Comment> {
     }
     
     override func fetchData() {
-        let token = GithubAPI.commitComment(repo: repo, sha: commit.value.sha!, page: page)
+        let token = GithubAPI.commitComments(repo: repo, sha: commit.value.sha!, page: page)
         
         GithubProvider
             .request(token)
@@ -92,7 +92,7 @@ class CommitViewModel: BaseTableViewModel<Comment> {
         return sectionTypes.count
     }
     
-    func numberOfRowsIn(section: Int) -> Int {
+    func numberOfRows(inSection section: Int) -> Int {
         switch sectionTypes[section] {
         case .message:
             return 1

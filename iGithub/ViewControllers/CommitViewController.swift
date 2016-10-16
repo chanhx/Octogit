@@ -43,7 +43,6 @@ class CommitViewController: BaseTableViewController {
         super.viewDidLoad()
         
         navigationItem.title = viewModel.commit.value.shortSHA
-        tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
         
         configureHeader()
         sizeHeaderToFit(tableView: tableView)
@@ -100,7 +99,7 @@ class CommitViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRowsIn(section: section)
+        return viewModel.numberOfRows(inSection: section)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

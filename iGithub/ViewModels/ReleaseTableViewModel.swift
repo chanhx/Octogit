@@ -20,7 +20,7 @@ class ReleaseTableViewModel: BaseTableViewModel<Release> {
     }
     
     override func fetchData() {
-        let token = GithubAPI.repositoryReleases(repo: repo, page: page)
+        let token = GithubAPI.releases(repo: repo, page: page)
         
         GithubProvider
             .request(token)

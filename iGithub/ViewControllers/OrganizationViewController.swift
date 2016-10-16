@@ -25,8 +25,14 @@ class OrganizationViewController: BaseTableViewController {
                         self.tableView.reloadData()
                         
                         self.avatarView.setAvatar(with: org.avatarURL)
-                        self.nameLabel.text = org.name ?? (org.login ?? "")
                         self.descLabel.text = org.orgDescription
+                        
+                        if let name = org.name?.trimmingCharacters(in: .whitespaces)
+                            , name.characters.count > 0 {
+                            self.nameLabel.text = name
+                        } else {
+                            self.nameLabel.text = org.login
+                        }
                         
                         self.sizeHeaderToFit(tableView: self.tableView)
                     }
