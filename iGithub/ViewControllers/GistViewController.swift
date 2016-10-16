@@ -107,15 +107,15 @@ class GistViewController: BaseTableViewController {
         }
     }
     
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        super.tableView(tableView, didSelectRowAt: indexPath)
-//        
-//        guard indexPath.section == 0 else {
-//            return
-//        }
-//        
-//        let fileTVC = FileViewController()
-//        fileTVC.viewModel = FileViewModel(file: <#T##CommitFile#>)
-//        navigationController?.pushViewController(fileTVC, animated: true)
-//    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
+        
+        guard indexPath.section == 0 else {
+            return
+        }
+        
+        let fileTVC = FileViewController()
+        fileTVC.viewModel = FileViewModel(file: viewModel.gist.files![indexPath.row])
+        navigationController?.pushViewController(fileTVC, animated: true)
+    }
 }

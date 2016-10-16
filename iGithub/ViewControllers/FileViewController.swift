@@ -43,9 +43,7 @@ class FileViewController: UIViewController {
             navigationItem.prompt = path
         }
 
-        if viewModel.shouldFetchData {
-            viewModel.fetch()
-        }
+        viewModel.getFileContent()
     }
     
 }
