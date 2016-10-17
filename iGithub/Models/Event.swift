@@ -251,6 +251,7 @@ class PullRequestReviewCommentEvent : Event {
         
         action  <- map["payload.action"]
         comment <- (map["payload.comment"], PullRequestCommentTransform())
+        pullRequest <- (map["payload.pull_request"], PullRequestTransform())
     }
 }
 

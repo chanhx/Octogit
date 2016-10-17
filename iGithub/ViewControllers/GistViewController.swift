@@ -39,8 +39,6 @@ class GistViewController: BaseTableViewController {
         
         configureHeader()
         sizeHeaderToFit(tableView: tableView)
-        
-        viewModel.fetchData()
     }
     
     func configureHeader() {
