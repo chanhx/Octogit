@@ -13,10 +13,18 @@ import ObjectMapper
 
 class RepositoryViewModel {
     
+    enum InfoType {
+        case author
+        case description
+        case homepage
+        case readme
+    }
+    
     var fullName: String
     let disposeBag = DisposeBag()
     var repository: Variable<Repository>
     var repositoryLoaded = false
+    var infoTypes = [InfoType]()
     
     init(repo: Repository) {
         self.fullName = repo.fullName!
@@ -39,14 +47,36 @@ class RepositoryViewModel {
 //                if $0.statusCode == 404 {
 //                    
 //                }
-                self.repositoryLoaded = true
-                self.repository.value = Mapper<Repository>().map(JSONObject: $0)!
+                
+                if let repo = Mapper<Repository>().map(JSONObject: $0) {
+                    self.setInfoTypes(repo: repo)
+                    self.repositoryLoaded = true
+                    self.repository.value = repo
+                }
             })
             .addDisposableTo(disposeBag)
     }
     
     var numberOfSections: Int {
         return self.repositoryLoaded ? 3 : 1
+    }
+    
+    func setInfoTypes(repo: Repository) {
+        
+        infoTypes.removeAll()
+        infoTypes.append(.author)
+        
+        if let desc = repo.repoDescription?.trimmingCharacters(in: .whitespacesAndNewlines),
+            desc.characters.count > 0 {
+            infoTypes.append(.description)
+        }
+        
+        if let homepage = repo.homepage?.absoluteString.trimmingCharacters(in: .whitespacesAndNewlines),
+            homepage.characters.count > 0 {
+            infoTypes.append(.homepage)
+        }
+        
+        infoTypes.append(.readme)
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
@@ -56,12 +86,7 @@ class RepositoryViewModel {
         
         switch section {
         case 0:
-            guard let desc = repository.value.repoDescription else {
-                return 2
-            }
-            
-            let trimmedDesc = desc.trimmingCharacters(in: .whitespacesAndNewlines)
-            return trimmedDesc.characters.count == 0 ? 2 : 3
+            return infoTypes.count
         case 1:
             return 5
         default:

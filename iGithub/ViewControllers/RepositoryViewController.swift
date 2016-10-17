@@ -68,25 +68,31 @@ class RepositoryViewController: BaseTableViewController {
         
         switch indexPath.section {
         case 0:
-            switch indexPath.row {
-            case 0:
+            switch viewModel.infoTypes[indexPath.row] {
+            case .author:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
                 cell.entity = viewModel.repository.value.owner
                 cell.accessoryType = .disclosureIndicator
                 
                 return cell
-            case viewModel.numberOfRowsInSection(0) - 1:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
-                cell.textLabel?.textColor = UIColor(netHex: 0x333333)
-                cell.textLabel?.attributedText = Octicon.book.iconString(" README", iconSize: 18, iconColor: .gray)
-                return cell
-            default:
+            case .description:
                 let cell = UITableViewCell()
                 cell.selectionStyle = .none
                 cell.textLabel?.numberOfLines = 0
                 cell.textLabel?.lineBreakMode = .byWordWrapping
                 cell.textLabel?.textColor = UIColor(netHex: 0x333333)
                 cell.textLabel?.text = viewModel.repository.value.repoDescription!
+                return cell
+            case .homepage:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
+                cell.accessoryType = .disclosureIndicator
+                cell.textLabel?.textColor = UIColor(netHex: 0x333333)
+                cell.textLabel?.attributedText = Octicon.link.iconString(" \(viewModel.repository.value.homepage!.host!)", iconSize: 18, iconColor: .gray)
+                return cell
+            case .readme:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
+                cell.textLabel?.textColor = UIColor(netHex: 0x333333)
+                cell.textLabel?.attributedText = Octicon.book.iconString(" README", iconSize: 18, iconColor: .gray)
                 return cell
             }
         case 1:
@@ -129,77 +135,91 @@ class RepositoryViewController: BaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         super.tableView(tableView, didSelectRowAt: indexPath)
         
-        switch (indexPath.section, indexPath.row) {
-        case (0, 0):
-            var vc: UIViewController
-            
-            switch viewModel.repository.value.owner!.type! {
-            case .user:
-                vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC")
-                (vc as! UserViewController).viewModel = self.viewModel.ownerViewModel
-            case .organization:
-                vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrgVC")
-                (vc as! OrganizationViewController).viewModel = (self.viewModel.ownerViewModel as! OrganizationViewModel)
+        switch indexPath.section {
+        case 0:
+            switch viewModel.infoTypes[indexPath.row] {
+            case .author:
+                var vc: UIViewController
+                switch viewModel.repository.value.owner!.type! {
+                case .user:
+                    vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC")
+                    (vc as! UserViewController).viewModel = self.viewModel.ownerViewModel
+                case .organization:
+                    vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrgVC")
+                    (vc as! OrganizationViewController).viewModel = (self.viewModel.ownerViewModel as! OrganizationViewModel)
+                }
+                self.navigationController?.pushViewController(vc, animated: true)
+            case .homepage:
+                navigationController?.pushViewController(URLRouter.viewControllerForURL(viewModel.repository.value.homepage!), animated: true)
+            case .readme:
+                let fileVC = FileViewController()
+                fileVC.viewModel = FileViewModel(repository: viewModel.repository.value.fullName!)
+                self.navigationController?.pushViewController(fileVC, animated: true)
+            default:
+                break
             }
-            self.navigationController?.pushViewController(vc, animated: true)
+        case 1:
+            switch indexPath.row {
+            case 0:
+                let repo = viewModel.repository.value
+                
+                let openIssueTVC = IssueTableViewController()
+                openIssueTVC.viewModel = IssueTableViewModel(repo: repo)
+                
+                let closedIssueTVC = IssueTableViewController()
+                closedIssueTVC.viewModel = IssueTableViewModel(repo: repo, state: .closed)
+                
+                let issueSVC = SegmentViewController(viewControllers: [openIssueTVC, closedIssueTVC], titles: ["Open", "Closed"])
+                issueSVC.navigationItem.title = "Issues"
+                
+                self.navigationController?.pushViewController(issueSVC, animated: true)
+                
+            case 1:
+                let repo = viewModel.repository.value
+                
+                let openPullRequestTVC = PullRequestTableViewController()
+                openPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo)
+                
+                let closedPullRequestTVC = PullRequestTableViewController()
+                closedPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo, state: .closed)
+                
+                let pullRequestSVC = SegmentViewController(viewControllers: [openPullRequestTVC, closedPullRequestTVC], titles: ["Open", "Closed"])
+                pullRequestSVC.navigationItem.title = "Pull requests"
+                
+                self.navigationController?.pushViewController(pullRequestSVC, animated: true)
+                
+            case 2:
+                let releaseTVC = ReleaseTableViewController()
+                releaseTVC.viewModel = ReleaseTableViewModel(repo: viewModel.repository.value)
+                self.navigationController?.pushViewController(releaseTVC, animated: true)
+                
+            case 3:
+                let memberTVC = UserTableViewController()
+                memberTVC.viewModel = UserTableViewModel(repo: viewModel.repository.value)
+                self.navigationController?.pushViewController(memberTVC, animated: true)
+                
+            case 4:
+                let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventTVC") as! EventTableViewController
+                eventTVC.viewModel = EventTableViewModel(repo: viewModel.repository.value)
+                self.navigationController?.pushViewController(eventTVC, animated: true)
+            default:
+                break
+            }
             
-        case (0, viewModel.numberOfRowsInSection(0) - 1):
-            let fileVC = FileViewController()
-            fileVC.viewModel = FileViewModel(repository: viewModel.repository.value.fullName!)
-            self.navigationController?.pushViewController(fileVC, animated: true)
-            
-        case (1, 0):
-            let repo = viewModel.repository.value
-            
-            let openIssueTVC = IssueTableViewController()
-            openIssueTVC.viewModel = IssueTableViewModel(repo: repo)
-            
-            let closedIssueTVC = IssueTableViewController()
-            closedIssueTVC.viewModel = IssueTableViewModel(repo: repo, state: .closed)
-            
-            let issueSVC = SegmentViewController(viewControllers: [openIssueTVC, closedIssueTVC], titles: ["Open", "Closed"])
-            issueSVC.navigationItem.title = "Issues"
-            
-            self.navigationController?.pushViewController(issueSVC, animated: true)
-        
-        case (1, 1):
-            let repo = viewModel.repository.value
-            
-            let openPullRequestTVC = PullRequestTableViewController()
-            openPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo)
-            
-            let closedPullRequestTVC = PullRequestTableViewController()
-            closedPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo, state: .closed)
-            
-            let pullRequestSVC = SegmentViewController(viewControllers: [openPullRequestTVC, closedPullRequestTVC], titles: ["Open", "Closed"])
-            pullRequestSVC.navigationItem.title = "Pull requests"
-            
-            self.navigationController?.pushViewController(pullRequestSVC, animated: true)
-
-        case (1, 2):
-            let releaseTVC = ReleaseTableViewController()
-            releaseTVC.viewModel = ReleaseTableViewModel(repo: viewModel.repository.value)
-            self.navigationController?.pushViewController(releaseTVC, animated: true)
-            
-        case (1, 3):
-            let memberTVC = UserTableViewController()
-            memberTVC.viewModel = UserTableViewModel(repo: viewModel.repository.value)
-            self.navigationController?.pushViewController(memberTVC, animated: true)
-            
-        case (1, 4):
-            let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventTVC") as! EventTableViewController
-            eventTVC.viewModel = EventTableViewModel(repo: viewModel.repository.value)
-            self.navigationController?.pushViewController(eventTVC, animated: true)
-            
-        case (2, 0):
-            let fileTableVC = FileTableViewController()
-            fileTableVC.viewModel = viewModel.filesTableViewModel
-            self.navigationController?.pushViewController(fileTableVC, animated: true)
-            
-        case (2, 1):
-            let commitTVC = CommitTableViewController()
-            commitTVC.viewModel = CommitTableViewModel(repo: viewModel.repository.value)
-            self.navigationController?.pushViewController(commitTVC, animated: true)
+        case 2:
+            switch indexPath.row {
+            case 0:
+                let fileTableVC = FileTableViewController()
+                fileTableVC.viewModel = viewModel.filesTableViewModel
+                self.navigationController?.pushViewController(fileTableVC, animated: true)
+                
+            case 1:
+                let commitTVC = CommitTableViewController()
+                commitTVC.viewModel = CommitTableViewModel(repo: viewModel.repository.value)
+                self.navigationController?.pushViewController(commitTVC, animated: true)
+            default:
+                break
+            }
             
         default:
             break

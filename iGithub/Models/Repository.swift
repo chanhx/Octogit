@@ -44,7 +44,7 @@ class Repository: BaseModel {
         id              <- map["id"]
         name            <- map["name"]
         fullName        <- map["full_name"]
-        homepage        <- map["homepage"]
+        homepage        <- (map["homepage"], URLTransform())
         repoDescription <- map["description"]
         language        <- map["language"]
         
