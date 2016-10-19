@@ -54,6 +54,10 @@ class RepositoryViewController: BaseTableViewController {
                 }).addDisposableTo(viewModel.disposeBag)
         }
     }
+    
+    class func instantiateFromStoryboard() -> RepositoryViewController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RepositoryViewController") as! RepositoryViewController
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -193,16 +197,16 @@ class RepositoryViewController: BaseTableViewController {
         case 0:
             switch viewModel.infoTypes[indexPath.row] {
             case .author:
-                var vc: UIViewController
                 switch viewModel.repository.value.owner!.type! {
                 case .user:
-                    vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC")
-                    (vc as! UserViewController).viewModel = self.viewModel.ownerViewModel
+                    let vc = UserViewController.instantiateFromStoryboard()
+                    vc.viewModel = self.viewModel.ownerViewModel
+                    self.navigationController?.pushViewController(vc, animated: true)
                 case .organization:
-                    vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrgVC")
-                    (vc as! OrganizationViewController).viewModel = (self.viewModel.ownerViewModel as! OrganizationViewModel)
+                    let vc = OrganizationViewController.instantiateFromStoryboard()
+                    vc.viewModel = (self.viewModel.ownerViewModel as! OrganizationViewModel)
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
-                self.navigationController?.pushViewController(vc, animated: true)
             case .homepage:
                 navigationController?.pushViewController(URLRouter.viewControllerForURL(viewModel.repository.value.homepage!), animated: true)
             case .readme:

@@ -96,4 +96,12 @@ extension String {
     var pathExtension: String {
         return (self as NSString).pathExtension
     }
+    
+    func removePrefix(_ prefix: String) -> String {
+        if hasPrefix(prefix) {
+            return substring(from: prefix.endIndex)
+        }
+        
+        return self
+    }
 }

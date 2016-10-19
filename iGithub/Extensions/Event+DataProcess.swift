@@ -20,14 +20,14 @@ extension Event {
         case .createEvent:
             let e = self as! CreateEvent
             switch e.refType! {
-            case .Repository:
-                return "\(e.actor!) created \(e.refType!.rawValue) \(e.repository!)"
+            case .repository:
+                return "\(e.actor!) created \(e.refType!) \(e.repository!)"
             default:
-                return "\(e.actor!) created \(e.refType!.rawValue) \(e.ref!) at \(e.repository!)"
+                return "\(e.actor!) created \(e.refType!) \(e.ref!) at \(e.repository!)"
             }
         case .deleteEvent:
             let e = self as! DeleteEvent
-            return "\(e.actor!) deleted \(e.refType?.rawValue) \(e.ref!) at \(e.repository!)"
+            return "\(e.actor!) deleted \(e.refType!) \(e.ref!) at \(e.repository!)"
         case .forkEvent:
             let e = self as! ForkEvent
             return "\(e.actor!) forked \(e.repository!) to \(e.forkee!)"
@@ -36,7 +36,8 @@ extension Event {
             return "\(e.actor!) \(e.action!) \(e.pageName!) in the \(e.repository!) wiki"
         case .issueCommentEvent:
             let e = self as! IssueCommentEvent
-            return "\(e.actor!) \(e.action!) comment on issue \(e.repository!)#\(e.issue!.number!)"
+            let object = e.issue!.isPullRequest ? "pull request" : "issue"
+            return "\(e.actor!) \(e.action!) comment on \(object) \(e.repository!)#\(e.issue!.number!)"
         case .issuesEvent:
             let e = self as! IssueEvent
             return "\(e.actor!) \(e.action!) issue \(e.repository!)#\(e.issue!.number!)"
@@ -48,7 +49,7 @@ extension Event {
         case .pullRequestEvent:
             let e = self as! PullRequestEvent
             var action: String
-            if e.action! == .Closed && e.pullRequest!.isMerged! {
+            if e.action! == .closed && e.pullRequest!.isMerged! {
                 action = "merged"
             } else {
                 action = e.action!.rawValue
@@ -56,13 +57,15 @@ extension Event {
             return "\(e.actor!) \(action) pull request \(e.repository!)#\(e.pullRequest!.number!)"
         case .pullRequestReviewCommentEvent:
             let e = self as! PullRequestReviewCommentEvent
-            return "\(e.actor!) \(e.action) comment on issue \(e.repository!)#\(e.pullRequest!.number!)"
+            return "\(e.actor!) \(e.action!) comment on pull request \(e.repository!)#\(e.pullRequest!.number!)"
         case .pushEvent:
             let e = self as! PushEvent
-            return "\(e.actor!) pushed to \(e.ref!) at \(e.repository!)"
+            let ref = e.ref!.removePrefix("refs/heads/")
+            
+            return "\(e.actor!) pushed to \(ref) at \(e.repository!)"
         case .releaseEvent:
             let e = self as! ReleaseEvent
-            return "\(e.actor) released \(e.releaseTagName) at \(e.repository)"
+            return "\(e.actor!) released \(e.releaseTagName!) at \(e.repository!)"
         case .watchEvent:
             return "\(self.actor!) starred \(self.repository!)"
         default:
@@ -78,7 +81,7 @@ extension Event {
         case .createEvent:
             let e = self as! CreateEvent
             switch e.refType! {
-            case .Repository:
+            case .repository:
                 return e.repoDescription
             default:
                 return nil
@@ -91,7 +94,7 @@ extension Event {
             return e.summary
         case .issueCommentEvent:
             let e = self as! IssueCommentEvent
-            return e.comment!.body
+            return e.comment!
         case .issuesEvent:
             let e = self as! IssueEvent
             return e.issue!.title
@@ -103,7 +106,7 @@ extension Event {
             return e.pullRequest?.title
         case .pullRequestReviewCommentEvent:
             let e = self as! PullRequestReviewCommentEvent
-            return e.comment!.body
+            return e.comment!
         case .pushEvent:
             let e = self as! PushEvent
             var messages: [String] = []
@@ -130,11 +133,11 @@ extension Event {
         case .createEvent:
             let e = self as! CreateEvent
             switch e.refType! {
-            case .Branch:
+            case .branch:
                 icon = Octicon.gitBranch
-            case .Repository:
+            case .repository:
                 icon = Octicon.repo
-            case .Tag:
+            case .tag:
                 icon = Octicon.tag
             }
         case .deleteEvent:
@@ -146,7 +149,7 @@ extension Event {
         case .issuesEvent:
             let e = self as! IssueEvent
             switch e.action! {
-            case .Closed:
+            case .closed:
                 icon = Octicon.issueClosed
                 color = UIColor(netHex: 0xBD2C00)
             default:
@@ -160,9 +163,9 @@ extension Event {
         case .pullRequestEvent:
             let e = self as! PullRequestEvent
             icon = Octicon.gitPullrequest
-            if e.action! == .Closed && e.pullRequest!.isMerged! {
+            if e.action! == .closed && e.pullRequest!.isMerged! {
                 color = UIColor(netHex: 0x6E5494)
-            } else if e.action! == .Closed {
+            } else if e.action! == .closed {
                 color = UIColor(netHex: 0xBD2C00)
             } else {
                 color = UIColor(netHex: 0x6BB644)

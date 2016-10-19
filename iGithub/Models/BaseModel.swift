@@ -51,12 +51,6 @@ class PullRequestTransform: TransformOf<PullRequest, AnyObject> {
     }
 }
 
-class PullRequestCommentTransform: TransformOf<PullRequestComment, AnyObject> {
-    init() {
-        super.init(fromJSON: { Mapper<PullRequestComment>().map(JSON: $0 as! [String : Any]) }, toJSON: { String(describing: $0) as AnyObject })
-    }
-}
-
 class RepositoryTransform: TransformOf<Repository, String> {
     init() {
         super.init(fromJSON: { Mapper<Repository>().map(JSONObject: $0) }, toJSON: { String(describing: $0) })

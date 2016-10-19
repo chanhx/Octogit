@@ -42,7 +42,7 @@ class IssueTableViewController: BaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         super.tableView(tableView, didSelectRowAt: indexPath)
         
-        let issueVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "IssueVC") as! IssueViewController
+        let issueVC = IssueViewController.instantiateFromStoryboard()
         issueVC.viewModel = viewModel.viewModelForIndex(indexPath.row)
         self.navigationController?.pushViewController(issueVC, animated: true)
     }

@@ -42,7 +42,7 @@ class PullRequestTableViewController: BaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         super.tableView(tableView, didSelectRowAt: indexPath)
         
-        let pullRequestVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "IssueVC") as! IssueViewController
+        let pullRequestVC = IssueViewController.instantiateFromStoryboard()
         pullRequestVC.viewModel = viewModel.viewModelForIndex(indexPath.row)
         self.navigationController?.pushViewController(pullRequestVC, animated: true)
     }

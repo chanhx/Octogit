@@ -40,6 +40,10 @@ class OrganizationViewController: BaseTableViewController {
                 .addDisposableTo(viewModel.disposeBag)
         }
     }
+    
+    class func instantiateFromStoryboard() -> OrganizationViewController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrganizationViewController") as! OrganizationViewController
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

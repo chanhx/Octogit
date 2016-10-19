@@ -32,7 +32,7 @@ class RepositoryTableViewController: BaseTableViewController {
                     self.viewModel.dataSource.value[indexPath.row]
                 }
                 .subscribe(onNext: { repo in
-                    let repoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RepositoryVC") as! RepositoryViewController
+                    let repoVC = RepositoryViewController.instantiateFromStoryboard()
                     repoVC.viewModel = RepositoryViewModel(repo: repo)
                     self.navigationController?.pushViewController(repoVC, animated: true)
                 })

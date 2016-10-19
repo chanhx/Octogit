@@ -55,18 +55,18 @@ class SearchViewController: BaseTableViewController {
         switch viewModel.option {
         case .repositories:
             let repo = self.viewModel.repoTVM.repositories.value[indexPath.row]
-            let repoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RepositoryVC") as! RepositoryViewController
+            let repoVC = RepositoryViewController.instantiateFromStoryboard()
             repoVC.viewModel = RepositoryViewModel(repo: repo)
             self.presentingViewController?.navigationController?.pushViewController(repoVC, animated: true)
         case .users:
             let user = viewModel.userTVM.users.value[indexPath.row]
             switch user.type! {
             case .user:
-                let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC") as! UserViewController
+                let userVC = UserViewController.instantiateFromStoryboard()
                 userVC.viewModel = UserViewModel(user)
                 self.presentingViewController?.navigationController?.pushViewController(userVC, animated: true)
             case .organization:
-                let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrgVC") as! OrganizationViewController
+                let orgVC = OrganizationViewController.instantiateFromStoryboard()
                 orgVC.viewModel = OrganizationViewModel(user)
                 self.presentingViewController?.navigationController?.pushViewController(orgVC, animated: true)
             }

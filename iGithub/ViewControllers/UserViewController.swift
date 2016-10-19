@@ -57,6 +57,10 @@ class UserViewController: BaseTableViewController {
                 .addDisposableTo(viewModel.disposeBag)
         }
     }
+    
+    class func instantiateFromStoryboard() -> UserViewController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserViewController") as! UserViewController
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +75,20 @@ class UserViewController: BaseTableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSections
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        guard viewModel.userLoaded else {
+            return super.tableView(tableView, heightForHeaderInSection: section)
+        }
+        
+        switch viewModel.sectionTypes[section] {
+        case .organizations:
+            return 25
+        default:
+            return super.tableView(tableView, heightForHeaderInSection: section)
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -156,7 +174,7 @@ class UserViewController: BaseTableViewController {
                 break
             }
         case .organizations:
-            let orgVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "OrgVC") as! OrganizationViewController
+            let orgVC = OrganizationViewController.instantiateFromStoryboard()
             let organization = self.viewModel.organizations.value[indexPath.row]
             orgVC.viewModel = OrganizationViewModel(organization)
             self.navigationController?.pushViewController(orgVC, animated: true)

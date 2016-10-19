@@ -42,7 +42,6 @@
 		C538FD0B1D40A30F003A559E /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD0A1D40A30F003A559E /* Event.swift */; };
 		C538FD0D1D40A336003A559E /* Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD0C1D40A336003A559E /* Commit.swift */; };
 		C538FD0F1D40A349003A559E /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD0E1D40A349003A559E /* PullRequest.swift */; };
-		C538FD111D40A3C2003A559E /* PullRequestComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD101D40A3C2003A559E /* PullRequestComment.swift */; };
 		C538FD131D40A3F0003A559E /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD121D40A3F0003A559E /* Issue.swift */; };
 		C538FD151D40A40B003A559E /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD141D40A40B003A559E /* Comment.swift */; };
 		C538FD171D40A42C003A559E /* CommitComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD161D40A42C003A559E /* CommitComment.swift */; };
@@ -202,7 +201,6 @@
 		C538FD0A1D40A30F003A559E /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		C538FD0C1D40A336003A559E /* Commit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commit.swift; sourceTree = "<group>"; };
 		C538FD0E1D40A349003A559E /* PullRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequest.swift; sourceTree = "<group>"; };
-		C538FD101D40A3C2003A559E /* PullRequestComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestComment.swift; sourceTree = "<group>"; };
 		C538FD121D40A3F0003A559E /* Issue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
 		C538FD141D40A40B003A559E /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		C538FD161D40A42C003A559E /* CommitComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitComment.swift; sourceTree = "<group>"; };
@@ -371,7 +369,6 @@
 				C538FD141D40A40B003A559E /* Comment.swift */,
 				C538FD181D40A455003A559E /* Repository.swift */,
 				C538FD0E1D40A349003A559E /* PullRequest.swift */,
-				C538FD101D40A3C2003A559E /* PullRequestComment.swift */,
 				C538FD011D406638003A559E /* User.swift */,
 				C524742C1D519CBB0001D9CD /* Label.swift */,
 				C524742E1D51A1500001D9CD /* Milestone.swift */,
@@ -871,7 +868,6 @@
 				C538FD291D40E946003A559E /* BaseTableViewModel.swift in Sources */,
 				C538FD541D45A0A2003A559E /* FileCell.swift in Sources */,
 				C538FD0D1D40A336003A559E /* Commit.swift in Sources */,
-				C538FD111D40A3C2003A559E /* PullRequestComment.swift in Sources */,
 				C55791551D74392600FBBD41 /* UIScrollView+RefreshComponent.swift in Sources */,
 				C5819ABB1D4CF3D4009D7772 /* RepositoryCell.swift in Sources */,
 				C5F4BDF71D3FB37A009DF758 /* WebAPI.swift in Sources */,

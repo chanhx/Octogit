@@ -44,6 +44,7 @@ class EventCell: UITableViewCell {
             
             contentLabel.text = entity.content
             contentLabel.isHidden = contentLabel.text == nil
+            contentLabel.numberOfLines = entity.type! == .pushEvent ? 0 : 5
             
             addLinksToTitle()
             addLinksToContent()
@@ -64,6 +65,11 @@ class EventCell: UITableViewCell {
         }
         
         switch entity.type! {
+        case .createEvent:
+            let e = entity as! CreateEvent
+            if e.refType! != .repository {
+                titleLabel.addLink(URL(string: "/\(e.repository!)/tree/\(e.ref!)")!, toText: e.ref!)
+            }
         case .forkEvent:
             let e = entity as! ForkEvent
             titleLabel.addLink(URL(string: "/\(e.forkee!)")!, toText: e.forkee!)
@@ -81,10 +87,18 @@ class EventCell: UITableViewCell {
             titleLabel.addLink(URL(string: "/\(e.member!)")!, toText: e.member!.login!)
         case .pullRequestEvent:
             let e = entity as! PullRequestEvent
-            titleLabel.addLink(URL(string: "/pull/\(e.pullRequest!.number!)")!, toText: "#\(e.pullRequest!.number!)")
+            titleLabel.addLink(URL(string: "/\(e.repository!)/pull/\(e.pullRequest!.number!)")!, toText: "\(e.repository!)#\(e.pullRequest!.number!)")
         case .pullRequestReviewCommentEvent:
             let e = entity as! PullRequestReviewCommentEvent
-            titleLabel.addLink(URL(string: "/pull/\(e.pullRequest!.number!)")!, toText: "#\(e.pullRequest!.number!)")
+            titleLabel.addLink(URL(string: "/\(e.repository!)/pull/\(e.pullRequest!.number!)")!, toText: "\(e.repository!)#\(e.pullRequest!.number!)")
+        case .pushEvent:
+            let e = entity as! PushEvent
+            let ref = e.ref!.removePrefix("refs/heads/")
+            
+            titleLabel.addLink(URL(string: "/\(e.repository!)/tree/\(ref)")!, toText: ref)
+        case .releaseEvent:
+            let e = entity as! ReleaseEvent
+            titleLabel.addLink(URL(string: "/\(e.repository!)/tree/\(e.releaseTagName!)")!, toText: e.releaseTagName!)
         default:
             break
         }

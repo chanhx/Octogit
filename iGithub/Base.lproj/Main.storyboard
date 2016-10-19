@@ -74,7 +74,7 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" text="content" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IaJ-WK-GLf" customClass="TTTAttributedLabel">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" text="content" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IaJ-WK-GLf" customClass="TTTAttributedLabel">
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -112,7 +112,7 @@
         <!--Repository View Controller-->
         <scene sceneID="hg2-Ja-QwL">
             <objects>
-                <tableViewController storyboardIdentifier="RepositoryVC" hidesBottomBarWhenPushed="YES" id="xZN-qh-DqG" customClass="RepositoryViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RepositoryViewController" hidesBottomBarWhenPushed="YES" id="xZN-qh-DqG" customClass="RepositoryViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="O0s-Jc-Mse">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -193,7 +193,7 @@
         <!--Issue View Controller-->
         <scene sceneID="24x-2R-LsL">
             <objects>
-                <tableViewController storyboardIdentifier="IssueVC" hidesBottomBarWhenPushed="YES" id="NSL-N6-Hfg" customClass="IssueViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="IssueViewController" hidesBottomBarWhenPushed="YES" id="NSL-N6-Hfg" customClass="IssueViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Rp6-iF-SPl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -729,7 +729,7 @@
         <!--User View Controller-->
         <scene sceneID="hoo-sT-ab9">
             <objects>
-                <tableViewController storyboardIdentifier="UserVC" hidesBottomBarWhenPushed="YES" id="pQL-K4-C6r" customClass="UserViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="UserViewController" hidesBottomBarWhenPushed="YES" id="pQL-K4-C6r" customClass="UserViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Din-X6-Djb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -833,7 +833,7 @@
         <!--Organization View Controller-->
         <scene sceneID="isW-Tf-rvG">
             <objects>
-                <tableViewController storyboardIdentifier="OrgVC" hidesBottomBarWhenPushed="YES" id="WG6-Fg-HDL" customClass="OrganizationViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="OrganizationViewController" hidesBottomBarWhenPushed="YES" id="WG6-Fg-HDL" customClass="OrganizationViewController" customModule="iGithub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Cfq-3e-De2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

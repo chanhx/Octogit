@@ -37,6 +37,10 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
         }
     }
     
+    class func instantiateFromStoryboard() -> IssueViewController {
+        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "IssueViewController") as! IssueViewController
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -177,7 +181,7 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
         
         switch viewModel.sectionType(for: indexPath.section) {
         case .asignees:
-            let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC") as! UserViewController
+            let userVC = UserViewController.instantiateFromStoryboard()
             userVC.viewModel = UserViewModel(viewModel.issue.assignees![indexPath.row])
             navigationController?.pushViewController(userVC, animated: true)
         case .changes:

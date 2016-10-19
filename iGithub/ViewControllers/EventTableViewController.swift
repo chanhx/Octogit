@@ -67,7 +67,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
     }
     
     func showUser(_ user: User) {
-        let userVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserVC") as! UserViewController
+        let userVC = UserViewController.instantiateFromStoryboard()
         userVC.viewModel = UserViewModel(user)
         navigationController?.pushViewController(userVC, animated: true)
     }

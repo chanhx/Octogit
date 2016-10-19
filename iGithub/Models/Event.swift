@@ -95,9 +95,9 @@ class CommitCommentEvent : Event {
 }
 
 enum RefType : String {
-    case Branch = "branch"
-    case Tag = "tag"
-    case Repository = "repository"
+    case branch = "branch"
+    case tag = "tag"
+    case repository = "repository"
 }
 
 // MARK: CreateEvent
@@ -165,28 +165,28 @@ class GollumEvent: Event {
 class IssueCommentEvent : Event {
     var action: String?
     var issue: Issue?
-    var comment: Comment?
+    var comment: String?
     
     override func mapping(map: Map) {
         super.mapping(map: map)
         
-        action <- map["payload.action"]
-        issue <- (map["payload.issue"], IssueTransform())
-        comment <- (map["payload.comment"], CommentTransform())
+        action  <- map["payload.action"]
+        issue   <- (map["payload.issue"], IssueTransform())
+        comment <- map["payload.comment.body"]
     }
 }
 
 // MARK: IssueEvent
 
 enum IssueAction: String {
-    case Assigned = "assigned"
-    case Unassigned = "unassigned"
-    case Labeled = "labeled"
-    case Unlabeled = "unlabeled"
-    case Opened = "opened"
-    case Edited = "edited"
-    case Closed = "closed"
-    case Reopened = "reopened"
+    case assigned = "assigned"
+    case unassigned = "unassigned"
+    case labeled = "labeled"
+    case unlabeled = "unlabeled"
+    case opened = "opened"
+    case edited = "edited"
+    case closed = "closed"
+    case reopened = "reopened"
 }
 
 class IssueEvent: Event {
@@ -243,15 +243,15 @@ class PullRequestEvent : Event {
 
 class PullRequestReviewCommentEvent : Event {
     var action: String?
-    var comment: PullRequestComment?
     var pullRequest : PullRequest?
+    var comment: String?
     
     override func mapping(map: Map) {
         super.mapping(map: map)
         
         action  <- map["payload.action"]
-        comment <- (map["payload.comment"], PullRequestCommentTransform())
         pullRequest <- (map["payload.pull_request"], PullRequestTransform())
+        comment <- map["payload.comment.body"]
     }
 }
 
