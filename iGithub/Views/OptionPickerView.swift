@@ -7,56 +7,64 @@
 //
 
 import UIKit
+import RxSwift
 
 @objc protocol OptionPickerViewDelegate: UIPickerViewDataSource, UIPickerViewDelegate {
     func doneButtonClicked(_ pickerView: OptionPickerView)
 }
 
-class OptionPickerView: UIView {
+class OptionPickerView: UIPickerView {
     
-    let pickerView = UIPickerView()
-    let toolBar = UIToolbar()
+    var selectedRow: [Int]
+    var index: Int {
+        didSet {
+            reloadAllComponents()
+            selectRow(tmpSelectedRow[index], inComponent: 0, animated: false)
+            configureToolBar()
+        }
+    }
     
-    lazy var background: UIView! = {
+    private lazy var background: UIView! = {
+        $0.backgroundColor = UIColor(white: 0.3, alpha: 0.6)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hide)))
         return $0
     }(UIView(frame: UIApplication.shared.windows.last!.bounds))
     
-    var selectedRow: [Int]
-    var tmpSelectedRow: [Int?]
-    var index: Int {
-        didSet {
-            pickerView.reloadAllComponents()
-            pickerView.selectRow(tmpSelectedRow[index] ?? selectedRow[index], inComponent: 0, animated: false)
-            configureToolBar()
-        }
-    }
-    weak var delegate: OptionPickerViewDelegate?
+    private var tmpSelectedRow: [Int]
+    
+    private let disposeBag = DisposeBag()
+    private let toolBar = UIToolbar()
+    private weak var pickerDelegate: OptionPickerViewDelegate?
     
     init(delegate: OptionPickerViewDelegate, optionsCount: Int = 1, index: Int = 0, selectedRow: [Int]? = nil) {
         
-        self.delegate = delegate
-        pickerView.dataSource = delegate
-        pickerView.delegate = delegate
+        self.pickerDelegate = delegate
         
         self.selectedRow = selectedRow ?? Array(repeating: 0, count: optionsCount)
-        tmpSelectedRow = Array(repeating: nil, count: optionsCount)
+        tmpSelectedRow = self.selectedRow
         self.index = index
         
         super.init(frame: CGRect.zero)
         
-        pickerView.backgroundColor = UIColor(netHex: 0xDADADA)
-        configureToolBar()
-        addSubviews([pickerView, toolBar])
+        dataSource = delegate
+        super.delegate = delegate
         
+        rx.itemSelected.asObservable().subscribe(onNext: {
+            self.tmpSelectedRow[self.index] = $0.0
+        }).addDisposableTo(disposeBag)
+        
+        clipsToBounds = false
+        backgroundColor = UIColor(netHex: 0xDADADA)
+        
+        toolBar.backgroundColor = UIColor(netHex: 0xf8f8f8)
+        configureToolBar()
+        addSubview(toolBar)
+        
+        toolBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            toolBar.topAnchor.constraint(equalTo: topAnchor),
-            toolBar.bottomAnchor.constraint(equalTo: pickerView.topAnchor),
+            toolBar.bottomAnchor.constraint(equalTo: topAnchor),
             toolBar.leftAnchor.constraint(equalTo: leftAnchor),
             toolBar.rightAnchor.constraint(equalTo: rightAnchor),
-            pickerView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            pickerView.leftAnchor.constraint(equalTo: leftAnchor),
-            pickerView.rightAnchor.constraint(equalTo: rightAnchor)
         ])
     }
     
@@ -64,15 +72,22 @@ class OptionPickerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var intrinsicContentSize : CGSize {
-        return CGSize(
-            width: toolBar.intrinsicContentSize.width,
-            height: toolBar.intrinsicContentSize.height + pickerView.intrinsicContentSize.height
-        )
+    func clearRecord() {
+        tmpSelectedRow = selectedRow
     }
     
-    func clearRecord() {
-        tmpSelectedRow = Array(repeating: nil, count: tmpSelectedRow.count)
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if !self.clipsToBounds && !self.isHidden && self.alpha > 0.0 {
+            let subviews = self.subviews.reversed()
+            for subview in subviews {
+                let subPoint = subview.convert(point, from: self)
+                if let result = subview.hitTest(subPoint, with: event) {
+                    return result
+                }
+            }
+        }
+        
+        return nil
     }
     
     // MARK: toolbar
@@ -107,12 +122,10 @@ class OptionPickerView: UIView {
     }
     
     @objc fileprivate func doneItemClicked() {
-        for i in 0..<selectedRow.count {
-            selectedRow[i] = tmpSelectedRow[i] ?? selectedRow[i]
-        }
+        selectedRow = tmpSelectedRow
         
         self.hide()
-        delegate?.doneButtonClicked(self)
+        pickerDelegate?.doneButtonClicked(self)
     }
     
     // MARK: show and hide
@@ -126,9 +139,9 @@ class OptionPickerView: UIView {
         
         var pickerFrame = background.frame
         pickerFrame.origin.y = pickerFrame.height
-        pickerFrame.size.height = self.intrinsicContentSize.height
+        pickerFrame.size.height = intrinsicContentSize.height
         self.frame = pickerFrame
-        self.pickerView.selectRow(self.selectedRow[self.index], inComponent: 0, animated: false)
+        self.selectRow(self.selectedRow[self.index], inComponent: 0, animated: false)
         
         UIApplication.shared.windows.last?.addSubview(self)
         

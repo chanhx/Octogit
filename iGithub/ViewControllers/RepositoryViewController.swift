@@ -289,7 +289,7 @@ class RepositoryViewController: BaseTableViewController {
 extension RepositoryViewController: OptionPickerViewDelegate {
     
     func doneButtonClicked(_ pickerView: OptionPickerView) {
-        viewModel.branch = viewModel.branches[pickerView.tmpSelectedRow[0]!].name!
+        viewModel.branch = viewModel.branches[pickerView.selectedRow[0]].name!
         branchButton.choice = viewModel.branch
     }
     
@@ -303,9 +303,5 @@ extension RepositoryViewController: OptionPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return viewModel.branches[row].name!
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.pickerView.tmpSelectedRow[self.pickerView.index] = row
     }
 }

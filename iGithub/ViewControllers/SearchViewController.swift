@@ -200,15 +200,4 @@ extension SearchViewController: OptionPickerViewDelegate {
             return viewModel.usersSortOptions.map {$0.desc} [row]
         }
     }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        var pickerView: OptionPickerView
-        switch viewModel.option {
-        case .repositories:
-            pickerView = repoOptionsPickerView
-        case .users:
-            pickerView = userOptionPickerView
-        }
-        pickerView.tmpSelectedRow[pickerView.index] = row
-    }
 }

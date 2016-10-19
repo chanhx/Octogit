@@ -147,12 +147,12 @@ extension ExplorationViewController: TTTAttributedLabelDelegate {
 extension ExplorationViewController: OptionPickerViewDelegate {
     
     func doneButtonClicked(_ pickerView: OptionPickerView) {
-        if let row0 = pickerView.tmpSelectedRow[0] {
-            viewModel.since = viewModel.pickerVM.timeOptions[row0].time
-        }
-        if let row1 = pickerView.tmpSelectedRow[1] {
-            viewModel.language = languagesArray[row1]
-        }
+        let row0 = pickerView.selectedRow[0]
+        let row1 = pickerView.selectedRow[1]
+        
+        viewModel.since = viewModel.pickerVM.timeOptions[row0].time
+        viewModel.language = languagesArray[row1]
+
         viewModel.updateOptions()
         updateTitle()
     }
@@ -167,9 +167,5 @@ extension ExplorationViewController: OptionPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.pickerView.index == 0 ? viewModel.timeOptions[row] : languagesArray[row]
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.pickerView.tmpSelectedRow[self.pickerView.index] = row
     }
 }
