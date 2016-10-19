@@ -23,7 +23,9 @@ class RepositoryViewModel {
     var fullName: String
     let disposeBag = DisposeBag()
     var repository: Variable<Repository>
-    var isRepositoryLoaded = false
+    var isRepositoryLoaded: Bool {
+        return self.repository.value.defaultBranch != nil
+    }
     
     var branches = [Branch]()
     var pageForBranches = 1
@@ -56,7 +58,6 @@ class RepositoryViewModel {
                 
                 if let repo = Mapper<Repository>().map(JSONObject: $0) {
                     self.setInfoTypes(repo: repo)
-                    self.isRepositoryLoaded = true
                     self.branch = repo.defaultBranch!
                     self.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
                     self.repository.value = repo

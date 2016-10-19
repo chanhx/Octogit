@@ -28,26 +28,24 @@ class RepositoryViewController: BaseTableViewController {
             
             Observable.combineLatest(repositorySubject, branchesSubject) {
                     ($0, $1)
-                }.subscribe(onNext: { (repo, isBranchLoaded) in
+                }.skipWhile({ (repo, _) in
+                    repo.defaultBranch == nil
+                })
+                .subscribe(onNext: { (repo, isBranchLoaded) in
                     DispatchQueue.main.async {
                         
-                        if isBranchLoaded, let branch = repo.defaultBranch {
-                            self.viewModel.rearrangeBranches(withDefaultBranch: branch)
+                        if isBranchLoaded {
+                            self.viewModel.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
                         }
                         
                         self.tableView.reloadData()
                         
-                        if self.viewModel.isRepositoryLoaded {
-                            if repo.isPrivate! {
-                                self.iconLabel.text = Octicon.lock.rawValue
-                            } else {
-                                self.iconLabel.text = repo.isAFork! ? Octicon.repoForked.rawValue : Octicon.repo.rawValue
-                            }
-                            self.updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString)"
+                        if repo.isPrivate! {
+                            self.iconLabel.text = Octicon.lock.rawValue
                         } else {
-                            self.iconLabel.text = ""
+                            self.iconLabel.text = repo.isAFork! ? Octicon.repoForked.rawValue : Octicon.repo.rawValue
                         }
-                        self.titleLabel.text = repo.name
+                        self.updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString)"
                         
                         self.sizeHeaderToFit(tableView: self.tableView)
                     }
@@ -61,6 +59,10 @@ class RepositoryViewController: BaseTableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.iconLabel.text = ""
+        self.titleLabel.text = viewModel.repository.value.name
+        self.sizeHeaderToFit(tableView: self.tableView)
         
         viewModel.fetchRepository()
         viewModel.fetchBranches()
