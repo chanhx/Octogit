@@ -30,6 +30,7 @@ class FileViewModel {
     var file: GHFile
     var fileName: String
     var filePath: String?
+    var ref: String?
     var html = Variable("")
     var contentData = Variable(Data())
     let disposeBag = DisposeBag()
@@ -45,11 +46,12 @@ class FileViewModel {
         }
     }
     
-    init(repository: String, file: File) {
+    init(repository: String, file: File, ref: String) {
         repo = repository
         self.file = .normalFile(file)
         fileName = file.name!
         filePath = file.path!.components(separatedBy: "/").dropLast().joined(separator: "/")
+        self.ref = ref
     }
     
     init(repository: String) {
@@ -99,7 +101,7 @@ class FileViewModel {
     }
     
     func fetchContent(_ file: File) {
-        let token = GithubAPI.getContents(repo: repo!, path: file.path!)
+        let token = GithubAPI.getContents(repo: repo!, path: file.path!, ref: ref!)
         
         GithubProvider
             .request(token)
@@ -129,7 +131,7 @@ class FileViewModel {
     func fetchHTMLContent(_ file: File) {
         let token: GithubAPI
         if let path = file.path {
-            token = GithubAPI.getHTMLContents(repo: repo!, path: path)
+            token = GithubAPI.getHTMLContents(repo: repo!, path: path, ref: ref!)
         } else {
             token = GithubAPI.getTheREADME(repo: repo!)
         }

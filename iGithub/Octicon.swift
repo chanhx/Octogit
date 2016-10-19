@@ -196,6 +196,22 @@ enum Octicon : String, CustomStringConvertible {
         return iconString
     }
     
+    func image(color: UIColor = .black, backgroundColor: UIColor = .clear, iconSize: CGFloat, size: CGSize) -> UIImage {
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        
+        (rawValue as NSString).draw(in: CGRect(origin: CGPoint.zero, size: size),
+                                    withAttributes: [
+                                        NSFontAttributeName: UIFont.OcticonOfSize(iconSize),
+                                        NSForegroundColorAttributeName: color,
+                                        NSBackgroundColorAttributeName: backgroundColor])
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image!
+    }
+    
     var description : String {
         get {
             return self.rawValue

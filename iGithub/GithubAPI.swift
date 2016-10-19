@@ -50,11 +50,15 @@ enum UsersSearchSort: String {
 
 enum GithubAPI {
     
+    // MARK: Branch
+    
+    case branches(repo: String, page: Int)
+    
     // MARK: File
     
     case getABlob(repo: String, sha: String)
-    case getContents(repo: String, path: String)
-    case getHTMLContents(repo: String, path: String)
+    case getContents(repo: String, path: String, ref: String)
+    case getHTMLContents(repo: String, path: String, ref: String)
     case getTheREADME(repo: String)
     case pullRequestFiles(repo: String, number: Int, page: Int)
     
@@ -123,15 +127,20 @@ extension GithubAPI: TargetType {
     var path: String {
         switch self {
             
-        // MARK: File:
+        // MARK: Branch
+        
+        case .branches(let repo, _):
+            return "repos/\(repo)/branches"
+            
+        // MARK: File
             
         case .getABlob(let repo, let sha):
             return "/repos/\(repo)/git/blobs/\(sha)"
         case .getARepository(let repo):
             return "/repos/\(repo)"
-        case .getContents(let repo, let path):
+        case .getContents(let repo, let path, _):
             return "/repos/\(repo)/contents/\(path)"
-        case .getHTMLContents(let repo, let path):
+        case .getHTMLContents(let repo, let path, _):
             return "/repos/\(repo)/contents/\(path)"
         case .getTheREADME(let repo):
             return "/repos/\(repo)/readme"
@@ -238,6 +247,10 @@ extension GithubAPI: TargetType {
         case .repositoryCommits(_, let branch, let page):
             return ["sha": branch, "page": page]
             
+        case .getContents(_, _, let ref),
+             .getHTMLContents(_, _, let ref):
+            return ["ref": ref]
+            
         case .searchRepositories(let q, let sort):
             return ["q": q, "sort": sort.rawValue]
             
@@ -248,7 +261,9 @@ extension GithubAPI: TargetType {
              .repositoryPullRequests(_, let page, let state):
             return ["page": page, "state": state.rawValue]
             
-        case .followedBy(_, let page),
+        case .branches(_, let page),
+             
+             .followedBy(_, let page),
              .followersOf(_, let page),
              
              .organizationMembers(_, let page),

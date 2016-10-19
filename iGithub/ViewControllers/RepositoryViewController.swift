@@ -19,28 +19,39 @@ class RepositoryViewController: BaseTableViewController {
     
     let statusCell = StatusCell(name: "repository")
     
+    lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self)
+    
     var viewModel: RepositoryViewModel! {
         didSet {
-            viewModel.repository.asObservable().subscribe(onNext: { repo in
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    
-                    if self.viewModel.repositoryLoaded {
-                        if repo.isPrivate! {
-                            self.iconLabel.text = Octicon.lock.rawValue
-                        } else {
-                            self.iconLabel.text = repo.isAFork! ? Octicon.repoForked.rawValue : Octicon.repo.rawValue
+            let repositorySubject = viewModel.repository.asObservable()
+            let branchesSubject = viewModel.isBranchesLoaded.asObservable()
+            
+            Observable.combineLatest(repositorySubject, branchesSubject) {
+                    ($0, $1)
+                }.subscribe(onNext: { (repo, isBranchLoaded) in
+                    DispatchQueue.main.async {
+                        
+                        if isBranchLoaded, let branch = repo.defaultBranch {
+                            self.viewModel.rearrangeBranches(withDefaultBranch: branch)
                         }
-                        self.updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString)"
-                    } else {
-                        self.iconLabel.text = ""
+                        
+                        self.tableView.reloadData()
+                        
+                        if self.viewModel.isRepositoryLoaded {
+                            if repo.isPrivate! {
+                                self.iconLabel.text = Octicon.lock.rawValue
+                            } else {
+                                self.iconLabel.text = repo.isAFork! ? Octicon.repoForked.rawValue : Octicon.repo.rawValue
+                            }
+                            self.updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString)"
+                        } else {
+                            self.iconLabel.text = ""
+                        }
+                        self.titleLabel.text = repo.name
+                        
+                        self.sizeHeaderToFit(tableView: self.tableView)
                     }
-                    self.titleLabel.text = repo.name
-                    
-                    self.sizeHeaderToFit(tableView: self.tableView)
-                }
-            }).addDisposableTo(viewModel.disposeBag)
+                }).addDisposableTo(viewModel.disposeBag)
         }
     }
 
@@ -48,12 +59,52 @@ class RepositoryViewController: BaseTableViewController {
         super.viewDidLoad()
         
         viewModel.fetchRepository()
+        viewModel.fetchBranches()
     }
-
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSections
+    }
+    
+    lazy var header: UIView = {
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 35))
+        header.addSubview(self.branchButton)
+        
+        return header
+    }()
+    
+    lazy var branchButton: OptionButton = {
+        let button = OptionButton(frame: CGRect(x: 12, y: 0, width: 120, height: 27))
+        button.addTarget(self.pickerView, action: #selector(OptionPickerView.show), for: .touchUpInside)
+        
+        button.optionTitle = "Branch"
+        button.choice = self.viewModel.repository.value.defaultBranch!
+        
+        self.viewModel.isBranchesLoaded.asObservable()
+            .bindTo(button.rx.enabled)
+            .addDisposableTo(self.viewModel.disposeBag)
+        
+        return button
+    }()
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section == 1 else {
+            return nil
+        }
+        
+        return header
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 1 {
+            return 35
+        } else if section == 2 {
+            return 10
+        } else {
+            return super.tableView(tableView, heightForHeaderInSection: section)
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -62,7 +113,7 @@ class RepositoryViewController: BaseTableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard viewModel.repositoryLoaded else {
+        guard viewModel.isRepositoryLoaded else {
             return statusCell
         }
         
@@ -95,7 +146,23 @@ class RepositoryViewController: BaseTableViewController {
                 cell.textLabel?.attributedText = Octicon.book.iconString(" README", iconSize: 18, iconColor: .gray)
                 return cell
             }
+            
         case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
+            cell.textLabel?.textColor = UIColor(netHex: 0x333333)
+            
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.attributedText = Octicon.code.iconString(" Code", iconSize: 18, iconColor: .lightGray)
+            case 1:
+                cell.textLabel?.attributedText = Octicon.gitCommit.iconString(" Commits", iconSize: 18, iconColor: .lightGray)
+            default:
+                break
+            }
+            
+            return cell
+            
+        case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
             cell.textLabel?.textColor = UIColor(netHex: 0x333333)
             
@@ -113,20 +180,7 @@ class RepositoryViewController: BaseTableViewController {
             default: break
             }
             return cell
-        case 2:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
-            cell.textLabel?.textColor = UIColor(netHex: 0x333333)
-            
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.attributedText = Octicon.code.iconString(" Code", iconSize: 18, iconColor: .lightGray)
-            case 1:
-                cell.textLabel?.attributedText = Octicon.gitCommit.iconString(" Commits", iconSize: 18, iconColor: .lightGray)
-            default:
-                break
-            }
-            
-            return cell
+        
         default:
             return UITableViewCell()
         }
@@ -158,7 +212,23 @@ class RepositoryViewController: BaseTableViewController {
             default:
                 break
             }
+        
         case 1:
+            switch indexPath.row {
+            case 0:
+                let fileTableVC = FileTableViewController()
+                fileTableVC.viewModel = viewModel.fileTableViewModel
+                self.navigationController?.pushViewController(fileTableVC, animated: true)
+                
+            case 1:
+                let commitTVC = CommitTableViewController()
+                commitTVC.viewModel = viewModel.commitTableViewModel
+                self.navigationController?.pushViewController(commitTVC, animated: true)
+            default:
+                break
+            }
+        
+        case 2:
             switch indexPath.row {
             case 0:
                 let repo = viewModel.repository.value
@@ -206,23 +276,32 @@ class RepositoryViewController: BaseTableViewController {
                 break
             }
             
-        case 2:
-            switch indexPath.row {
-            case 0:
-                let fileTableVC = FileTableViewController()
-                fileTableVC.viewModel = viewModel.filesTableViewModel
-                self.navigationController?.pushViewController(fileTableVC, animated: true)
-                
-            case 1:
-                let commitTVC = CommitTableViewController()
-                commitTVC.viewModel = CommitTableViewModel(repo: viewModel.repository.value)
-                self.navigationController?.pushViewController(commitTVC, animated: true)
-            default:
-                break
-            }
-            
         default:
             break
         }
+    }
+}
+
+extension RepositoryViewController: OptionPickerViewDelegate {
+    
+    func doneButtonClicked(_ pickerView: OptionPickerView) {
+        viewModel.branch = viewModel.branches[pickerView.tmpSelectedRow[0]!].name!
+        branchButton.choice = viewModel.branch
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return viewModel.branches.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return viewModel.branches[row].name!
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.pickerView.tmpSelectedRow[self.pickerView.index] = row
     }
 }

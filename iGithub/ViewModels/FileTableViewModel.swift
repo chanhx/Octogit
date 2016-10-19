@@ -13,13 +13,13 @@ class FileTableViewModel: BaseTableViewModel<File> {
     
     var repository: String
     var path: String
-    var token: GithubAPI
+    var ref: String
     
-    init(repository: String, path: String = "") {
+    init(repository: String, path: String = "", ref: String) {
         
         self.repository = repository
         self.path = path
-        self.token = .getContents(repo: repository, path: path)
+        self.ref = ref
         
         super.init()
     }
@@ -29,6 +29,8 @@ class FileTableViewModel: BaseTableViewModel<File> {
     }
     
     override func fetchData() {
+        let token = GithubAPI.getContents(repo: repository, path: path, ref: ref)
+        
         GithubProvider
             .request(token)
             .mapJSON()
@@ -67,10 +69,10 @@ class FileTableViewModel: BaseTableViewModel<File> {
     }
     
     func fileViewModel(_ file: File) -> FileViewModel {
-        return FileViewModel(repository: repository, file: file)
+        return FileViewModel(repository: repository, file: file, ref: ref)
     }
     
     func subDirectoryViewModel(_ directory: File) -> FileTableViewModel {
-        return FileTableViewModel(repository: repository, path: directory.path!)
+        return FileTableViewModel(repository: repository, path: directory.path!, ref: ref)
     }
 }

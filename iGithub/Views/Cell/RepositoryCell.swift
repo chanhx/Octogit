@@ -83,7 +83,7 @@ class RepositoryCell: UITableViewCell {
     
     var entity: Repository! {
         didSet {
-            timeLabel.text = entity.updatedAt?.naturalString
+            timeLabel.text = entity.pushedAt?.naturalString
             nameLabel.text = shouldDisplayFullName ? entity.fullName! : entity.name!
             
             descriptionLabel.text = entity.repoDescription

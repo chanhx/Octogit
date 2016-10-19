@@ -137,6 +137,9 @@
 		C5E733881D61C90000913A66 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733871D61C90000913A66 /* SearchViewController.swift */; };
 		C5E7338A1D62292000913A66 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733891D62292000913A66 /* SearchViewModel.swift */; };
 		C5E7ACDB1D94C232007D1986 /* iGithub.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = C5E7ACDA1D94C232007D1986 /* iGithub.entitlements */; };
+		C5E7C2291DB4F4A000F95509 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7C2281DB4F4A000F95509 /* GradientButton.swift */; };
+		C5E7C22B1DB5CB2100F95509 /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7C22A1DB5CB2100F95509 /* OptionButton.swift */; };
+		C5E7C22D1DB61D5200F95509 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7C22C1DB61D5200F95509 /* Branch.swift */; };
 		C5F4BDE71D3F95E5009DF758 /* Octicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDE61D3F95E5009DF758 /* Octicon.swift */; };
 		C5F4BDEB1D3F96D2009DF758 /* octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */; };
 		C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */; };
@@ -302,6 +305,9 @@
 		C5E733871D61C90000913A66 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C5E733891D62292000913A66 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		C5E7ACDA1D94C232007D1986 /* iGithub.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = iGithub.entitlements; sourceTree = "<group>"; };
+		C5E7C2281DB4F4A000F95509 /* GradientButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
+		C5E7C22A1DB5CB2100F95509 /* OptionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
+		C5E7C22C1DB61D5200F95509 /* Branch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
 		C5F4BDE61D3F95E5009DF758 /* Octicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Octicon.swift; sourceTree = "<group>"; };
 		C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = octicons.ttf; sourceTree = "<group>"; };
 		C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -371,6 +377,7 @@
 				C524742E1D51A1500001D9CD /* Milestone.swift */,
 				C5DB70181DA2AC3500D96248 /* Gist.swift */,
 				C52D1ADB1DA606740033AC49 /* Release.swift */,
+				C5E7C22C1DB61D5200F95509 /* Branch.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -408,7 +415,7 @@
 				C55791511D73E69800FBBD41 /* Refresh */,
 				C57005E71DAB3712008DEFA9 /* TwicketSegmentedControl */,
 				C59730E41D994B7A00DADF01 /* Cell */,
-				C5C4D9541D4A27B2007C1891 /* CountButton.swift */,
+				C5E7C2271DB4F47900F95509 /* Button */,
 				C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */,
 				C5E733841D603A8E00913A66 /* SegmentHeaderView.swift */,
 				C571EF571D64836100F752EE /* OptionPickerView.swift */,
@@ -588,6 +595,16 @@
 				C5DF4BA71D8CD2E900052A85 /* iGithub-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C5E7C2271DB4F47900F95509 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				C5C4D9541D4A27B2007C1891 /* CountButton.swift */,
+				C5E7C2281DB4F4A000F95509 /* GradientButton.swift */,
+				C5E7C22A1DB5CB2100F95509 /* OptionButton.swift */,
+			);
+			name = Button;
 			sourceTree = "<group>";
 		};
 		C5F4BDEC1D3FAEE6009DF758 /* ViewControllers */ = {
@@ -861,10 +878,12 @@
 				C5DB701F1DA3A6BB00D96248 /* TitleHeaderView.swift in Sources */,
 				C5DB70151DA27BD900D96248 /* CommitTableViewModel.swift in Sources */,
 				C5373C4F1D4B97F6006CFB83 /* UserTableViewModel.swift in Sources */,
+				C5E7C22D1DB61D5200F95509 /* Branch.swift in Sources */,
 				C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */,
 				C538FD0B1D40A30F003A559E /* Event.swift in Sources */,
 				C538FD251D40DB70003A559E /* EventCell.swift in Sources */,
 				C538FD191D40A455003A559E /* Repository.swift in Sources */,
+				C5E7C2291DB4F4A000F95509 /* GradientButton.swift in Sources */,
 				C5DB700D1DA1177400D96248 /* PullRequestTableViewModel.swift in Sources */,
 				C52678A51DAE075C00F69F1B /* CommitFile.swift in Sources */,
 				C538FD571D461852003A559E /* FileViewController.swift in Sources */,
@@ -875,6 +894,7 @@
 				C5E733831D5EEE8C00913A66 /* TrendingRepoCell.swift in Sources */,
 				C52678A71DAE0A9B00F69F1B /* CommitFileTableViewModel.swift in Sources */,
 				C524742F1D51A1500001D9CD /* Milestone.swift in Sources */,
+				C5E7C22B1DB5CB2100F95509 /* OptionButton.swift in Sources */,
 				C538FD021D406638003A559E /* User.swift in Sources */,
 				C538FD431D43BDE5003A559E /* StatusCell.swift in Sources */,
 				C5E7337B1D5D642900913A66 /* ExploreViewModel.swift in Sources */,

@@ -53,6 +53,8 @@ class UserTableViewModel: BaseTableViewModel<User> {
     }
     
     override func fetchData() {
+        updateToken()
+        
         GithubProvider
             .request(token)
             .do(onNext: {
