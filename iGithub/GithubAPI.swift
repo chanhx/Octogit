@@ -25,7 +25,7 @@ let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
         return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeHTML])
     case .repositoryIssues, .repositoryPullRequests:
         return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeHTMLAndJSON])
-    case .issueComments, .gistComments, .commitComments:
+    case .issueComments, .pullRequestComments, .gistComments, .commitComments:
         return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeTextAndJSON])
     default:
         return endpoint
@@ -65,6 +65,7 @@ enum GithubAPI {
     // MARK: Comment
     
     case issueComments(repo: String, number: Int, page: Int)
+    case pullRequestComments(repo: String, number: Int, page: Int)
     case commitComments(repo: String, sha: String, page: Int)
     case gistComments(gistID: String, page: Int)
     
@@ -152,6 +153,8 @@ extension GithubAPI: TargetType {
             
         case .issueComments(let repo, let number, _):
             return "/repos/\(repo)/issues/\(number)/comments"
+        case .pullRequestComments(let repo, let number, _):
+            return "/repos/\(repo)/pulls/\(number)/comments"
         case .commitComments(let repo, let sha, _):
             return "/repos/\(repo)/commits/\(sha)/comments"
         case .gistComments(let gistID, _):
@@ -269,6 +272,7 @@ extension GithubAPI: TargetType {
              .organizationMembers(_, let page),
              
              .issueComments(_, _, let page),
+             .pullRequestComments(_, _, let page),
              .commitComments(_, _, let page),
              .gistComments(_, let page),
              
