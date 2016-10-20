@@ -38,7 +38,7 @@ class FileTableViewModel: BaseTableViewModel<File> {
                 onNext: {
                     self.dataSource.value = Mapper<File>().mapArray(JSONObject: $0)!
                         .map {
-                            if $0.type! == .file && $0.size == 0 {
+                            if $0.isSubmodule {
                                 $0.type = .submodule
                             }
                             return $0
@@ -70,6 +70,14 @@ class FileTableViewModel: BaseTableViewModel<File> {
     
     func fileViewModel(_ file: File) -> FileViewModel {
         return FileViewModel(repository: repository, file: file, ref: ref)
+    }
+    
+    func submoduleViewModel(_ file: File) -> FileTableViewModel {
+        let pathComponents = file.gitLink!.pathComponents
+        let repo = "\(pathComponents[2])/\(pathComponents[3])"
+        let ref = pathComponents.last!
+        
+        return FileTableViewModel(repository: repo, ref: ref)
     }
     
     func subDirectoryViewModel(_ directory: File) -> FileTableViewModel {

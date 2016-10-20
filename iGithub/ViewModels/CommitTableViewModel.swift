@@ -17,7 +17,7 @@ class CommitTableViewModel: BaseTableViewModel<Commit> {
     init(repo: Repository, branch: String) {
         self.repo = repo.fullName!
         token = .repositoryCommits(repo: repo.fullName!,
-                                   branch: branch,
+                                   sha: branch,
                                    page: 1)
         
         super.init()
@@ -35,7 +35,7 @@ class CommitTableViewModel: BaseTableViewModel<Commit> {
     func updateToken() {
         switch token {
         case .repositoryCommits(let repo, let branch, _):
-            token = .repositoryCommits(repo: repo, branch: branch, page: page)
+            token = .repositoryCommits(repo: repo, sha: branch, page: page)
         case .pullRequestCommits(let repo, let number, _):
             token = .pullRequestCommits(repo: repo, number: number, page: page)
         default:

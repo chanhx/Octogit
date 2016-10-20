@@ -96,7 +96,7 @@ enum GithubAPI {
     
     // MARK: Commit
     
-    case repositoryCommits(repo: String, branch: String, page: Int)
+    case repositoryCommits(repo: String, sha: String, page: Int)
     case pullRequestCommits(repo: String, number: Int, page: Int)
     case getACommit(repo: String, sha: String)
     
@@ -247,8 +247,8 @@ extension GithubAPI: TargetType {
         case .oAuthUser(let accessToken):
             return ["access_token": accessToken]
             
-        case .repositoryCommits(_, let branch, let page):
-            return ["sha": branch, "page": page]
+        case .repositoryCommits(_, let sha, let page):
+            return ["sha": sha, "page": page]
             
         case .getContents(_, _, let ref),
              .getHTMLContents(_, _, let ref):

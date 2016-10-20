@@ -25,7 +25,9 @@ class File: BaseModel {
     var path: String?
     var content: String?
     var sha: String?
-    var htmlURL: URL?
+
+    var link: URL?
+    var gitLink: URL?
     
     override func mapping(map: Map) {
         type        <- map["type"]
@@ -35,6 +37,28 @@ class File: BaseModel {
         path        <- map["path"]
         content     <- map["content"]
         sha         <- map["sha"]
-        htmlURL     <- (map["html_url"], URLTransform())
+        
+        link    <- (map["_links.self"], URLTransform())
+        gitLink     <- (map["_links.git"], URLTransform())
     }
+    
+    lazy var isSubmodule: Bool = {
+        guard self.type == .file else {
+            return false
+        }
+        
+        guard self.size! <= 0 else {
+            return false
+        }
+        
+        guard let l1 = self.link, let l2 = self.gitLink else {
+            return true
+        }
+        
+        let l1Components = l1.pathComponents
+        let l2Components = l2.pathComponents
+        
+        return (l1Components[2] != l2Components[2])
+            || (l1Components[3] != l2Components[3])
+    }()
 }

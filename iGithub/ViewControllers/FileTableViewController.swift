@@ -51,14 +51,25 @@ class FileTableViewController: BaseTableViewController {
         super.tableView(tableView, didSelectRowAt: indexPath)
         
         let file = viewModel.dataSource.value[indexPath.row]
-        if file.type! == .file {
-            let fileVC = FileViewController()
-            fileVC.viewModel = viewModel.fileViewModel(file)
+        
+        switch file.type! {
+        case .submodule:
+            guard let _ = file.gitLink else {
+                MessageManager.showMessage(title: "", body: "The submodule repository is not hosted on github.com", type: .info)
+                return
+            }
+            
+            let fileVC = FileTableViewController()
+            fileVC.viewModel = viewModel.submoduleViewModel(file)
             self.navigationController?.pushViewController(fileVC, animated: true)
-        } else {
+        case .directory:
             let fileTVC = FileTableViewController()
             fileTVC.viewModel = viewModel.subDirectoryViewModel(file)
             self.navigationController?.pushViewController(fileTVC, animated: true)
+        default:
+            let fileVC = FileViewController()
+            fileVC.viewModel = viewModel.fileViewModel(file)
+            self.navigationController?.pushViewController(fileVC, animated: true)
         }
     }
     
