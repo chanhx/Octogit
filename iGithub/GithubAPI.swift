@@ -59,7 +59,7 @@ enum GithubAPI {
     case getABlob(repo: String, sha: String)
     case getContents(repo: String, path: String, ref: String)
     case getHTMLContents(repo: String, path: String, ref: String)
-    case getTheREADME(repo: String)
+    case getTheREADME(repo: String, ref: String)
     case pullRequestFiles(repo: String, number: Int, page: Int)
     
     // MARK: Comment
@@ -143,7 +143,7 @@ extension GithubAPI: TargetType {
             return "/repos/\(repo)/contents/\(path)"
         case .getHTMLContents(let repo, let path, _):
             return "/repos/\(repo)/contents/\(path)"
-        case .getTheREADME(let repo):
+        case .getTheREADME(let repo, _):
             return "/repos/\(repo)/readme"
             
         case .pullRequestFiles(let repo, let number, _):
@@ -251,7 +251,8 @@ extension GithubAPI: TargetType {
             return ["sha": sha, "page": page]
             
         case .getContents(_, _, let ref),
-             .getHTMLContents(_, _, let ref):
+             .getHTMLContents(_, _, let ref),
+             .getTheREADME(_, let ref):
             return ["ref": ref]
             
         case .searchRepositories(let q, let sort):

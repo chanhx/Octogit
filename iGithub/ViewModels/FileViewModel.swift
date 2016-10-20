@@ -54,10 +54,12 @@ class FileViewModel {
         self.ref = ref
     }
     
-    init(repository: String) {
+    init(repository: String, ref: String) {
         repo = repository
         file = .normalFile(Mapper<File>().map(JSON: ["name": "README"])!)
         fileName = "README"
+        filePath = ""
+        self.ref = ref
     }
     
     init(file: CommitFile) {
@@ -133,7 +135,7 @@ class FileViewModel {
         if let path = file.path {
             token = GithubAPI.getHTMLContents(repo: repo!, path: path, ref: ref!)
         } else {
-            token = GithubAPI.getTheREADME(repo: repo!)
+            token = GithubAPI.getTheREADME(repo: repo!, ref: ref!)
         }
         
         GithubProvider

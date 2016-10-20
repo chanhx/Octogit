@@ -139,6 +139,10 @@ class RepositoryViewModel {
     
     // MARK: generate child viewmodel
     
+    var readmeViewModel: FileViewModel {
+        return FileViewModel(repository: fullName, ref: branch)
+    }
+    
     var fileTableViewModel: FileTableViewModel {
         return FileTableViewModel(repository: fullName, ref: branch)
     }
