@@ -139,6 +139,7 @@
 		C5E7C2291DB4F4A000F95509 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7C2281DB4F4A000F95509 /* GradientButton.swift */; };
 		C5E7C22B1DB5CB2100F95509 /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7C22A1DB5CB2100F95509 /* OptionButton.swift */; };
 		C5E7C22D1DB61D5200F95509 /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7C22C1DB61D5200F95509 /* Branch.swift */; };
+		C5E7C2351DB9C48C00F95509 /* TableViewController+EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7C2341DB9C48C00F95509 /* TableViewController+EmptyView.swift */; };
 		C5F4BDE71D3F95E5009DF758 /* Octicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDE61D3F95E5009DF758 /* Octicon.swift */; };
 		C5F4BDEB1D3F96D2009DF758 /* octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */; };
 		C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */; };
@@ -306,6 +307,7 @@
 		C5E7C2281DB4F4A000F95509 /* GradientButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
 		C5E7C22A1DB5CB2100F95509 /* OptionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
 		C5E7C22C1DB61D5200F95509 /* Branch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
+		C5E7C2341DB9C48C00F95509 /* TableViewController+EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TableViewController+EmptyView.swift"; sourceTree = "<group>"; };
 		C5F4BDE61D3F95E5009DF758 /* Octicon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Octicon.swift; sourceTree = "<group>"; };
 		C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = octicons.ttf; sourceTree = "<group>"; };
 		C5F4BDEE1D3FB1E8009DF758 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -430,6 +432,7 @@
 				C59D120D1D5AE2DD0098301A /* NSURL+Github.swift */,
 				C5113D191D87B5B400344739 /* File+DataProcess.swift */,
 				C59730DF1D980C4700DADF01 /* UIViewControllerExtension.swift */,
+				C5E7C2341DB9C48C00F95509 /* TableViewController+EmptyView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -920,6 +923,7 @@
 				C52D1AE21DA64D0F0033AC49 /* ReleaseTableViewModel.swift in Sources */,
 				C5ABDF4E1D7DC8A800F07DC2 /* Renderer.swift in Sources */,
 				C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */,
+				C5E7C2351DB9C48C00F95509 /* TableViewController+EmptyView.swift in Sources */,
 				C55791571D743A2D00FBBD41 /* RefreshFooter.swift in Sources */,
 				C538FD471D4491DE003A559E /* Event+DataProcess.swift in Sources */,
 				C538FD391D430FB3003A559E /* RepositoryViewModel.swift in Sources */,

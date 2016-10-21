@@ -22,6 +22,11 @@ class ReleaseTableViewController: BaseTableViewController {
                         self.tableView.refreshFooter?.endRefreshing() :
                         self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
                 })
+                .do(onNext: {
+                    if $0.count <= 0 {
+                        self.show(statusType: .empty(action: {}))
+                    }
+                })
                 .bindTo(tableView.rx.items(cellIdentifier: "ReleaseCell", cellType: ReleaseCell.self)) { row, element, cell in
                     cell.entity = element
                 }

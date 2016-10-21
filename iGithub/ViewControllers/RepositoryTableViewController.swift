@@ -21,6 +21,11 @@ class RepositoryTableViewController: BaseTableViewController {
                         self.tableView.refreshFooter?.endRefreshing() :
                         self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
                 })
+                .do(onNext: {
+                    if $0.count <= 0 {
+                        self.show(statusType: .empty(action: {}))
+                    }
+                })
                 .bindTo(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) { row, element, cell in
                     cell.shouldDisplayFullName = self.viewModel.shouldDisplayFullName
                     cell.entity = element

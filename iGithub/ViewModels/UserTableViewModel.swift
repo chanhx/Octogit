@@ -10,7 +10,7 @@ import ObjectMapper
 
 class UserTableViewModel: BaseTableViewModel<User> {
     
-    fileprivate var token: GithubAPI
+    var token: GithubAPI
     
     init(repo: Repository) {
         token = .repositoryContributors(repo: repo.fullName!, page: 1)
@@ -19,11 +19,6 @@ class UserTableViewModel: BaseTableViewModel<User> {
     
     init(organization: User) {
         token = .organizationMembers(org: organization.login!, page: 1)
-        super.init()
-    }
-    
-    init(user: User) {
-        token = .organizations(user: user.login!)
         super.init()
     }
     

@@ -21,6 +21,13 @@ class IssueTableViewController: BaseTableViewController {
                         self.tableView.refreshFooter?.endRefreshing() :
                         self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
                 })
+                .do(onNext: {
+                    if $0.count <= 0 {
+                        self.show(statusType: .empty(action: {}))
+//                    } else {
+//                        self.hide(statusType: .empty(action))
+                    }
+                })
                 .bindTo(tableView.rx.items(cellIdentifier: "IssueCell", cellType: IssueCell.self)) { row, element, cell in
                     cell.entity = element
                 }
