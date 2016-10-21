@@ -57,7 +57,6 @@ class RepositoryViewModel {
 //                }
                 
                 if let repo = Mapper<Repository>().map(JSONObject: $0) {
-                    self.setInfoTypes(repo: repo)
                     self.branch = repo.defaultBranch!
                     self.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
                     self.repository.value = repo
@@ -106,7 +105,10 @@ class RepositoryViewModel {
     
     func setInfoTypes(repo: Repository) {
         
-        infoTypes.removeAll()
+        if !isRepositoryLoaded || infoTypes.count > 0 {
+            return
+        }
+        
         infoTypes.append(.author)
         
         if let desc = repo.repoDescription?.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -129,6 +131,7 @@ class RepositoryViewModel {
         
         switch section {
         case 0:
+            setInfoTypes(repo: repository.value)
             return infoTypes.count
         case 1:
             return 2

@@ -64,7 +64,9 @@ class RepositoryViewController: BaseTableViewController {
         self.titleLabel.text = viewModel.repository.value.name
         self.sizeHeaderToFit(tableView: self.tableView)
         
-        viewModel.fetchRepository()
+        if !viewModel.isRepositoryLoaded {
+            viewModel.fetchRepository()
+        }
         viewModel.fetchBranches()
     }
     
