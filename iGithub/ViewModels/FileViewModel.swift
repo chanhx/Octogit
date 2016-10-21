@@ -160,7 +160,10 @@ class FileViewModel {
         
         if let upwarppedMarkdown = markdown {
             let template = try! Template(named: "markdown")
-            let data = ["content": upwarppedMarkdown]
+            let data = [
+                "base_url": "https://github.com/\(repo!)/raw/\(ref!)/\(filePath!)",
+                "content": upwarppedMarkdown
+            ]
             
             return try! template.render(Box(data))
         }
