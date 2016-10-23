@@ -6,6 +6,22 @@
 
 ## CHANGELOG
 
+### SwiftDate 4.0.6
+Released on: Mon Oct 17, 2016, [Download](https://github.com/malcommac/SwiftDate/releases/tag/4.0.6)
+* [#303](https://github.com/malcommac/SwiftDate/issues/303) `Date.defaultRegion()` is now set to `Region.Local()` as specified in doc (not `Region.GMT()`)
+* [#302](https://github.com/malcommac/SwiftDate/issues/302) Fixed an issue with colloquial dates and future dates; also fixed an issue when reporting colloquial differences expressed in weeks
+* [#301](https://github.com/malcommac/SwiftDate/issues/301) Add `.locale` property in `ISO8601DateTimeFormatter`
+
+### SwiftDate 4.0.5
+Released on: Mon Oct 10, 2016, [Download](https://github.com/malcommac/SwiftDate/releases/tag/4.0.5)
+* [#284](https://github.com/malcommac/SwiftDate/issues/284) Fixed a crash with .colloquial() function and # weeks evaluation
+* [#287](https://github.com/malcommac/SwiftDate/issues/287) Added Simplified Chinese translation (thanks to @codingrhythm)
+* [#288](https://github.com/malcommac/SwiftDate/issues/288) Added Indonesian translation (thanks to @suprie)
+* [#286](https://github.com/malcommac/SwiftDate/issues/286) Added French translation (thanks to @pierrolivier)
+* [#293](https://github.com/malcommac/SwiftDate/issues/293) Added .withInternetDateTimeExtended as options of ISO8601DateTimeFormatter
+* [#292](https://github.com/malcommac/SwiftDate/issues/292) .setDefaultRegion and .defaultRegion are now static func/prop of the Date object
+
+
 ### SwiftDate 4.0.4
 Released on: Tue Oct 4, 2016, [Download](https://github.com/malcommac/SwiftDate/releases/tag/4.0.4)
 * [#277](https://github.com/malcommac/SwiftDate/issues/277): Remove `throws` from Date.add(components:) in Date+Math.swift 

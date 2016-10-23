@@ -23,7 +23,7 @@ class PullRequestTableViewController: BaseTableViewController {
                 })
                 .do(onNext: {
                     if $0.count <= 0 {
-                        self.show(statusType: .empty(action: {}))
+                        self.show(statusType: .empty)
                     }
                 })
                 .bindTo(tableView.rx.items(cellIdentifier: "IssueCell", cellType: IssueCell.self)) { row, element, cell in

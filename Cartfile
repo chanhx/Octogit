@@ -1,4 +1,4 @@
-github "Moya/Moya" "8.0.0-beta.2"
+github "Moya/Moya" "8.0.0-beta.3"
 github "Hearst-DD/ObjectMapper" ~> 2.1.0
 github "onevcat/Kingfisher" ~> 3.1.0
 github "malcommac/SwiftDate" ~> 4.0.0
@@ -7,4 +7,3 @@ github "kishikawakatsumi/KeychainAccess"
 github "TTTAttributedLabel/TTTAttributedLabel"
 github "tid-kijyun/Kanna" ~> 2.0
 github "SwiftKickMobile/SwiftMessages"
-github "mariohahn/StatusProvider"

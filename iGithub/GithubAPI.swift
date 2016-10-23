@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Moya
 import RxMoya
 
 // MARK: - Provider setup
@@ -16,17 +17,17 @@ let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
     (target: GithubAPI) -> Endpoint<GithubAPI> in
     
     var endpoint = MoyaProvider.DefaultEndpointMapping(target)
-    endpoint = endpoint.endpointByAddingParameters(["access_token": AccountManager.token!])
+    endpoint = endpoint.adding(newParameters: ["access_token": AccountManager.token!])
     
     switch target {
     case .getABlob:
-        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeRaw])
+        return endpoint.adding(newHttpHeaderFields: ["Accept": Constants.MediaTypeRaw])
     case .getHTMLContents, .getTheREADME:
-        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeHTML])
+        return endpoint.adding(newHttpHeaderFields: ["Accept": Constants.MediaTypeHTML])
     case .repositoryIssues, .repositoryPullRequests:
-        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeHTMLAndJSON])
+        return endpoint.adding(newHttpHeaderFields: ["Accept": Constants.MediaTypeHTMLAndJSON])
     case .issueComments, .pullRequestComments, .gistComments, .commitComments:
-        return endpoint.endpointByAddingHTTPHeaderFields(["Accept": Constants.MediaTypeTextAndJSON])
+        return endpoint.adding(newHttpHeaderFields: ["Accept": Constants.MediaTypeTextAndJSON])
     default:
         return endpoint
     }
@@ -236,10 +237,10 @@ extension GithubAPI: TargetType {
             return "/gists/starred"
         }
     }
-    var method: RxMoya.Method {
+    var method: Moya.Method {
         switch self {
         default:
-            return .GET
+            return .get
         }
     }
     var parameters: [String: Any]? {
@@ -301,7 +302,7 @@ extension GithubAPI: TargetType {
             return nil
         }
     }
-    var task: RxMoya.Task {
+    var task: Moya.Task {
         return .request
     }
     var sampleData: Data {

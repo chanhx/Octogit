@@ -86,18 +86,29 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
 extension ExplorationViewController: SegmentHeaderViewDelegate {
     
     func headerView(_ view: SegmentHeaderView, didSelectSegmentTitle title: TrendingType) {
+        viewModel.type = title
+        
         switch title {
         case .repositories:
             bindToRepoTVM()
         case .users:
             bindToUserTVM()
         }
-        
-        viewModel.type = title
     }
     
     func bindToRepoTVM() {
         viewModel.repoTVM.repositories.asObservable()
+            .do(onNext: {
+                if $0.count <= 0 {
+                    if let _ = self.viewModel.repoTVM.message {
+                        self.show(statusType: .empty)
+                    } else {
+                        self.show(statusType: .loading)
+                    }
+                } else {
+                    self.hide(statusType: .loading)
+                }
+            })
             .bindTo(tableView.rx.items(cellIdentifier: "TrendingRepoCell", cellType: TrendingRepoCell.self)) {
                 row, repo, cell in
                 cell.configureCell(repo.name, description: repo.description, meta: repo.meta)
@@ -107,6 +118,17 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
     
     func bindToUserTVM() {
         viewModel.userTVM.users.asObservable()
+            .do(onNext: {
+                if $0.count <= 0 {
+                    if let _ = self.viewModel.userTVM.message {
+                        self.show(statusType: .empty)
+                    } else {
+                        self.show(statusType: .loading)
+                    }
+                } else {
+                    self.hide(statusType: .loading)
+                }
+            })
             .bindTo(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) {
                 row, user, cell in
                 cell.entity = user

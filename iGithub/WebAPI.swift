@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Moya
 import RxMoya
 
 struct OAuthConfiguration {
@@ -21,7 +22,7 @@ struct OAuthConfiguration {
     static var authorizationURL: URL? {
         return WebProvider
             .endpoint(.authorize)
-            .urlRequest
+            .urlRequest?
             .url
     }
 }
@@ -61,12 +62,12 @@ extension WebAPI: TargetType {
             }
         }
     }
-    var method: RxMoya.Method {
+    var method: Moya.Method {
         switch self {
         case .accessToken(_):
-            return .POST
+            return .post
         default:
-            return .GET
+            return .get
         }
     }
     var parameters: [String: Any]? {
@@ -80,7 +81,7 @@ extension WebAPI: TargetType {
             return ["since": since.rawValue as AnyObject, "l": language as AnyObject]
         }
     }
-    var task: RxMoya.Task {
+    var task: Moya.Task {
         return .request
     }
     var sampleData: Data {

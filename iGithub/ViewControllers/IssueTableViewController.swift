@@ -23,7 +23,7 @@ class IssueTableViewController: BaseTableViewController {
                 })
                 .do(onNext: {
                     if $0.count <= 0 {
-                        self.show(statusType: .empty(action: {}))
+                        self.show(statusType: .empty)
 //                    } else {
 //                        self.hide(statusType: .empty(action))
                     }

@@ -8,6 +8,7 @@
 
 import Foundation
 import KeychainAccess
+import Moya
 import RxMoya
 import RxSwift
 import ObjectMapper
@@ -35,7 +36,7 @@ class AccountManager {
         }
     }
     
-    class func requestToken(_ code: String, success: @escaping () -> Void, failure: @escaping (RxMoya.Error) -> Void) {
+    class func requestToken(_ code: String, success: @escaping () -> Void, failure: @escaping (Moya.Error) -> Void) {
         WebProvider
             .request(.accessToken(code: code))
             .mapString()

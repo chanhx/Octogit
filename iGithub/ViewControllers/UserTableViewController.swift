@@ -24,7 +24,7 @@ class UserTableViewController: BaseTableViewController {
                 })
                 .do(onNext: {
                     if $0.count <= 0 {
-                        self.show(statusType: .empty(action: {}))
+                        self.show(statusType: .empty)
                     }
                 })
                 .bindTo(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) { row, element, cell in

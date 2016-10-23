@@ -23,7 +23,7 @@ class RepositoryTableViewController: BaseTableViewController {
                 })
                 .do(onNext: {
                     if $0.count <= 0 {
-                        self.show(statusType: .empty(action: {}))
+                        self.show(statusType: .empty)
                     }
                 })
                 .bindTo(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) { row, element, cell in

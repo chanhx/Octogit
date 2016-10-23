@@ -65,6 +65,16 @@ class ExplorationViewModel {
         }
         trendingVM.since = since
         trendingVM.language = language
+        
+        switch type {
+        case .repositories:
+            repoTVM.message = nil
+            repoTVM.repositories.value.removeAll()
+        case .users:
+            userTVM.message = nil
+            userTVM.users.value.removeAll()
+        }
+        
         trendingVM.fetchHTML()
     }
 }
@@ -112,11 +122,14 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
     var since: TrendingTime?
     var language: String?
     var repositories: Variable<[(name: String, description: String?, meta: String)]> = Variable([])
+    var message: String?
     var token: WebAPI {
         return WebAPI.trending(since: since!, language: languagesDict[language!]!, type: .repositories)
     }
     
     @inline(__always) func parse(_ doc: HTMLDocument) {
+        message = doc.css("div.blankslate h3").first?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         repositories.value = doc.css("li.repo-list-item").map {
             let name = String($0.at_css("h3.repo-list-name a")!["href"]!.characters.dropFirst())
             
@@ -138,11 +151,14 @@ class TrendingUserTableViewModel: TrendingViewModelProtocol {
     var since: TrendingTime?
     var language: String?
     var users: Variable<[User]> = Variable([])
+    var message: String?
     var token: WebAPI {
         return WebAPI.trending(since: since!, language: languagesDict[language!]!, type: .users)
     }
     
     @inline(__always) func parse(_ doc: HTMLDocument) {
+        message = doc.css("div.blankslate h3").first?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         users.value = doc.css("li.user-leaderboard-list-item.leaderboard-list-item").map {
             let name = String($0.at_css("div h2 a")!["href"]!.characters.dropFirst())
             let avatarURL = $0.at_css("a img")!["src"]!
