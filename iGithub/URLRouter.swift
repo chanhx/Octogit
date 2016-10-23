@@ -28,12 +28,7 @@ struct URLRouter {
             return userVC
         } else if pathComponents.count >= 3 {
             
-            let repo = Mapper<Repository>().map(JSON:
-                [
-                    "name": pathComponents[2],
-                    "full_name": "\(pathComponents[1])/\(pathComponents[2])"
-                ]
-            )!
+            let repo = "\(pathComponents[1])/\(pathComponents[2])"
             
             if pathComponents.count == 3 {
                 let repoVC = RepositoryViewController.instantiateFromStoryboard()

@@ -13,8 +13,8 @@ class IssueTableViewModel: BaseTableViewModel<Issue> {
     private var repo: String
     var state: IssueState
     
-    init(repo: Repository, state: IssueState = .open) {
-        self.repo = repo.fullName!
+    init(repo: String, state: IssueState = .open) {
+        self.repo = repo
         self.state = state
         
         super.init()

@@ -39,8 +39,8 @@ class RepositoryViewModel {
         self.repository = Variable(repo)
     }
     
-    init(fullName: String) {
-        self.fullName = fullName
+    init(repo: String) {
+        self.fullName = repo
         
         let name = fullName.components(separatedBy: "/").last!
         self.repository = Variable(Mapper<Repository>().map(JSON: ["name": "\(name)"])!)
@@ -151,7 +151,7 @@ class RepositoryViewModel {
     }
     
     var commitTableViewModel: CommitTableViewModel {
-        return CommitTableViewModel(repo: repository.value, branch: branch)
+        return CommitTableViewModel(repo: fullName, branch: branch)
     }
 
     var ownerViewModel: UserViewModel {

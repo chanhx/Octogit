@@ -14,20 +14,16 @@ class CommitTableViewModel: BaseTableViewModel<Commit> {
     var repo: String
     var token: GithubAPI
     
-    init(repo: Repository, branch: String) {
-        self.repo = repo.fullName!
-        token = .repositoryCommits(repo: repo.fullName!,
-                                   sha: branch,
-                                   page: 1)
+    init(repo: String, branch: String) {
+        self.repo = repo
+        token = .repositoryCommits(repo: repo, sha: branch, page: 1)
         
         super.init()
     }
     
     init(repo: String, pullRequestNumber: Int) {
         self.repo = repo
-        token = .pullRequestCommits(repo: repo,
-                                    number: pullRequestNumber,
-                                    page: 1)
+        token = .pullRequestCommits(repo: repo, number: pullRequestNumber, page: 1)
         
         super.init()
     }

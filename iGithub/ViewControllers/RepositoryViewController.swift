@@ -243,10 +243,10 @@ class RepositoryViewController: BaseTableViewController {
                 let repo = viewModel.repository.value
                 
                 let openIssueTVC = IssueTableViewController()
-                openIssueTVC.viewModel = IssueTableViewModel(repo: repo)
+                openIssueTVC.viewModel = IssueTableViewModel(repo: repo.fullName!)
                 
                 let closedIssueTVC = IssueTableViewController()
-                closedIssueTVC.viewModel = IssueTableViewModel(repo: repo, state: .closed)
+                closedIssueTVC.viewModel = IssueTableViewModel(repo: repo.fullName!, state: .closed)
                 
                 let issueSVC = SegmentViewController(viewControllers: [openIssueTVC, closedIssueTVC], titles: ["Open", "Closed"])
                 issueSVC.navigationItem.title = "Issues"
@@ -257,10 +257,10 @@ class RepositoryViewController: BaseTableViewController {
                 let repo = viewModel.repository.value
                 
                 let openPullRequestTVC = PullRequestTableViewController()
-                openPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo)
+                openPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo.fullName!)
                 
                 let closedPullRequestTVC = PullRequestTableViewController()
-                closedPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo, state: .closed)
+                closedPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo.fullName!, state: .closed)
                 
                 let pullRequestSVC = SegmentViewController(viewControllers: [openPullRequestTVC, closedPullRequestTVC], titles: ["Open", "Closed"])
                 pullRequestSVC.navigationItem.title = "Pull requests"

@@ -65,7 +65,7 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
         case .repositories:
             let repo = self.viewModel.repoTVM.repositories.value[indexPath.row]
             let repoVC = RepositoryViewController.instantiateFromStoryboard()
-            repoVC.viewModel = RepositoryViewModel(fullName: repo.name)
+            repoVC.viewModel = RepositoryViewModel(repo: repo.name)
             self.navigationController?.pushViewController(repoVC, animated: true)
         case .users:
             let user = viewModel.userTVM.users.value[indexPath.row]
