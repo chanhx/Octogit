@@ -35,7 +35,7 @@ class FileTableViewModel: BaseTableViewModel<File> {
             .request(token)
             .mapJSON()
             .subscribe(
-                onNext: {
+                onNext: { [unowned self] in
                     self.dataSource.value = Mapper<File>().mapArray(JSONObject: $0)!
                         .map {
                             if $0.isSubmodule {
@@ -61,8 +61,8 @@ class FileTableViewModel: BaseTableViewModel<File> {
                             }
                     })
                 },
-                onError: {
-                    MessageManager.show(error: $0)
+                onError: { [unowned self] in
+                    self.error.value = $0
                 }
             )
             .addDisposableTo(disposeBag)

@@ -12,18 +12,29 @@ class CommitFileTableViewController: BaseTableViewController {
     
     var viewModel: CommitFileTableViewModel! {
         didSet {
-            viewModel.dataSource.asObservable()
-                .skipWhile{ $0.count <= 0 }
-                .do(onNext: { _ in
+            viewModel.dataSource.asDriver()
+                .skip(1)
+                .do(onNext: { [unowned self] _ in
                     self.tableView.refreshHeader?.endRefreshingWithNoMoreData()
                     
                     self.viewModel.hasNextPage ?
                         self.tableView.refreshFooter?.endRefreshing() :
                         self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
                 })
-                .bindTo(tableView.rx.items(cellIdentifier: "CommitFileCell", cellType: CommitFileCell.self)) { row, element, cell in
+                .drive(tableView.rx.items(cellIdentifier: "CommitFileCell", cellType: CommitFileCell.self)) { row, element, cell in
                     cell.entity = element
                 }
+                .addDisposableTo(viewModel.disposeBag)
+            
+            viewModel.error.asDriver()
+                .filter {
+                    $0 != nil
+                }
+                .drive(onNext: { [unowned self] in
+                    self.tableView.refreshHeader?.endRefreshing()
+                    self.tableView.refreshFooter?.endRefreshing()
+                    MessageManager.show(error: $0!)
+                    })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }

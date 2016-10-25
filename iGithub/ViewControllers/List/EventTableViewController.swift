@@ -14,15 +14,15 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
     
     var viewModel: EventTableViewModel! {
         didSet {
-            viewModel.dataSource.asObservable()
+            viewModel.dataSource.asDriver()
                 .skip(1)
-                .do(onNext: { _ in
+                .do(onNext: { [unowned self] _ in
                     self.tableView.refreshHeader?.endRefreshing()
                     self.viewModel.hasNextPage ?
                         self.tableView.refreshFooter?.endRefreshing() :
                         self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
                 })
-                .bindTo(tableView.rx.items(cellIdentifier: "EventCell", cellType: EventCell.self)) { row, element, cell in
+                .drive(tableView.rx.items(cellIdentifier: "EventCell", cellType: EventCell.self)) { [unowned self] row, element, cell in
                     cell.entity = element
                     cell.titleLabel.delegate = self
                     cell.contentLabel.delegate = self
@@ -32,6 +32,17 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                     cell.avatarView.tag = row
                     cell.avatarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.avatarTapped)))
                 }
+                .addDisposableTo(viewModel.disposeBag)
+            
+            viewModel.error.asDriver()
+                .filter {
+                    $0 != nil
+                }
+                .drive(onNext: { [unowned self] in
+                    self.tableView.refreshHeader?.endRefreshing()
+                    self.tableView.refreshFooter?.endRefreshing()
+                    MessageManager.show(error: $0!)
+                })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }
@@ -51,7 +62,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
         let row = label.tag
         let user = viewModel.dataSource.value[row].actor!
         
-        guard url.absoluteString != "/\(user)" else {
+        if url.absoluteString == "/\(user)" {
             showUser(user)
             return
         }

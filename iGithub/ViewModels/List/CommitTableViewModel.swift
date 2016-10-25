@@ -44,14 +44,14 @@ class CommitTableViewModel: BaseTableViewModel<Commit> {
         
         GithubProvider
             .request(token)
-            .do(onNext: {
+            .do(onNext: { [unowned self] in
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
                 }
             })
             .mapJSON()
             .subscribe(
-                onNext: {
+                onNext: { [unowned self] in
                     if let newCommits = Mapper<Commit>().mapArray(JSONObject: $0) {
                         if self.page == 1 {
                             self.dataSource.value = newCommits
@@ -60,8 +60,8 @@ class CommitTableViewModel: BaseTableViewModel<Commit> {
                         }
                     }
                 },
-                onError: {
-                    MessageManager.show(error: $0)
+                onError: { [unowned self] in
+                    self.error.value = $0
                 }
             )
             .addDisposableTo(disposeBag)

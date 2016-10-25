@@ -13,25 +13,15 @@ class FileTableViewController: BaseTableViewController {
     
     var viewModel: FileTableViewModel! {
         didSet {
-            viewModel.dataSource.asObservable()
+            viewModel.dataSource.asDriver()
                 .skip(1)
-                .do(onNext: { _ in
+                .do(onNext: { [unowned self] _ in
                     self.tableView.refreshHeader?.endRefreshingWithNoMoreData()
                 })
-                .bindTo(tableView.rx.items(cellIdentifier: "FileCell", cellType: FileCell.self)) { row, element, cell in
+                .drive(tableView.rx.items(cellIdentifier: "FileCell", cellType: FileCell.self)) { row, element, cell in
                     cell.entity = element
                 }
-                .addDisposableTo(viewModel.disposeBag)
-            
-//            tableView
-//                .rx_itemSelected
-//                .map { indexPath in
-//                    return self.viewModel.dataSource.value[indexPath.row]
-//                }
-//                .subscribeNext { file in
-//                    
-//                }
-//                .addDisposableTo(viewModel.disposeBag)
+                .addDisposableTo(viewModel.disposeBag)            
         }
     }
     

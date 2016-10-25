@@ -26,14 +26,14 @@ class IssueTableViewModel: BaseTableViewModel<Issue> {
         GithubProvider
             .request(token)
             .filterSuccessfulStatusCodes()
-            .do(onNext: {
+            .do(onNext: { [unowned self] in
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
                 }
             })
             .mapJSON()
             .subscribe(
-                onNext: {
+                onNext: { [unowned self] in
                     if let newIssues = Mapper<Issue>().mapArray(JSONObject: $0) {
                         
                         let filteredIssues = newIssues.filter {
@@ -47,8 +47,8 @@ class IssueTableViewModel: BaseTableViewModel<Issue> {
                         }
                     }
                 },
-                onError: {
-                    print($0)
+                onError: { [unowned self] in
+                    self.error.value = $0
             })
             .addDisposableTo(disposeBag)
     }

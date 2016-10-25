@@ -1,46 +1,48 @@
 //
-//  RepositoryTableViewController.swift
+//  ReleaseTableViewController.swift
 //  iGithub
 //
-//  Created by Chan Hocheung on 7/31/16.
+//  Created by Chan Hocheung on 10/6/16.
 //  Copyright © 2016 Hocheung. All rights reserved.
 //
 
-import UIKit
+import Foundation
+import RxSwift
 
-class RepositoryTableViewController: BaseTableViewController {
-
-    var viewModel: RepositoryTableViewModel! {
+class ReleaseTableViewController: BaseTableViewController {
+    
+    var viewModel: ReleaseTableViewModel! {
         didSet {
-            viewModel.dataSource.asObservable()
+            viewModel.dataSource.asDriver()
                 .skip(1)
-                .do(onNext: { _ in
+                .do(onNext: { [unowned self] _ in
                     self.tableView.refreshHeader?.endRefreshing()
                     
                     self.viewModel.hasNextPage ?
                         self.tableView.refreshFooter?.endRefreshing() :
                         self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
                 })
-                .do(onNext: {
+                .do(onNext: { [unowned self] in
                     if $0.count <= 0 {
                         self.show(statusType: .empty)
+                    } else {
+                        self.hide(statusType: .empty)
                     }
                 })
-                .bindTo(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) { row, element, cell in
-                    cell.shouldDisplayFullName = self.viewModel.shouldDisplayFullName
+                .drive(tableView.rx.items(cellIdentifier: "ReleaseCell", cellType: ReleaseCell.self)) { row, element, cell in
                     cell.entity = element
                 }
                 .addDisposableTo(viewModel.disposeBag)
             
-            tableView.rx.itemSelected
-                .map { indexPath in
-                    self.viewModel.dataSource.value[indexPath.row]
+            viewModel.error.asDriver()
+                .filter {
+                    $0 != nil
                 }
-                .subscribe(onNext: { repo in
-                    let repoVC = RepositoryViewController.instantiateFromStoryboard()
-                    repoVC.viewModel = RepositoryViewModel(repo: repo)
-                    self.navigationController?.pushViewController(repoVC, animated: true)
-                })
+                .drive(onNext: { [unowned self] in
+                    self.tableView.refreshHeader?.endRefreshing()
+                    self.tableView.refreshFooter?.endRefreshing()
+                    MessageManager.show(error: $0!)
+                    })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }
@@ -48,12 +50,13 @@ class RepositoryTableViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(RepositoryCell.self, forCellReuseIdentifier: "RepositoryCell")
+        navigationItem.title = "Release"
+        tableView.register(ReleaseCell.self, forCellReuseIdentifier: "ReleaseCell")
         
         tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
         tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
         
         tableView.refreshHeader?.beginRefreshing()
     }
-
+    
 }

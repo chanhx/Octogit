@@ -13,40 +13,35 @@ class UserTableViewController: BaseTableViewController {
 
     var viewModel: UserTableViewModel! {
         didSet {
-            viewModel.dataSource.asObservable()
+            viewModel.dataSource.asDriver()
                 .skip(1)
-                .do(onNext: { _ in
+                .do(onNext: { [unowned self] _ in
                     self.tableView.refreshHeader?.endRefreshing()
                     
                     self.viewModel.hasNextPage ?
                         self.tableView.refreshFooter?.endRefreshing() :
                         self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
                 })
-                .do(onNext: {
+                .do(onNext: { [unowned self] in
                     if $0.count <= 0 {
                         self.show(statusType: .empty)
+                    } else {
+                        self.hide(statusType: .empty)
                     }
                 })
-                .bindTo(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) { row, element, cell in
+                .drive(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) { row, element, cell in
                     cell.entity = element
                 }
                 .addDisposableTo(viewModel.disposeBag)
             
-            tableView.rx.itemSelected
-                .map { indexPath in
-                    self.viewModel.dataSource.value[indexPath.row]
+            viewModel.error.asDriver()
+                .filter {
+                    $0 != nil
                 }
-                .subscribe( onNext: {
-                    switch $0.type! {
-                    case .user:
-                        let userVC = UserViewController.instantiateFromStoryboard()
-                        userVC.viewModel = UserViewModel($0)
-                        self.navigationController?.pushViewController(userVC, animated: true)
-                    case .organization:
-                        let orgVC = OrganizationViewController.instantiateFromStoryboard()
-                        orgVC.viewModel = OrganizationViewModel($0)
-                        self.navigationController?.pushViewController(orgVC, animated: true)
-                    }
+                .drive(onNext: { [unowned self] in
+                    self.tableView.refreshHeader?.endRefreshing()
+                    self.tableView.refreshFooter?.endRefreshing()
+                    MessageManager.show(error: $0!)
                 })
                 .addDisposableTo(viewModel.disposeBag)
         }
@@ -61,6 +56,22 @@ class UserTableViewController: BaseTableViewController {
         tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
         
         tableView.refreshHeader?.beginRefreshing()
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
+        
+        let entity = viewModel.dataSource.value[indexPath.row]
+        switch entity.type! {
+        case .user:
+            let userVC = UserViewController.instantiateFromStoryboard()
+            userVC.viewModel = UserViewModel(entity)
+            self.navigationController?.pushViewController(userVC, animated: true)
+        case .organization:
+            let orgVC = OrganizationViewController.instantiateFromStoryboard()
+            orgVC.viewModel = OrganizationViewModel(entity)
+            self.navigationController?.pushViewController(orgVC, animated: true)
+        }
     }
 
 }

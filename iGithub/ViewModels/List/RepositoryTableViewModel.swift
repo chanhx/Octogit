@@ -46,14 +46,14 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
         
         GithubProvider
             .request(token)
-            .do(onNext: {
+            .do(onNext: { [unowned self] in
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
                 }
             })
             .mapJSON()
             .subscribe(
-                onNext: {
+                onNext: { [unowned self] in
                     if let newRepos = Mapper<Repository>().mapArray(JSONObject: $0) {
                         if self.page == 1 {
                             self.dataSource.value = newRepos
@@ -62,8 +62,8 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
                         }
                     }
                 },
-                onError: {
-                    print($0)
+                onError: { [unowned self] in
+                    self.error.value = $0
             })
             .addDisposableTo(disposeBag)
     }
@@ -77,7 +77,7 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
         }
     }
     
-    func repoViewModelForIndex(_ index: Int) -> RepositoryViewModel {
-        return RepositoryViewModel(repo: dataSource.value[index])
+    func repoViewModel(forRow row: Int) -> RepositoryViewModel {
+        return RepositoryViewModel(repo: dataSource.value[row])
     }
 }

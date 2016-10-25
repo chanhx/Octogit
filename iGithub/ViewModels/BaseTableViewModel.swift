@@ -14,6 +14,7 @@ import ObjectMapper
 class BaseTableViewModel<T: BaseModel> {
     
     var dataSource: Variable<[T]> = Variable([])
+    let error = Variable<Swift.Error?>(nil)
     let disposeBag = DisposeBag()
     
     var page: Int = 1

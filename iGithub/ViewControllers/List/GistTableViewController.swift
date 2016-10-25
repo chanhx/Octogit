@@ -13,7 +13,7 @@ class GistTableViewController: BaseTableViewController {
     
     var viewModel: GistTableViewModel! {
         didSet {
-            viewModel.dataSource.asObservable()
+            viewModel.dataSource.asDriver()
                 .skip(1)
                 .do(onNext: { _ in
                     self.tableView.refreshHeader?.endRefreshing()
@@ -22,9 +22,20 @@ class GistTableViewController: BaseTableViewController {
                         self.tableView.refreshFooter?.endRefreshing() :
                         self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
                 })
-                .bindTo(tableView.rx.items(cellIdentifier: "GistCell", cellType: GistCell.self)) { row, element, cell in
+                .drive(tableView.rx.items(cellIdentifier: "GistCell", cellType: GistCell.self)) { row, element, cell in
                     cell.entity = element
                 }
+                .addDisposableTo(viewModel.disposeBag)
+            
+            viewModel.error.asDriver()
+                .filter {
+                    $0 != nil
+                }
+                .drive(onNext: { [unowned self] in
+                    self.tableView.refreshHeader?.endRefreshing()
+                    self.tableView.refreshFooter?.endRefreshing()
+                    MessageManager.show(error: $0!)
+                    })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }

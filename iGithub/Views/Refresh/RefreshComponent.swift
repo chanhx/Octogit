@@ -23,6 +23,7 @@ enum RefreshState {
 
 class RefreshComponent: UIView {
     
+    fileprivate var kvoContext: UInt8 = 0
     fileprivate weak var scrollView: UIScrollView!
     fileprivate weak var target: AnyObject?
     fileprivate var selector: Selector?
@@ -55,6 +56,27 @@ class RefreshComponent: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
+        
+        guard let scrollView = newSuperview as? UIScrollView else {
+            removeObservers()
+            return
+        }
+        
+        self.scrollView = scrollView
+    }
+    
+    func addObservers() {
+        self.scrollView.addObserver(self, forKeyPath: RefreshContentOffsetKey, options: .new, context: &kvoContext)
+        self.scrollView.addObserver(self, forKeyPath: RefreshContentSizeKey, options: .new, context: &kvoContext)
+    }
+    
+    func removeObservers() {
+        superview?.removeObserver(self, forKeyPath: RefreshContentOffsetKey, context: &kvoContext)
+        superview?.removeObserver(self, forKeyPath: RefreshContentSizeKey, context: &kvoContext)
+    }
+    
     func endRefreshing() {
         DispatchQueue.main.async {
             self.state = .idle
@@ -69,8 +91,6 @@ class RefreshComponent: UIView {
 }
 
 class RefreshHeader: RefreshComponent {
-    
-    fileprivate var kvoContext: UInt8 = 0
     
     override var state: RefreshState {
         didSet {
@@ -104,23 +124,14 @@ class RefreshHeader: RefreshComponent {
         }
     }
     
-    deinit {
-        superview?.removeObserver(self, forKeyPath: RefreshContentOffsetKey, context: &kvoContext)
-    }
-    
     override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
         
-        guard let scrollView = newSuperview as? UIScrollView else {
-            return
-        }
+        guard let _ = scrollView else { return }
         
-        superview?.removeObserver(self, forKeyPath: RefreshContentOffsetKey, context: &kvoContext)
-        
-        self.scrollView = scrollView
         frame = CGRect(x: 0, y: -RefreshComponentHeight, width: scrollView.bounds.width, height: RefreshComponentHeight)
         
-        self.scrollView.addObserver(self, forKeyPath: RefreshContentOffsetKey, options: .new, context: &kvoContext)
+        addObservers()
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -165,8 +176,6 @@ class RefreshHeader: RefreshComponent {
 
 class RefreshFooter: RefreshComponent {
     
-    fileprivate var kvoContext: UInt8 = 0
-    
     override var state: RefreshState {
         didSet {
             guard oldValue != state else {
@@ -197,26 +206,14 @@ class RefreshFooter: RefreshComponent {
         }
     }
     
-    deinit {
-        superview?.removeObserver(self, forKeyPath: RefreshContentOffsetKey, context: &kvoContext)
-        superview?.removeObserver(self, forKeyPath: RefreshContentSizeKey, context: &kvoContext)
-    }
-    
     override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
         
-        guard let scrollView = newSuperview as? UIScrollView else {
-            return
-        }
+        guard let _ = scrollView else { return }
         
-        superview?.removeObserver(self, forKeyPath: RefreshContentOffsetKey, context: &kvoContext)
-        superview?.removeObserver(self, forKeyPath: RefreshContentSizeKey, context: &kvoContext)
-        
-        self.scrollView = scrollView
         frame = CGRect(x: 0, y: scrollView.contentSize.height, width: scrollView.bounds.width, height: RefreshComponentHeight)
         
-        self.scrollView.addObserver(self, forKeyPath: RefreshContentOffsetKey, options: .new, context: &kvoContext)
-        self.scrollView.addObserver(self, forKeyPath: RefreshContentSizeKey, options: .new, context: &kvoContext)
+        addObservers()
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

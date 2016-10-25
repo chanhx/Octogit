@@ -8,6 +8,7 @@
 
 import Foundation
 import ObjectMapper
+import RxSwift
 import Moya
 
 enum UserEventType {
@@ -17,7 +18,7 @@ enum UserEventType {
 
 class EventTableViewModel: BaseTableViewModel<Event> {
     
-    fileprivate var token: GithubAPI
+    private var token: GithubAPI
     
     init(user: User, type: UserEventType) {
         switch type {
@@ -59,14 +60,14 @@ class EventTableViewModel: BaseTableViewModel<Event> {
         GithubProvider
             .request(token)
             .filterSuccessfulStatusAndRedirectCodes()
-            .do(onNext: {
+            .do(onNext: { [unowned self] in
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
                 }
             })
             .mapJSON()
             .subscribe(
-                onNext: {
+                onNext: { [unowned self] in
                     if let newEvents = Mapper<Event>().mapArray(JSONObject: $0) {
                         if self.page == 1 {
                             self.dataSource.value = newEvents
@@ -75,8 +76,8 @@ class EventTableViewModel: BaseTableViewModel<Event> {
                         }
                     }
                 },
-                onError: {
-                    MessageManager.show(error: $0)
+                onError: { [unowned self] in
+                    self.error.value = $0
                 }
             )
             .addDisposableTo(disposeBag)

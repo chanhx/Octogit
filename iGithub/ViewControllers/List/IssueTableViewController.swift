@@ -1,34 +1,47 @@
 //
-//  PullRequestTableViewController.swift
+//  IssueTableViewController.swift
 //  iGithub
 //
-//  Created by Chan Hocheung on 10/2/16.
+//  Created by Chan Hocheung on 8/1/16.
 //  Copyright © 2016 Hocheung. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-class PullRequestTableViewController: BaseTableViewController {
-    
-    var viewModel: PullRequestTableViewModel! {
+class IssueTableViewController: BaseTableViewController {
+
+    var viewModel: IssueTableViewModel! {
         didSet {
-            viewModel.dataSource.asObservable()
+            viewModel.dataSource.asDriver()
                 .skip(1)
-                .do(onNext: { _ in
+                .do(onNext: { [unowned self] _ in
                     self.tableView.refreshHeader?.endRefreshing()
                     
                     self.viewModel.hasNextPage ?
                         self.tableView.refreshFooter?.endRefreshing() :
                         self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
                 })
-                .do(onNext: {
+                .do(onNext: { [unowned self] in
                     if $0.count <= 0 {
                         self.show(statusType: .empty)
+                    } else {
+                        self.hide(statusType: .empty)
                     }
                 })
-                .bindTo(tableView.rx.items(cellIdentifier: "IssueCell", cellType: IssueCell.self)) { row, element, cell in
+                .drive(tableView.rx.items(cellIdentifier: "IssueCell", cellType: IssueCell.self)) { row, element, cell in
                     cell.entity = element
                 }
+                .addDisposableTo(viewModel.disposeBag)
+            
+            viewModel.error.asDriver()
+                .filter {
+                    $0 != nil
+                }
+                .drive(onNext: { [unowned self] in
+                    self.tableView.refreshHeader?.endRefreshing()
+                    self.tableView.refreshFooter?.endRefreshing()
+                    MessageManager.show(error: $0!)
+                })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }
@@ -47,9 +60,9 @@ class PullRequestTableViewController: BaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         super.tableView(tableView, didSelectRowAt: indexPath)
         
-        let pullRequestVC = IssueViewController.instantiateFromStoryboard()
-        pullRequestVC.viewModel = viewModel.viewModelForIndex(indexPath.row)
-        self.navigationController?.pushViewController(pullRequestVC, animated: true)
+        let issueVC = IssueViewController.instantiateFromStoryboard()
+        issueVC.viewModel = viewModel.viewModelForIndex(indexPath.row)
+        self.navigationController?.pushViewController(issueVC, animated: true)
     }
-    
+
 }
