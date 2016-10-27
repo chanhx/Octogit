@@ -97,8 +97,8 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
     }
     
     func bindToRepoTVM() {
-        viewModel.repoTVM.repositories.asObservable()
-            .do(onNext: {
+        viewModel.repoTVM.repositories.asDriver()
+            .do(onNext: { [unowned self] in
                 if $0.count <= 0 {
                     if let _ = self.viewModel.repoTVM.message {
                         self.show(statusType: .empty)
@@ -109,7 +109,7 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
                     self.hide(statusType: .loading)
                 }
             })
-            .bindTo(tableView.rx.items(cellIdentifier: "TrendingRepoCell", cellType: TrendingRepoCell.self)) {
+            .drive(tableView.rx.items(cellIdentifier: "TrendingRepoCell", cellType: TrendingRepoCell.self)) {
                 row, repo, cell in
                 cell.configureCell(repo.name, description: repo.description, meta: repo.meta)
             }
@@ -117,8 +117,8 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
     }
     
     func bindToUserTVM() {
-        viewModel.userTVM.users.asObservable()
-            .do(onNext: {
+        viewModel.userTVM.users.asDriver()
+            .do(onNext: { [unowned self] in
                 if $0.count <= 0 {
                     if let _ = self.viewModel.userTVM.message {
                         self.show(statusType: .empty)
@@ -129,7 +129,7 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
                     self.hide(statusType: .loading)
                 }
             })
-            .bindTo(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) {
+            .drive(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) {
                 row, user, cell in
                 cell.entity = user
             }

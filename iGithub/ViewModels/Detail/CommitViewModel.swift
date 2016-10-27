@@ -42,7 +42,7 @@ class CommitViewModel: BaseTableViewModel<Comment> {
             .request(token)
             .mapJSON()
             .subscribe(
-                onNext: {
+                onNext: { [unowned self] in
                     if let commit = Mapper<Commit>().map(JSONObject: $0) {
                         self.classifyFiles(ofCommit: commit)
                         self.commit.value = commit
@@ -60,14 +60,14 @@ class CommitViewModel: BaseTableViewModel<Comment> {
         
         GithubProvider
             .request(token)
-            .do(onNext: {
+            .do(onNext: { [unowned self] in
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
                 }
             })
             .mapJSON()
             .subscribe(
-                onNext: {
+                onNext: { [unowned self] in
                     if let newComments = Mapper<Comment>().mapArray(JSONObject: $0) {
                         self.dataSource.value.append(contentsOf: newComments)
                     }

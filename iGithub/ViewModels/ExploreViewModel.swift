@@ -91,7 +91,7 @@ class PickerViewModel {
     
 }
 
-protocol TrendingViewModelProtocol {
+protocol TrendingViewModelProtocol: class {
     var disposeBag: DisposeBag { get }
     var token: WebAPI { get }
     var since: TrendingTime? { get set }
@@ -105,7 +105,7 @@ extension TrendingViewModelProtocol {
         WebProvider
             .request(token)
             .mapString()
-            .subscribe(onNext: {
+            .subscribe(onNext: { [unowned self] in
                 guard let doc = Kanna.HTML(html: $0, encoding: String.Encoding.utf8) else {
                     return  // Result(error: ParseError.HTMLParseError)
                 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 class CommitViewController: BaseTableViewController {
     
@@ -17,20 +18,20 @@ class CommitViewController: BaseTableViewController {
     
     var viewModel: CommitViewModel! {
         didSet {
+            viewModel.fetchFiles()
             viewModel.fetchData()
             
-            let commitSubject = viewModel.commit.asObservable()
-            let commentsSubject = viewModel.dataSource.asObservable()
-            Observable.combineLatest(commitSubject, commentsSubject) { commit, comments in
+            let commitDriver = viewModel.commit.asDriver()
+            let commentsDriver = viewModel.dataSource.asDriver()
+            
+            Driver.combineLatest(commitDriver, commentsDriver) { commit, comments in
                     (commit, comments)
                 }
-                .subscribe { _ in
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                        
-                        self.sizeHeaderToFit(tableView: self.tableView)
-                    }
-                }
+                .drive(onNext: { [unowned self] _ in
+                    self.tableView.reloadData()
+                    
+                    self.sizeHeaderToFit(tableView: self.tableView)
+                })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }
@@ -46,9 +47,6 @@ class CommitViewController: BaseTableViewController {
         
         configureHeader()
         sizeHeaderToFit(tableView: tableView)
-        
-        viewModel.fetchFiles()
-        viewModel.fetchData()
     }
     
     func configureHeader() {
@@ -172,6 +170,9 @@ class CommitViewController: BaseTableViewController {
         default:
             break
         }
+        
+        guard files.count > 0 else { return }
+        
         fileTVC.viewModel = CommitFileTableViewModel(files: files)
         navigationController?.pushViewController(fileTVC, animated: true)
     }

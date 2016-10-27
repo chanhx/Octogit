@@ -30,7 +30,9 @@ class UserViewModel {
     let disposeBag = DisposeBag()
     var token: GithubAPI
     
-    var userLoaded = false
+    var userLoaded: Bool {
+        return self.user.value.followers != nil
+    }
     var sectionTypes = [SectionType]()
     var vcardDetails = [VcardDetail]()
     
@@ -52,8 +54,7 @@ class UserViewModel {
         GithubProvider
             .request(token)
             .mapJSON()
-            .subscribe(onNext: {
-                self.userLoaded = true
+            .subscribe(onNext: { [unowned self] in
                 let user = Mapper<User>().map(JSONObject: $0)!
                 self.setSectionTypes(user: user)
                 self.user.value = user
@@ -65,7 +66,7 @@ class UserViewModel {
         GithubProvider
             .request(.organizations(user: user.value.login!))
             .mapJSON()
-            .subscribe(onNext: {
+            .subscribe(onNext: { [unowned self] in
                 self.organizations.value = Mapper<User>().mapArray(JSONObject: $0)!
             })
             .addDisposableTo(disposeBag)

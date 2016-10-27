@@ -24,15 +24,13 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
         didSet {
             viewModel.fetchData()
             
-            viewModel.dataSource.asObservable()
-                .skipWhile { $0.count <= 0 }
-                .subscribe { _ in
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                        
-                        self.sizeHeaderToFit(tableView: self.tableView)
-                    }
-                }
+            viewModel.dataSource.asDriver()
+                .filter { $0.count > 0 }
+                .drive(onNext: { [unowned self] _ in
+                    self.tableView.reloadData()
+                    
+                    self.sizeHeaderToFit(tableView: self.tableView)
+                })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }
@@ -51,16 +49,15 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
         
         sizeHeaderToFit(tableView: tableView)
         
-        contentHeight.asObservable()
+        contentHeight.asDriver()
             .skip(1)
             .distinctUntilChanged()
-            .subscribe { _ in
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    
-                    self.sizeHeaderToFit(tableView: self.tableView)
-                }
-            }.addDisposableTo(disposeBag)
+            .drive(onNext: { [unowned self] _ in
+                self.tableView.reloadData()
+                
+                self.sizeHeaderToFit(tableView: self.tableView)
+            })
+            .addDisposableTo(disposeBag)
     }
     
     func configureHeader() {

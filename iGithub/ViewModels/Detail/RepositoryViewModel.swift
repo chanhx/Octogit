@@ -37,6 +37,8 @@ class RepositoryViewModel {
     init(repo: Repository) {
         self.fullName = repo.fullName!
         self.repository = Variable(repo)
+        
+        branch = repo.defaultBranch!
     }
     
     init(repo: String) {
@@ -50,7 +52,7 @@ class RepositoryViewModel {
         GithubProvider
             .request(.getARepository(repo: fullName))
             .mapJSON()
-            .subscribe(onNext: {
+            .subscribe(onNext: { [unowned self] in
                 // first check if there is an error and if the repo exists
 //                if $0.statusCode == 404 {
 //                    
@@ -70,7 +72,7 @@ class RepositoryViewModel {
         
         GithubProvider
             .request(token)
-            .subscribe(onNext: {
+            .subscribe(onNext: { [unowned self] in
                 
                 if let json = try? $0.mapJSON(), let newBranches = Mapper<Branch>().mapArray(JSONObject: json) {
                     self.branches.append(contentsOf: newBranches)

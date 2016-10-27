@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxCocoa
 import RxSwift
 
 class UserViewController: BaseTableViewController {
@@ -20,40 +21,30 @@ class UserViewController: BaseTableViewController {
     @IBOutlet weak var bioLabel: UILabel!
     @IBOutlet weak var followButton: UIButton!
     
-    var statusCell: StatusCell!
+    var statusCell = StatusCell(name: "user")
     
     var viewModel: UserViewModel! {
         didSet {
-            statusCell = StatusCell(name: "user")
+            let userDriver = viewModel.user.asDriver()
+            let orgsDriver = viewModel.organizations.asDriver()
             
-            viewModel.user.asObservable()
-                .subscribe(onNext: { user in
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                        
-                        self.avatarView.setAvatar(with: user.avatarURL)
-                        self.nameLabel.text = user.name ?? user.login
-                        self.followersButton.setTitle(user.followers, title: "Followers")
-                        self.repositoriesButton.setTitle(user.publicRepos, title: "Repositories")
-                        self.followingButton.setTitle(user.following, title: "Following")
-                        self.bioLabel.text = user.bio
-                        self.bioLabel.isHidden = user.bio == nil
-                        
-                        self.sizeHeaderToFit(tableView: self.tableView)
-                    }
+            userDriver.drive(onNext: { [unowned self] user in
+                    self.tableView.reloadData()
+                
+                    self.configureHeader(user: user)
+                    self.sizeHeaderToFit(tableView: self.tableView)
                 })
                 .addDisposableTo(viewModel.disposeBag)
             
-            viewModel.organizations.asObservable()
-                .skipWhile { $0.count <= 0 }
-                .subscribe { _ in
-                    guard self.viewModel.userLoaded else {
-                        return
-                    }
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+            Driver.combineLatest(userDriver, orgsDriver) { user, orgs in
+                    (user, orgs)
                 }
+                .filter { (user, orgs) in
+                    user.followers != nil && orgs.count > 0
+                }
+                .drive(onNext: { [unowned self] _ in
+                    self.tableView.reloadData()
+                })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }
@@ -61,7 +52,7 @@ class UserViewController: BaseTableViewController {
     class func instantiateFromStoryboard() -> UserViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UserViewController") as! UserViewController
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -69,6 +60,16 @@ class UserViewController: BaseTableViewController {
         
         self.viewModel.fetchUser()
         self.viewModel.fetchOrganizations()
+    }
+    
+    func configureHeader(user: User) {
+        self.avatarView.setAvatar(with: user.avatarURL)
+        self.nameLabel.text = user.name ?? user.login
+        self.followersButton.setTitle(user.followers, title: "Followers")
+        self.repositoriesButton.setTitle(user.publicRepos, title: "Repositories")
+        self.followingButton.setTitle(user.following, title: "Following")
+        self.bioLabel.text = user.bio
+        self.bioLabel.isHidden = user.bio == nil
     }
 
     // MARK: - Table view data source

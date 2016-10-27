@@ -23,32 +23,13 @@ class RepositoryViewController: BaseTableViewController {
     
     var viewModel: RepositoryViewModel! {
         didSet {
-            let repositorySubject = viewModel.repository.asObservable()
-            let branchesSubject = viewModel.isBranchesLoaded.asObservable()
-            
-            Observable.combineLatest(repositorySubject, branchesSubject) {
-                    ($0, $1)
-                }.skipWhile({ (repo, _) in
-                    repo.defaultBranch == nil
-                })
-                .subscribe(onNext: { (repo, isBranchLoaded) in
-                    DispatchQueue.main.async {
-                        
-                        if isBranchLoaded {
-                            self.viewModel.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
-                        }
-                        
-                        self.tableView.reloadData()
-                        
-                        if repo.isPrivate! {
-                            self.iconLabel.text = Octicon.lock.rawValue
-                        } else {
-                            self.iconLabel.text = repo.isAFork! ? Octicon.repoForked.rawValue : Octicon.repo.rawValue
-                        }
-                        self.updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString)"
-                        
-                        self.sizeHeaderToFit(tableView: self.tableView)
-                    }
+            viewModel.repository.asDriver()
+                .filter { $0.defaultBranch != nil }
+                .drive(onNext: { [unowned self] repo in
+                    self.tableView.reloadData()
+                    
+                    self.configureHeader(repo: repo)
+                    self.sizeHeaderToFit(tableView: self.tableView)
                 }).addDisposableTo(viewModel.disposeBag)
         }
     }
@@ -68,6 +49,17 @@ class RepositoryViewController: BaseTableViewController {
             viewModel.fetchRepository()
         }
         viewModel.fetchBranches()
+    }
+    
+    func configureHeader(repo: Repository) {
+        if repo.isPrivate! {
+            self.iconLabel.text = Octicon.lock.rawValue
+        } else if repo.isAFork! {
+            self.iconLabel.text = Octicon.repoForked.rawValue
+        } else {
+            self.iconLabel.text = Octicon.repo.rawValue
+        }
+        self.updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString)"
     }
     
     // MARK: - Table view data source
@@ -90,7 +82,19 @@ class RepositoryViewController: BaseTableViewController {
         button.optionTitle = "Branch"
         button.choice = self.viewModel.repository.value.defaultBranch!
         
-        self.viewModel.isBranchesLoaded.asObservable()
+        let repositorySubject = self.viewModel.repository.asObservable().skipWhile { $0.defaultBranch == nil }
+        let branchesLoadedSubject = self.viewModel.isBranchesLoaded.asObservable()
+        
+        Observable.combineLatest(repositorySubject, branchesLoadedSubject) { (repo, loaded) in
+                (repo, loaded)
+            }
+            .observeOn(ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .userInitiated))
+            .do(onNext: { [unowned self] (repo, loaded) in
+                guard loaded else { return }
+                self.viewModel.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
+            })
+            .map { $0.1 }
+            .observeOn(MainScheduler.instance)
             .bindTo(button.rx.enabled)
             .addDisposableTo(self.viewModel.disposeBag)
         

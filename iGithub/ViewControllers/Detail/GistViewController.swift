@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class GistViewController: BaseTableViewController {
     
@@ -18,14 +19,12 @@ class GistViewController: BaseTableViewController {
         didSet {
             viewModel.fetchData()
             
-            viewModel.dataSource.asObservable()
-                .subscribe { _ in
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                        
-                        self.sizeHeaderToFit(tableView: self.tableView)
-                    }
-                }
+            viewModel.dataSource.asDriver()
+                .drive(onNext: { [unowned self] _ in
+                    self.tableView.reloadData()
+                    
+                    self.sizeHeaderToFit(tableView: self.tableView)
+                })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }

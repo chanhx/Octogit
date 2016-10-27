@@ -19,23 +19,12 @@ class OrganizationViewController: BaseTableViewController {
     
     var viewModel: OrganizationViewModel! {
         didSet {
-            viewModel.user.asObservable()
-                .subscribe(onNext: { org in
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                        
-                        self.avatarView.setAvatar(with: org.avatarURL)
-                        self.descLabel.text = org.orgDescription
-                        
-                        if let name = org.name?.trimmingCharacters(in: .whitespaces)
-                            , name.characters.count > 0 {
-                            self.nameLabel.text = name
-                        } else {
-                            self.nameLabel.text = org.login
-                        }
-                        
-                        self.sizeHeaderToFit(tableView: self.tableView)
-                    }
+            viewModel.user.asDriver()
+                .drive(onNext: { [unowned self] org in
+                    self.tableView.reloadData()
+                    
+                    self.configureHeader(org: org)
+                    self.sizeHeaderToFit(tableView: self.tableView)
                 })
                 .addDisposableTo(viewModel.disposeBag)
         }
@@ -51,6 +40,18 @@ class OrganizationViewController: BaseTableViewController {
         self.navigationItem.title = self.viewModel.title
         
         self.viewModel.fetchUser()
+    }
+    
+    func configureHeader(org: User) {
+        self.avatarView.setAvatar(with: org.avatarURL)
+        self.descLabel.text = org.orgDescription
+        
+        if let name = org.name?.trimmingCharacters(in: .whitespaces)
+            , name.characters.count > 0 {
+            self.nameLabel.text = name
+        } else {
+            self.nameLabel.text = org.login
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

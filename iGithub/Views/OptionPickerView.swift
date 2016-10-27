@@ -49,7 +49,7 @@ class OptionPickerView: UIPickerView {
         dataSource = delegate
         super.delegate = delegate
         
-        rx.itemSelected.asObservable().subscribe(onNext: {
+        rx.itemSelected.asObservable().subscribe(onNext: { [unowned self] in
             self.tmpSelectedRow[self.index] = $0.0
         }).addDisposableTo(disposeBag)
         

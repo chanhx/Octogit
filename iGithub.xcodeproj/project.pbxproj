@@ -660,16 +660,16 @@
 		C5EE81D91DBF4EAD00673E20 /* List */ = {
 			isa = PBXGroup;
 			children = (
-				C5EE81DC1DBF4EAD00673E20 /* EventTableViewController.swift */,
-				C5EE81EC1DBF4EE200673E20 /* RepositoryTableViewController.swift */,
-				C5EE81DD1DBF4EAD00673E20 /* FileTableViewController.swift */,
-				C5EE81E21DBF4EAD00673E20 /* UserTableViewController.swift */,
 				C5EE81DA1DBF4EAD00673E20 /* CommitFileTableViewController.swift */,
 				C5EE81DB1DBF4EAD00673E20 /* CommitTableViewController.swift */,
+				C5EE81DC1DBF4EAD00673E20 /* EventTableViewController.swift */,
+				C5EE81DD1DBF4EAD00673E20 /* FileTableViewController.swift */,
+				C5EE81DE1DBF4EAD00673E20 /* GistTableViewController.swift */,
 				C5EE81DF1DBF4EAD00673E20 /* IssueTableViewController.swift */,
 				C5EE81E01DBF4EAD00673E20 /* PullRequestTableViewController.swift */,
-				C5EE81DE1DBF4EAD00673E20 /* GistTableViewController.swift */,
 				C5EE81E11DBF4EAD00673E20 /* ReleaseTableViewController.swift */,
+				C5EE81EC1DBF4EE200673E20 /* RepositoryTableViewController.swift */,
+				C5EE81E21DBF4EAD00673E20 /* UserTableViewController.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -680,8 +680,8 @@
 				C5F4BDED1D3FB19A009DF758 /* Login */,
 				C5EE81D91DBF4EAD00673E20 /* List */,
 				C51CDEAD1DBF797C0043A755 /* Detail */,
-				C5E733801D5DA0F300913A66 /* MainTabBarController.swift */,
 				C538FD261D40E86B003A559E /* BaseTableViewController.swift */,
+				C5E733801D5DA0F300913A66 /* MainTabBarController.swift */,
 				C52013CD1D57361A00FDCC30 /* WebViewController.swift */,
 				C5E7337E1D5D9FE900913A66 /* ExplorationViewController.swift */,
 				C5E733871D61C90000913A66 /* SearchViewController.swift */,

@@ -108,8 +108,8 @@ extension SearchViewController: SegmentHeaderViewDelegate {
     }
     
     func bindToRepoTVM() {
-        viewModel.repoTVM.repositories.asObservable()
-            .bindTo(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) {
+        viewModel.repoTVM.repositories.asDriver()
+            .drive(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) {
                 row, repo, cell in
                 cell.entity = repo
             }
@@ -117,8 +117,8 @@ extension SearchViewController: SegmentHeaderViewDelegate {
     }
     
     func bindToUserTVM() {
-        viewModel.userTVM.users.asObservable()
-            .bindTo(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) {
+        viewModel.userTVM.users.asDriver()
+            .drive(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) {
                 row, user, cell in
                 cell.entity = user
             }

@@ -46,16 +46,13 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
         webViewCell.webView.isOpaque = false
         tableView.tableFooterView = webViewCell
         
-        DispatchQueue.global(qos: .default).async {
-            self.pickerView.selectedRow[0] = self.themes.index(of: self.themeLabel.text!) ?? 0
-        }
+        pickerView.selectedRow[0] = self.themes.index(of: self.themeLabel.text!) ?? 0
 
-        lineNumbersSwitch.rx.value.subscribe { _ in
-            self.renderSample()
-        }
-        .addDisposableTo(disposeBag)
-        
-        renderSample()
+        lineNumbersSwitch.rx.value.asDriver()
+            .drive(onNext: { [unowned self] _ in
+                self.renderSample()
+            })
+            .addDisposableTo(disposeBag)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oG8-CS-3Y0">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oG8-CS-3Y0">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -34,7 +34,7 @@
                                                     <frame key="frameInset" width="353" height="41"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3u0-sg-mFz">
-                                                            <frame key="frameInset" minY="13" width="36" height="16"/>
+                                                            <frame key="frameInset" minY="12" width="36" height="18"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="36" id="uBU-fq-ZdE"/>
                                                             </constraints>
@@ -768,19 +768,16 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Q3v-cX-cIP">
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGN-AG-Skv" customClass="CountButton" customModule="iGithub" customModuleProvider="target">
-                                            <state key="normal" title="Followers"/>
                                             <connections>
                                                 <action selector="showFollowers" destination="pQL-K4-C6r" eventType="touchUpInside" id="mL4-bL-WPp"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="99v-fH-cxy" customClass="CountButton" customModule="iGithub" customModuleProvider="target">
-                                            <state key="normal" title="Repositories"/>
                                             <connections>
                                                 <action selector="showRepositories" destination="pQL-K4-C6r" eventType="touchUpInside" id="LOP-ZS-J7s"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JfX-pb-zp9" customClass="CountButton" customModule="iGithub" customModuleProvider="target">
-                                            <state key="normal" title="Following"/>
                                             <connections>
                                                 <action selector="showFollowings" destination="pQL-K4-C6r" eventType="touchUpInside" id="iMs-D6-Em7"/>
                                             </connections>

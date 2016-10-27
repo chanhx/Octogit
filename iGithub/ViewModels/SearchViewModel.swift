@@ -113,7 +113,7 @@ class RepositoriesSearchViewModel {
         GithubProvider
             .request(token)
             .mapJSON()
-            .subscribe(onNext: {
+            .subscribe(onNext: { [unowned self] in
                 if let results = Mapper<Repository>().mapArray(JSONObject: ($0 as! [String: Any])["items"]) {
                     self.repositories.value = results
                     self.query = query
@@ -136,7 +136,7 @@ class UsersSearchViewModel {
         GithubProvider
             .request(token)
             .mapJSON()
-            .subscribe(onNext: {
+            .subscribe(onNext: { [unowned self] in
                 if let results = Mapper<User>().mapArray(JSONObject: ($0 as! [String: Any])["items"]) {
                     self.users.value = results
                     self.query = query

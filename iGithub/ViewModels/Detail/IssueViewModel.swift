@@ -67,7 +67,7 @@ class IssueViewModel: BaseTableViewModel<Comment> {
             .filterSuccessfulStatusCodes()
             .mapJSON()
             .subscribe(
-                onNext: {
+                onNext: { [unowned self] in
                     if let newComments = Mapper<Comment>().mapArray(JSONObject: $0) {
                         self.dataSource.value.append(contentsOf: newComments)
                     }

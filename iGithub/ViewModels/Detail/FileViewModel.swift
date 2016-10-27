@@ -109,7 +109,7 @@ class FileViewModel {
             .request(token)
             .mapJSON()
             .subscribe(
-                onNext: {
+                onNext: { [unowned self] in
                     let normalFile = Mapper<File>().map(JSONObject: $0)!
                     self.file = .normalFile(normalFile)
                     
@@ -141,14 +141,14 @@ class FileViewModel {
         GithubProvider
             .request(token)
             .mapString()
-            .subscribe(onNext: {
+            .subscribe(onNext: { [unowned self] in
                 self.html.value = self.htmlForMarkdown($0)
             })
             .addDisposableTo(disposeBag)
     }
     
     func fetch(gistFile: GistFile) {
-        Alamofire.request(gistFile.rawURL!).responseString { response in
+        Alamofire.request(gistFile.rawURL!).responseString { [unowned self] response in
             if response.result.isSuccess {
                 let language = self.language(ofFile: gistFile.name!)
                 self.html.value = self.htmlForRawFile(response.result.value!, language:language)

@@ -13,7 +13,7 @@ class CommitFileTableViewController: BaseTableViewController {
     var viewModel: CommitFileTableViewModel! {
         didSet {
             viewModel.dataSource.asDriver()
-                .skip(1)
+                .filter { $0.count > 0 }
                 .do(onNext: { [unowned self] _ in
                     self.tableView.refreshHeader?.endRefreshingWithNoMoreData()
                     

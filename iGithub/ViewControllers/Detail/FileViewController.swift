@@ -8,24 +8,22 @@
 
 import UIKit
 import WebKit
-import RxSwift
-import Mustache
 
 class FileViewController: UIViewController {
 
     let webView = WKWebView()
     var viewModel: FileViewModel! {
         didSet {
-            viewModel.html.asObservable()
-                .skipWhile { $0.characters.count <= 0 }
-                .subscribe(onNext: { html in
+            viewModel.html.asDriver()
+                .filter { $0.characters.count > 0 }
+                .drive(onNext: { [unowned self] html in
                     self.webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
                 })
                 .addDisposableTo(viewModel.disposeBag)
             
-            viewModel.contentData.asObservable()
-                .skipWhile { $0.count <= 0 }
-                .subscribe(onNext: { data in
+            viewModel.contentData.asDriver()
+                .filter { $0.count > 0 }
+                .drive(onNext: { [unowned self] data in
                     self.webView.load(data, mimeType: self.viewModel.mimeType, characterEncodingName: "utf-8", baseURL: Bundle.main.resourceURL!)
                 })
                 .addDisposableTo(viewModel.disposeBag)
