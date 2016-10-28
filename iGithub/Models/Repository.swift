@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class Repository: BaseModel {
+class Repository: Mappable {
     
     var id: Int?
     var name: String?
@@ -39,8 +39,12 @@ class Repository: BaseModel {
     
     var defaultBranch: String?
     
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
     // Mappable
-    override func mapping(map: Map) {
+    func mapping(map: Map) {
         id              <- map["id"]
         name            <- map["name"]
         fullName        <- map["full_name"]
@@ -48,9 +52,9 @@ class Repository: BaseModel {
         repoDescription <- map["description"]
         language        <- map["language"]
         
-        owner           <- (map["owner"], UserTransform())
-        parent          <- (map["parent"], RepositoryTransform())
-        source          <- (map["source"], RepositoryTransform())
+        owner           <- map["owner"]
+        parent          <- map["parent"]
+        source          <- map["source"]
         
         createdAt       <- (map["created_at"], DateTransform())
         pushedAt        <- (map["pushed_at"], DateTransform())

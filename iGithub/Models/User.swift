@@ -14,7 +14,7 @@ enum UserType: String {
     case organization = "Organization"
 }
 
-class User: BaseModel, CustomStringConvertible {
+class User: Mappable, CustomStringConvertible {
     
     var id: Int?
     var login: String?
@@ -35,8 +35,12 @@ class User: BaseModel, CustomStringConvertible {
     var publicGists: Int?
     var publicRepos: Int?
     
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
     // Mappable
-    override func mapping(map: Map) {
+    func mapping(map: Map) {
         id              <- map["id"]
         login           <- map["login"]
         name            <- map["name"]

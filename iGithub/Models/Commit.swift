@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class Commit: BaseModel {
+class Commit: Mappable {
     
     var sha: String?
     var message: String?
@@ -20,14 +20,18 @@ class Commit: BaseModel {
     var committer: User?
     var files: [CommitFile]?
     
-    override func mapping(map: Map) {
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
+    func mapping(map: Map) {
         sha         <- map["sha"]
         message     <- map["commit.message"]
         commitDate  <- (map["commit.author.date"], DateTransform())
         author      <- map["author"]
         authorName  <- map["commit.author.name"]
         committer   <- map["committer"]
-        files       <- (map["files"], CommitFileTransform())
+        files       <- map["files"]
     }
     
     lazy var shortSHA: String = {
@@ -35,12 +39,16 @@ class Commit: BaseModel {
     }()
 }
 
-class EventCommit: BaseModel {
+class EventCommit: Mappable {
     
     var sha: String?
     var message: String?
     
-    override func mapping(map: Map) {
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
+    func mapping(map: Map) {
         sha             <- map["sha"]
         message         <- map["message"]
     }

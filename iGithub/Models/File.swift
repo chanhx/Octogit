@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class File: BaseModel {
+class File: Mappable {
     
     enum FileType: String {
         case directory = "dir"
@@ -29,7 +29,11 @@ class File: BaseModel {
     var link: URL?
     var gitLink: URL?
     
-    override func mapping(map: Map) {
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
+    func mapping(map: Map) {
         type        <- map["type"]
         encoding    <- map["encoding"]
         size        <- map["size"]

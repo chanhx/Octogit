@@ -55,8 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func setURLCache() {
-        let URLCache = Foundation.URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
-        Foundation.URLCache.shared = URLCache
+        let urlCache = URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
+        URLCache.shared = urlCache
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

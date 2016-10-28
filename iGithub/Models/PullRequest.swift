@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class PullRequest : Issue {
+class PullRequest: Issue {
     
     var isMerged: Bool?
     var mergedAt: Date?

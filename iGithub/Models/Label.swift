@@ -9,13 +9,17 @@
 import Foundation
 import ObjectMapper
 
-class Label: BaseModel {
+class Label: Mappable {
     
     var url: URL?
     var name: String?
     var color: String?
     
-    override func mapping(map: Map) {
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
+    func mapping(map: Map) {
         url     <- (map["url"], URLTransform())
         name    <- map["name"]
         color   <- map["color"]

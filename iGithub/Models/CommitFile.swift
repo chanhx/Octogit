@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class CommitFile: BaseModel {
+class CommitFile: Mappable {
     
     enum Status: String {
         case added = "added"
@@ -26,7 +26,11 @@ class CommitFile: BaseModel {
     var changes: Int?
     var patch: String?
     
-    override func mapping(map: Map) {
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
+    func mapping(map: Map) {
         path        <- map["filename"]
         sha         <- map["sha"]
         status      <- map["status"]

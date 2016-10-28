@@ -39,7 +39,7 @@ enum EventType: String {
     case watchEvent = "WatchEvent"
 }
 
-class Event: BaseModel, StaticMappable {
+class Event: Mappable, StaticMappable {
     
     var id: Int?
     var type: EventType?
@@ -72,12 +72,16 @@ class Event: BaseModel, StaticMappable {
         return nil
     }
     
-    override func mapping(map: Map) {
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
+    func mapping(map: Map) {
         id              <- (map["id"], IntTransform())
         type            <- map["type"]
-        repository  <- map["repo.name"]
-        actor           <- (map["actor"], UserTransform())
-        org             <- (map["org"], UserTransform())
+        repository      <- map["repo.name"]
+        actor           <- map["actor"]
+        org             <- map["org"]
         createdAt       <- (map["created_at"], DateTransform())
     }
 }
@@ -171,7 +175,7 @@ class IssueCommentEvent : Event {
         super.mapping(map: map)
         
         action  <- map["payload.action"]
-        issue   <- (map["payload.issue"], IssueTransform())
+        issue   <- map["payload.issue"]
         comment <- map["payload.comment.body"]
     }
 }
@@ -196,7 +200,7 @@ class IssueEvent: Event {
     override func mapping(map: Map) {
         super.mapping(map: map)
         
-        issue <- (map["payload.issue"], IssueTransform())
+        issue  <- map["payload.issue"]
         action <- map["payload.action"]
     }
 }
@@ -209,7 +213,7 @@ class MemberEvent: Event {
     override func mapping(map: Map) {
         super.mapping(map: map)
         
-        member <- (map["payload.member"], UserTransform())
+        member <- map["payload.member"]
     }
 }
 
@@ -234,8 +238,8 @@ class PullRequestEvent : Event {
     override func mapping(map: Map) {
         super.mapping(map: map)
         
-        pullRequest <- (map["payload.pull_request"], PullRequestTransform())
-        action <- map["payload.action"]
+        pullRequest <- map["payload.pull_request"]
+        action      <- map["payload.action"]
     }
 }
 
@@ -250,8 +254,8 @@ class PullRequestReviewCommentEvent : Event {
         super.mapping(map: map)
         
         action  <- map["payload.action"]
-        pullRequest <- (map["payload.pull_request"], PullRequestTransform())
-        comment <- map["payload.comment.body"]
+        pullRequest <- map["payload.pull_request"]
+        comment     <- map["payload.comment.body"]
     }
 }
 
@@ -275,7 +279,7 @@ class PushEvent : Event {
         previousHeadSHA     <- map["payload.before"]
         currentHeadSHA      <- map["payload.head"]
         branchName          <- map["payload.ref"]
-        commits             <- (map["payload.commits"], EventCommitTransform())
+        commits             <- map["payload.commits"]
     }
 }
 

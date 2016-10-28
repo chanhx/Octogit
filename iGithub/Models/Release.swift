@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class Release: BaseModel {
+class Release: Mappable {
     
     var name: String?
     var tagName: String?
@@ -18,11 +18,15 @@ class Release: BaseModel {
     var createdAt: Date?
     var publishedAt: Date?
     
-    override func mapping(map: Map) {
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
+    func mapping(map: Map) {
         name        <- map["name"]
         tagName     <- map["tag_name"]
         body        <- map["body"]
-        author      <- (map["author"], UserTransform())
+        author      <- map["author"]
         createdAt   <- (map["created_at"], DateTransform())
         publishedAt <- (map["published_at"], DateTransform())
     }

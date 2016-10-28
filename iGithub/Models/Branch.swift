@@ -9,13 +9,17 @@
 import Foundation
 import ObjectMapper
 
-class Branch: BaseModel {
+class Branch: Mappable {
     
     var name: String?
     var commitSHA: String?
     var isProtected: Bool?
     
-    override func mapping(map: Map) {
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
+    func mapping(map: Map) {
         name        <- map["name"]
         commitSHA   <- map["commit.sha"]
         isProtected <- map["protected"]

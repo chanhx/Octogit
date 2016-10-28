@@ -11,7 +11,7 @@ import RxMoya
 import RxSwift
 import ObjectMapper
 
-class BaseTableViewModel<T: BaseModel> {
+class BaseTableViewModel<T> {
     
     var dataSource: Variable<[T]> = Variable([])
     let error = Variable<Swift.Error?>(nil)

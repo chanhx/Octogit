@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class Milestone: BaseModel {
+class Milestone: Mappable {
     
     typealias MilestoneState = IssueState
     
@@ -21,12 +21,16 @@ class Milestone: BaseModel {
     var openIssues: Int?
     var closedIssues: Int?
     
-    override func mapping(map: Map) {
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
+    func mapping(map: Map) {
         number          <- map["number"]
         state           <- map["state"]
         title           <- map["title"]
         milestoneDesc   <- map["description"]
-        creator         <- (map["creator"], UserTransform())
+        creator         <- map["creator"]
         openIssues      <- map["open_issues"]
         closedIssues    <- map["closed_issues"]
     }

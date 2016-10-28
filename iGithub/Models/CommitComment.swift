@@ -9,18 +9,22 @@
 import Foundation
 import ObjectMapper
 
-class CommitComment: BaseModel {
+class CommitComment: Mappable {
     
     var id: Int?
     var commitID: String?
     var user: User?
     var body: String?
     var createdAt: Date?
+    
+    required init?(map: Map) {
+        mapping(map: map)
+    }
         
-    override func mapping(map: Map) {
+    func mapping(map: Map) {
         id          <- map["id"]
         commitID    <- map["commit_id"]
-        user        <- (map["user"], UserTransform())
+        user        <- map["user"]
         body        <- map["body"]
         createdAt   <- (map["created_at"], DateTransform())
     }

@@ -9,16 +9,20 @@
 import Foundation
 import ObjectMapper
 
-class Comment: BaseModel {
+class Comment: Mappable {
     
     var id: Int?
     var user: User?
     var body: String?
     var createdAt: Date?
     
-    override func mapping(map: Map) {
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
+    func mapping(map: Map) {
         id          <- map["id"]
-        user        <- (map["user"], UserTransform())
+        user        <- map["user"]
         body        <- map["body_text"]
         createdAt   <- (map["created_at"], DateTransform())
     }

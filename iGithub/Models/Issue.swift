@@ -14,7 +14,7 @@ enum IssueState : String {
     case closed = "closed"
 }
 
-class Issue : BaseModel {
+class Issue: Mappable {
     
     var id: Int?
     var title: String?
@@ -30,16 +30,20 @@ class Issue : BaseModel {
     var comments: Int?
     var pullRequest: [String: String]?
     
-    override func mapping(map: Map) {
+    required init?(map: Map) {
+        mapping(map: map)
+    }
+    
+    func mapping(map: Map) {
         id          <- map["id"]
         number      <- map["number"]
         title       <- map["title"]
         body        <- map["body_html"]
         state       <- map["state"]
-        user        <- (map["user"], UserTransform())
-        assignees   <- (map["assignees"], UserTransform())
-        milestone   <- (map["milestone"], MilestoneTransform())
-        labels      <- (map["labels"], LabelTransform())
+        user        <- map["user"]
+        assignees   <- map["assignees"]
+        milestone   <- map["milestone"]
+        labels      <- map["labels"]
         createdAt   <- (map["created_at"], DateTransform())
         closedAt    <- (map["closed_at"], DateTransform())
         comments    <- map["comments"]
