@@ -28,6 +28,26 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
         super.init()
     }
     
+    init(subscriber: User) {
+        token = .subscribedRepos(user: subscriber.login!, page: 1)
+        super.init()
+    }
+    
+    private init(token: GithubAPI) {
+        self.token = token
+        super.init()
+    }
+    
+    class func starred() -> RepositoryTableViewModel {
+        let vm = RepositoryTableViewModel(token: .starredReposOfAuthenticatedUser(page: 1))
+        return vm
+    }
+    
+    class func subscribed() -> RepositoryTableViewModel {
+        let vm = RepositoryTableViewModel(token: .subscribedReposOfAuthenticatedUser(page: 1))
+        return vm
+    }
+    
     func updateToken() {
         switch token {
         case .organizationRepos(let org, _):
@@ -36,6 +56,12 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
             token = .userRepos(user: user, page: page)
         case .starredRepos(let user, _):
             token = .starredRepos(user: user, page: page)
+        case .starredReposOfAuthenticatedUser(let page):
+            token = .starredReposOfAuthenticatedUser(page: page)
+        case .subscribedRepos(let user, let page):
+            token = .subscribedRepos(user: user, page: page)
+        case .subscribedReposOfAuthenticatedUser(let page):
+            token = .subscribedReposOfAuthenticatedUser(page: page)
         default:
             break
         }

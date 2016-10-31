@@ -57,9 +57,7 @@ class IssueTableViewController: BaseTableViewController {
         tableView.refreshHeader?.beginRefreshing()
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        super.tableView(tableView, didSelectRowAt: indexPath)
-        
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         let issueVC = IssueViewController.instantiateFromStoryboard()
         issueVC.viewModel = viewModel.viewModelForIndex(indexPath.row)
         self.navigationController?.pushViewController(issueVC, animated: true)

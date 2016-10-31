@@ -54,9 +54,7 @@ class CommitFileTableViewController: BaseTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        super.tableView(tableView, didSelectRowAt: indexPath)
-        
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         let fileVC = FileViewController()
         fileVC.viewModel = viewModel.fileViewModel(forRow: indexPath.row)
         self.navigationController?.pushViewController(fileVC, animated: true)

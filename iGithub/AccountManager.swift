@@ -36,6 +36,11 @@ class AccountManager {
         }
     }
     
+    class func logout() {
+        currentUser = nil
+        token = nil
+    }
+    
     class func requestToken(_ code: String, success: @escaping () -> Void, failure: @escaping (Moya.Error) -> Void) {
         WebProvider
             .request(.accessToken(code: code))

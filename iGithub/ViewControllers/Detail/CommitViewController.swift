@@ -146,11 +146,12 @@ class CommitViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        super.tableView(tableView, didSelectRowAt: indexPath)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
         
         guard viewModel.sectionTypes[indexPath.section] == .changes,
             var files = viewModel.commit.value.files else {
-            return
+                return
         }
         
         let fileTVC = CommitFileTableViewController()

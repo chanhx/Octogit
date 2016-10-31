@@ -59,7 +59,6 @@ class RepositoryTableViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        super.tableView(tableView, didSelectRowAt: indexPath)
         
         let repoVC = RepositoryViewController.instantiateFromStoryboard()
         repoVC.viewModel = viewModel.repoViewModel(forRow: indexPath.row)

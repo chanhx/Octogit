@@ -150,7 +150,6 @@ class UserViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        super.tableView(tableView, didSelectRowAt: indexPath)
         
         switch viewModel.sectionTypes[indexPath.section] {
         case .vcards:
@@ -169,7 +168,7 @@ class UserViewController: BaseTableViewController {
                 navigationController?.pushViewController(repositoryTVC, animated: true)
             case 2:
                 let gistTVC = GistTableViewController()
-                gistTVC.viewModel = GistTableViewModel(user: viewModel.user.value)
+                gistTVC.viewModel = GistTableViewModel(user: viewModel.user.value.login!)
                 navigationController?.pushViewController(gistTVC, animated: true)
             default:
                 break

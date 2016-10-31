@@ -32,7 +32,7 @@ class OAuthViewController: WebViewController {
                     let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
                     UIApplication.shared.delegate!.window!!.rootViewController = mainVC
                 }, failure: {
-                    print($0)
+                    MessageManager.show(error: $0)
                     _ = self.navigationController?.popViewController(animated: true)
                 })
             }

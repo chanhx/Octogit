@@ -11,16 +11,33 @@ import ObjectMapper
 
 class GistTableViewModel: BaseTableViewModel<Gist> {
     
-    var user: String
+    var token: GithubAPI
     
-    init(user: User) {
-        self.user = user.login!
+    override init() {
+        token = .starredGists(page: 1)
         
         super.init()
     }
     
+    init(user: String) {
+        token = .userGists(user: user, page: 1)
+        
+        super.init()
+    }
+    
+    func updateToken() {
+        switch token {
+        case .starredGists:
+            token = .starredGists(page: page)
+        case .userGists(let user, _):
+            token = .userGists(user: user, page: page)
+        default:
+            break
+        }
+    }
+    
     override func fetchData() {
-        let token = GithubAPI.userGists(user: user, page: page)
+        updateToken()
         
         GithubProvider
             .request(token)

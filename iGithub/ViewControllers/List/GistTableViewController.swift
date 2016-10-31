@@ -53,7 +53,6 @@ class GistTableViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        super.tableView(tableView, didSelectRowAt: indexPath)
         
         let gistVC = GistViewController.instantiateFromStoryboard()
         gistVC.viewModel = GistViewModel(gist: viewModel.dataSource.value[indexPath.row])

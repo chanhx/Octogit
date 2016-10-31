@@ -95,6 +95,8 @@ enum GithubAPI {
     case repositoryIssues(repo: String, page: Int, state: IssueState)
     case repositoryPullRequests(repo: String, page: Int, state: IssueState)
     
+    case authenticatedUserIssues(page: Int, state: IssueState)
+    
     // MARK: Commit
     
     case repositoryCommits(repo: String, sha: String, page: Int)
@@ -110,6 +112,9 @@ enum GithubAPI {
     
     case userRepos(user: String, page: Int)
     case starredRepos(user: String, page: Int)
+    case starredReposOfAuthenticatedUser(page: Int)
+    case subscribedRepos(user: String, page: Int)
+    case subscribedReposOfAuthenticatedUser(page: Int)
     case organizationRepos(org: String, page: Int)
     case getARepository(repo: String)
     
@@ -199,6 +204,9 @@ extension GithubAPI: TargetType {
         case .repositoryPullRequests(let repo, _, _):
             return "/repos/\(repo)/pulls"
             
+        case .authenticatedUserIssues:
+            return "/issues"
+            
         // MARK: Commit
             
         case .repositoryCommits(let repo, _, _):
@@ -223,6 +231,12 @@ extension GithubAPI: TargetType {
             return "/orgs/\(org)/repos"
         case .starredRepos(let user, _):
             return "/users/\(user)/starred"
+        case .starredReposOfAuthenticatedUser:
+            return "/user/starred"
+        case .subscribedRepos(let user, _):
+            return "/users/\(user)/subscriptions"
+        case .subscribedReposOfAuthenticatedUser:
+            return "/user/subscriptions"
             
         // MARK: Release
             
@@ -263,7 +277,8 @@ extension GithubAPI: TargetType {
             return ["q": q, "sort": sort.rawValue]
             
         case .repositoryIssues(_, let page, let state),
-             .repositoryPullRequests(_, let page, let state):
+             .repositoryPullRequests(_, let page, let state),
+             .authenticatedUserIssues(let page, let state):
             return ["page": page, "state": state.rawValue]
             
         case .branches(_, let page),
@@ -291,10 +306,13 @@ extension GithubAPI: TargetType {
              
              .userGists(_, let page),
              .starredGists(let page),
-             .starredRepos(_, let page),
-             .organizationRepos(_, let page),
              
-             .userRepos(_, let page):
+             .userRepos(_, let page),
+             .organizationRepos(_, let page),
+             .starredRepos(_, let page),
+             .starredReposOfAuthenticatedUser(let page),
+             .subscribedRepos(_, let page),
+             .subscribedReposOfAuthenticatedUser(let page):
              
             return ["page": page]
             

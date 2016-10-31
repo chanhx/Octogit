@@ -59,7 +59,6 @@ class UserTableViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        super.tableView(tableView, didSelectRowAt: indexPath)
         
         let entity = viewModel.dataSource.value[indexPath.row]
         switch entity.type! {

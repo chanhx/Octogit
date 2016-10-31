@@ -109,7 +109,6 @@ class OrganizationViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        super.tableView(tableView, didSelectRowAt: indexPath)
         
         switch viewModel.sectionTypes[indexPath.section] {
         case .vcards:

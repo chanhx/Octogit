@@ -50,9 +50,7 @@ class CommitTableViewController: BaseTableViewController {
         tableView.refreshHeader?.beginRefreshing()
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        super.tableView(tableView, didSelectRowAt: indexPath)
-        
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         let commitVC = CommitViewController.instantiateFromStoryboard()
         commitVC.viewModel = viewModel.commitViewModel(forRow: indexPath.row)
         self.navigationController?.pushViewController(commitVC, animated: true)

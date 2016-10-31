@@ -73,9 +73,12 @@
 		C538FD4A1D449602003A559E /* DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD491D449602003A559E /* DataProcess.swift */; };
 		C538FD4E1D44FB79003A559E /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD4D1D44FB79003A559E /* File.swift */; };
 		C538FD541D45A0A2003A559E /* FileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD531D45A0A2003A559E /* FileCell.swift */; };
+		C554238D1DC60392001B7D20 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C554238C1DC60392001B7D20 /* AccountViewController.swift */; };
+		C55423941DC6EFEE001B7D20 /* LibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55423931DC6EFEE001B7D20 /* LibraryTableViewController.swift */; };
+		C55423961DC6F0BE001B7D20 /* libraries.json in Resources */ = {isa = PBXBuildFile; fileRef = C55423951DC6F0BE001B7D20 /* libraries.json */; };
+		C55423991DC755D4001B7D20 /* LibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55423981DC755D4001B7D20 /* LibraryCell.swift */; };
 		C55791531D73E71300FBBD41 /* RefreshComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791521D73E71300FBBD41 /* RefreshComponent.swift */; };
 		C55791551D74392600FBBD41 /* UIScrollView+RefreshComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791541D74392600FBBD41 /* UIScrollView+RefreshComponent.swift */; };
-		C55791571D743A2D00FBBD41 /* RefreshFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791561D743A2D00FBBD41 /* RefreshFooter.swift */; };
 		C55791591D76E50900FBBD41 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55791581D76E50900FBBD41 /* LoadingIndicator.swift */; };
 		C55E08491D4701A20004EC7C /* content.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C55E08481D4701A20004EC7C /* content.mustache */; };
 		C55E08541D478E8E0004EC7C /* common.css in Resources */ = {isa = PBXBuildFile; fileRef = C55E08531D478E8E0004EC7C /* common.css */; };
@@ -237,9 +240,12 @@
 		C538FD491D449602003A559E /* DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProcess.swift; sourceTree = "<group>"; };
 		C538FD4D1D44FB79003A559E /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		C538FD531D45A0A2003A559E /* FileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileCell.swift; path = Cell/FileCell.swift; sourceTree = "<group>"; };
+		C554238C1DC60392001B7D20 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		C55423931DC6EFEE001B7D20 /* LibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryTableViewController.swift; sourceTree = "<group>"; };
+		C55423951DC6F0BE001B7D20 /* libraries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = libraries.json; sourceTree = "<group>"; };
+		C55423981DC755D4001B7D20 /* LibraryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryCell.swift; sourceTree = "<group>"; };
 		C55791521D73E71300FBBD41 /* RefreshComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshComponent.swift; sourceTree = "<group>"; };
 		C55791541D74392600FBBD41 /* UIScrollView+RefreshComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+RefreshComponent.swift"; sourceTree = "<group>"; };
-		C55791561D743A2D00FBBD41 /* RefreshFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshFooter.swift; sourceTree = "<group>"; };
 		C55791581D76E50900FBBD41 /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		C55E08481D4701A20004EC7C /* content.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = content.mustache; sourceTree = "<group>"; };
 		C55E08531D478E8E0004EC7C /* common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = common.css; sourceTree = "<group>"; };
@@ -491,7 +497,6 @@
 			isa = PBXGroup;
 			children = (
 				C55791521D73E71300FBBD41 /* RefreshComponent.swift */,
-				C55791561D743A2D00FBBD41 /* RefreshFooter.swift */,
 				C55791541D74392600FBBD41 /* UIScrollView+RefreshComponent.swift */,
 			);
 			path = Refresh;
@@ -524,6 +529,7 @@
 				C5DB700E1DA22D3B00D96248 /* CommitCell.swift */,
 				C5DB70161DA2AB4C00D96248 /* GistCell.swift */,
 				C52D1ADD1DA6081E0033AC49 /* ReleaseCell.swift */,
+				C55423981DC755D4001B7D20 /* LibraryCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -633,6 +639,7 @@
 				C59482BE1D65A73300B9F47C /* languages_array.plist */,
 				C5113D1B1D88124D00344739 /* languages_dict.plist */,
 				C526EE131D7D1954008C0D72 /* themes.plist */,
+				C55423951DC6F0BE001B7D20 /* libraries.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -687,6 +694,8 @@
 				C5E733871D61C90000913A66 /* SearchViewController.swift */,
 				C526EE0F1D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift */,
 				C57005E11DAA922C008DEFA9 /* SegmentViewController.swift */,
+				C554238C1DC60392001B7D20 /* AccountViewController.swift */,
+				C55423931DC6EFEE001B7D20 /* LibraryTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -828,6 +837,7 @@
 				C5BB907B1D487ACA005A40C0 /* empty_content.html in Resources */,
 				C526EE161D7D7E36008C0D72 /* Prism in Resources */,
 				C55E08561D4793740004EC7C /* file_extensions.plist in Resources */,
+				C55423961DC6F0BE001B7D20 /* libraries.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -929,6 +939,7 @@
 				C5DB701F1DA3A6BB00D96248 /* TitleHeaderView.swift in Sources */,
 				C5E7C22D1DB61D5200F95509 /* Branch.swift in Sources */,
 				C51CDEC61DBF79910043A755 /* GistViewModel.swift in Sources */,
+				C55423991DC755D4001B7D20 /* LibraryCell.swift in Sources */,
 				C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */,
 				C538FD0B1D40A30F003A559E /* Event.swift in Sources */,
 				C538FD251D40DB70003A559E /* EventCell.swift in Sources */,
@@ -946,6 +957,7 @@
 				C5E733831D5EEE8C00913A66 /* TrendingRepoCell.swift in Sources */,
 				C524742F1D51A1500001D9CD /* Milestone.swift in Sources */,
 				C500F8C81DBBA2EF009BB44A /* StatusProvider.swift in Sources */,
+				C554238D1DC60392001B7D20 /* AccountViewController.swift in Sources */,
 				C5E7C22B1DB5CB2100F95509 /* OptionButton.swift in Sources */,
 				C538FD021D406638003A559E /* User.swift in Sources */,
 				C51CDEB81DBF797C0043A755 /* IssueViewController.swift in Sources */,
@@ -974,12 +986,12 @@
 				C5F79AD71D957732006B0466 /* MessageManager.swift in Sources */,
 				C500F8C61DBBA2EF009BB44A /* ErrorStatusView.swift in Sources */,
 				C526EE101D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift in Sources */,
+				C55423941DC6EFEE001B7D20 /* LibraryTableViewController.swift in Sources */,
 				C5ABDF4E1D7DC8A800F07DC2 /* Renderer.swift in Sources */,
 				C51CDEA31DBF790F0043A755 /* CommitFileTableViewModel.swift in Sources */,
 				C51CDEC51DBF79910043A755 /* FileViewModel.swift in Sources */,
 				C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */,
 				C5E7C2351DB9C48C00F95509 /* TableViewController+EmptyView.swift in Sources */,
-				C55791571D743A2D00FBBD41 /* RefreshFooter.swift in Sources */,
 				C51CDEB61DBF797C0043A755 /* FileViewController.swift in Sources */,
 				C51CDEC41DBF79910043A755 /* CommitViewModel.swift in Sources */,
 				C538FD471D4491DE003A559E /* Event+DataProcess.swift in Sources */,

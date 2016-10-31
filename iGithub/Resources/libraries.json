@@ -1,0 +1,67 @@
+ [
+  {
+  "name": "GRMustache.swift",
+  "full_name": "groue/GRMustache.swift",
+  "description": "Flexible Mustache templates for Swift"
+  },
+  {
+  "name": "Moya",
+  "full_name": "Moya/Moya",
+  "description": "Network abstraction layer written in Swift."
+  },
+  {
+  "name": "ObjectMapper",
+  "full_name": "Hearst-DD/ObjectMapper",
+  "description": "Simple JSON Object mapping written in Swift"
+  },
+  {
+  "name": "Kanna",
+  "full_name": "tid-kijyun/Kanna",
+  "description": "Kanna(鉋) is an XML/HTML parser for Swift."
+  },
+  {
+  "name": "KeychainAccess",
+  "full_name": "kishikawakatsumi/KeychainAccess",
+  "description": "Simple Swift wrapper for Keychain that works on iOS and OS X"
+  },
+  {
+  "name": "Kingfisher",
+  "full_name": "onevcat/Kingfisher",
+  "description": "A lightweight, pure-Swift library for downloading and caching images from the web."
+  },
+  {
+  "name": "Prism",
+  "full_name": "PrismJS/prism",
+  "description": "Lightweight, robust, elegant syntax highlighting."
+  },
+  {
+  "name": "RxSwift",
+  "full_name": "ReactiveX/RxSwift",
+  "description": "Reactive Programming in Swift"
+  },
+  {
+  "name": "StatusProvider",
+  "full_name": "mariohahn/StatusProvider",
+  "description": "Protocol to handle initial Loadings, Empty Views and Error Handling in a ViewController & views"
+  },
+  {
+  "name": "SwiftDate",
+  "full_name": "malcommac/SwiftDate",
+  "description": "The best way to manage Dates and Timezones in Swift"
+  },
+  {
+  "name": "SwiftMessages",
+  "full_name": "SwiftKickMobile/SwiftMessages",
+  "description": "A very flexible message bar for iOS written in Swift."
+  },
+  {
+  "name": "TTTAttributedLabel",
+  "full_name": "TTTAttributedLabel/TTTAttributedLabel",
+  "description": "A drop-in replacement for UILabel that supports attributes, data detectors, links, and more"
+  },
+  {
+  "name": "TwicketSegmentedControl",
+  "full_name": "twicketapp/TwicketSegmentedControl",
+  "description": "Custom UISegmentedControl replacement for iOS, written in Swift"
+  }
+]

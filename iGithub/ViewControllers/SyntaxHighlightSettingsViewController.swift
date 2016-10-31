@@ -66,7 +66,6 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
             return
         }
         
-        tableView.deselectRow(at: indexPath, animated: true)
         self.pickerView.show()
     }
     

@@ -59,7 +59,6 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        super.tableView(tableView, didSelectRowAt: indexPath)
         
         switch viewModel.type {
         case .repositories:

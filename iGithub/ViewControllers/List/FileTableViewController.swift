@@ -38,7 +38,6 @@ class FileTableViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        super.tableView(tableView, didSelectRowAt: indexPath)
         
         let file = viewModel.dataSource.value[indexPath.row]
         
@@ -46,6 +45,7 @@ class FileTableViewController: BaseTableViewController {
         case .submodule:
             guard let _ = file.gitLink else {
                 MessageManager.showMessage(title: "", body: "The submodule repository is not hosted on github.com", type: .info)
+                tableView.deselectRow(at: indexPath, animated: true)
                 return
             }
             
