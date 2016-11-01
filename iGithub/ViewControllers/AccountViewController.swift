@@ -12,6 +12,16 @@ class AccountViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.title = AccountManager.currentUser?.login
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+    }
+    
+    func showProfile() {
+        let userVC = UserViewController.instantiateFromStoryboard()
+        userVC.viewModel = UserViewModel(AccountManager.currentUser!)
+        navigationController?.pushViewController(userVC, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -68,5 +78,17 @@ class AccountViewController: UITableViewController {
         default:
             break
         }
+    }
+    
+    private var imageView: UIImageView {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        imageView.layer.masksToBounds = true
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 15
+        imageView.setAvatar(with: AccountManager.currentUser?.avatarURL)
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showProfile)))
+        
+        return imageView
     }
 }
