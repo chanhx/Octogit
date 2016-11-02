@@ -14,7 +14,7 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
     let headerView = SegmentHeaderView()
     
     var searchController: UISearchController!
-    var searchViewController = SearchViewController()
+    var searchViewController = SearchViewController(style: .grouped)
     
     lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self, optionsCount: 2, selectedRow: [1, 0])
 
@@ -44,9 +44,9 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
     
     // MARK: UISearchControllerDelegate
     
-//    func didDismissSearchController(searchController: UISearchController) {
-//        searchViewController clear search results
-//    }
+    func willDismissSearchController(_ searchController: UISearchController) {
+        searchViewController.viewModel.clean()
+    }
     
     // MARK: UITableViewDelegate
     

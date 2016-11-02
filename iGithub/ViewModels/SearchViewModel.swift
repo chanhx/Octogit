@@ -52,6 +52,10 @@ class SearchViewModel {
         (.joined, "Recently joined")
     ]
     
+    init() {
+        self.option = options[0]
+    }
+    
     func search(_ query: String) {
         self.query = query
         switch option {
@@ -66,8 +70,9 @@ class SearchViewModel {
         }
     }
     
-    init() {
-        self.option = options[0]
+    func clean() {
+        repoTVM.repositories.value = []
+        userTVM.users.value = []
     }
 }
 

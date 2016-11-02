@@ -16,17 +16,12 @@ class SearchViewController: BaseTableViewController {
     
     lazy var repoOptionsPickerView: OptionPickerView = OptionPickerView(delegate: self, optionsCount: 2)
     lazy var userOptionPickerView: OptionPickerView = OptionPickerView(delegate: self)
-    
-    init () {
-        super.init(style: .grouped)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        automaticallyAdjustsScrollViewInsets = false
+        tableView.contentInset = UIEdgeInsetsMake(64, 0, 44, 0)
 
         tableView.keyboardDismissMode = .onDrag
         tableView.backgroundColor = UIColor(netHex: 0xFAFAFA)
@@ -50,6 +45,7 @@ class SearchViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         switch viewModel.option {
         case .repositories:
@@ -131,7 +127,7 @@ extension SearchViewController: TTTAttributedLabelDelegate {
         let sortDescription = viewModel.titleVM.sortDescription(viewModel.option)
         switch viewModel.option {
         case .repositories(_, let language):
-            headerView.titleLabel.text = "Sort: \(sortDescription) | Language: \(language)"
+            headerView.titleLabel.text = "\(sortDescription) in \(language)"
             headerView.titleLabel.addLink(URL(string: "ReposSort")!, toText: sortDescription)
             headerView.titleLabel.addLink(URL(string: "Language")!,
                                           toText: language.replacingOccurrences(of: "+", with: "\\+"))
