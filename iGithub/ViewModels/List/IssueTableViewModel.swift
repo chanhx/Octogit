@@ -45,6 +45,8 @@ class IssueTableViewModel: BaseTableViewModel<Issue> {
                         } else {
                             self.dataSource.value.append(contentsOf: filteredIssues)
                         }
+                        
+                        self.page += 1
                     }
                 },
                 onError: { [unowned self] in

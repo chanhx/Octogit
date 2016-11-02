@@ -34,7 +34,13 @@ class ReleaseTableViewModel: BaseTableViewModel<Release> {
                 onNext: { [unowned self] in
                     let newReleases = Mapper<Release>().mapArray(JSONObject: $0)!
                     
-                    self.dataSource.value.append(contentsOf: newReleases)
+                    if self.page == 1 {
+                        self.dataSource.value = newReleases
+                    } else {
+                        self.dataSource.value.append(contentsOf: newReleases)
+                    }
+                    
+                    self.page += 1
                 },
                 onError: { [unowned self] in
                     self.error.value = $0

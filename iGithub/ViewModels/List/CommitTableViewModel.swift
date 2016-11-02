@@ -58,6 +58,8 @@ class CommitTableViewModel: BaseTableViewModel<Commit> {
                         } else {
                             self.dataSource.value.append(contentsOf: newCommits)
                         }
+                        
+                        self.page += 1
                     }
                 },
                 onError: { [unowned self] in

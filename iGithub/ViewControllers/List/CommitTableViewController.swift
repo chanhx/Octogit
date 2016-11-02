@@ -45,7 +45,7 @@ class CommitTableViewController: BaseTableViewController {
         tableView.register(CommitCell.self, forCellReuseIdentifier: "CommitCell")
         
         tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
-        tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
+        tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchData))
         
         tableView.refreshHeader?.beginRefreshing()
     }

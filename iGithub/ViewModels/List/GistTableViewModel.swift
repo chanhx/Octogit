@@ -55,6 +55,8 @@ class GistTableViewModel: BaseTableViewModel<Gist> {
                         } else {
                             self.dataSource.value.append(contentsOf: newGists)
                         }
+                        
+                        self.page += 1
                     }
                 },
                 onError: { [unowned self] in

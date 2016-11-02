@@ -56,11 +56,11 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
             token = .userRepos(user: user, page: page)
         case .starredRepos(let user, _):
             token = .starredRepos(user: user, page: page)
-        case .starredReposOfAuthenticatedUser(let page):
+        case .starredReposOfAuthenticatedUser:
             token = .starredReposOfAuthenticatedUser(page: page)
-        case .subscribedRepos(let user, let page):
+        case .subscribedRepos(let user, _):
             token = .subscribedRepos(user: user, page: page)
-        case .subscribedReposOfAuthenticatedUser(let page):
+        case .subscribedReposOfAuthenticatedUser:
             token = .subscribedReposOfAuthenticatedUser(page: page)
         default:
             break
@@ -86,6 +86,8 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
                         } else {
                             self.dataSource.value.append(contentsOf: newRepos)
                         }
+                        
+                        self.page += 1
                     }
                 },
                 onError: { [unowned self] in

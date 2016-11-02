@@ -40,6 +40,8 @@ class PullRequestTableViewModel: BaseTableViewModel<PullRequest> {
                         } else {
                             self.dataSource.value.append(contentsOf: newPullRequests)
                         }
+                        
+                        self.page += 1
                     }
                 },
                 onError: { [unowned self] in

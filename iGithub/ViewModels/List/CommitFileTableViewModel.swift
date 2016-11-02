@@ -42,7 +42,13 @@ class CommitFileTableViewModel: BaseTableViewModel<CommitFile> {
             .subscribe(
                 onNext: { [unowned self] in
                     if let newFiles = Mapper<CommitFile>().mapArray(JSONObject: $0) {
-                        self.dataSource.value.append(contentsOf: newFiles)
+                        if self.page == 1 {
+                            self.dataSource.value = newFiles
+                        } else {
+                            self.dataSource.value.append(contentsOf: newFiles)
+                        }
+                        
+                        self.page += 1
                     }
                 },
                 onError: { [unowned self] in

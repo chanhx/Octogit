@@ -20,15 +20,10 @@ class BaseTableViewModel<T> {
     var page: Int = 1
     var hasNextPage = true
     
-    func fetchData() {}
+    @objc func fetchData() {}
     
     @objc func refresh() {
         page = 1
-        fetchData()
-    }
-    
-    @objc func fetchNextPage() {
-        page += 1
         fetchData()
     }
 }

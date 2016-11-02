@@ -53,7 +53,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
         self.navigationItem.title = viewModel.title
         
         tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
-        tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
+        tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchData))
         
         tableView.refreshHeader?.beginRefreshing()
     }

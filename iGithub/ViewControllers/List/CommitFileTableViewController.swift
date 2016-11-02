@@ -48,7 +48,7 @@ class CommitFileTableViewController: BaseTableViewController {
         
         if viewModel.dataSource.value.count <= 0 {
             tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
-            tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
+            tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchData))
             
             tableView.refreshHeader?.beginRefreshing()
         }

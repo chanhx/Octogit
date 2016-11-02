@@ -66,6 +66,8 @@ class UserTableViewModel: BaseTableViewModel<User> {
                         } else {
                             self.dataSource.value.append(contentsOf: newUsers)
                         }
+                        
+                        self.page += 1
                     }
                 },
                 onError: { [unowned self] in

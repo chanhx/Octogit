@@ -74,6 +74,8 @@ class EventTableViewModel: BaseTableViewModel<Event> {
                         } else {
                             self.dataSource.value.append(contentsOf: newEvents)
                         }
+                        
+                        self.page += 1
                     }
                 },
                 onError: { [unowned self] in
