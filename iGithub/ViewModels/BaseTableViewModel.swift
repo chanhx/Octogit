@@ -24,6 +24,7 @@ class BaseTableViewModel<T> {
     
     @objc func refresh() {
         page = 1
+        hasNextPage = true
         fetchData()
     }
 }

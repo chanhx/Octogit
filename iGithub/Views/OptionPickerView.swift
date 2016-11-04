@@ -15,11 +15,11 @@ import RxSwift
 
 class OptionPickerView: UIPickerView {
     
-    var selectedRow: [Int]
+    var selectedRows: [Int]
     var index: Int {
         didSet {
             reloadAllComponents()
-            selectRow(tmpSelectedRow[index], inComponent: 0, animated: false)
+            selectRow(tmpSelectedRows[index], inComponent: 0, animated: false)
             configureToolBar()
         }
     }
@@ -30,18 +30,18 @@ class OptionPickerView: UIPickerView {
         return $0
     }(UIView(frame: UIApplication.shared.windows.last!.bounds))
     
-    private var tmpSelectedRow: [Int]
+    private var tmpSelectedRows: [Int]
     
     private let disposeBag = DisposeBag()
     private let toolBar = UIToolbar()
     private weak var pickerDelegate: OptionPickerViewDelegate?
     
-    init(delegate: OptionPickerViewDelegate, optionsCount: Int = 1, index: Int = 0, selectedRow: [Int]? = nil) {
+    init(delegate: OptionPickerViewDelegate, optionsCount: Int = 1, index: Int = 0, selectedRows: [Int]? = nil) {
         
         self.pickerDelegate = delegate
         
-        self.selectedRow = selectedRow ?? Array(repeating: 0, count: optionsCount)
-        tmpSelectedRow = self.selectedRow
+        self.selectedRows = selectedRows ?? Array(repeating: 0, count: optionsCount)
+        tmpSelectedRows = self.selectedRows
         self.index = index
         
         super.init(frame: CGRect.zero)
@@ -50,7 +50,7 @@ class OptionPickerView: UIPickerView {
         super.delegate = delegate
         
         rx.itemSelected.asObservable().subscribe(onNext: { [unowned self] in
-            self.tmpSelectedRow[self.index] = $0.0
+            self.tmpSelectedRows[self.index] = $0.0
         }).addDisposableTo(disposeBag)
         
         clipsToBounds = false
@@ -73,7 +73,7 @@ class OptionPickerView: UIPickerView {
     }
     
     func clearRecord() {
-        tmpSelectedRow = selectedRow
+        tmpSelectedRows = selectedRows
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -104,9 +104,9 @@ class OptionPickerView: UIPickerView {
         fixSpace30.width = 30
         
         previousItem.isEnabled = index > 0
-        nextItem.isEnabled = index < selectedRow.count - 1
+        nextItem.isEnabled = index < selectedRows.count - 1
         
-        if selectedRow.count <= 1 {
+        if selectedRows.count <= 1 {
             toolBar.setItems([flexibleSpace, doneItem, fixSpace10], animated: false)
         } else {
             toolBar.setItems([fixSpace10, previousItem, fixSpace30, nextItem, flexibleSpace, doneItem, fixSpace10], animated: false)
@@ -122,7 +122,7 @@ class OptionPickerView: UIPickerView {
     }
     
     @objc fileprivate func doneItemClicked() {
-        selectedRow = tmpSelectedRow
+        selectedRows = tmpSelectedRows
         
         self.hide()
         pickerDelegate?.doneButtonClicked(self)
@@ -141,7 +141,7 @@ class OptionPickerView: UIPickerView {
         pickerFrame.origin.y = pickerFrame.height
         pickerFrame.size.height = intrinsicContentSize.height
         self.frame = pickerFrame
-        self.selectRow(self.selectedRow[self.index], inComponent: 0, animated: false)
+        self.selectRow(self.selectedRows[self.index], inComponent: 0, animated: false)
         
         UIApplication.shared.windows.last?.addSubview(self)
         

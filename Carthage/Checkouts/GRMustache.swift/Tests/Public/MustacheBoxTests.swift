@@ -37,7 +37,7 @@ class MustacheBoxTests: XCTestCase {
     // This test should go elsewhere
     func testBoolBoxing() {
         let template = try! Template(string:"{{.}}:{{#.}}true{{/.}}{{^.}}false{{/.}}")
-        XCTAssertEqual(try! template.render(Box(true)), "1:true")
-        XCTAssertEqual(try! template.render(Box(false)), "0:false")
+        XCTAssertEqual(try! template.render(true), "1:true")
+        XCTAssertEqual(try! template.render(false), "0:false")
     }
 }

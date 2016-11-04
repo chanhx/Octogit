@@ -513,7 +513,11 @@ public final class Property<Value>: PropertyProtocol {
 		self.sources = sources
 		_value = { atomic.value! }
 		_producer = { producer }
-		_signal = { producer.startAndRetrieveSignal() }
+		_signal = {
+			var extractedSignal: Signal<Value, NoError>!
+			producer.startWithSignal { signal, _ in extractedSignal = signal }
+			return extractedSignal
+		}
 	}
 
 	deinit {

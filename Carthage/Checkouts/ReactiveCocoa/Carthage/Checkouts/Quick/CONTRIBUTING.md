@@ -98,8 +98,6 @@ some "ground rules":
   issues or pull requests submitted to the project. Please provide kind,
   constructive feedback. Please don't be sarcastic or snarky.
 
-Read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for more in depth guidelines.
-
 ## Creating a Release
 
 The process is relatively straight forward, but here's is a useful checklist for tagging:

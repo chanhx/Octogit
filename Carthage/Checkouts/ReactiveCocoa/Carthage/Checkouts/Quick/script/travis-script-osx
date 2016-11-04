@@ -3,7 +3,10 @@
 if [ "$PODSPEC" ]; then
   TASK="podspec:lint"
 else
-  TASK="test:$PLATFORM"
+  TASK="test"
+
+  if [ "$XCTOOL" ]; then TASK="$TASK:xctool"; fi
+  TASK="$TASK:$PLATFORM"
 fi
 
 echo "Executing rake task: $TASK"

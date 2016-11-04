@@ -16,7 +16,7 @@ let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
     
     (target: GithubAPI) -> Endpoint<GithubAPI> in
     
-    var endpoint = MoyaProvider.DefaultEndpointMapping(target)
+    var endpoint = MoyaProvider.defaultEndpointMapping(target)
     endpoint = endpoint.adding(newParameters: ["access_token": AccountManager.token!])
     
     switch target {
@@ -35,18 +35,44 @@ let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
 
 // MARK: - Provider support
 
-enum RepositoriesSearchSort: String {
+enum RepositoriesSearchSort: String, CustomStringConvertible {
     case bestMatch = ""
     case forks = "forks"
     case stars = "stars"
     case updated = "updated"
+    
+    var description: String {
+        switch self {
+        case .bestMatch:
+            return "Best match"
+        case .forks:
+            return "Most forks"
+        case .stars:
+            return "Most stars"
+        case .updated:
+            return "Recently updated"
+        }
+    }
 }
 
-enum UsersSearchSort: String {
+enum UsersSearchSort: String, CustomStringConvertible {
     case bestMatch = ""
     case followers = "followers"
     case joined = "joined"
     case repositories = "repositories"
+    
+    var description: String {
+        switch self {
+        case .bestMatch:
+            return "Best match"
+        case .followers:
+            return "Most followers"
+        case .repositories:
+            return "Most repositories"
+        case .joined:
+            return "Recently joined"
+        }
+    }
 }
 
 enum GithubAPI {
@@ -105,8 +131,8 @@ enum GithubAPI {
     
     // MARK: Search
     
-    case searchRepositories(q: String, sort: RepositoriesSearchSort)
-    case searchUsers(q: String, sort: UsersSearchSort)
+    case searchRepositories(q: String, sort: RepositoriesSearchSort, page: Int)
+    case searchUsers(q: String, sort: UsersSearchSort, page: Int)
     
     // MARK: Repository
     
@@ -270,11 +296,11 @@ extension GithubAPI: TargetType {
              .getTheREADME(_, let ref):
             return ["ref": ref]
             
-        case .searchRepositories(let q, let sort):
-            return ["q": q, "sort": sort.rawValue]
+        case .searchRepositories(let q, let sort, let page):
+            return ["q": q, "sort": sort.rawValue, "page": page]
             
-        case .searchUsers(let q, let sort):
-            return ["q": q, "sort": sort.rawValue]
+        case .searchUsers(let q, let sort, let page):
+            return ["q": q, "sort": sort.rawValue, "page": page]
             
         case .repositoryIssues(_, let page, let state),
              .repositoryPullRequests(_, let page, let state),

@@ -14,9 +14,9 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
     let headerView = SegmentHeaderView()
     
     var searchController: UISearchController!
-    var searchViewController = SearchViewController(style: .grouped)
+    var searchViewController = SearchViewController()
     
-    lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self, optionsCount: 2, selectedRow: [1, 0])
+    lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self, optionsCount: 2, selectedRows: [1, 0])
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,7 +139,7 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
 extension ExplorationViewController: TTTAttributedLabelDelegate {
     
     func updateTitle() {
-        let time = viewModel.pickerVM.timeOptions[pickerView.selectedRow[0]].desc
+        let time = viewModel.pickerVM.timeOptions[pickerView.selectedRows[0]].desc
         let language = viewModel.language.replacingOccurrences(of: "+", with: "\\+")
         
         headerView.titleLabel.setText(Octicon.flame.iconString("Trending for \(time) in \(viewModel.language)",
@@ -168,8 +168,8 @@ extension ExplorationViewController: TTTAttributedLabelDelegate {
 extension ExplorationViewController: OptionPickerViewDelegate {
     
     func doneButtonClicked(_ pickerView: OptionPickerView) {
-        let row0 = pickerView.selectedRow[0]
-        let row1 = pickerView.selectedRow[1]
+        let row0 = pickerView.selectedRows[0]
+        let row1 = pickerView.selectedRows[1]
         
         viewModel.since = viewModel.pickerVM.timeOptions[row0].time
         viewModel.language = languagesArray[row1]

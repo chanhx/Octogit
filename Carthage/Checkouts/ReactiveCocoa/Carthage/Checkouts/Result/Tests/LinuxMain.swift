@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import ResultTests
+@testable import ResultTestSuite
 
 XCTMain([
   testCase(ResultTests.allTests),

@@ -212,10 +212,8 @@ enum Octicon : String, CustomStringConvertible {
         return image!
     }
     
-    var description : String {
-        get {
-            return self.rawValue
-        }
+    var description: String {
+        return self.rawValue
     }
 }
 

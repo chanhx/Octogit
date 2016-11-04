@@ -1,7 +1,7 @@
 Kanna(鉋)
 =================
 
-Kanna(鉋) is an XML/HTML parser for Mac OS X and iOS. (It was formerly known as Swift-HTML-Parser)
+Kanna(鉋) is an XML/HTML parser for cross-platform(macOS, iOS, tvOS, watchOS and Linux!).
 
 It was inspired by [Nokogiri](https://github.com/sparklemotion/nokogiri)(鋸).
 
@@ -18,7 +18,7 @@ It was inspired by [Nokogiri](https://github.com/sparklemotion/nokogiri)(鋸).
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Reference Status](https://www.versioneye.com/objective-c/kanna/reference_badge.svg?style=flat)](https://www.versioneye.com/objective-c/kanna/references)
 
-:information_source: [Documentation](http://blog.guardlet.com/Kanna/)
+:information_source: [Documentation](http://tid-kijyun.github.io/Kanna/)
 
 
 Features:
@@ -51,6 +51,20 @@ github "tid-kijyun/Kanna" ~> 2.0.0
 
 1. In the project settings add `$(SDKROOT)/usr/include/libxml2` to the "header search paths" field
 
+#####Swift Package Manager (beta)
+Adding it to your `Package.swift`:
+
+```
+import PackageDescription
+
+let package = Package(
+    name: "YourProject",
+    
+    dependencies: [
+        .Package(url: "https://github.com/tid-kijyun/Kanna.git", majorVersion: 2)
+    ]
+)
+```
 
 ### Swift 2.x
 

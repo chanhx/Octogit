@@ -88,14 +88,14 @@ class RepositoryViewController: BaseTableViewController {
         Observable.combineLatest(repositorySubject, branchesLoadedSubject) { (repo, loaded) in
                 (repo, loaded)
             }
-            .observeOn(ConcurrentDispatchQueueScheduler(globalConcurrentQueueQOS: .userInitiated))
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .do(onNext: { [unowned self] (repo, loaded) in
                 guard loaded else { return }
                 self.viewModel.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
             })
             .map { $0.1 }
             .observeOn(MainScheduler.instance)
-            .bindTo(button.rx.enabled)
+            .bindTo(button.rx.isEnabled)
             .addDisposableTo(self.viewModel.disposeBag)
         
         return button
@@ -297,7 +297,7 @@ class RepositoryViewController: BaseTableViewController {
 extension RepositoryViewController: OptionPickerViewDelegate {
     
     func doneButtonClicked(_ pickerView: OptionPickerView) {
-        viewModel.branch = viewModel.branches[pickerView.selectedRow[0]].name!
+        viewModel.branch = viewModel.branches[pickerView.selectedRows[0]].name!
         branchButton.choice = viewModel.branch
     }
     

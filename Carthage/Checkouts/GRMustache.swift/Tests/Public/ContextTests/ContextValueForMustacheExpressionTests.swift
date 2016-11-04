@@ -27,32 +27,32 @@ import Mustache
 class ContextValueForMustacheExpressionTests: XCTestCase {
 
     func testImplicitIteratorExpression() {
-        let context = Context(Box("success"))
-        let box = try! context.mustacheBoxForExpression(".")
+        let context = Context("success")
+        let box = try! context.mustacheBox(forExpression: ".")
         let string = box.value as? String
         XCTAssertEqual(string!, "success")
     }
     
     func testIdentifierExpression() {
-        let context = Context(Box(["name": "success"]))
-        let box = try! context.mustacheBoxForExpression("name")
+        let context = Context(["name": "success"])
+        let box = try! context.mustacheBox(forExpression: "name")
         let string = box.value as? String
         XCTAssertEqual(string!, "success")
     }
     
     func testScopedExpression() {
-        let context = Context(Box(["a": ["name": "success"]] as NSDictionary))
-        let box = try! context.mustacheBoxForExpression("a.name")
+        let context = Context(["a": ["name": "success"]])
+        let box = try! context.mustacheBox(forExpression: "a.name")
         let string = box.value as? String
         XCTAssertEqual(string!, "success")
     }
     
     func testFilteredExpression() {
-        let filter = Filter({ (string: String?) -> MustacheBox in
-            return Box(string!.uppercased())
+        let filter = Filter({ (string: String?) -> Any? in
+            return string!.uppercased()
         })
-        let context = Context(Box(["name": "success", "f": filter]))
-        let box = try! context.mustacheBoxForExpression("f(name)")
+        let context = Context(["name": "success", "f": filter])
+        let box = try! context.mustacheBox(forExpression: "f(name)")
         let string = box.value as? String
         XCTAssertEqual(string!, "SUCCESS")
     }
@@ -60,7 +60,7 @@ class ContextValueForMustacheExpressionTests: XCTestCase {
     func testParseError() {
         let context = Context()
         do {
-            _ = try context.mustacheBoxForExpression("a.")
+            _ = try context.mustacheBox(forExpression: "a.")
             XCTFail("Expected MustacheError")
         } catch let error as MustacheError {
             XCTAssertEqual(error.kind, MustacheError.Kind.parseError) // Invalid expression
@@ -72,7 +72,7 @@ class ContextValueForMustacheExpressionTests: XCTestCase {
     func testRenderError() {
         let context = Context()
         do {
-            _ = try context.mustacheBoxForExpression("f(x)")
+            _ = try context.mustacheBox(forExpression: "f(x)")
             XCTFail("Expected MustacheError")
         } catch let error as MustacheError {
             XCTAssertEqual(error.kind, MustacheError.Kind.renderError) // Missing filter

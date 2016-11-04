@@ -12,7 +12,9 @@ import RxSwift
 class SearchViewController: BaseTableViewController {
     
     let viewModel = SearchViewModel()
-    let headerView = SegmentHeaderView()
+    
+    let headerView = SegmentHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 90))
+//    let headerView = SegmentHeaderView()
     
     lazy var repoOptionsPickerView: OptionPickerView = OptionPickerView(delegate: self, optionsCount: 2)
     lazy var userOptionPickerView: OptionPickerView = OptionPickerView(delegate: self)
@@ -23,10 +25,13 @@ class SearchViewController: BaseTableViewController {
         automaticallyAdjustsScrollViewInsets = false
         tableView.contentInset = UIEdgeInsetsMake(64, 0, 44, 0)
 
+        tableView.tableHeaderView = headerView
+        
         tableView.keyboardDismissMode = .onDrag
         tableView.backgroundColor = UIColor(netHex: 0xFAFAFA)
         tableView.register(RepositoryCell.self, forCellReuseIdentifier: "RepositoryCell")
         tableView.register(UserCell.self, forCellReuseIdentifier: "UserCell")
+        tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchNextPage))
         
         headerView.delegate = self
         headerView.title = .repositories
@@ -36,25 +41,25 @@ class SearchViewController: BaseTableViewController {
 
     // MARK: - Table view data source
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 90
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return headerView
-    }
+//    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 90
+//    }
+//    
+//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        return headerView
+//    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        switch viewModel.option {
-        case .repositories:
-            let repo = self.viewModel.repoTVM.repositories.value[indexPath.row]
+        switch viewModel.searchObject {
+        case .repository:
+            let repo = viewModel.repoTVM.dataSource.value[indexPath.row]
             let repoVC = RepositoryViewController.instantiateFromStoryboard()
             repoVC.viewModel = RepositoryViewModel(repo: repo)
             self.presentingViewController?.navigationController?.pushViewController(repoVC, animated: true)
-        case .users:
-            let user = viewModel.userTVM.users.value[indexPath.row]
+        case .user:
+            let user = viewModel.userTVM.dataSource.value[indexPath.row]
             switch user.type! {
             case .user:
                 let userVC = UserViewController.instantiateFromStoryboard()
@@ -82,7 +87,7 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         if let query = searchBar.text , query.characters.count > 0 {
-            viewModel.search(query)
+            viewModel.search(query: query)
         }
     }
 }
@@ -92,18 +97,23 @@ extension SearchViewController: SegmentHeaderViewDelegate {
     func headerView(_ view: SegmentHeaderView, didSelectSegmentTitle title: TrendingType) {
         switch title {
         case .repositories:
+            viewModel.searchObject = .repository
             bindToRepoTVM()
-            viewModel.option = viewModel.options[0]
         case .users:
+            viewModel.searchObject = .user
             bindToUserTVM()
-            viewModel.option = viewModel.options[1]
         }
         
         updateTitle()
     }
     
     func bindToRepoTVM() {
-        viewModel.repoTVM.repositories.asDriver()
+        viewModel.repoTVM.dataSource.asDriver()
+            .do(onNext: { [unowned self] _ in
+                self.viewModel.repoTVM.hasNextPage ?
+                    self.tableView.refreshFooter?.endRefreshing() :
+                    self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
+            })
             .drive(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) {
                 row, repo, cell in
                 cell.entity = repo
@@ -112,7 +122,12 @@ extension SearchViewController: SegmentHeaderViewDelegate {
     }
     
     func bindToUserTVM() {
-        viewModel.userTVM.users.asDriver()
+        viewModel.userTVM.dataSource.asDriver()
+            .do(onNext: { [unowned self] _ in
+                self.viewModel.userTVM.hasNextPage ?
+                    self.tableView.refreshFooter?.endRefreshing() :
+                    self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
+            })
             .drive(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) {
                 row, user, cell in
                 cell.entity = user
@@ -124,14 +139,18 @@ extension SearchViewController: SegmentHeaderViewDelegate {
 extension SearchViewController: TTTAttributedLabelDelegate {
     
     func updateTitle() {
-        let sortDescription = viewModel.titleVM.sortDescription(viewModel.option)
-        switch viewModel.option {
-        case .repositories(_, let language):
+        switch viewModel.searchObject {
+        case .repository:
+            let sortDescription = viewModel.repoTVM.sort.description
+            let language = viewModel.repoTVM.language
+            
             headerView.titleLabel.text = "\(sortDescription) in \(language)"
             headerView.titleLabel.addLink(URL(string: "ReposSort")!, toText: sortDescription)
             headerView.titleLabel.addLink(URL(string: "Language")!,
                                           toText: language.replacingOccurrences(of: "+", with: "\\+"))
-        case .users(_):
+        case .user:
+            let sortDescription = viewModel.userTVM.sort.description
+            
             headerView.titleLabel.text = "Sort: \(sortDescription)"
             headerView.titleLabel.addLink(URL(string: "UsersSort")!, toText: sortDescription)
         }
@@ -160,13 +179,15 @@ extension SearchViewController: OptionPickerViewDelegate {
     
     func doneButtonClicked(_ pickerView: OptionPickerView) {
         if pickerView == repoOptionsPickerView {
-            let row0 = pickerView.selectedRow[0]
-            let row1 = pickerView.selectedRow[1]
+            let row0 = pickerView.selectedRows[0]
+            let row1 = pickerView.selectedRows[1]
             
-            viewModel.option = .repositories(sort: viewModel.reposSortOptions[row0].option, language: languagesArray[row1])
+            viewModel.repoTVM.sort = viewModel.repoTVM.sortOptions[row0]
+            viewModel.repoTVM.language = languagesArray[row1]
         } else if pickerView == userOptionPickerView {
-            let row = pickerView.selectedRow[0]
-            viewModel.option = .users(sort: viewModel.usersSortOptions[row].option)
+            let row = pickerView.selectedRows[0]
+            
+            viewModel.userTVM.sort = viewModel.userTVM.sortOptions[row]
         }
         
         updateTitle()
@@ -177,22 +198,22 @@ extension SearchViewController: OptionPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        switch viewModel.option {
-        case .repositories:
+        switch viewModel.searchObject {
+        case .repository:
             return repoOptionsPickerView.index == 0 ? 4 : languagesArray.count
-        case .users:
+        case .user:
             return 4
         }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        switch viewModel.option {
-        case .repositories:
+        switch viewModel.searchObject {
+        case .repository:
             return repoOptionsPickerView.index == 0 ?
-                viewModel.reposSortOptions.map {$0.desc} [row] :
+                viewModel.repoTVM.sortOptions.map {$0.description} [row] :
                 languagesArray[row]
-        case .users:
-            return viewModel.usersSortOptions.map {$0.desc} [row]
+        case .user:
+            return viewModel.userTVM.sortOptions.map {$0.description} [row]
         }
     }
 }

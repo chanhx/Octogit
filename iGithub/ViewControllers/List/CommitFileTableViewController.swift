@@ -34,7 +34,7 @@ class CommitFileTableViewController: BaseTableViewController {
                     self.tableView.refreshHeader?.endRefreshing()
                     self.tableView.refreshFooter?.endRefreshing()
                     MessageManager.show(error: $0!)
-                    })
+                })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }

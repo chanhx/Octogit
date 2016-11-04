@@ -29,17 +29,13 @@ extension NSObject : MustacheBoxable {
     /// `NSObject` adopts the `MustacheBoxable` protocol so that it can feed
     /// Mustache templates.
     ///
-    /// You should not directly call the `mustacheBox` property. Always use the
-    /// `Box()` function instead:
-    ///
-    ///     object.mustacheBox   // Valid, but discouraged
-    ///     Box(object)          // Preferred
+    /// You should not directly call the `mustacheBox` property.
     ///
     ///
     /// NSObject's default implementation handles two general cases:
     ///
-    /// - Enumerable objects that conform to the `NSFastEnumeration` protocol, such
-    ///   as `NSArray` and `NSOrderedSet`.
+    /// - Enumerable objects that conform to the `NSFastEnumeration` protocol,
+    ///   such as `NSArray` and `NSOrderedSet`.
     /// - All other objects
     ///
     /// GRMustache ships with a few specific classes that escape the general
@@ -94,7 +90,8 @@ extension NSObject : MustacheBoxable {
     ///
     /// ### Rendering
     ///
-    /// - `{{object}}` renders the result of the `description` method, HTML-escaped.
+    /// - `{{object}}` renders the result of the `description` method,
+    ///   HTML-escaped.
     ///
     /// - `{{{object}}}` renders the result of the `description` method, *not*
     ///   HTML-escaped.
@@ -103,29 +100,27 @@ extension NSObject : MustacheBoxable {
     ///   of the context stack.
     ///
     /// - `{{^object}}...{{/object}}` does not render.
-    ///
     open var mustacheBox: MustacheBox {
         if let enumerable = self as? NSFastEnumeration {
             // Enumerable
             
-            // Turn enumerable into a Swift array of MustacheBoxes that we know how to box
-            let array = IteratorSequence(NSFastEnumerationIterator(enumerable)).map(BoxAny)
-            return array.mustacheBoxWithArrayValue(self, box: { $0 })
+            // Turn enumerable into a Swift array that we know how to box
+            return Box(Array(IteratorSequence(NSFastEnumerationIterator(enumerable))))
             
         } else {
             // Generic NSObject
             
             #if OBJC
-            return MustacheBox(
-                value: self,
-                keyedSubscript: { (key: String) in
-                    if GRMustacheKeyAccess.isSafeMustacheKey(key, for: self) {
-                        // Use valueForKey: for safe keys
-                        return BoxAny(self.value(forKey: key))
-                    } else {
-                        // Missing key
-                        return Box()
-                    }
+                return MustacheBox(
+                    value: self,
+                    keyedSubscript: { (key: String) in
+                        if GRMustacheKeyAccess.isSafeMustacheKey(key, for: self) {
+                            // Use valueForKey: for safe keys
+                            return self.value(forKey: key)
+                        } else {
+                            // Missing key
+                            return nil
+                        }
                 })
             #else
                 return MustacheBox(value: self)
@@ -170,11 +165,7 @@ extension NSNumber {
     /// `NSNumber` adopts the `MustacheBoxable` protocol so that it can feed
     /// Mustache templates.
     ///
-    /// You should not directly call the `mustacheBox` property. Always use the
-    /// `Box()` function instead:
-    ///
-    ///     NSNumber(integer: 1).mustacheBox   // Valid, but discouraged
-    ///     Box(NSNumber(integer: 1))          // Preferred
+    /// You should not directly call the `mustacheBox` property.
     ///
     ///
     /// ### Rendering
@@ -184,8 +175,8 @@ extension NSNumber {
     /// UInt64, or Double.
     ///
     /// - `{{number}}` is rendered with built-in Swift String Interpolation.
-    ///   Custom formatting can be explicitly required with NSNumberFormatter,
-    ///   as in `{{format(a)}}` (see `NSFormatter`).
+    ///   Custom formatting can be explicitly required with NumberFormatter,
+    ///   as in `{{format(a)}}` (see `Formatter`).
     ///
     /// - `{{#number}}...{{/number}}` renders if and only if `number` is
     ///   not 0 (zero).
@@ -217,14 +208,13 @@ extension NSNumber {
         case "Q":
             return Box(uint64Value)
         case "f":
-            return Box(Double(floatValue))
+            return Box(floatValue)
         case "d":
             return Box(doubleValue)
         case "B":
             return Box(boolValue)
         default:
-            NSLog("GRMustache support for NSNumber of type \(objCType) is not implemented: value is discarded.")
-            return Box()
+            return Box(self)
         }
     }
 }
@@ -236,11 +226,7 @@ extension NSString {
     /// `NSString` adopts the `MustacheBoxable` protocol so that it can feed
     /// Mustache templates.
     ///
-    /// You should not directly call the `mustacheBox` property. Always use the
-    /// `Box()` function instead:
-    ///
-    ///     "foo".mustacheBox   // Valid, but discouraged
-    ///     Box("foo")          // Preferred
+    /// You should not directly call the `mustacheBox` property.
     ///
     ///
     /// ### Rendering
@@ -283,12 +269,7 @@ extension NSSet {
     ///     try! template.render(Box(["set": Box(set)]))
     ///
     ///
-    /// You should not directly call the `mustacheBox` property. Always use the
-    /// `Box()` function instead:
-    ///
-    ///     set.mustacheBox   // Valid, but discouraged
-    ///     Box(set)          // Preferred
-    ///
+    /// You should not directly call the `mustacheBox` property.
     ///
     /// ### Rendering
     ///
@@ -311,8 +292,7 @@ extension NSSet {
     /// Because 0 (zero) is falsey, `{{#set.count}}...{{/set.count}}` renders
     /// once, if and only if `set` is not empty.
     open override var mustacheBox: MustacheBox {
-        let array = IteratorSequence(NSFastEnumerationIterator(self)).map(BoxAny)
-        return array.mustacheBoxWithSetValue(self, box: { $0 })
+        return Box(Set(IteratorSequence(NSFastEnumerationIterator(self)).flatMap { $0 as? AnyHashable }))
     }
 }
 
@@ -331,11 +311,7 @@ extension NSDictionary {
     ///     let rendering = try! template.render(Box(dictionary))
     ///
     ///
-    /// You should not directly call the `mustacheBox` property. Always use the
-    /// `Box()` function instead:
-    ///
-    ///     dictionary.mustacheBox   // Valid, but discouraged
-    ///     Box(dictionary)          // Preferred
+    /// You should not directly call the `mustacheBox` property.
     ///
     ///
     /// ### Rendering
@@ -352,30 +328,18 @@ extension NSDictionary {
     /// - `{{^dictionary}}...{{/dictionary}}` does not render.
     ///
     ///
-    /// In order to iterate over the key/value pairs of a dictionary, use the `each`
-    /// filter from the Standard Library:
+    /// In order to iterate over the key/value pairs of a dictionary, use the
+    /// `each` filter from the Standard Library:
     ///
     ///     // Attach StandardLibrary.each to the key "each":
     ///     let template = try! Template(string: "<{{# each(dictionary) }}{{@key}}:{{.}}, {{/}}>")
-    ///     template.registerInBaseContext("each", Box(StandardLibrary.each))
+    ///     template.register(StandardLibrary.each, forKey: "each")
     ///
     ///     // Renders "<name:Arthur, age:36, >"
     ///     let dictionary = ["name": "Arthur", "age": 36] as NSDictionary
-    ///     let rendering = try! template.render(Box(["dictionary": dictionary]))
+    ///     let rendering = try! template.render(["dictionary": dictionary])
     open override var mustacheBox: MustacheBox {
-        return MustacheBox(
-            converter: MustacheBox.Converter(dictionaryValue: { IteratorSequence(NSFastEnumerationIterator(self)).reduce([String: MustacheBox](), { (boxDictionary, key) in
-                var boxDictionary = boxDictionary
-                if let key = key as? String {
-                    boxDictionary[key] = BoxAny(self[key])
-                } else {
-                    NSLog("GRMustache found a non-string key in NSDictionary (\(key)): value is discarded.")
-                }
-                return boxDictionary
-            })}),
-            value: self,
-            keyedSubscript: { BoxAny(self[$0])
-        })
+        return Box(self as? [AnyHashable: Any])
     }
 }
 
@@ -385,12 +349,7 @@ extension ReferenceConvertible where Self: MustacheBoxable {
     ///
     /// See NSObject.mustacheBox
     public var mustacheBox: MustacheBox {
-        if let object = self as? ReferenceType {
-            return object.mustacheBox
-        } else {
-            NSLog("Value `\(self)` can not feed Mustache templates: it is discarded.")
-            return Box()
-        }
+        return (self as! ReferenceType).mustacheBox
     }
 }
 

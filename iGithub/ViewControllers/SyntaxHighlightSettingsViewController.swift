@@ -46,7 +46,7 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
         webViewCell.webView.isOpaque = false
         tableView.tableFooterView = webViewCell
         
-        pickerView.selectedRow[0] = self.themes.index(of: self.themeLabel.text!) ?? 0
+        pickerView.selectedRows[0] = self.themes.index(of: self.themeLabel.text!) ?? 0
 
         lineNumbersSwitch.rx.value.asDriver()
             .drive(onNext: { [unowned self] _ in
@@ -77,7 +77,7 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
 extension SyntaxHighlightSettingsViewController: OptionPickerViewDelegate {
     
     func doneButtonClicked(_ pickerView: OptionPickerView) {
-        themeLabel.text = themes[pickerView.selectedRow[0]]
+        themeLabel.text = themes[pickerView.selectedRows[0]]
         
         renderSample()
     }

@@ -1,1 +1,1 @@
-github "ReactiveCocoa/ReactiveSwift" "228fd564561383a387f338558bd777cd14ca4291"
+github "antitypical/Result" ~> 2.1.3
