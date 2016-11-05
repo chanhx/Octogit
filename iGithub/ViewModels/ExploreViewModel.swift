@@ -121,7 +121,8 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
     var disposeBag = DisposeBag()
     var since: TrendingTime?
     var language: String?
-    var repositories: Variable<[(name: String, description: String?, meta: String)]> = Variable([])
+    var repositories: Variable<[(name: String, repoDescription: String?, language: String?, stargazers: String, forks: String, periodStargazers: String?)]>
+        = Variable([])
     var message: String?
     var token: WebAPI {
         return WebAPI.trending(since: since!, language: languagesDict[language!]!, type: .repositories)
@@ -130,17 +131,18 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
     @inline(__always) func parse(_ doc: HTMLDocument) {
         message = doc.css("div.blankslate h3").first?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        repositories.value = doc.css("li.repo-list-item").map {
-            let name = String($0.at_css("h3.repo-list-name a")!["href"]!.characters.dropFirst())
+        repositories.value = doc.css("div.explore-content li").map {
+            let name = String($0.at_css("h3 a")!["href"]!.characters.dropFirst())
             
-            let rawDesc = $0.at_css("p.repo-list-description")
+            let rawDesc = $0.at_css("div.py-1 p")
             let description = rawDesc?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            let meta = $0.at_css("p.repo-list-meta")!.text!.components(separatedBy: "•").map {
-                $0.trimmingCharacters(in: .whitespacesAndNewlines)
-                }.dropLast().joined(separator: " • ")
+            let language = $0.at_css("span[itemprop=\"programmingLanguage\"]")?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let stargazers = $0.at_css("a[aria-label=\"Stargazers\"]")!.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let forks = $0.at_css("a[aria-label=\"Forks\"]")!.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let periodStargazers = $0.at_css("span.float-right")?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            return (name, description, meta)
+            return (name, description, language, stargazers, forks, periodStargazers)
         }
     }
 }

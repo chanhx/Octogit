@@ -10,9 +10,12 @@ import UIKit
 
 class TrendingRepoCell: UITableViewCell {
     
-    let nameLabel = UILabel()
-    let descriptionLabel = UILabel()
-    let metaLabel = UILabel()
+    private let nameLabel = UILabel()
+    private let descriptionLabel = UILabel()
+    private let languageLabel = UILabel()
+    private let stargazersCountLabel = UILabel()
+    private let forksCountLabel = UILabel()
+    private let periodStargazersCountLabel = UILabel()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -29,27 +32,36 @@ class TrendingRepoCell: UITableViewCell {
     }
     
     func configureSubviews() {
+        for label in [periodStargazersCountLabel, languageLabel, stargazersCountLabel, forksCountLabel] {
+            label.textColor = UIColor(netHex: 0x888888)
+            label.font = UIFont.systemFont(ofSize: 14)
+        }
+        
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
+        nameLabel.textColor = UIColor(netHex: 0x4078C0)
         nameLabel.numberOfLines = 0
         nameLabel.lineBreakMode = .byWordWrapping
-        nameLabel.textColor = UIColor(netHex: 0x4078C0)
         
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .byWordWrapping
         descriptionLabel.textColor = UIColor(netHex: 0x666666)
-        
-        metaLabel.font = UIFont.systemFont(ofSize: 14)
-        metaLabel.textColor = UIColor(netHex: 0x888888)
     }
     
     func layout() {
-        let vStackView = UIStackView(arrangedSubviews: [nameLabel, descriptionLabel, metaLabel])
+        let hStackView = UIStackView(arrangedSubviews: [languageLabel, stargazersCountLabel, forksCountLabel])
+        hStackView.axis = .horizontal
+        hStackView.alignment = .center
+        hStackView.distribution = .equalSpacing
+        hStackView.spacing = 12
+        
+        let vStackView = UIStackView(arrangedSubviews: [periodStargazersCountLabel, nameLabel, descriptionLabel, hStackView])
         vStackView.axis = .vertical
-        vStackView.alignment = .fill
+        vStackView.alignment = .leading
         vStackView.distribution = .fill
         vStackView.spacing = 8
-        vStackView.translatesAutoresizingMaskIntoConstraints = false
+        
         contentView.addSubview(vStackView)
+        vStackView.translatesAutoresizingMaskIntoConstraints = false
         
         let margins = contentView.layoutMarginsGuide
         
@@ -61,11 +73,19 @@ class TrendingRepoCell: UITableViewCell {
         ])
     }
     
-    func configureCell(_ name: String, description: String?, meta: String) {
+    func configureCell(name: String, description: String?, language: String?, stargazers: String, forks: String, periodStargazers: String?) {
         nameLabel.text = name
-        metaLabel.text = meta
         
         descriptionLabel.text = description
         descriptionLabel.isHidden = description == nil
+        
+        languageLabel.text = language
+        languageLabel.isHidden = language == nil
+        
+        periodStargazersCountLabel.text = periodStargazers
+        periodStargazersCountLabel.isHidden = periodStargazers == nil
+        
+        stargazersCountLabel.attributedText = Octicon.star.iconString(stargazers)
+        forksCountLabel.attributedText = Octicon.gitBranch.iconString(forks)
     }
 }

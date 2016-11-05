@@ -110,7 +110,12 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
             })
             .drive(tableView.rx.items(cellIdentifier: "TrendingRepoCell", cellType: TrendingRepoCell.self)) {
                 row, repo, cell in
-                cell.configureCell(repo.name, description: repo.description, meta: repo.meta)
+                cell.configureCell(name: repo.name,
+                                   description: repo.repoDescription,
+                                   language: repo.language,
+                                   stargazers: repo.stargazers,
+                                   forks: repo.forks,
+                                   periodStargazers: repo.periodStargazers)
             }
             .addDisposableTo(viewModel.repoTVM.disposeBag)
     }
