@@ -196,7 +196,7 @@ enum Octicon : String, CustomStringConvertible {
         return iconString
     }
     
-    func image(color: UIColor = .black, backgroundColor: UIColor = .clear, iconSize: CGFloat, size: CGSize) -> UIImage {
+    func image(color: UIColor = UIColor(netHex: 0x333333), backgroundColor: UIColor = .clear, iconSize: CGFloat, size: CGSize) -> UIImage {
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         

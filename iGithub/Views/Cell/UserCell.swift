@@ -30,7 +30,7 @@ class UserCell: UITableViewCell {
         let margins = contentView.layoutMarginsGuide
         
         NSLayoutConstraint.activate([
-            avatarView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 5),
+            avatarView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 8),
             avatarView.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
             avatarView.widthAnchor.constraint(equalToConstant: 32),
             avatarView.heightAnchor.constraint(equalToConstant: 32),

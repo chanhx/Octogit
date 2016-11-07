@@ -69,7 +69,7 @@ class Repository: Mappable {
         openIssuesCount <- map["open_issues_count"]
         stargazersCount <- map["stargazers_count"]
         forksCount      <- map["forks_count"]
-        watchersCount   <- map["watchers_count"]
+        watchersCount   <- map["subscribers_count"]
         
         defaultBranch   <- map["default_branch"]
     }

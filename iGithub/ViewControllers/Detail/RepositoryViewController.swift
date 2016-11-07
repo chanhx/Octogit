@@ -17,6 +17,12 @@ class RepositoryViewController: BaseTableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var updateTimeLabel: UILabel!
     
+    @IBOutlet weak var starButton: GradientButton!
+    @IBOutlet weak var forkButton: GradientButton!
+    
+    @IBOutlet weak var starsCountLabel: UILabel!
+    @IBOutlet weak var forksCountLabel: UILabel!
+    
     let statusCell = StatusCell(name: "repository")
     
     lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self)
@@ -45,6 +51,12 @@ class RepositoryViewController: BaseTableViewController {
         self.titleLabel.text = viewModel.repository.value.name
         self.sizeHeaderToFit(tableView: self.tableView)
         
+        starButton.setImage(Octicon.star.image(iconSize: 15, size: CGSize(width: 16, height: 15)), for: .normal)
+        forkButton.setImage(Octicon.repoForked.image(iconSize: 15, size: CGSize(width: 13, height: 15)), for: .normal)
+        
+        starsCountLabel.layer.borderColor = UIColor(netHex: 0xd5d5d5).cgColor
+        forksCountLabel.layer.borderColor = UIColor(netHex: 0xd5d5d5).cgColor
+        
         if !viewModel.isRepositoryLoaded {
             viewModel.fetchRepository()
         }
@@ -53,13 +65,20 @@ class RepositoryViewController: BaseTableViewController {
     
     func configureHeader(repo: Repository) {
         if repo.isPrivate! {
-            self.iconLabel.text = Octicon.lock.rawValue
+            iconLabel.text = Octicon.lock.rawValue
         } else if repo.isAFork! {
-            self.iconLabel.text = Octicon.repoForked.rawValue
+            iconLabel.text = Octicon.repoForked.rawValue
         } else {
-            self.iconLabel.text = Octicon.repo.rawValue
+            iconLabel.text = Octicon.repo.rawValue
         }
-        self.updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString)"
+        updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString)"
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        
+        starButton.setTitle("Star", for: .normal)
+        starsCountLabel.text = formatter.string(from: NSNumber(value: repo.stargazersCount!))
+        forksCountLabel.text = formatter.string(from: NSNumber(value: repo.forksCount!))
     }
     
     // MARK: - Table view data source
@@ -76,7 +95,7 @@ class RepositoryViewController: BaseTableViewController {
     }()
     
     lazy var branchButton: OptionButton = {
-        let button = OptionButton(frame: CGRect(x: 12, y: 0, width: 120, height: 27))
+        let button = OptionButton(frame: CGRect(x: 15, y: 0, width: 120, height: 27))
         button.addTarget(self.pickerView, action: #selector(OptionPickerView.show), for: .touchUpInside)
         
         button.optionTitle = "Branch"

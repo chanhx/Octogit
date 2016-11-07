@@ -23,10 +23,15 @@ class OptionButton: GradientButton {
     }
     
     func commonInit() {
+        layer.cornerRadius = 3
+        
+        setTitleColor(UIColor(netHex: 0x333333), for: .normal)
+        titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: UIFontWeightMedium)
+        
         imageEdgeInsets = UIEdgeInsets(top: 0, left: -3, bottom: 0, right: 0)
         titleLabel?.lineBreakMode = .byTruncatingTail
         
-        setImage(Octicon.triangleDown.image(color: UIColor(netHex: 0x333333), iconSize: 12, size: CGSize(width: 10, height: 10)), for: .normal)
+        setImage(Octicon.triangleDown.image(iconSize: 12, size: CGSize(width: 10, height: 10)), for: .normal)
         
         transform = CGAffineTransform(scaleX: -1, y: 1)
         titleLabel?.transform = CGAffineTransform(scaleX: -1, y: 1)
@@ -38,7 +43,7 @@ class OptionButton: GradientButton {
         didSet {
             let attributedTitle = NSMutableAttributedString(string: "\(optionTitle): \(choice!)")
             attributedTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor(netHex: 0x818181),
-                                         range: NSRange(location: 0, length: optionTitle.characters.count))
+                                         range: NSRange(location: 0, length: optionTitle.characters.count + 1))
             
             setAttributedTitle(attributedTitle, for: .normal)
             
