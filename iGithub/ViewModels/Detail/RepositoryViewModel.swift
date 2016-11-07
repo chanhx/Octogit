@@ -23,6 +23,7 @@ class RepositoryViewModel {
     var fullName: String
     let disposeBag = DisposeBag()
     var repository: Variable<Repository>
+    var isStarring = Variable<Bool?>(nil)
     var isRepositoryLoaded: Bool {
         return self.repository.value.defaultBranch != nil
     }
@@ -67,6 +68,8 @@ class RepositoryViewModel {
             .addDisposableTo(disposeBag)
     }
     
+    // MARK: Branches
+    
     func fetchBranches() {
         let token = GithubAPI.branches(repo: fullName, page: pageForBranches)
         
@@ -99,6 +102,39 @@ class RepositoryViewModel {
                 break
             }
         }
+    }
+    
+    // MARK: Star
+    
+    func checkIsStarring() {
+        GithubProvider
+            .request(.isStarring(repo: fullName))
+            .subscribe(onNext: { [unowned self] response in
+                if response.statusCode == 204 {
+                    self.isStarring.value = true
+                } else if response.statusCode == 404 {
+                    self.isStarring.value = false
+                } else {
+                    // error happened
+                }
+            })
+            .addDisposableTo(disposeBag)
+    }
+    
+    @objc func toggleStar() {
+        let token: GithubAPI = isStarring.value! ? .unstar(repo: fullName) : .star(repo: fullName)
+        
+        GithubProvider
+            .request(token)
+            .subscribe(onNext: { [unowned self] response in
+                if response.statusCode == 204 {
+                    self.isStarring.value = !self.isStarring.value!
+                } else {
+                    let json = try! response.mapJSON()
+                    print(json)
+                }
+            })
+            .addDisposableTo(disposeBag)
     }
     
     var numberOfSections: Int {

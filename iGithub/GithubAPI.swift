@@ -17,7 +17,7 @@ let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
     (target: GithubAPI) -> Endpoint<GithubAPI> in
     
     var endpoint = MoyaProvider.defaultEndpointMapping(target)
-    endpoint = endpoint.adding(newParameters: ["access_token": AccountManager.token!])
+    endpoint = endpoint.adding(newHttpHeaderFields: ["Authorization": "token \(AccountManager.token!)"])
     
     switch target {
     case .getABlob:
@@ -144,6 +144,10 @@ enum GithubAPI {
     case organizationRepos(org: String, page: Int)
     case getARepository(repo: String)
     
+    case isStarring(repo: String)
+    case star(repo: String)
+    case unstar(repo: String)
+    
     // MARK: Release
     
     case releases(repo: String, page: Int)
@@ -264,8 +268,14 @@ extension GithubAPI: TargetType {
         case .subscribedReposOfAuthenticatedUser:
             return "/user/subscriptions"
             
-        // MARK: Release
+        case .isStarring(let repo):
+            return "/user/starred/\(repo)"
+        case .star(let repo),
+             .unstar(let repo):
+            return "/user/starred/\(repo)"
             
+        // MARK: Release
+        
         case .releases(let repo, _):
             return "/repos/\(repo)/releases"
             
@@ -279,6 +289,10 @@ extension GithubAPI: TargetType {
     }
     var method: Moya.Method {
         switch self {
+        case .star:
+            return .put
+        case .unstar:
+            return .delete
         default:
             return .get
         }

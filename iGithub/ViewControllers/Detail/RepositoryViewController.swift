@@ -37,6 +37,14 @@ class RepositoryViewController: BaseTableViewController {
                     self.configureHeader(repo: repo)
                     self.sizeHeaderToFit(tableView: self.tableView)
                 }).addDisposableTo(viewModel.disposeBag)
+            
+            viewModel.isStarring.asDriver()
+                .filter { $0 != nil }
+                .drive(onNext: { [unowned self] in
+                    self.starButton.isEnabled = true
+                    self.starButton.setTitle($0! ? "Unstar" : "Star", for: .normal)
+                })
+                .addDisposableTo(viewModel.disposeBag)
         }
     }
     
@@ -54,12 +62,15 @@ class RepositoryViewController: BaseTableViewController {
         starButton.setImage(Octicon.star.image(iconSize: 15, size: CGSize(width: 16, height: 15)), for: .normal)
         forkButton.setImage(Octicon.repoForked.image(iconSize: 15, size: CGSize(width: 13, height: 15)), for: .normal)
         
+        starButton.addTarget(viewModel, action: #selector(viewModel.toggleStar), for: .touchUpInside)
+        
         starsCountLabel.layer.borderColor = UIColor(netHex: 0xd5d5d5).cgColor
         forksCountLabel.layer.borderColor = UIColor(netHex: 0xd5d5d5).cgColor
         
         if !viewModel.isRepositoryLoaded {
             viewModel.fetchRepository()
         }
+        viewModel.checkIsStarring()
         viewModel.fetchBranches()
     }
     
@@ -76,7 +87,6 @@ class RepositoryViewController: BaseTableViewController {
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
         
-        starButton.setTitle("Star", for: .normal)
         starsCountLabel.text = formatter.string(from: NSNumber(value: repo.stargazersCount!))
         forksCountLabel.text = formatter.string(from: NSNumber(value: repo.forksCount!))
     }
