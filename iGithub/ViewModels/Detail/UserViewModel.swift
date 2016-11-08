@@ -26,6 +26,7 @@ class UserViewModel {
     }
     
     var user: Variable<User>
+    var isFollowing = Variable<Bool?>(nil)
     var organizations: Variable<[User]> = Variable([])
     let disposeBag = DisposeBag()
     var token: GithubAPI
@@ -35,6 +36,23 @@ class UserViewModel {
     }
     var sectionTypes = [SectionType]()
     var vcardDetails = [VcardDetail]()
+    lazy var information: String = {
+        var information: String = self.user.value.login!
+        if let name = self.user.value.name, name.characters.count > 0 {
+            information.append("(\(name))")
+        }
+        if let company = self.user.value.company, company.characters.count > 0 {
+            information.append(", \(company)")
+        }
+        if let location = self.user.value.location, location.characters.count > 0 {
+            information.append(", \(location)")
+        }
+        
+        return information
+    }()
+    lazy var htmlURL: URL = {
+        return URL(string: "https://github.com/\(self.user.value.login!)")!
+    }()
     
     init(_ user: User) {
         self.user = Variable(user)
@@ -68,6 +86,37 @@ class UserViewModel {
             .mapJSON()
             .subscribe(onNext: { [unowned self] in
                 self.organizations.value = Mapper<User>().mapArray(JSONObject: $0)!
+            })
+            .addDisposableTo(disposeBag)
+    }
+    
+    func checkIsFollowing() {
+        GithubProvider
+            .request(.isFollowing(user: user.value.login!))
+            .subscribe(onNext: { [unowned self] response in
+                if response.statusCode == 204 {
+                    self.isFollowing.value = true
+                } else if response.statusCode == 404 {
+                    self.isFollowing.value = false
+                } else {
+                    // error happened
+                }
+            })
+            .addDisposableTo(disposeBag)
+    }
+    
+    func toggleFollowing() {
+        let token: GithubAPI = isFollowing.value! ? .unfollow(user: user.value.login!) : .follow(user: user.value.login!)
+        
+        GithubProvider
+            .request(token)
+            .subscribe(onNext: { [unowned self] response in
+                if response.statusCode == 204 {
+                    self.isFollowing.value = !self.isFollowing.value!
+                } else {
+                    let json = try! response.mapJSON()
+                    print(json)
+                }
             })
             .addDisposableTo(disposeBag)
     }

@@ -121,12 +121,12 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     }
     
     func share(_ button: UIBarButtonItem) {
-        var items = [AnyObject]()
+        var items = [Any]()
         if webView.title != nil {
-            items.append(webView.title! as AnyObject)
+            items.append(webView.title!)
         }
         if request?.url != nil {
-            items.append(request!.url! as AnyObject)
+            items.append(request!.url!)
         }
         let activityVC = UIActivityViewController(activityItems: items, applicationActivities: [ActivitySafari()])
         activityVC.popoverPresentationController?.barButtonItem = button

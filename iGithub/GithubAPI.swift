@@ -109,6 +109,10 @@ enum GithubAPI {
     case followedBy(user: String, page: Int)
     case followersOf(user: String, page: Int)
     
+    case isFollowing(user: String)
+    case follow(user: String)
+    case unfollow(user: String)
+    
     // MARK: Event
     
     case receivedEvents(user: String, page: Int)
@@ -216,6 +220,12 @@ extension GithubAPI: TargetType {
         case .followersOf(let user, _):
             return "/users/\(user)/followers"
             
+        case .isFollowing(let user):
+            return "/user/following/\(user)"
+        case .follow(let user),
+             .unfollow(let user):
+            return "/user/following/\(user)"
+            
         // MARK: Event
             
         case .receivedEvents(let user, _):
@@ -289,9 +299,9 @@ extension GithubAPI: TargetType {
     }
     var method: Moya.Method {
         switch self {
-        case .star:
+        case .star, .follow:
             return .put
-        case .unstar:
+        case .unstar, .unfollow:
             return .delete
         default:
             return .get

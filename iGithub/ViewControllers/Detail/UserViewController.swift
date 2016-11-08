@@ -27,6 +27,7 @@ class UserViewController: BaseTableViewController {
         didSet {
             let userDriver = viewModel.user.asDriver()
             let orgsDriver = viewModel.organizations.asDriver()
+            let isFollowingDriver = viewModel.isFollowing.asDriver()
             
             userDriver.drive(onNext: { [unowned self] user in
                     self.tableView.reloadData()
@@ -46,6 +47,17 @@ class UserViewController: BaseTableViewController {
                     self.tableView.reloadData()
                 })
                 .addDisposableTo(viewModel.disposeBag)
+            
+            Driver.combineLatest(userDriver, isFollowingDriver) { user, isFollowing in
+                    (user, isFollowing)
+                }
+                .filter { (user, isFollowing) in
+                    user.followers != nil && isFollowing != nil
+                }
+                .drive(onNext: { [unowned self] _ in
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
+                })
+                .addDisposableTo(viewModel.disposeBag)
         }
     }
     
@@ -57,8 +69,11 @@ class UserViewController: BaseTableViewController {
         super.viewDidLoad()
 
         self.navigationItem.title = self.viewModel.title
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(showActionSheet))
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
         
         self.viewModel.fetchUser()
+        self.viewModel.checkIsFollowing()
         self.viewModel.fetchOrganizations()
     }
     
@@ -197,6 +212,47 @@ class UserViewController: BaseTableViewController {
         let userTVC = UserTableViewController()
         userTVC.viewModel = UserTableViewModel(followedBy: viewModel.user.value)
         navigationController?.pushViewController(userTVC, animated: true)
+    }
+    
+    // MARK: UIAlertController
+    
+    var alertController: UIAlertController {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let shareAction = UIAlertAction(title: "Share", style: .default, handler: { _ in
+            let items: [Any] = [
+                self.viewModel.information,
+                self.viewModel.htmlURL
+            ]
+            let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+            self.navigationController?.present(activityVC, animated: true, completion: nil)
+            
+        })
+        let followAction = UIAlertAction(title: viewModel.isFollowing.value! ? "Unfollow" : "Follow", style: .default, handler: { _ in
+            self.viewModel.toggleFollowing()
+        })
+        let copyURLAction = UIAlertAction(title: "Copy URL", style: .default, handler: { _ in
+            UIPasteboard.general.string = self.viewModel.htmlURL.absoluteString
+        })
+        let showOnGithubAction = UIAlertAction(title: "Show on Github", style: .default, handler: { _ in
+            let webVC = WebViewController(url: self.viewModel.htmlURL)
+            self.navigationController?.pushViewController(webVC, animated: true)
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(shareAction)
+        if viewModel.user.value.id! != AccountManager.currentUser!.id! {
+            alertController.addAction(followAction)
+        }
+        alertController.addAction(copyURLAction)
+        alertController.addAction(showOnGithubAction)
+        alertController.addAction(cancelAction)
+        
+        return alertController
+    }
+    
+    func showActionSheet() {
+        self.present(alertController, animated: true, completion: nil)
     }
 
 }
