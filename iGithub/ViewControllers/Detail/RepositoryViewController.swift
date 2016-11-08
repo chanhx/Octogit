@@ -29,7 +29,10 @@ class RepositoryViewController: BaseTableViewController {
     
     var viewModel: RepositoryViewModel! {
         didSet {
-            viewModel.repository.asDriver()
+            let repoDriver = viewModel.repository.asDriver()
+            let starDriver = viewModel.isStarring.asDriver()
+            
+            repoDriver
                 .filter { $0.defaultBranch != nil }
                 .drive(onNext: { [unowned self] repo in
                     self.tableView.reloadData()
@@ -38,11 +41,17 @@ class RepositoryViewController: BaseTableViewController {
                     self.sizeHeaderToFit(tableView: self.tableView)
                 }).addDisposableTo(viewModel.disposeBag)
             
-            viewModel.isStarring.asDriver()
-                .filter { $0 != nil }
-                .drive(onNext: { [unowned self] in
+            Driver.combineLatest(repoDriver, starDriver) { repo, isStarring in
+                    (repo, isStarring)
+                }
+                .filter { (repo, isStarring) in
+                    repo.defaultBranch != nil && isStarring != nil
+                }
+                .drive(onNext: { [unowned self] (_, isStarring) in
                     self.starButton.isEnabled = true
-                    self.starButton.setTitle($0! ? "Unstar" : "Star", for: .normal)
+                    self.starButton.setTitle(isStarring! ? "Unstar" : "Star", for: .normal)
+                    
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
                 })
                 .addDisposableTo(viewModel.disposeBag)
         }
@@ -55,14 +64,17 @@ class RepositoryViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.iconLabel.text = ""
-        self.titleLabel.text = viewModel.repository.value.name
-        self.sizeHeaderToFit(tableView: self.tableView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(showActionSheet))
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        
+        iconLabel.text = ""
+        titleLabel.text = viewModel.repository.value.name
+        sizeHeaderToFit(tableView: self.tableView)
         
         starButton.setImage(Octicon.star.image(iconSize: 15, size: CGSize(width: 16, height: 15)), for: .normal)
         forkButton.setImage(Octicon.repoForked.image(iconSize: 15, size: CGSize(width: 13, height: 15)), for: .normal)
         
-        starButton.addTarget(viewModel, action: #selector(viewModel.toggleStar), for: .touchUpInside)
+        starButton.addTarget(viewModel, action: #selector(viewModel.toggleStarring), for: .touchUpInside)
         
         starsCountLabel.layer.borderColor = UIColor(netHex: 0xd5d5d5).cgColor
         forksCountLabel.layer.borderColor = UIColor(netHex: 0xd5d5d5).cgColor
@@ -340,5 +352,45 @@ extension RepositoryViewController: OptionPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return viewModel.branches[row].name!
+    }
+}
+
+extension RepositoryViewController {
+    
+    var alertController: UIAlertController {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let shareAction = UIAlertAction(title: "Share", style: .default, handler: { _ in
+            let items: [Any] = [
+                self.viewModel.information,
+                self.viewModel.htmlURL
+            ]
+            let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+            self.navigationController?.present(activityVC, animated: true, completion: nil)
+            
+        })
+        let starAction = UIAlertAction(title: viewModel.isStarring.value! ? "Unstar" : "Star", style: .default, handler: { _ in
+            self.viewModel.toggleStarring()
+        })
+        let copyURLAction = UIAlertAction(title: "Copy URL", style: .default, handler: { _ in
+            UIPasteboard.general.string = self.viewModel.htmlURL.absoluteString
+        })
+        let showOnGithubAction = UIAlertAction(title: "Show on Github", style: .default, handler: { _ in
+            let webVC = WebViewController(url: self.viewModel.htmlURL)
+            self.navigationController?.pushViewController(webVC, animated: true)
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addAction(shareAction)
+        alertController.addAction(starAction)
+        alertController.addAction(copyURLAction)
+        alertController.addAction(showOnGithubAction)
+        alertController.addAction(cancelAction)
+        
+        return alertController
+    }
+    
+    func showActionSheet() {
+        self.present(alertController, animated: true, completion: nil)
     }
 }

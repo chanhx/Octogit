@@ -35,6 +35,19 @@ class RepositoryViewModel {
     
     var infoTypes = [InfoType]()
     
+    lazy var information: String = {
+        var information: String = "Check out the repository \(self.fullName)."
+        if let description = self.repository.value.repoDescription,
+            description.characters.count > 0 {
+            information.append(" \(description)")
+        }
+        
+        return information
+    }()
+    lazy var htmlURL: URL = {
+        return URL(string: "https://github.com/\(self.fullName)")!
+    }()
+    
     init(repo: Repository) {
         self.fullName = repo.fullName!
         self.repository = Variable(repo)
@@ -121,7 +134,7 @@ class RepositoryViewModel {
             .addDisposableTo(disposeBag)
     }
     
-    @objc func toggleStar() {
+    @objc func toggleStarring() {
         let token: GithubAPI = isStarring.value! ? .unstar(repo: fullName) : .star(repo: fullName)
         
         GithubProvider

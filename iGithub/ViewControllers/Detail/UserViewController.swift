@@ -213,8 +213,9 @@ class UserViewController: BaseTableViewController {
         userTVC.viewModel = UserTableViewModel(followedBy: viewModel.user.value)
         navigationController?.pushViewController(userTVC, animated: true)
     }
-    
-    // MARK: UIAlertController
+}
+
+extension UserViewController {
     
     var alertController: UIAlertController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -254,5 +255,4 @@ class UserViewController: BaseTableViewController {
     func showActionSheet() {
         self.present(alertController, animated: true, completion: nil)
     }
-
 }
