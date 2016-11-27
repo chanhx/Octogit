@@ -73,6 +73,7 @@
 		C538FD4A1D449602003A559E /* DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD491D449602003A559E /* DataProcess.swift */; };
 		C538FD4E1D44FB79003A559E /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD4D1D44FB79003A559E /* File.swift */; };
 		C538FD541D45A0A2003A559E /* FileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD531D45A0A2003A559E /* FileCell.swift */; };
+		C545BDF41DE2A5BC005031F1 /* AppInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C545BDF31DE2A5BC005031F1 /* AppInfoViewController.swift */; };
 		C554238D1DC60392001B7D20 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C554238C1DC60392001B7D20 /* AccountViewController.swift */; };
 		C55423941DC6EFEE001B7D20 /* LibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55423931DC6EFEE001B7D20 /* LibraryTableViewController.swift */; };
 		C55423961DC6F0BE001B7D20 /* libraries.json in Resources */ = {isa = PBXBuildFile; fileRef = C55423951DC6F0BE001B7D20 /* libraries.json */; };
@@ -240,6 +241,7 @@
 		C538FD491D449602003A559E /* DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProcess.swift; sourceTree = "<group>"; };
 		C538FD4D1D44FB79003A559E /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		C538FD531D45A0A2003A559E /* FileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileCell.swift; path = Cell/FileCell.swift; sourceTree = "<group>"; };
+		C545BDF31DE2A5BC005031F1 /* AppInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfoViewController.swift; sourceTree = "<group>"; };
 		C554238C1DC60392001B7D20 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		C55423931DC6EFEE001B7D20 /* LibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryTableViewController.swift; sourceTree = "<group>"; };
 		C55423951DC6F0BE001B7D20 /* libraries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = libraries.json; sourceTree = "<group>"; };
@@ -696,6 +698,7 @@
 				C57005E11DAA922C008DEFA9 /* SegmentViewController.swift */,
 				C554238C1DC60392001B7D20 /* AccountViewController.swift */,
 				C55423931DC6EFEE001B7D20 /* LibraryTableViewController.swift */,
+				C545BDF31DE2A5BC005031F1 /* AppInfoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -778,6 +781,7 @@
 				TargetAttributes = {
 					C5DB945E1D3F842000887E81 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = U4BQ82MM2T;
 						LastSwiftMigration = 0800;
 					};
 					C5DB94721D3F842000887E81 = {
@@ -988,6 +992,7 @@
 				C526EE101D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift in Sources */,
 				C55423941DC6EFEE001B7D20 /* LibraryTableViewController.swift in Sources */,
 				C5ABDF4E1D7DC8A800F07DC2 /* Renderer.swift in Sources */,
+				C545BDF41DE2A5BC005031F1 /* AppInfoViewController.swift in Sources */,
 				C51CDEA31DBF790F0043A755 /* CommitFileTableViewModel.swift in Sources */,
 				C51CDEC51DBF79910043A755 /* FileViewModel.swift in Sources */,
 				C5F4BDF51D3FB294009DF758 /* OAuthViewController.swift in Sources */,
@@ -1158,7 +1163,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = U4BQ82MM2T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1179,7 +1184,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = U4BQ82MM2T;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
