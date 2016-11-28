@@ -9,8 +9,16 @@
 import UIKit
 
 class LoginViewController: UIViewController {
+    
+    @IBOutlet weak var authorizeButton: UIButton! {
+        didSet {
+            authorizeButton.layer.borderColor = UIColor(netHex: 0x6cc644).cgColor
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
+    
 }

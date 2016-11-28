@@ -14,7 +14,7 @@ struct OAuthConfiguration {
     static let callbackMark = "iGithub"
     static let clientID = "638bff0d62dacd915554"
     static let clientSecret = "006e5bd102210c78981af47bbe347318cf55081b"
-    static let scopes = ["user", "repo", "gist", "notifications"]
+    static let scopes = ["user", "repo"]
     static let note = "iOctocat: Application"
     static let noteURL = "http://ioctocat.com"
     static var accessToken: String?

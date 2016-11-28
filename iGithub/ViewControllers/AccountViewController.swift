@@ -38,38 +38,33 @@ class AccountViewController: UITableViewController {
         
         switch indexPath.section {
         case 0:
+            let repoTVC = RepositoryTableViewController()
+            repoTVC.hidesBottomBarWhenPushed = true
+            
             switch indexPath.row {
             case 0:
-                let repoTVC = RepositoryTableViewController()
-                repoTVC.hidesBottomBarWhenPushed = true
                 repoTVC.viewModel = RepositoryTableViewModel(user: user)
-                navigationController?.pushViewController(repoTVC, animated: true)
             case 1:
-                let repoTVC = RepositoryTableViewController()
-                repoTVC.hidesBottomBarWhenPushed = true
                 repoTVC.viewModel = RepositoryTableViewModel.starred()
-                navigationController?.pushViewController(repoTVC, animated: true)
             case 2:
-                let repoTVC = RepositoryTableViewController()
-                repoTVC.hidesBottomBarWhenPushed = true
                 repoTVC.viewModel = RepositoryTableViewModel.subscribed()
-                navigationController?.pushViewController(repoTVC, animated: true)
             default:
                 break
             }
+            navigationController?.pushViewController(repoTVC, animated: true)
         case 1:
+            let gistTVC = GistTableViewController()
+            gistTVC.hidesBottomBarWhenPushed = true
+
             switch indexPath.row {
             case 0:
-                let gistTVC = GistTableViewController()
                 gistTVC.viewModel = GistTableViewModel(user: AccountManager.currentUser!.login!)
-                navigationController?.pushViewController(gistTVC, animated: true)
             case 1:
-                let gistTVC = GistTableViewController()
                 gistTVC.viewModel = GistTableViewModel()
-                navigationController?.pushViewController(gistTVC, animated: true)
             default:
                 break
             }
+            navigationController?.pushViewController(gistTVC, animated: true)
         case 4:
             AccountManager.logout()
             
