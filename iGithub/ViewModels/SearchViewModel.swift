@@ -27,9 +27,13 @@ class SearchViewModel {
         switch searchObject {
         case .repository:
             repoTVM.query = query
+            repoTVM.isLoading = true
+            repoTVM.dataSource.value.removeAll()
             repoTVM.refresh()
         case .user:
             userTVM.query = query
+            userTVM.isLoading = true
+            userTVM.dataSource.value.removeAll()
             userTVM.refresh()
         }
     }
@@ -56,6 +60,7 @@ class RepositoriesSearchViewModel: BaseTableViewModel<Repository> {
     var query: String?
     var sort: RepositoriesSearchSort = .bestMatch
     var language = "All Languages"
+    var isLoading = false
     
     let sortOptions: [RepositoriesSearchSort] = [
         .bestMatch, .stars, .forks, .updated
@@ -72,6 +77,8 @@ class RepositoriesSearchViewModel: BaseTableViewModel<Repository> {
         GithubProvider
             .request(token)
             .do(onNext: { [unowned self] in
+                self.isLoading = false
+                
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
                 }
@@ -97,6 +104,7 @@ class UsersSearchViewModel: BaseTableViewModel<User> {
     
     var query: String?
     var sort: UsersSearchSort = .bestMatch
+    var isLoading = false
     
     let sortOptions: [UsersSearchSort] = [
         .bestMatch, .followers, .repositories, .joined
@@ -106,10 +114,12 @@ class UsersSearchViewModel: BaseTableViewModel<User> {
         return GithubAPI.searchUsers(q: query!, sort: sort, page: page)
     }
     
-    override func fetchData() {
+    override func fetchData() {        
         GithubProvider
             .request(token)
             .do(onNext: { [unowned self] in
+                self.isLoading = false
+                
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
                 }

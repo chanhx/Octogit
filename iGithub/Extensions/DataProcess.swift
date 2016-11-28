@@ -74,7 +74,7 @@ extension UIView {
 
 extension TTTAttributedLabel {
     func addLink(_ url: URL, toText text: String) {
-        let regexString = NSString(format: "^%1$@\\s|\\s%1$@\\s|\\s%1$@$", text) as String
+        let regexString = NSString(format: "(^|\\s)%1$@(\\s|$)", text) as String
         let range = (self.text! as NSString).range(of: regexString, options: .regularExpression)
         self.addLink(to: url, with: range)
     }

@@ -109,7 +109,17 @@ extension SearchViewController: SegmentHeaderViewDelegate {
     
     func bindToRepoTVM() {
         viewModel.repoTVM.dataSource.asDriver()
-            .do(onNext: { [unowned self] _ in
+            .do(onNext: { [unowned self] in
+                if $0.count <= 0 {
+                    if self.viewModel.repoTVM.isLoading {
+                        self.show(statusType: .loading)
+                    } else {
+                        self.show(statusType: .empty)
+                    }
+                } else {
+                    self.hide(statusType: .loading)
+                }
+                
                 self.viewModel.repoTVM.hasNextPage ?
                     self.tableView.refreshFooter?.endRefreshing() :
                     self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
@@ -123,7 +133,17 @@ extension SearchViewController: SegmentHeaderViewDelegate {
     
     func bindToUserTVM() {
         viewModel.userTVM.dataSource.asDriver()
-            .do(onNext: { [unowned self] _ in
+            .do(onNext: { [unowned self] in
+                if $0.count <= 0 {
+                    if self.viewModel.userTVM.isLoading {
+                        self.show(statusType: .loading)
+                    } else {
+                        self.show(statusType: .empty)
+                    }
+                } else {
+                    self.hide(statusType: .loading)
+                }
+                
                 self.viewModel.userTVM.hasNextPage ?
                     self.tableView.refreshFooter?.endRefreshing() :
                     self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
@@ -151,7 +171,7 @@ extension SearchViewController: TTTAttributedLabelDelegate {
         case .user:
             let sortDescription = viewModel.userTVM.sort.description
             
-            headerView.titleLabel.text = "Sort: \(sortDescription)"
+            headerView.titleLabel.text = sortDescription
             headerView.titleLabel.addLink(URL(string: "UsersSort")!, toText: sortDescription)
         }
     }
