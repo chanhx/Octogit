@@ -64,7 +64,7 @@ class FileViewModel {
     
     init(file: CommitFile) {
         self.file = .commitFile(file)
-        html.value = Renderer.render(file.patch!, language: "diff")
+        html.value = Renderer.render(file.patch ?? "", language: "diff")
         fileName = file.name
         filePath = file.path!.components(separatedBy: "/").dropLast().joined(separator: "/")
     }
