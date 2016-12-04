@@ -41,20 +41,20 @@ extension SignalProducerProtocol where Value == Response, Error == Moya.Error {
 
     /// Maps data received from the signal into a JSON object. If the conversion fails, the signal errors.
     public func mapJSON(failsOnEmptyData: Bool = true) -> SignalProducer<Any, Moya.Error> {
-        return producer.flatMap(.latest, transform: { response -> SignalProducer<Any, Error> in
+        return producer.flatMap(.latest) { response -> SignalProducer<Any, Error> in
             return unwrapThrowable { try response.mapJSON(failsOnEmptyData: failsOnEmptyData) }
-        })
+        }
     }
 
-    /// Maps data received from the signal into a String. If the conversion fails, the signal errors.
-    public func mapString() -> SignalProducer<String, Moya.Error> {
+    /// Maps received data at key path into a String. If the conversion fails, the signal errors.
+    public func mapString(atKeyPath keyPath: String? = nil) -> SignalProducer<String, Moya.Error> {
         return producer.flatMap(.latest) { response -> SignalProducer<String, Error> in
-            return unwrapThrowable { try response.mapString() }
+            return unwrapThrowable { try response.mapString(atKeyPath: keyPath) }
         }
     }
 }
 
-/// Maps throwable to SignalProducer
+/// Maps throwable to SignalProducer.
 private func unwrapThrowable<T>(throwable: () throws -> T) -> SignalProducer<T, Moya.Error> {
     do {
         return SignalProducer(value: try throwable())

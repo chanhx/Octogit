@@ -17,17 +17,17 @@ let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
     (target: GithubAPI) -> Endpoint<GithubAPI> in
     
     var endpoint = MoyaProvider.defaultEndpointMapping(target)
-    endpoint = endpoint.adding(newHttpHeaderFields: ["Authorization": "token \(AccountManager.token!)"])
+    endpoint = endpoint.adding(newHTTPHeaderFields: ["Authorization": "token \(AccountManager.token!)"])
     
     switch target {
     case .getABlob:
-        return endpoint.adding(newHttpHeaderFields: ["Accept": Constants.MediaTypeRaw])
+        return endpoint.adding(newHTTPHeaderFields: ["Accept": Constants.MediaTypeRaw])
     case .getHTMLContents, .getTheREADME:
-        return endpoint.adding(newHttpHeaderFields: ["Accept": Constants.MediaTypeHTML])
+        return endpoint.adding(newHTTPHeaderFields: ["Accept": Constants.MediaTypeHTML])
     case .repositoryIssues, .repositoryPullRequests:
-        return endpoint.adding(newHttpHeaderFields: ["Accept": Constants.MediaTypeHTMLAndJSON])
+        return endpoint.adding(newHTTPHeaderFields: ["Accept": Constants.MediaTypeHTMLAndJSON])
     case .issueComments, .pullRequestComments, .gistComments, .commitComments:
-        return endpoint.adding(newHttpHeaderFields: ["Accept": Constants.MediaTypeTextAndJSON])
+        return endpoint.adding(newHTTPHeaderFields: ["Accept": Constants.MediaTypeTextAndJSON])
     default:
         return endpoint
     }

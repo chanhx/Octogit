@@ -65,9 +65,11 @@ extension MyService: TargetType {
             return data
         }
     }
-    var multipartBody: [MultipartFormData]? {
-        // Optional
-        return nil
+    var task: Task {
+        switch self {
+            case .zen, .showUser, .createUser, .showAccounts:
+                return .request
+        }
     }
 }
 

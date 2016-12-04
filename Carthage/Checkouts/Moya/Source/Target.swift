@@ -9,42 +9,12 @@ public protocol TargetType {
     var parameters: [String: Any]? { get }
     var sampleData: Data { get }
     var task: Task { get }
+    var validate: Bool { get } // Alamofire validation (defaults to `false`)
 }
 
-public enum StructTarget: TargetType {
-    case `struct`(TargetType)
-
-    public init(_ target: TargetType) {
-        self = StructTarget.struct(target)
-    }
-
-    public var path: String {
-        return target.path
-    }
-
-    public var baseURL: URL {
-        return target.baseURL
-    }
-
-    public var method: Moya.Method {
-        return target.method
-    }
-
-    public var parameters: [String: Any]? {
-        return target.parameters
-    }
-
-    public var sampleData: Data {
-        return target.sampleData
-    }
-    public var task: Task {
-        return target.task
-    }
-
-    public var target: TargetType {
-        switch self {
-        case .struct(let t): return t
-        }
+public extension TargetType {
+    var validate: Bool {
+        return false
     }
 }
 

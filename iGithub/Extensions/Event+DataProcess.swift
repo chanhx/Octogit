@@ -45,7 +45,7 @@ extension Event {
             let e = self as! MemberEvent
             return "\(e.actor!) added \(e.member!) to \(e.repository!)"
         case .publicEvent:
-            return "\(self.actor!) open-sourced \(self.repository!)"
+            return "\(self.actor!) made \(self.repository!) public"
         case .pullRequestEvent:
             let e = self as! PullRequestEvent
             var action: String

@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.1.1](https://github.com/SwiftKickMobile/SwiftMessages/releases/tag/3.1.0)
+
+### Features
+
+* Added a `view` case to `presentationContext` for displaying the message in a specific container view.
+
+## [3.1.0](https://github.com/SwiftKickMobile/SwiftMessages/releases/tag/3.1.0)
+
+### Features
+
+* Add `eventListeners` option to `SwiftMessages.Config` to specify a list of event listeners to be notified of message show and hide events.
+
 ## [3.0.3](https://github.com/SwiftKickMobile/SwiftMessages/releases/tag/3.0.3)
 
 ### Features

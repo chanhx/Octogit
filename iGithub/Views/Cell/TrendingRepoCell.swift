@@ -73,7 +73,7 @@ class TrendingRepoCell: UITableViewCell {
         ])
     }
     
-    func configureCell(name: String, description: String?, language: String?, stargazers: String, forks: String, periodStargazers: String?) {
+    func configureCell(name: String, description: String?, language: String?, stargazers: String, forks: String?, periodStargazers: String?) {
         nameLabel.text = name
         
         descriptionLabel.text = description
@@ -86,6 +86,10 @@ class TrendingRepoCell: UITableViewCell {
         periodStargazersCountLabel.isHidden = periodStargazers == nil
         
         stargazersCountLabel.attributedText = Octicon.star.iconString(stargazers)
-        forksCountLabel.attributedText = Octicon.gitBranch.iconString(forks)
+        
+        forksCountLabel.isHidden = forks == nil
+        if let forks = forks {
+            forksCountLabel.attributedText = Octicon.gitBranch.iconString(forks)
+        }
     }
 }

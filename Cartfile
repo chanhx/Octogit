@@ -1,6 +1,6 @@
-github "Moya/Moya" "8.0.0-beta.4"
-github "Hearst-DD/ObjectMapper" ~> 2.1.0
-github "onevcat/Kingfisher" ~> 3.1.0
+github "Moya/Moya" "8.0.0-beta.5"
+github "Hearst-DD/ObjectMapper" ~> 2.2.0
+github "onevcat/Kingfisher" ~> 3.2.0
 github "malcommac/SwiftDate" ~> 4.0.0
 github "groue/GRMustache.swift"
 github "kishikawakatsumi/KeychainAccess"

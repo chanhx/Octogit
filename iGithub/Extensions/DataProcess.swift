@@ -42,6 +42,10 @@ extension UIColor {
 }
 
 extension UIImage {
+    class var defaultAvatar: UIImage {
+        return UIImage(named: "default-avatar")!.kf.image(withRoundRadius: 6, fit: CGSize(width: 60, height: 60), scale: 1.0)
+    }
+    
     class func imageWithColor(_ color: UIColor) -> UIImage {
         let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
         UIGraphicsBeginImageContext(rect.size)
@@ -59,7 +63,8 @@ extension UIImage {
 
 extension UIImageView {
     func setAvatar(with avatarURL: URL?) {
-        self.kf.setImage(with: avatarURL, placeholder: UIImage(named: "default-avatar"))
+        let processor = RoundCornerImageProcessor(cornerRadius: 12, targetSize: CGSize(width: 120, height: 120))
+        self.kf.setImage(with: avatarURL, placeholder: UIImage.defaultAvatar, options: [.processor(processor)])
     }
 }
 
