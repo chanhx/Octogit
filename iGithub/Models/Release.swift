@@ -27,7 +27,7 @@ class Release: Mappable {
         tagName     <- map["tag_name"]
         body        <- map["body"]
         author      <- map["author"]
-        createdAt   <- (map["created_at"], DateTransform())
-        publishedAt <- (map["published_at"], DateTransform())
+        createdAt   <- (map["created_at"], ISO8601DateTransform())
+        publishedAt <- (map["published_at"], ISO8601DateTransform())
     }
 }

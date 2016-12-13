@@ -27,7 +27,7 @@ class Commit: Mappable {
     func mapping(map: Map) {
         sha         <- map["sha"]
         message     <- map["commit.message"]
-        commitDate  <- (map["commit.author.date"], DateTransform())
+        commitDate  <- (map["commit.author.date"], ISO8601DateTransform())
         author      <- map["author"]
         authorName  <- map["commit.author.name"]
         committer   <- map["committer"]

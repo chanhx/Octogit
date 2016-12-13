@@ -26,6 +26,6 @@ class CommitComment: Mappable {
         commitID    <- map["commit_id"]
         user        <- map["user"]
         body        <- map["body"]
-        createdAt   <- (map["created_at"], DateTransform())
+        createdAt   <- (map["created_at"], ISO8601DateTransform())
     }
 }

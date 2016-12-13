@@ -44,8 +44,8 @@ class Issue: Mappable {
         assignees   <- map["assignees"]
         milestone   <- map["milestone"]
         labels      <- map["labels"]
-        createdAt   <- (map["created_at"], DateTransform())
-        closedAt    <- (map["closed_at"], DateTransform())
+        createdAt   <- (map["created_at"], ISO8601DateTransform())
+        closedAt    <- (map["closed_at"], ISO8601DateTransform())
         comments    <- map["comments"]
         pullRequest <- map["pull_request"]
     }

@@ -24,6 +24,6 @@ class Comment: Mappable {
         id          <- map["id"]
         user        <- map["user"]
         body        <- map["body_text"]
-        createdAt   <- (map["created_at"], DateTransform())
+        createdAt   <- (map["created_at"], ISO8601DateTransform())
     }
 }

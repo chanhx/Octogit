@@ -15,12 +15,6 @@ class IntTransform: TransformOf<Int, String> {
     }
 }
 
-class DateTransform: TransformOf<Date, String> {
-    init() {
-        super.init(fromJSON: { try! $0?.date(format: .iso8601(options: .withInternetDateTime)).absoluteDate }, toJSON: { String(describing: $0) })
-    }
-}
-
 class GistFilesTransform: TransformOf<[GistFile], AnyObject> {
     init() {
         super.init(

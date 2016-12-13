@@ -32,8 +32,8 @@ class Gist: Mappable {
         owner           <- map["owner"]
         files           <- (map["files"], GistFilesTransform())
         comments        <- map["comments"]
-        createdAt       <- (map["created_at"], DateTransform())
-        updatedAt       <- (map["updated_at"], DateTransform())
+        createdAt       <- (map["created_at"], ISO8601DateTransform())
+        updatedAt       <- (map["updated_at"], ISO8601DateTransform())
     }
 }
 

@@ -1170,7 +1170,7 @@
 				);
 				INFOPLIST_FILE = iGithub/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithub;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hocheung.iGithub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iGithub/iGithub-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1191,7 +1191,7 @@
 				);
 				INFOPLIST_FILE = iGithub/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithub;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hocheung.iGithub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "iGithub/iGithub-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

@@ -82,7 +82,7 @@ class Event: Mappable, StaticMappable {
         repository      <- map["repo.name"]
         actor           <- map["actor"]
         org             <- map["org"]
-        createdAt       <- (map["created_at"], DateTransform())
+        createdAt       <- (map["created_at"], ISO8601DateTransform())
     }
 }
 

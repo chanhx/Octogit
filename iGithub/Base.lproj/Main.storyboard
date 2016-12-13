@@ -38,7 +38,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="40.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3u0-sg-mFz">
-                                                            <rect key="frame" x="0.0" y="11.5" width="36" height="17.5"/>
+                                                            <rect key="frame" x="0.0" y="12.5" width="36" height="16"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="36" id="uBU-fq-ZdE"/>
                                                             </constraints>
@@ -121,7 +121,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dk4-Bl-SdB">
-                                    <rect key="frame" x="16" y="14" width="27" height="27"/>
+                                    <rect key="frame" x="16" y="14" width="27" height="29.5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="27" id="orv-GX-jzI"/>
                                     </constraints>
@@ -1043,7 +1043,7 @@
                             <rect key="frame" x="0.0" y="64" width="375" height="146"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tentacle" translatesAutoresizingMaskIntoConstraints="NO" id="AzF-mc-b3c">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tentacle_icon" translatesAutoresizingMaskIntoConstraints="NO" id="AzF-mc-b3c">
                                     <rect key="frame" x="150" y="25" width="75" height="75"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="75" id="lA7-1b-B8Q"/>
@@ -1309,6 +1309,6 @@
         <image name="tabbar_avatar_selected" width="24" height="25"/>
         <image name="tabbar_compass" width="25" height="25"/>
         <image name="tabbar_compass_selected" width="25" height="25"/>
-        <image name="tentacle" width="512" height="512"/>
+        <image name="tentacle_icon" width="512" height="512"/>
     </resources>
 </document>

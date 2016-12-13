@@ -18,7 +18,7 @@ class PullRequest: Issue {
         super.mapping(map: map)
         
         isMerged <- map["merged"]
-        mergedAt <- (map["merged_at"], DateTransform())
+        mergedAt <- (map["merged_at"], ISO8601DateTransform())
     }
     
     override var icon: Octicon {

@@ -56,9 +56,9 @@ class Repository: Mappable {
         parent          <- map["parent"]
         source          <- map["source"]
         
-        createdAt       <- (map["created_at"], DateTransform())
-        pushedAt        <- (map["pushed_at"], DateTransform())
-        updatedAt       <- (map["updated_at"], DateTransform())
+        createdAt       <- (map["created_at"], ISO8601DateTransform())
+        pushedAt        <- (map["pushed_at"], ISO8601DateTransform())
+        updatedAt       <- (map["updated_at"], ISO8601DateTransform())
         
         isPrivate       <- map["private"]
         isAFork         <- map["fork"]
