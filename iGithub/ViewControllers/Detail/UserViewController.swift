@@ -72,7 +72,9 @@ class UserViewController: BaseTableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(showActionSheet))
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         
-        self.viewModel.fetchUser()
+        if !viewModel.userLoaded {
+            self.viewModel.fetchUser()
+        }
         self.viewModel.checkIsFollowing()
         self.viewModel.fetchOrganizations()
     }
@@ -165,6 +167,7 @@ class UserViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
         
         switch viewModel.sectionTypes[indexPath.section] {
         case .vcards:

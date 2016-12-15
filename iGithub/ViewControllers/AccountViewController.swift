@@ -9,13 +9,29 @@
 import UIKit
 
 class AccountViewController: UITableViewController {
+    
+    private var imageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 15
+        imageView.setAvatar(with: AccountManager.currentUser?.avatarURL)
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showProfile)))
+        
         navigationItem.title = AccountManager.currentUser?.login
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        
+        AccountManager.refresh {
+            if self.imageView.kf.webURL != $0.avatarURL {
+                self.imageView.setAvatar(with: $0.avatarURL)
+            }
+            self.navigationItem.title = AccountManager.currentUser?.login
+        }
     }
     
     func showProfile() {
@@ -73,17 +89,5 @@ class AccountViewController: UITableViewController {
         default:
             break
         }
-    }
-    
-    private var imageView: UIImageView {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        imageView.layer.masksToBounds = true
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 15
-        imageView.setAvatar(with: AccountManager.currentUser?.avatarURL)
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showProfile)))
-        
-        return imageView
     }
 }

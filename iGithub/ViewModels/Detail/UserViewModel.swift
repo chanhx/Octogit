@@ -57,6 +57,7 @@ class UserViewModel {
     init(_ user: User) {
         self.user = Variable(user)
         token = .user(user: user.login!)
+        setSectionTypes(user: user)
     }
 
     init(_ username: String) {
@@ -122,11 +123,7 @@ class UserViewModel {
     }
     
     var numberOfSections: Int {
-        guard userLoaded else {
-            return 1
-        }
-
-        return sectionTypes.count
+        return userLoaded ? sectionTypes.count : 1
     }
     
     private func setSectionTypes(user: User) {

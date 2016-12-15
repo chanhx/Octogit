@@ -41,6 +41,17 @@ class AccountManager {
         token = nil
     }
     
+    class func refresh(completionHandler: @escaping (User) -> Void) {
+        GithubProvider
+            .request(.user(user: AccountManager.currentUser!.login!))
+            .mapJSON()
+            .subscribe(onNext: {
+                currentUser = Mapper<User>().map(JSONObject: $0)!
+                completionHandler(currentUser!)
+            })
+            .addDisposableTo(disposeBag)
+    }
+    
     class func requestToken(_ code: String, success: @escaping () -> Void, failure: @escaping (Moya.Error) -> Void) {
         WebProvider
             .request(.accessToken(code: code))
