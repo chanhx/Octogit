@@ -57,7 +57,10 @@ class UserViewModel {
     init(_ user: User) {
         self.user = Variable(user)
         token = .user(user: user.login!)
-        setSectionTypes(user: user)
+        
+        if userLoaded {
+            setSectionTypes(user: user)
+        }
     }
 
     init(_ username: String) {
