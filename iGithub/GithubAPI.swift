@@ -16,7 +16,7 @@ let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
     
     (target: GithubAPI) -> Endpoint<GithubAPI> in
     
-    var endpoint = MoyaProvider.defaultEndpointMapping(target)
+    var endpoint = MoyaProvider.defaultEndpointMapping(for: target)
     endpoint = endpoint.adding(newHTTPHeaderFields: ["Authorization": "token \(AccountManager.token!)"])
     
     switch target {

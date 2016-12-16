@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import StoreKit
 
-class AppInfoViewController: BaseTableViewController {
+class AppInfoViewController: BaseTableViewController, SKStoreProductViewControllerDelegate {
     
     @IBOutlet var versionLabel: UILabel!
 
@@ -24,6 +25,25 @@ class AppInfoViewController: BaseTableViewController {
         copyrightLabel.textAlignment = .center
         view.addSubview(copyrightLabel)
         copyrightLabel.text = "Copyright © 2016, Hocheung Chan."
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        super.tableView(tableView, didSelectRowAt: indexPath)
+        
+        if indexPath.row == 1 {
+            openStoreProduct(withiTunesItemIdentifier: 1181732351)
+        }
+    }
+    
+    func openStoreProduct(withiTunesItemIdentifier identifier: NSNumber) {
+        let storeVC = SKStoreProductViewController()
+        storeVC.delegate = self
+        storeVC.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: identifier])
+        self.present(storeVC, animated: true, completion: nil)
+    }
+    
+    func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+        viewController.dismiss(animated: true, completion: nil)
     }
 
 }
