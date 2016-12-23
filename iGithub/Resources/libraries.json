@@ -5,16 +5,6 @@
   "description": "Flexible Mustache templates for Swift"
   },
   {
-  "name": "Moya",
-  "full_name": "Moya/Moya",
-  "description": "Network abstraction layer written in Swift."
-  },
-  {
-  "name": "ObjectMapper",
-  "full_name": "Hearst-DD/ObjectMapper",
-  "description": "Simple JSON Object mapping written in Swift"
-  },
-  {
   "name": "Kanna",
   "full_name": "tid-kijyun/Kanna",
   "description": "Kanna(鉋) is an XML/HTML parser for Swift."
@@ -28,6 +18,16 @@
   "name": "Kingfisher",
   "full_name": "onevcat/Kingfisher",
   "description": "A lightweight, pure-Swift library for downloading and caching images from the web."
+  },
+  {
+  "name": "Moya",
+  "full_name": "Moya/Moya",
+  "description": "Network abstraction layer written in Swift."
+  },
+  {
+  "name": "ObjectMapper",
+  "full_name": "Hearst-DD/ObjectMapper",
+  "description": "Simple JSON Object mapping written in Swift"
   },
   {
   "name": "Prism",

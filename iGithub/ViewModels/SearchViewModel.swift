@@ -48,6 +48,9 @@ class SearchViewModel {
     }
     
     func clean() {
+        repoTVM.query = nil
+        userTVM.query = nil
+        
         repoTVM.dataSource.value = []
         userTVM.dataSource.value = []
     }

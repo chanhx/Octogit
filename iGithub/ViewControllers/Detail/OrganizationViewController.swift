@@ -15,7 +15,7 @@ class OrganizationViewController: BaseTableViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
     
-    let statusCell = StatusCell(name: "organizations")
+    let statusCell = StatusCell(name: "organization")
     
     var viewModel: OrganizationViewModel! {
         didSet {

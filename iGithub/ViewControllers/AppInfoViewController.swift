@@ -31,19 +31,7 @@ class AppInfoViewController: BaseTableViewController, SKStoreProductViewControll
         super.tableView(tableView, didSelectRowAt: indexPath)
         
         if indexPath.row == 1 {
-            openStoreProduct(withiTunesItemIdentifier: 1181732351)
+            UIApplication.shared.openURL(URL(string: "itms-apps://itunes.apple.com/us/app/octogit/id1181732351?mt=8")!)
         }
     }
-    
-    func openStoreProduct(withiTunesItemIdentifier identifier: NSNumber) {
-        let storeVC = SKStoreProductViewController()
-        storeVC.delegate = self
-        storeVC.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: identifier])
-        self.present(storeVC, animated: true, completion: nil)
-    }
-    
-    func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-        viewController.dismiss(animated: true, completion: nil)
-    }
-
 }
