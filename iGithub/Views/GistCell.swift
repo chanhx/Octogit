@@ -30,10 +30,14 @@ class GistCell: UITableViewCell {
         nameLabel.lineBreakMode = .byTruncatingTail
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
         nameLabel.textColor = UIColor(netHex: 0x4078C0)
+        nameLabel.layer.isOpaque = true
+        nameLabel.backgroundColor = .white
         
         [filesCountLabel, timeLabel].forEach {
             $0.font = .systemFont(ofSize: 14)
             $0.textColor = UIColor(netHex: 0x767676)
+            $0.layer.isOpaque = true
+            $0.backgroundColor = .white
         }
     }
     

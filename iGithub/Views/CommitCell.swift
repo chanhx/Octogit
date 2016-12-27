@@ -30,11 +30,16 @@ class CommitCell: UITableViewCell {
         titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.font = .systemFont(ofSize: 16)
         titleLabel.textColor = UIColor(netHex: 0x333333)
+        titleLabel.layer.masksToBounds = true
+        titleLabel.layer.isOpaque = true
+        titleLabel.backgroundColor = .white
         
         infoLabel.font = .systemFont(ofSize: 14)
         infoLabel.textColor = UIColor(netHex: 0x767676)
         infoLabel.numberOfLines = 0
         infoLabel.lineBreakMode = .byWordWrapping
+        infoLabel.layer.isOpaque = true
+        infoLabel.backgroundColor = .white
         
         contentView.addSubviews([avatarView, titleLabel, infoLabel])
     }

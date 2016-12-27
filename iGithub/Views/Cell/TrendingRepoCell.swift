@@ -35,16 +35,23 @@ class TrendingRepoCell: UITableViewCell {
         for label in [periodStargazersCountLabel, languageLabel, stargazersCountLabel, forksCountLabel] {
             label.textColor = UIColor(netHex: 0x888888)
             label.font = UIFont.systemFont(ofSize: 14)
+            label.layer.isOpaque = true
+            label.backgroundColor = .white
         }
         
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
         nameLabel.textColor = UIColor(netHex: 0x4078C0)
         nameLabel.numberOfLines = 0
         nameLabel.lineBreakMode = .byWordWrapping
+        nameLabel.layer.isOpaque = true
+        nameLabel.backgroundColor = .white
         
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .byWordWrapping
         descriptionLabel.textColor = UIColor(netHex: 0x666666)
+        descriptionLabel.layer.isOpaque = true
+        descriptionLabel.layer.masksToBounds = true
+        descriptionLabel.backgroundColor = .white
     }
     
     func layout() {

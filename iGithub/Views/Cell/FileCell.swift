@@ -26,11 +26,17 @@ class FileCell: UITableViewCell {
     
     func configureSubviews() {
         iconLabel.font = UIFont.OcticonOfSize(20)
+        iconLabel.layer.masksToBounds = true
+        iconLabel.layer.isOpaque = true
+        iconLabel.backgroundColor = .white
         
         nameLabel.numberOfLines = 3
         nameLabel.lineBreakMode = .byTruncatingTail
         nameLabel.font = UIFont.systemFont(ofSize: 17)
         nameLabel.textColor = UIColor(netHex: 0x4078C0)
+        nameLabel.layer.masksToBounds = true
+        nameLabel.layer.isOpaque = true
+        nameLabel.backgroundColor = .white
         
         contentView.addSubviews([iconLabel, nameLabel])
     }

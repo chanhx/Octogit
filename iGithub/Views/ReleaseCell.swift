@@ -29,10 +29,14 @@ class ReleaseCell: UITableViewCell {
         nameLabel.numberOfLines = 3
         nameLabel.lineBreakMode = .byTruncatingTail
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
+        nameLabel.layer.isOpaque = true
+        nameLabel.backgroundColor = .white
         
         [tagLabel, timeLabel].forEach {
             $0.font = .systemFont(ofSize: 14)
             $0.textColor = UIColor(netHex: 0x767676)
+            $0.layer.isOpaque = true
+            $0.backgroundColor = .white
         }
     }
     

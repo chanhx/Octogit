@@ -28,14 +28,20 @@ class CommitFileCell: UITableViewCell {
     func configureSubviews() {
         iconLabel.font = UIFont.OcticonOfSize(20)
         iconLabel.textColor = UIColor(netHex: 0x767676)
+        iconLabel.layer.isOpaque = true
+        iconLabel.backgroundColor = .white
         
         nameLabel.numberOfLines = 0
         nameLabel.lineBreakMode = .byWordWrapping
         nameLabel.font = UIFont.systemFont(ofSize: 17)
         nameLabel.textColor = UIColor(netHex: 0x333333)
+        nameLabel.layer.isOpaque = true
+        nameLabel.backgroundColor = .white
         
         infoLabel.font = UIFont.systemFont(ofSize: 14)
         infoLabel.textColor = UIColor(netHex: 0x888888)
+        infoLabel.layer.isOpaque = true
+        infoLabel.backgroundColor = .white
         
         contentView.addSubviews([iconLabel, nameLabel, infoLabel])
     }

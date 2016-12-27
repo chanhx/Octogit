@@ -49,6 +49,8 @@ class SegmentHeaderView: UIView {
     
     func configureSubviews() {
         titleLabel.font = UIFont.systemFont(ofSize: 14)
+        titleLabel.layer.isOpaque = true
+        titleLabel.backgroundColor = backgroundColor
         titleLabel.linkAttributes = [
             NSForegroundColorAttributeName: UIColor(netHex: 0x4078C0),
             NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue
