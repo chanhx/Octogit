@@ -37,19 +37,19 @@ class CommentCell: UITableViewCell {
         nameLabel.font = .systemFont(ofSize: 15, weight: UIFontWeightMedium)
         nameLabel.textColor = UIColor(netHex: 0x555555)
         nameLabel.layer.isOpaque = true
-        nameLabel.backgroundColor = .white
+        nameLabel.backgroundColor = contentView.backgroundColor
         
         timeLabel.font = .systemFont(ofSize: 14)
         timeLabel.textColor = UIColor(netHex: 0x767676)
         timeLabel.layer.isOpaque = true
-        timeLabel.backgroundColor = .white
+        timeLabel.backgroundColor = contentView.backgroundColor
         
         bodyLabel.numberOfLines = 0
         bodyLabel.lineBreakMode = .byWordWrapping
         bodyLabel.font = .systemFont(ofSize: 16)
         bodyLabel.textColor = UIColor(netHex: 0x333333)
         bodyLabel.layer.isOpaque = true
-        bodyLabel.backgroundColor = .white
+        bodyLabel.backgroundColor = contentView.backgroundColor
         
         contentView.addSubviews([avatarView, nameLabel, timeLabel, bodyLabel])
     }
