@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import StoreKit
 
-class AppInfoViewController: BaseTableViewController, SKStoreProductViewControllerDelegate {
+class AppInfoViewController: BaseTableViewController {
     
     @IBOutlet var versionLabel: UILabel!
 
@@ -24,7 +23,7 @@ class AppInfoViewController: BaseTableViewController, SKStoreProductViewControll
         copyrightLabel.textColor = .lightGray
         copyrightLabel.textAlignment = .center
         view.addSubview(copyrightLabel)
-        copyrightLabel.text = "Copyright © 2016, Hocheung Chan."
+        copyrightLabel.text = "Copyright © 2016-2017, Hocheung Chan."
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -32,6 +31,10 @@ class AppInfoViewController: BaseTableViewController, SKStoreProductViewControll
         
         if indexPath.row == 1 {
             UIApplication.shared.openURL(URL(string: "itms-apps://itunes.apple.com/us/app/octogit/id1181732351?mt=8")!)
+        } else if indexPath.row == 3 {
+            let repoVC = RepositoryViewController.instantiateFromStoryboard()
+            repoVC.viewModel = RepositoryViewModel(repo: "chanhx/Octogit")
+            self.navigationController?.pushViewController(repoVC, animated: true)
         }
     }
 }
