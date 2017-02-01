@@ -39,6 +39,8 @@ class Repository: Mappable {
     
     var defaultBranch: String?
     
+    var size: Int?
+    
     required init?(map: Map) {
         mapping(map: map)
     }
@@ -72,5 +74,7 @@ class Repository: Mappable {
         watchersCount   <- map["subscribers_count"]
         
         defaultBranch   <- map["default_branch"]
+        
+        size            <- map["size"]
     }
 }

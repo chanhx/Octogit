@@ -27,12 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             storyboardName = "Login"
         }
-        
-        let initialVC = UIStoryboard(name: storyboardName, bundle: nil).instantiateInitialViewController()!
 
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = initialVC
-        self.window?.makeKeyAndVisible()
+        self.window?.rootViewController = UIStoryboard(name: storyboardName, bundle: nil).instantiateInitialViewController()!
         
         return true
     }
@@ -55,8 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func setURLCache() {
-        let urlCache = URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
-        URLCache.shared = urlCache
+        URLCache.shared = URLCache(memoryCapacity: 4 * 1024 * 1024, diskCapacity: 20 * 1024 * 1024, diskPath: nil)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

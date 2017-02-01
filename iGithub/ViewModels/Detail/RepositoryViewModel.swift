@@ -13,6 +13,13 @@ import ObjectMapper
 
 class RepositoryViewModel {
     
+    enum Section {
+        case info
+        case code
+        case misc
+        case loading
+    }
+    
     enum InfoType {
         case author
         case description
@@ -33,6 +40,7 @@ class RepositoryViewModel {
     var isBranchesLoaded = Variable(false)
     var branch: String!
     
+    var sections = [Section]()
     var infoTypes = [InfoType]()
     
     lazy var information: String = {
@@ -151,7 +159,23 @@ class RepositoryViewModel {
     }
     
     var numberOfSections: Int {
-        return self.isRepositoryLoaded ? 3 : 1
+        setSections()
+        return sections.count
+    }
+    
+    func setSections() {
+        sections = []
+        
+        guard self.isRepositoryLoaded else {
+            sections.append(.loading)
+            return
+        }
+        
+        sections.append(.info)
+        if repository.value.size! > 0 {
+            sections.append(.code)
+        }
+        sections.append(.misc)
     }
     
     func setInfoTypes(repo: Repository) {
@@ -176,18 +200,16 @@ class RepositoryViewModel {
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
-        guard self.isRepositoryLoaded else {
-            return 1
-        }
-        
-        switch section {
-        case 0:
+        switch sections[section] {
+        case .info:
             setInfoTypes(repo: repository.value)
             return infoTypes.count
-        case 1:
+        case .code:
             return 2
-        default:
+        case .misc:
             return 5
+        case .loading:
+            return 1
         }
     }
     

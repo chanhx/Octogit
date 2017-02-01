@@ -143,17 +143,13 @@ class RepositoryViewController: BaseTableViewController {
     }()
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard section == 1 else {
-            return nil
-        }
-        
-        return header
+        return viewModel.sections[section] == .code ? header : nil
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 1 {
+        if viewModel.sections[section] == .code {
             return 35
-        } else if section == 2 {
+        } else if viewModel.sections[section] == .misc {
             return 10
         } else {
             return super.tableView(tableView, heightForHeaderInSection: section)
@@ -166,12 +162,8 @@ class RepositoryViewController: BaseTableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard viewModel.isRepositoryLoaded else {
-            return statusCell
-        }
-        
-        switch indexPath.section {
-        case 0:
+        switch viewModel.sections[indexPath.section] {
+        case .info:
             switch viewModel.infoTypes[indexPath.row] {
             case .author:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
@@ -200,7 +192,7 @@ class RepositoryViewController: BaseTableViewController {
                 return cell
             }
             
-        case 1:
+        case .code:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
             cell.textLabel?.textColor = UIColor(netHex: 0x333333)
             
@@ -216,7 +208,7 @@ class RepositoryViewController: BaseTableViewController {
             
             return cell
             
-        case 2:
+        case .misc:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
             cell.textLabel?.textColor = UIColor(netHex: 0x333333)
             
@@ -235,8 +227,8 @@ class RepositoryViewController: BaseTableViewController {
             }
             return cell
         
-        default:
-            return UITableViewCell()
+        case .loading:
+            return statusCell
         }
     }
     

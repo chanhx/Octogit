@@ -177,8 +177,6 @@ extension GithubAPI: TargetType {
             
         case .getABlob(let repo, let sha):
             return "/repos/\(repo)/git/blobs/\(sha)"
-        case .getARepository(let repo):
-            return "/repos/\(repo)"
         case .getContents(let repo, let path, _):
             return "/repos/\(repo)/contents/\(path)"
         case .getHTMLContents(let repo, let path, _):
@@ -265,6 +263,8 @@ extension GithubAPI: TargetType {
             
         // MARK: Repository
             
+        case .getARepository(let repo):
+            return "/repos/\(repo)"
         case .userRepos(let user, _):
             return "/users/\(user)/repos"
         case .organizationRepos(let org, _):
