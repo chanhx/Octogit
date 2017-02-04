@@ -183,7 +183,8 @@ class RepositoryViewController: BaseTableViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
                 cell.accessoryType = .disclosureIndicator
                 cell.textLabel?.textColor = UIColor(netHex: 0x333333)
-                cell.textLabel?.attributedText = Octicon.link.iconString(" \(viewModel.repository.value.homepage!.host!)", iconSize: 18, iconColor: .gray)
+                let urlString = viewModel.repository.value.homepage!.host ?? viewModel.repository.value.homepage!.absoluteString
+                cell.textLabel?.attributedText = Octicon.link.iconString(" \(urlString)", iconSize: 18, iconColor: .gray)
                 return cell
             case .readme:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
