@@ -16,7 +16,7 @@ class RepositoryCell: UITableViewCell {
     private let languageLabel = UILabel()
     private let stargazersCountLabel = UILabel()
     private let forksCountLabel = UILabel()
-    private let timeLabel = UILabel()
+    private let infoLabel = UILabel()
     
     var shouldDisplayFullName = true
 
@@ -35,7 +35,7 @@ class RepositoryCell: UITableViewCell {
     }
     
     func configureSubviews() {
-        for label in [timeLabel, languageLabel, stargazersCountLabel, forksCountLabel] {
+        for label in [infoLabel, languageLabel, stargazersCountLabel, forksCountLabel] {
             label.textColor = UIColor(netHex: 0x888888)
             label.font = UIFont.systemFont(ofSize: 14)
             label.layer.isOpaque = true
@@ -69,7 +69,7 @@ class RepositoryCell: UITableViewCell {
         hStackView.distribution = .equalSpacing
         hStackView.spacing = 12
         
-        let vStackView = UIStackView(arrangedSubviews: [timeLabel, nameLabel, descriptionLabel, hStackView])
+        let vStackView = UIStackView(arrangedSubviews: [infoLabel, nameLabel, descriptionLabel, hStackView])
         vStackView.axis = .vertical
         vStackView.alignment = .leading
         vStackView.distribution = .fill
@@ -81,19 +81,23 @@ class RepositoryCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             iconLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor),
-            iconLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            iconLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 3),
             
-            vStackView.topAnchor.constraint(equalTo: margins.topAnchor),
-            vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
+            vStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            vStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             vStackView.leadingAnchor.constraint(equalTo: iconLabel.trailingAnchor, constant: 5),
-            vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
+            vStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
     }
     
     var entity: Repository! {
         didSet {
-            timeLabel.text = entity.pushedAt?.naturalString
-            nameLabel.text = shouldDisplayFullName ? entity.fullName! : entity.name!
+            infoLabel.text = entity.pushedAt?.naturalString
+            if shouldDisplayFullName {
+                nameLabel.attributedText = highlightRepoName(fullName: entity.fullName!)
+            } else {
+                nameLabel.text = entity.name!
+            }
             
             descriptionLabel.text = entity.repoDescription
             descriptionLabel.isHidden = entity.repoDescription == nil
@@ -115,6 +119,41 @@ class RepositoryCell: UITableViewCell {
                 iconLabel.text = Octicon.repo.rawValue
             }
         }
+    }
+    
+    func configureCell(name: String, description: String?, language: String?, stargazers: String, forks: String?, periodStargazers: String?) {
+        iconLabel.isHidden = true
+        nameLabel.attributedText = highlightRepoName(fullName: name)
+        
+        descriptionLabel.text = description
+        descriptionLabel.isHidden = description == nil
+        
+        languageLabel.text = language
+        languageLabel.isHidden = language == nil
+        
+        infoLabel.text = periodStargazers
+        infoLabel.isHidden = periodStargazers == nil
+        
+        stargazersCountLabel.attributedText = Octicon.star.iconString(stargazers)
+        
+        forksCountLabel.isHidden = forks == nil
+        if let forks = forks {
+            forksCountLabel.attributedText = Octicon.gitBranch.iconString(forks)
+        }
+    }
+    
+    private func highlightRepoName(fullName name: String) -> NSAttributedString {
+        let nameComponents = name.components(separatedBy: "/")
+        let owner = nameComponents[0]
+        let repo = nameComponents[1]
+        let attributedName = NSMutableAttributedString(string: "\(owner) / ")
+        attributedName.append(NSAttributedString(string: repo,
+                                                 attributes: [
+                                                    NSFontAttributeName : UIFont.systemFont(ofSize: 18, weight: UIFontWeightSemibold),
+                                                    NSForegroundColorAttributeName: UIColor(netHex: 0x437abe)
+            ]))
+        
+        return attributedName
     }
 
 }

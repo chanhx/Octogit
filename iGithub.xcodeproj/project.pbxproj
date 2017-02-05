@@ -129,7 +129,6 @@
 		C5E7337D1D5D809A00913A66 /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E7337C1D5D809A00913A66 /* Kanna.framework */; };
 		C5E7337F1D5D9FE900913A66 /* ExplorationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7337E1D5D9FE900913A66 /* ExplorationViewController.swift */; };
 		C5E733811D5DA0F300913A66 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733801D5DA0F300913A66 /* MainTabBarController.swift */; };
-		C5E733831D5EEE8C00913A66 /* TrendingRepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733821D5EEE8C00913A66 /* TrendingRepoCell.swift */; };
 		C5E733851D603A8E00913A66 /* SegmentHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733841D603A8E00913A66 /* SegmentHeaderView.swift */; };
 		C5E733881D61C90000913A66 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733871D61C90000913A66 /* SearchViewController.swift */; };
 		C5E7338A1D62292000913A66 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E733891D62292000913A66 /* SearchViewModel.swift */; };
@@ -305,7 +304,6 @@
 		C5E7337C1D5D809A00913A66 /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = Carthage/Build/iOS/Kanna.framework; sourceTree = "<group>"; };
 		C5E7337E1D5D9FE900913A66 /* ExplorationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplorationViewController.swift; sourceTree = "<group>"; };
 		C5E733801D5DA0F300913A66 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		C5E733821D5EEE8C00913A66 /* TrendingRepoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TrendingRepoCell.swift; path = Cell/TrendingRepoCell.swift; sourceTree = "<group>"; };
 		C5E733841D603A8E00913A66 /* SegmentHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentHeaderView.swift; sourceTree = "<group>"; };
 		C5E733871D61C90000913A66 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C5E733891D62292000913A66 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
@@ -527,7 +525,6 @@
 				C5819AC41D4EF7AC009D7772 /* IssueCell.swift */,
 				C52474271D50F06A0001D9CD /* WebViewCell.swift */,
 				C59730E11D98AFD400DADF01 /* CommentCell.swift */,
-				C5E733821D5EEE8C00913A66 /* TrendingRepoCell.swift */,
 				C5DB700E1DA22D3B00D96248 /* CommitCell.swift */,
 				C5DB70161DA2AB4C00D96248 /* GistCell.swift */,
 				C52D1ADD1DA6081E0033AC49 /* ReleaseCell.swift */,
@@ -958,7 +955,6 @@
 				C500F8C51DBBA2EF009BB44A /* EmptyStatusView.swift in Sources */,
 				C571EF581D64836100F752EE /* OptionPickerView.swift in Sources */,
 				C500B7961D545A3A00DC6D2A /* IGLinkLabel.swift in Sources */,
-				C5E733831D5EEE8C00913A66 /* TrendingRepoCell.swift in Sources */,
 				C524742F1D51A1500001D9CD /* Milestone.swift in Sources */,
 				C500F8C81DBBA2EF009BB44A /* StatusProvider.swift in Sources */,
 				C554238D1DC60392001B7D20 /* AccountViewController.swift in Sources */,

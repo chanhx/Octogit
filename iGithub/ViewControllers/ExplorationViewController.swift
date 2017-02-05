@@ -108,7 +108,7 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
                     self.hide(statusType: .loading)
                 }
             })
-            .drive(tableView.rx.items(cellIdentifier: "TrendingRepoCell", cellType: TrendingRepoCell.self)) {
+            .drive(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) {
                 row, repo, cell in
                 cell.configureCell(name: repo.name,
                                    description: repo.repoDescription,
