@@ -87,6 +87,7 @@ class UserViewModel {
     func fetchOrganizations() {
         GithubProvider
             .request(.organizations(user: user.value.login!))
+            .filterSuccessfulStatusAndRedirectCodes()
             .mapJSON()
             .subscribe(onNext: { [unowned self] in
                 self.organizations.value = Mapper<User>().mapArray(JSONObject: $0)!
