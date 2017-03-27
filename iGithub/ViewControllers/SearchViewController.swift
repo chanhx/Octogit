@@ -126,7 +126,7 @@ extension SearchViewController: SegmentHeaderViewDelegate {
             })
             .drive(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) {
                 row, repo, cell in
-                cell.entity = repo
+                cell.configure(withRepository: repo)
             }
             .addDisposableTo(viewModel.repoTVM.disposeBag)
     }

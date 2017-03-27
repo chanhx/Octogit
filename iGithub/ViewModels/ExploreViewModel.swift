@@ -121,7 +121,7 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
     var disposeBag = DisposeBag()
     var since: TrendingTime?
     var language: String?
-    var repositories: Variable<[(name: String, repoDescription: String?, language: String?, stargazers: String, forks: String?, periodStargazers: String?)]>
+    var repositories: Variable<[(name: String, repoDescription: String?, language: String?, stargazers: String?, forks: String?, periodStargazers: String?)]>
         = Variable([])
     var message: String?
     var token: WebAPI {
@@ -138,8 +138,10 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
             let description = rawDesc?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             
             let language = $0.at_css("span[itemprop=\"programmingLanguage\"]")?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-            let stargazers = $0.at_css("a[aria-label=\"Stargazers\"]")!.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let forks = $0.at_css("a[aria-label=\"Forks\"]")?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let starSVG = $0.at_css("svg[aria-label=\"star\"]")
+            let stargazers = starSVG?.parent?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let forkSVG = $0.at_css("svg[aria-label=\"fork\"]")
+            let forks = forkSVG?.parent?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             let periodStargazers = $0.at_css("span.float-right")?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             
             return (name, description, language, stargazers, forks, periodStargazers)

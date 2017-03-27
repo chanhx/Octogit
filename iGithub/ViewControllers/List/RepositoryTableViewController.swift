@@ -30,7 +30,7 @@ class RepositoryTableViewController: BaseTableViewController {
                 })
                 .drive(tableView.rx.items(cellIdentifier: "RepositoryCell", cellType: RepositoryCell.self)) { row, element, cell in
                     cell.shouldDisplayFullName = self.viewModel.shouldDisplayFullName
-                    cell.entity = element
+                    cell.configure(withRepository: element)
                 }
                 .addDisposableTo(viewModel.disposeBag)
             

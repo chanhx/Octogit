@@ -90,38 +90,36 @@ class RepositoryCell: UITableViewCell {
         ])
     }
     
-    var entity: Repository! {
-        didSet {
-            infoLabel.text = entity.pushedAt?.naturalString
-            if shouldDisplayFullName {
-                nameLabel.attributedText = highlightRepoName(fullName: entity.fullName!)
-            } else {
-                nameLabel.text = entity.name!
-            }
-            
-            descriptionLabel.text = entity.repoDescription
-            descriptionLabel.isHidden = entity.repoDescription == nil
-            
-            languageLabel.text = entity.language
-            languageLabel.isHidden = entity.language == nil
-            
-            let formatter = NumberFormatter()
-            formatter.numberStyle = NumberFormatter.Style.decimal
-            
-            stargazersCountLabel.attributedText = Octicon.star.iconString(formatter.string(from: NSNumber(value: entity.stargazersCount!))!)
-            forksCountLabel.attributedText = Octicon.gitBranch.iconString(formatter.string(from: NSNumber(value: entity.forksCount!))!)
-            
-            if entity.isPrivate! {
-                iconLabel.text = Octicon.lock.rawValue
-            } else if entity.isAFork! {
-                iconLabel.text = Octicon.repoForked.rawValue
-            } else {
-                iconLabel.text = Octicon.repo.rawValue
-            }
+    func configure(withRepository repo: Repository) {
+        infoLabel.text = repo.pushedAt?.naturalString
+        if shouldDisplayFullName {
+            nameLabel.attributedText = highlightRepoName(fullName: repo.fullName!)
+        } else {
+            nameLabel.text = repo.name!
+        }
+        
+        descriptionLabel.text = repo.repoDescription
+        descriptionLabel.isHidden = repo.repoDescription == nil
+        
+        languageLabel.text = repo.language
+        languageLabel.isHidden = repo.language == nil
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        
+        stargazersCountLabel.attributedText = Octicon.star.iconString(formatter.string(from: NSNumber(value: repo.stargazersCount!))!)
+        forksCountLabel.attributedText = Octicon.gitBranch.iconString(formatter.string(from: NSNumber(value: repo.forksCount!))!)
+        
+        if repo.isPrivate! {
+            iconLabel.text = Octicon.lock.rawValue
+        } else if repo.isAFork! {
+            iconLabel.text = Octicon.repoForked.rawValue
+        } else {
+            iconLabel.text = Octicon.repo.rawValue
         }
     }
     
-    func configureCell(name: String, description: String?, language: String?, stargazers: String, forks: String?, periodStargazers: String?) {
+    func configureCell(name: String, description: String?, language: String?, stargazers: String?, forks: String?, periodStargazers: String?) {
         iconLabel.isHidden = true
         nameLabel.attributedText = highlightRepoName(fullName: name)
         
@@ -134,7 +132,10 @@ class RepositoryCell: UITableViewCell {
         infoLabel.text = periodStargazers
         infoLabel.isHidden = periodStargazers == nil
         
-        stargazersCountLabel.attributedText = Octicon.star.iconString(stargazers)
+        stargazersCountLabel.isHidden = stargazers == nil
+        if let stargazers = stargazers {
+            stargazersCountLabel.attributedText = Octicon.star.iconString(stargazers)
+        }
         
         forksCountLabel.isHidden = forks == nil
         if let forks = forks {
