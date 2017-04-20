@@ -32,7 +32,7 @@ class LoadingIndicator: UIView {
         
         let arcCenter = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
         let radius = (bounds.width > bounds.height ? bounds.height : bounds.width) / 2 - lineWidth
-        let path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: CGFloat(-M_PI_2), endAngle: 3 * CGFloat(M_PI_2), clockwise: true)
+        let path = UIBezierPath(arcCenter: arcCenter, radius: radius, startAngle: CGFloat(-Double.pi / 2), endAngle: 3 * CGFloat(Double.pi / 2), clockwise: true)
         
         circleLayer.path = path.cgPath
         circleLayer.strokeColor = UIColor(netHex: 0x4078C0).cgColor
@@ -87,7 +87,7 @@ class LoadingIndicator: UIView {
         let rotate = CABasicAnimation(keyPath: "transform.rotation")
         rotate.duration = 0.8
         rotate.fromValue = 0
-        rotate.toValue = 2 * M_PI
+        rotate.toValue = 2 * Double.pi
         rotate.repeatCount = HUGE
         rotate.isRemovedOnCompletion = false
         layer.add(rotate, forKey: nil)

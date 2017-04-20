@@ -370,6 +370,9 @@ extension GithubAPI: TargetType {
             return nil
         }
     }
+    var parameterEncoding: ParameterEncoding {
+        return URLEncoding.default
+    }
     var task: Moya.Task {
         return .request
     }

@@ -43,7 +43,7 @@ extension UIColor {
 
 extension UIImage {
     class var defaultAvatar: UIImage {
-        return UIImage(named: "default-avatar")!.kf.image(withRoundRadius: 6, fit: CGSize(width: 60, height: 60), scale: 1.0)
+        return UIImage(named: "default-avatar")!.kf.image(withRoundRadius: 6, fit: CGSize(width: 60, height: 60))
     }
     
     class func imageWithColor(_ color: UIColor) -> UIImage {

@@ -136,7 +136,7 @@ class RepositoryViewController: BaseTableViewController {
             })
             .map { $0.1 }
             .observeOn(MainScheduler.instance)
-            .bindTo(button.rx.isEnabled)
+            .bind(to: button.rx.isEnabled)
             .addDisposableTo(self.viewModel.disposeBag)
         
         return button

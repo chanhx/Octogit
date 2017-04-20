@@ -13,14 +13,14 @@ import Moya
 class MessageManager {
     
     class func show(error: Swift.Error) {
-        guard let e = error as? Moya.Error else {
+        guard let e = error as? MoyaError else {
             return
         }
         
         var body: String
         
         switch e {
-        case .data, .jsonMapping, .imageMapping, .stringMapping:
+        case .jsonMapping, .imageMapping, .stringMapping:
             body = "Data error"
         case .statusCode(let response):
             body = "\(response.statusCode) error"

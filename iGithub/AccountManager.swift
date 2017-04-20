@@ -20,13 +20,14 @@ class AccountManager {
     static var disposeBag = DisposeBag()
     
     static var currentUser: User? = {
-        if let json = keychain["user_json"] {
-            return Mapper<User>().map(JSONString: json)
+        guard let json = UserDefaults.standard.object(forKey: "user_json") as? String else {
+            return nil
         }
-        return nil
+        return Mapper<User>().map(JSONString: json)
     }() {
         didSet {
-            keychain["user_json"] = currentUser != nil ? Mapper().toJSONString(currentUser!, prettyPrint: true) : nil
+            let json = currentUser != nil ? Mapper().toJSONString(currentUser!, prettyPrint: true) : nil
+            UserDefaults.standard.set(json, forKey: "user_json")
         }
     }
     
@@ -52,7 +53,7 @@ class AccountManager {
             .addDisposableTo(disposeBag)
     }
     
-    class func requestToken(_ code: String, success: @escaping () -> Void, failure: @escaping (Moya.Error) -> Void) {
+    class func requestToken(_ code: String, success: @escaping () -> Void, failure: @escaping (MoyaError) -> Void) {
         WebProvider
             .request(.accessToken(code: code))
             .mapString()
@@ -65,6 +66,7 @@ class AccountManager {
                     
                     GithubProvider
                         .request(.oAuthUser(accessToken: accessToken))
+                        .filterSuccessfulStatusAndRedirectCodes()
                         .mapJSON()
                         .subscribe(
                             onNext: {

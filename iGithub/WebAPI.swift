@@ -81,6 +81,14 @@ extension WebAPI: TargetType {
             return ["since": since.rawValue as AnyObject, "l": language as AnyObject]
         }
     }
+    var parameterEncoding: ParameterEncoding {
+        switch self {
+        case .accessToken(_):
+            return JSONEncoding.default
+        default:
+            return URLEncoding.default
+        }
+    }
     var task: Moya.Task {
         return .request
     }
