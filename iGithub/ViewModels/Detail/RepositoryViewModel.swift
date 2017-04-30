@@ -71,7 +71,7 @@ class RepositoryViewModel {
     }
     
     func fetchRepository() {
-        GithubProvider
+        GitHubProvider
             .request(.getARepository(repo: fullName))
             .mapJSON()
             .subscribe(onNext: { [unowned self] in
@@ -92,9 +92,9 @@ class RepositoryViewModel {
     // MARK: Branches
     
     func fetchBranches() {
-        let token = GithubAPI.branches(repo: fullName, page: pageForBranches)
+        let token = GitHubAPI.branches(repo: fullName, page: pageForBranches)
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .subscribe(onNext: { [unowned self] in
                 
@@ -128,7 +128,7 @@ class RepositoryViewModel {
     // MARK: Star
     
     func checkIsStarring() {
-        GithubProvider
+        GitHubProvider
             .request(.isStarring(repo: fullName))
             .subscribe(onNext: { [unowned self] response in
                 if response.statusCode == 204 {
@@ -143,9 +143,9 @@ class RepositoryViewModel {
     }
     
     @objc func toggleStarring() {
-        let token: GithubAPI = isStarring.value! ? .unstar(repo: fullName) : .star(repo: fullName)
+        let token: GitHubAPI = isStarring.value! ? .unstar(repo: fullName) : .star(repo: fullName)
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .subscribe(onNext: { [unowned self] response in
                 if response.statusCode == 204 {

@@ -29,9 +29,9 @@ class FileTableViewModel: BaseTableViewModel<File> {
     }
     
     override func fetchData() {
-        let token = GithubAPI.getContents(repo: repository, path: path, ref: ref)
+        let token = GitHubAPI.getContents(repo: repository, path: path, ref: ref)
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .mapJSON()
             .subscribe(

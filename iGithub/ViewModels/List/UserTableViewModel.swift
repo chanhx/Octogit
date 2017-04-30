@@ -10,7 +10,7 @@ import ObjectMapper
 
 class UserTableViewModel: BaseTableViewModel<User> {
     
-    var token: GithubAPI
+    var token: GitHubAPI
     
     init(repo: Repository) {
         token = .repositoryContributors(repo: repo.fullName!, page: 1)
@@ -50,7 +50,7 @@ class UserTableViewModel: BaseTableViewModel<User> {
     override func fetchData() {
         updateToken()
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .do(onNext: { [unowned self] in
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {

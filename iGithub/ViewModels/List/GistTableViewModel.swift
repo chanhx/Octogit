@@ -11,7 +11,7 @@ import ObjectMapper
 
 class GistTableViewModel: BaseTableViewModel<Gist> {
     
-    var token: GithubAPI
+    var token: GitHubAPI
     
     override init() {
         token = .starredGists(page: 1)
@@ -39,7 +39,7 @@ class GistTableViewModel: BaseTableViewModel<Gist> {
     override func fetchData() {
         updateToken()
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .do(onNext: { [unowned self] in
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {

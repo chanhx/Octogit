@@ -21,9 +21,9 @@ class IssueTableViewModel: BaseTableViewModel<Issue> {
     }
     
     override func fetchData() {
-        let token = GithubAPI.repositoryIssues(repo: repo, page: page, state: state)
+        let token = GitHubAPI.repositoryIssues(repo: repo, page: page, state: state)
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .filterSuccessfulStatusCodes()
             .do(onNext: { [unowned self] in

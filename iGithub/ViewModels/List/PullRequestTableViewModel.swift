@@ -21,9 +21,9 @@ class PullRequestTableViewModel: BaseTableViewModel<PullRequest> {
     }
     
     override func fetchData() {
-        let token = GithubAPI.repositoryPullRequests(repo: repo, page: page, state: state)
+        let token = GitHubAPI.repositoryPullRequests(repo: repo, page: page, state: state)
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .filterSuccessfulStatusCodes()
             .do(onNext: { [unowned self] in

@@ -29,7 +29,7 @@ class UserViewModel {
     var isFollowing = Variable<Bool?>(nil)
     var organizations: Variable<[User]> = Variable([])
     let disposeBag = DisposeBag()
-    var token: GithubAPI
+    var token: GitHubAPI
     
     var userLoaded: Bool {
         return self.user.value.followers != nil
@@ -73,7 +73,7 @@ class UserViewModel {
     }
     
     func fetchUser() {
-        GithubProvider
+        GitHubProvider
             .request(token)
             .mapJSON()
             .subscribe(onNext: { [unowned self] in
@@ -85,7 +85,7 @@ class UserViewModel {
     }
     
     func fetchOrganizations() {
-        GithubProvider
+        GitHubProvider
             .request(.organizations(user: user.value.login!))
             .filterSuccessfulStatusAndRedirectCodes()
             .mapJSON()
@@ -96,7 +96,7 @@ class UserViewModel {
     }
     
     func checkIsFollowing() {
-        GithubProvider
+        GitHubProvider
             .request(.isFollowing(user: user.value.login!))
             .subscribe(onNext: { [unowned self] response in
                 if response.statusCode == 204 {
@@ -111,9 +111,9 @@ class UserViewModel {
     }
     
     func toggleFollowing() {
-        let token: GithubAPI = isFollowing.value! ? .unfollow(user: user.value.login!) : .follow(user: user.value.login!)
+        let token: GitHubAPI = isFollowing.value! ? .unfollow(user: user.value.login!) : .follow(user: user.value.login!)
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .subscribe(onNext: { [unowned self] response in
                 if response.statusCode == 204 {

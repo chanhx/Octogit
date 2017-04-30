@@ -36,9 +36,9 @@ class CommitViewModel: BaseTableViewModel<Comment> {
     }
     
     func fetchFiles() {
-        let token = GithubAPI.getACommit(repo: repo, sha: commit.value.sha!)
+        let token = GitHubAPI.getACommit(repo: repo, sha: commit.value.sha!)
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .mapJSON()
             .subscribe(
@@ -56,9 +56,9 @@ class CommitViewModel: BaseTableViewModel<Comment> {
     }
     
     override func fetchData() {
-        let token = GithubAPI.commitComments(repo: repo, sha: commit.value.sha!, page: page)
+        let token = GitHubAPI.commitComments(repo: repo, sha: commit.value.sha!, page: page)
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .do(onNext: { [unowned self] in
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {

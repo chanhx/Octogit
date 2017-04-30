@@ -58,11 +58,11 @@ class IssueViewModel: BaseTableViewModel<Comment> {
     }
     
     override func fetchData() {
-        let token: GithubAPI = issue.isPullRequest ?
+        let token: GitHubAPI = issue.isPullRequest ?
             .pullRequestComments(repo: repo, number: issue.number!, page: page) :
             .issueComments(repo: repo, number: issue.number!, page: page)
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .filterSuccessfulStatusCodes()
             .mapJSON()

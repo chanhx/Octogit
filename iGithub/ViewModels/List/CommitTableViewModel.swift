@@ -12,7 +12,7 @@ import ObjectMapper
 class CommitTableViewModel: BaseTableViewModel<Commit> {
     
     var repo: String
-    var token: GithubAPI
+    var token: GitHubAPI
     
     init(repo: String, branch: String) {
         self.repo = repo
@@ -42,7 +42,7 @@ class CommitTableViewModel: BaseTableViewModel<Commit> {
     override func fetchData() {
         updateToken()
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .do(onNext: { [unowned self] in
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {

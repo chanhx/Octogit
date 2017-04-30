@@ -93,7 +93,7 @@ class PickerViewModel {
 
 protocol TrendingViewModelProtocol: class {
     var disposeBag: DisposeBag { get }
-    var token: WebAPI { get }
+    var token: GitHubAPI { get }
     var since: TrendingTime? { get set }
     var language: String? { get set }
     func fetchHTML()
@@ -102,7 +102,7 @@ protocol TrendingViewModelProtocol: class {
 
 extension TrendingViewModelProtocol {
     func fetchHTML() {
-        WebProvider
+        GitHubProvider
             .request(token)
             .mapString()
             .subscribe(onNext: { [unowned self] in
@@ -124,8 +124,8 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
     var repositories: Variable<[(name: String, repoDescription: String?, language: String?, stargazers: String?, forks: String?, periodStargazers: String?)]>
         = Variable([])
     var message: String?
-    var token: WebAPI {
-        return WebAPI.trending(since: since!, language: languagesDict[language!]!, type: .repositories)
+    var token: GitHubAPI {
+        return GitHubAPI.trending(since: since!, language: languagesDict[language!]!, type: .repositories)
     }
     
     @inline(__always) func parse(_ doc: HTMLDocument) {
@@ -156,8 +156,8 @@ class TrendingUserTableViewModel: TrendingViewModelProtocol {
     var language: String?
     var users: Variable<[User]> = Variable([])
     var message: String?
-    var token: WebAPI {
-        return WebAPI.trending(since: since!, language: languagesDict[language!]!, type: .users)
+    var token: GitHubAPI {
+        return GitHubAPI.trending(since: since!, language: languagesDict[language!]!, type: .users)
     }
     
     @inline(__always) func parse(_ doc: HTMLDocument) {

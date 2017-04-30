@@ -69,15 +69,15 @@ class RepositoriesSearchViewModel: BaseTableViewModel<Repository> {
         .bestMatch, .stars, .forks, .updated
     ]
     
-    var token: GithubAPI {
+    var token: GitHubAPI {
         let lan = languagesDict[language]!
         let q = lan.characters.count > 0 ? query! + "+language:\(lan)" : query!
         
-        return GithubAPI.searchRepositories(q: q, sort: sort, page: page)
+        return GitHubAPI.searchRepositories(q: q, sort: sort, page: page)
     }
     
     override func fetchData() {
-        GithubProvider
+        GitHubProvider
             .request(token)
             .do(onNext: { [unowned self] in
                 self.isLoading = false
@@ -113,12 +113,12 @@ class UsersSearchViewModel: BaseTableViewModel<User> {
         .bestMatch, .followers, .repositories, .joined
     ]
     
-    var token: GithubAPI {
-        return GithubAPI.searchUsers(q: query!, sort: sort, page: page)
+    var token: GitHubAPI {
+        return GitHubAPI.searchUsers(q: query!, sort: sort, page: page)
     }
     
     override func fetchData() {        
-        GithubProvider
+        GitHubProvider
             .request(token)
             .do(onNext: { [unowned self] in
                 self.isLoading = false

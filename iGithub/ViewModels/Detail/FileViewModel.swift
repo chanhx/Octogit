@@ -103,9 +103,9 @@ class FileViewModel {
     }
     
     func fetchContent(_ file: File) {
-        let token = GithubAPI.getContents(repo: repo!, path: file.path!, ref: ref!)
+        let token = GitHubAPI.getContents(repo: repo!, path: file.path!, ref: ref!)
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .mapJSON()
             .subscribe(
@@ -131,14 +131,14 @@ class FileViewModel {
     }
     
     func fetchHTMLContent(_ file: File) {
-        let token: GithubAPI
+        let token: GitHubAPI
         if let path = file.path {
-            token = GithubAPI.getHTMLContents(repo: repo!, path: path, ref: ref!)
+            token = GitHubAPI.getHTMLContents(repo: repo!, path: path, ref: ref!)
         } else {
-            token = GithubAPI.getTheREADME(repo: repo!, ref: ref!)
+            token = GitHubAPI.getTheREADME(repo: repo!, ref: ref!)
         }
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .mapString()
             .subscribe(onNext: { [unowned self] in

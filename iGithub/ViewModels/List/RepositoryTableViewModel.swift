@@ -11,7 +11,7 @@ import ObjectMapper
 
 class RepositoryTableViewModel: BaseTableViewModel<Repository> {
     
-    fileprivate var token: GithubAPI
+    fileprivate var token: GitHubAPI
     
     init(organization: User) {
         token = .organizationRepos(org: organization.login!, page: 1)
@@ -33,7 +33,7 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
         super.init()
     }
     
-    private init(token: GithubAPI) {
+    private init(token: GitHubAPI) {
         self.token = token
         super.init()
     }
@@ -70,7 +70,7 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
     override func fetchData() {
         updateToken()
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .do(onNext: { [unowned self] in
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {

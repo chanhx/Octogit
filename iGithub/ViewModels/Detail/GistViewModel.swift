@@ -21,9 +21,9 @@ class GistViewModel: BaseTableViewModel<Comment> {
     }
     
     override func fetchData() {
-        let token = GithubAPI.gistComments(gistID: gist.id!, page: page)
+        let token = GitHubAPI.gistComments(gistID: gist.id!, page: page)
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .do(onNext: { [unowned self] in
                 if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {

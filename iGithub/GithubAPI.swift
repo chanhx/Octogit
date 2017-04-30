@@ -1,5 +1,5 @@
 //
-//  GithubAPI.swift
+//  GitHubAPI.swift
 //  iGithub
 //
 //  Created by Chan Hocheung on 7/20/16.
@@ -9,12 +9,32 @@
 import Foundation
 import Moya
 import RxMoya
+import RxSwift
+
+// MARK: - OAuth Configuration
+
+struct OAuthConfiguration {
+    static let callbackMark = "iGithub"
+    static let clientID = "638bff0d62dacd915554"
+    static let clientSecret = "006e5bd102210c78981af47bbe347318cf55081b"
+    static let scopes = ["user", "repo"]
+    static let note = "iOctocat: Application"
+    static let noteURL = "http://ioctocat.com"
+    static var accessToken: String?
+    
+    static var authorizationURL: URL? {
+        return GitHubProvider
+            .endpoint(.authorize)
+            .urlRequest?
+            .url
+    }
+}
 
 // MARK: - Provider setup
 
-let GithubProvider = RxMoyaProvider<GithubAPI>(endpointClosure: {
+let GitHubProvider = RxMoyaProvider<GitHubAPI>(endpointClosure: {
     
-    (target: GithubAPI) -> Endpoint<GithubAPI> in
+    (target: GitHubAPI) -> Endpoint<GitHubAPI> in
     
     var endpoint = MoyaProvider.defaultEndpointMapping(for: target)
     endpoint = endpoint.adding(newHTTPHeaderFields: ["Authorization": "token \(AccountManager.token!)"])
@@ -75,7 +95,19 @@ enum UsersSearchSort: String, CustomStringConvertible {
     }
 }
 
-enum GithubAPI {
+enum TrendingTime: String {
+    case today = "daily"
+    case thisWeek = "weekly"
+    case thisMonth = "monthly"
+}
+
+enum GitHubAPI {
+    
+    // MARK: Web API
+    
+    case authorize
+    case accessToken(code: String)
+    case trending(since: TrendingTime, language: String, type: TrendingType)
     
     // MARK: Branch
     
@@ -162,18 +194,43 @@ enum GithubAPI {
     case starredGists(page: Int)
 }
 
-extension GithubAPI: TargetType {
+extension GitHubAPI: TargetType {
     
-    var baseURL: URL { return URL(string: "https://api.github.com")! }
+    var baseURL: URL {
+        switch self {
+        case .authorize,
+             .accessToken(code: _),
+             .trending(since: _, language: _, type: _):
+            
+            return URL(string: "https://github.com")!
+        default:
+            return URL(string: "https://api.github.com")!
+        }
+    }
+    
     var path: String {
         switch self {
             
-        // MARK: Branch
-        
+            // MAKR: Web API
+            
+        case .authorize:
+            return "/login/oauth/authorize"
+        case .accessToken:
+            return "/login/oauth/access_token"
+        case .trending(_, _, let type):
+            switch type {
+            case .repositories:
+                return "/trending"
+            case .users:
+                return "/trending/developers"
+            }
+            
+            // MARK: Branch
+            
         case .branches(let repo, _):
             return "repos/\(repo)/branches"
             
-        // MARK: File
+            // MARK: File
             
         case .getABlob(let repo, let sha):
             return "/repos/\(repo)/git/blobs/\(sha)"
@@ -187,7 +244,7 @@ extension GithubAPI: TargetType {
         case .pullRequestFiles(let repo, let number, _):
             return "/repos/\(repo)/pulls/\(number)/files"
             
-        // MARK: Comments
+            // MARK: Comments
             
         case .issueComments(let repo, let number, _):
             return "/repos/\(repo)/issues/\(number)/comments"
@@ -198,7 +255,7 @@ extension GithubAPI: TargetType {
         case .gistComments(let gistID, _):
             return "/gists/\(gistID)/comments"
             
-        // MARK: User
+            // MARK: User
             
         case .oAuthUser:
             return "/user"
@@ -224,7 +281,7 @@ extension GithubAPI: TargetType {
              .unfollow(let user):
             return "/user/following/\(user)"
             
-        // MARK: Event
+            // MARK: Event
             
         case .receivedEvents(let user, _):
             return "/users/\(user)/received_events"
@@ -235,7 +292,7 @@ extension GithubAPI: TargetType {
         case .organizationEvents(let org, _):
             return "/orgs/\(org)/events"
             
-        // MARK: Issue & Pull Request
+            // MARK: Issue & Pull Request
             
         case .repositoryIssues(let repo, _, _):
             return "/repos/\(repo)/issues"
@@ -245,7 +302,7 @@ extension GithubAPI: TargetType {
         case .authenticatedUserIssues:
             return "/issues"
             
-        // MARK: Commit
+            // MARK: Commit
             
         case .repositoryCommits(let repo, _, _):
             return "/repos/\(repo)/commits"
@@ -254,14 +311,14 @@ extension GithubAPI: TargetType {
         case .getACommit(let repo, let sha):
             return "/repos/\(repo)/commits/\(sha)"
             
-        // MARK: Search
+            // MARK: Search
             
         case .searchRepositories:
             return "/search/repositories"
         case .searchUsers:
             return "/search/users"
             
-        // MARK: Repository
+            // MARK: Repository
             
         case .getARepository(let repo):
             return "/repos/\(repo)"
@@ -284,12 +341,12 @@ extension GithubAPI: TargetType {
              .unstar(let repo):
             return "/user/starred/\(repo)"
             
-        // MARK: Release
-        
+            // MARK: Release
+            
         case .releases(let repo, _):
             return "/repos/\(repo)/releases"
             
-        // MARK: Gist
+            // MARK: Gist
             
         case .userGists(let user, _):
             return "/users/\(user)/gists"
@@ -297,8 +354,11 @@ extension GithubAPI: TargetType {
             return "/gists/starred"
         }
     }
+    
     var method: Moya.Method {
         switch self {
+        case .accessToken(_):
+            return .post
         case .star, .follow:
             return .put
         case .unstar, .unfollow:
@@ -307,8 +367,20 @@ extension GithubAPI: TargetType {
             return .get
         }
     }
+    
     var parameters: [String: Any]? {
         switch self {
+            
+        case .authorize:
+            let scope = (OAuthConfiguration.scopes as NSArray).componentsJoined(by: ",")
+            return ["client_id": OAuthConfiguration.clientID as AnyObject, "client_secret": OAuthConfiguration.clientSecret as AnyObject, "scope": scope as AnyObject]
+            
+        case .accessToken(let code):
+            return ["client_id": OAuthConfiguration.clientID as AnyObject, "client_secret": OAuthConfiguration.clientSecret as AnyObject, "code": code as AnyObject]
+            
+        case .trending(let since, let language, _):
+            return ["since": since.rawValue as AnyObject, "l": language as AnyObject]
+            
         case .oAuthUser(let accessToken):
             return ["access_token": accessToken]
             
@@ -363,7 +435,7 @@ extension GithubAPI: TargetType {
              .starredReposOfAuthenticatedUser(let page),
              .subscribedRepos(_, let page),
              .subscribedReposOfAuthenticatedUser(let page):
-             
+            
             return ["page": page]
             
         default:
@@ -371,7 +443,12 @@ extension GithubAPI: TargetType {
         }
     }
     var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
+        switch self {
+        case .accessToken(_):
+            return JSONEncoding.default
+        default:
+            return URLEncoding.default
+        }
     }
     var task: Moya.Task {
         return .request

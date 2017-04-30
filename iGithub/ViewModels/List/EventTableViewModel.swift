@@ -18,7 +18,7 @@ enum UserEventType {
 
 class EventTableViewModel: BaseTableViewModel<Event> {
     
-    private var token: GithubAPI
+    private var token: GitHubAPI
     
     init(user: User, type: UserEventType) {
         switch type {
@@ -57,7 +57,7 @@ class EventTableViewModel: BaseTableViewModel<Event> {
             break
         }
         
-        GithubProvider
+        GitHubProvider
             .request(token)
             .filterSuccessfulStatusAndRedirectCodes()
             .do(onNext: { [unowned self] in

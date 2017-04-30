@@ -43,7 +43,7 @@ class AccountManager {
     }
     
     class func refresh(completionHandler: @escaping (User) -> Void) {
-        GithubProvider
+        GitHubProvider
             .request(.user(user: AccountManager.currentUser!.login!))
             .mapJSON()
             .subscribe(onNext: {
@@ -54,7 +54,7 @@ class AccountManager {
     }
     
     class func requestToken(_ code: String, success: @escaping () -> Void, failure: @escaping (MoyaError) -> Void) {
-        WebProvider
+        GitHubProvider
             .request(.accessToken(code: code))
             .mapString()
             .subscribe(
@@ -64,7 +64,7 @@ class AccountManager {
                     }
                     AccountManager.token = accessToken
                     
-                    GithubProvider
+                    GitHubProvider
                         .request(.oAuthUser(accessToken: accessToken))
                         .filterSuccessfulStatusAndRedirectCodes()
                         .mapJSON()

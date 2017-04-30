@@ -28,9 +28,9 @@ class CommitFileTableViewModel: BaseTableViewModel<CommitFile> {
     }
     
     override func fetchData() {
-        let token = GithubAPI.pullRequestFiles(repo: repo!, number: pullRequestNumber!, page: page)
+        let token = GitHubAPI.pullRequestFiles(repo: repo!, number: pullRequestNumber!, page: page)
 
-        GithubProvider
+        GitHubProvider
             .request(token)
             .filterSuccessfulStatusAndRedirectCodes()
             .do(onNext: { [unowned self] in
