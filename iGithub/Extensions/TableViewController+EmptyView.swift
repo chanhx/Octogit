@@ -12,7 +12,7 @@ extension IssueTableViewController: StatusProvider {
 
     var emptyView: UIView? {
         let image = Octicon.issueOpened.image(color: UIColor(netHex: 0xaaaaaa), iconSize: 50, size: CGSize(width: 50, height: 50))
-        return EmptyStatusView(title: "There aren’t any \(viewModel.state) issues.", image: image)
+        return EmptyStatusView(title: "There aren’t any \(viewModel.state) issues", image: image)
     }
 }
 
@@ -20,7 +20,7 @@ extension PullRequestTableViewController: StatusProvider {
     
     var emptyView: UIView? {
         let image = Octicon.gitPullrequest.image(color: UIColor(netHex: 0xaaaaaa), iconSize: 50, size: CGSize(width: 50, height: 50))
-        return EmptyStatusView(title: "There aren’t any \(viewModel.state) pull reqeusts.", image: image)
+        return EmptyStatusView(title: "There aren’t any \(viewModel.state) pull reqeusts", image: image)
     }
 }
 
@@ -28,7 +28,7 @@ extension RepositoryTableViewController: StatusProvider {
     
     var emptyView: UIView? {
         let image = Octicon.repo.image(color: UIColor(netHex: 0xaaaaaa), iconSize: 50, size: CGSize(width: 50, height: 50))
-        return EmptyStatusView(title: "There aren’t any repositories.", image: image)
+        return EmptyStatusView(title: "There aren’t any repositories", image: image)
     }
 }
 
@@ -36,7 +36,7 @@ extension ReleaseTableViewController: StatusProvider {
     
     var emptyView: UIView? {
         let image = Octicon.tag.image(color: UIColor(netHex: 0xaaaaaa), iconSize: 50, size: CGSize(width: 50, height: 50))
-        return EmptyStatusView(title: "There aren’t any releases.", image: image)
+        return EmptyStatusView(title: "There aren’t any releases", image: image)
     }
 }
 

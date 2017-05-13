@@ -56,29 +56,27 @@ class AccountManager {
     class func requestToken(_ code: String, success: @escaping () -> Void, failure: @escaping (MoyaError) -> Void) {
         GitHubProvider
             .request(.accessToken(code: code))
-            .mapString()
+            .filterSuccessfulStatusAndRedirectCodes()
+            .flatMapLatest { (response) -> Observable<Moya.Response> in
+                
+                guard let string = String(data: response.data, encoding: .utf8),
+                    let accessToken = string.components(separatedBy: "&").first?.components(separatedBy: "=").last
+                else {
+                    throw MoyaError.stringMapping(response)
+                }
+                
+                AccountManager.token = accessToken
+                
+                return GitHubProvider.request(.oAuthUser(accessToken: accessToken))
+            }
+            .filterSuccessfulStatusAndRedirectCodes()
+            .mapJSON()
             .subscribe(
                 onNext: {
-                    guard let accessToken = $0.components(separatedBy: "&").first?.components(separatedBy: "=").last else {
-                        return
-                    }
-                    AccountManager.token = accessToken
-                    
-                    GitHubProvider
-                        .request(.oAuthUser(accessToken: accessToken))
-                        .filterSuccessfulStatusAndRedirectCodes()
-                        .mapJSON()
-                        .subscribe(
-                            onNext: {
-                                AccountManager.currentUser = Mapper<User>().map(JSONObject: $0)
-                                success()
-                            }//,
-//                            onError: {
-//                                failure($0)
-//                            }
-                        )
-                        .addDisposableTo(self.disposeBag)
-                }//,
+                    AccountManager.currentUser = Mapper<User>().map(JSONObject: $0)
+                    success()
+                }
+//                },
 //                onError: {
 //                    failure($0)
 //                }
