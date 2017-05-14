@@ -315,7 +315,7 @@ class RepositoryViewController: BaseTableViewController {
                 self.navigationController?.pushViewController(memberTVC, animated: true)
                 
             case 4:
-                let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventTVC") as! EventTableViewController
+                let eventTVC = EventTableViewController()
                 eventTVC.viewModel = EventTableViewModel(repo: viewModel.repository.value)
                 self.navigationController?.pushViewController(eventTVC, animated: true)
             default:

@@ -62,8 +62,6 @@ class User: Mappable, CustomStringConvertible {
     }
     
     var description : String {
-        get {
-            return self.login!
-        }
+        return self.login!
     }
 }

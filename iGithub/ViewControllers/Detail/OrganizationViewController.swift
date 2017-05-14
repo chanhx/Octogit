@@ -118,7 +118,7 @@ class OrganizationViewController: BaseTableViewController {
         case .general:
             switch indexPath.row {
             case 0:
-                let eventTVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "EventTVC") as! EventTableViewController
+                let eventTVC = EventTableViewController()
                 eventTVC.viewModel = EventTableViewModel(org: viewModel.user.value)
                 self.navigationController?.pushViewController(eventTVC, animated: true)
             case 1:

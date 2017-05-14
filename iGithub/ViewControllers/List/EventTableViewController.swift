@@ -23,7 +23,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                         self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
                 })
                 .drive(tableView.rx.items(cellIdentifier: "EventCell", cellType: EventCell.self)) { [unowned self] row, element, cell in
-                    cell.entity = element
+                    cell.configure(withEvent: element)
                     cell.titleLabel.delegate = self
                     cell.contentLabel.delegate = self
                     cell.selectionStyle = .none
@@ -51,6 +51,8 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
         super.viewDidLoad()
         
         self.navigationItem.title = viewModel.title
+        
+        tableView.register(EventCell.self, forCellReuseIdentifier: "EventCell")
         
         tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
         tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchData))
