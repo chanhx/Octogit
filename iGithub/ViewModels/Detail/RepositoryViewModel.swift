@@ -57,7 +57,7 @@ class RepositoryViewModel {
     }()
     
     init(repo: Repository) {
-        self.fullName = repo.fullName!
+        self.fullName = repo.nameWithOwner!
         self.repository = Variable(repo)
         
         branch = repo.defaultBranch!
@@ -72,15 +72,17 @@ class RepositoryViewModel {
     
     func fetchRepository() {
         GitHubProvider
-            .request(.getARepository(repo: fullName))
+            .request(.repository(repo: fullName))
             .mapJSON()
+//            .mapString()
             .subscribe(onNext: { [unowned self] in
                 // first check if there is an error and if the repo exists
 //                if $0.statusCode == 404 {
 //                    
 //                }
+                let json = $0 as! [String : [String : Any]]
                 
-                if let repo = Mapper<Repository>().map(JSONObject: $0) {
+                if let repo = Mapper<Repository>().map(JSONObject: json["data"]!["repository"]) {
                     self.branch = repo.defaultBranch!
                     self.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
                     self.repository.value = repo
@@ -125,23 +127,6 @@ class RepositoryViewModel {
         }
     }
     
-    // MARK: Star
-    
-    func checkIsStarring() {
-        GitHubProvider
-            .request(.isStarring(repo: fullName))
-            .subscribe(onNext: { [unowned self] response in
-                if response.statusCode == 204 {
-                    self.isStarring.value = true
-                } else if response.statusCode == 404 {
-                    self.isStarring.value = false
-                } else {
-                    // error happened
-                }
-            })
-            .addDisposableTo(disposeBag)
-    }
-    
     @objc func toggleStarring() {
         let token: GitHubAPI = isStarring.value! ? .unstar(repo: fullName) : .star(repo: fullName)
         
@@ -149,7 +134,7 @@ class RepositoryViewModel {
             .request(token)
             .subscribe(onNext: { [unowned self] response in
                 if response.statusCode == 204 {
-                    self.isStarring.value = !self.isStarring.value!
+                    self.repository.value.hasStarred = !self.repository.value.hasStarred!
                 } else {
                     let json = try! response.mapJSON()
                     print(json)
@@ -172,7 +157,7 @@ class RepositoryViewModel {
         }
         
         sections.append(.info)
-        if repository.value.size! > 0 {
+        if repository.value.diskUsage! > 0 {
             sections.append(.code)
         }
         sections.append(.misc)

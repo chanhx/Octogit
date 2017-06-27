@@ -37,6 +37,10 @@ class User: Mappable, CustomStringConvertible {
     
     required init?(map: Map) {
         mapping(map: map)
+        
+        if map["__typename"].isKeyPresent {
+            type <- map["__typename"]
+        }
     }
     
     // Mappable

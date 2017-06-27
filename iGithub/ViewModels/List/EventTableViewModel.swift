@@ -32,7 +32,7 @@ class EventTableViewModel: BaseTableViewModel<Event> {
     }
     
     init(repo: Repository) {
-        token = .repositoryEvents(repo: repo.fullName!, page: 1)
+        token = .repositoryEvents(repo: repo.nameWithOwner!, page: 1)
         
         super.init()
     }

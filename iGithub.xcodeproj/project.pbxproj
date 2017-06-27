@@ -45,6 +45,7 @@
 		C524742A1D50FB400001D9CD /* issue.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C52474291D50FB400001D9CD /* issue.mustache */; };
 		C524742D1D519CBB0001D9CD /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524742C1D519CBB0001D9CD /* Label.swift */; };
 		C524742F1D51A1500001D9CD /* Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524742E1D51A1500001D9CD /* Milestone.swift */; };
+		C52660A11EEEDF6F00761DF3 /* GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52660A01EEEDF6F00761DF3 /* GraphQL.swift */; };
 		C52678A51DAE075C00F69F1B /* CommitFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52678A41DAE075C00F69F1B /* CommitFile.swift */; };
 		C52678AB1DAE579100F69F1B /* CommitFileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52678AA1DAE579100F69F1B /* CommitFileCell.swift */; };
 		C526EE101D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C526EE0F1D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift */; };
@@ -211,6 +212,7 @@
 		C52474291D50FB400001D9CD /* issue.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = issue.mustache; sourceTree = "<group>"; };
 		C524742C1D519CBB0001D9CD /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		C524742E1D51A1500001D9CD /* Milestone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Milestone.swift; sourceTree = "<group>"; };
+		C52660A01EEEDF6F00761DF3 /* GraphQL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphQL.swift; sourceTree = "<group>"; };
 		C52678A41DAE075C00F69F1B /* CommitFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitFile.swift; sourceTree = "<group>"; };
 		C52678AA1DAE579100F69F1B /* CommitFileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitFileCell.swift; sourceTree = "<group>"; };
 		C526EE0F1D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyntaxHighlightSettingsViewController.swift; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 			children = (
 				C5DB94621D3F842000887E81 /* AppDelegate.swift */,
 				C538FCFE1D3FBFDC003A559E /* GithubAPI.swift */,
+				C52660A01EEEDF6F00761DF3 /* GraphQL.swift */,
 				C5F4BDEC1D3FAEE6009DF758 /* ViewControllers */,
 				C538FD1C1D40C9E1003A559E /* ViewModels */,
 				C538FD231D40DB11003A559E /* Views */,
@@ -996,6 +999,7 @@
 				C5EE81E91DBF4EAD00673E20 /* PullRequestTableViewController.swift in Sources */,
 				C52474281D50F06A0001D9CD /* WebViewCell.swift in Sources */,
 				C57005E21DAA922C008DEFA9 /* SegmentViewController.swift in Sources */,
+				C52660A11EEEDF6F00761DF3 /* GraphQL.swift in Sources */,
 				C51CDEA41DBF790F0043A755 /* CommitTableViewModel.swift in Sources */,
 				C5819AC51D4EF7AC009D7772 /* IssueCell.swift in Sources */,
 				C5EE81E61DBF4EAD00673E20 /* FileTableViewController.swift in Sources */,

@@ -178,7 +178,7 @@ enum GitHubAPI {
     case subscribedRepos(user: String, page: Int)
     case subscribedReposOfAuthenticatedUser(page: Int)
     case organizationRepos(org: String, page: Int)
-    case getARepository(repo: String)
+    case repository(repo: String)
     
     case isStarring(repo: String)
     case star(repo: String)
@@ -320,8 +320,8 @@ extension GitHubAPI: TargetType {
             
             // MARK: Repository
             
-        case .getARepository(let repo):
-            return "/repos/\(repo)"
+        case .repository:
+            return "/graphql"
         case .userRepos(let user, _):
             return "/users/\(user)/repos"
         case .organizationRepos(let org, _):
@@ -357,7 +357,7 @@ extension GitHubAPI: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .accessToken(_):
+        case .accessToken, .repository:
             return .post
         case .star, .follow:
             return .put
@@ -438,13 +438,16 @@ extension GitHubAPI: TargetType {
             
             return ["page": page]
             
+        case .repository:
+            return ["query": GraphQL.query(self)]
+            
         default:
             return nil
         }
     }
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .accessToken(_):
+        case .accessToken(_), .repository(_):
             return JSONEncoding.default
         default:
             return URLEncoding.default

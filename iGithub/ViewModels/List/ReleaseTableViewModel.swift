@@ -14,7 +14,7 @@ class ReleaseTableViewModel: BaseTableViewModel<Release> {
     var repo: String
     
     init(repo: Repository) {
-        self.repo = repo.fullName!
+        self.repo = repo.nameWithOwner!
         
         super.init()
     }
