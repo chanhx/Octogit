@@ -235,8 +235,8 @@ class RepositoryViewController: BaseTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        switch indexPath.section {
-        case 0:
+        switch viewModel.sections[indexPath.section] {
+        case .info:
             switch viewModel.infoTypes[indexPath.row] {
             case .author:
                 switch viewModel.repository.value.owner!.type! {
@@ -259,7 +259,7 @@ class RepositoryViewController: BaseTableViewController {
                 break
             }
         
-        case 1:
+        case .code:
             switch indexPath.row {
             case 0:
                 let fileTableVC = FileTableViewController()
@@ -274,7 +274,7 @@ class RepositoryViewController: BaseTableViewController {
                 break
             }
         
-        case 2:
+        case .misc:
             switch indexPath.row {
             case 0:
                 let repo = viewModel.repository.value
@@ -322,7 +322,7 @@ class RepositoryViewController: BaseTableViewController {
                 break
             }
             
-        default:
+        case .loading:
             break
         }
     }

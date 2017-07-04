@@ -172,7 +172,7 @@ class RepositoryViewModel {
         }
         
         sections.append(.info)
-        if repository.value.size! > 0 {
+        if let _ = repository.value.defaultBranch {
             sections.append(.code)
         }
         sections.append(.misc)
