@@ -250,7 +250,7 @@ class RepositoryViewController: BaseTableViewController {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             case .homepage:
-                navigationController?.pushViewController(URLRouter.viewControllerForURL(viewModel.repository.value.homepage!), animated: true)
+                navigationController?.pushViewController(URLRouter.viewController(forURL: viewModel.repository.value.homepage!), animated: true)
             case .readme:
                 let fileVC = FileViewController()
                 fileVC.viewModel = viewModel.readmeViewModel

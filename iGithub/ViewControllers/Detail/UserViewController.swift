@@ -172,7 +172,7 @@ class UserViewController: BaseTableViewController {
         switch viewModel.sectionTypes[indexPath.section] {
         case .vcards:
             if viewModel.vcardDetails[indexPath.row] == .blog {
-                navigationController?.pushViewController(URLRouter.viewControllerForURL(viewModel.user.value.blog!), animated: true)
+                navigationController?.pushViewController(URLRouter.viewController(forURL: viewModel.user.value.blog!), animated: true)
             }
         case .general:
             switch indexPath.row {

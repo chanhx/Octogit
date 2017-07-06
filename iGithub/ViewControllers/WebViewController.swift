@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController, WKNavigationDelegate {
+class WebViewController: UIViewController {
     
     var webView = WKWebView()
     fileprivate var request: URLRequest?
@@ -158,6 +158,25 @@ class WebViewController: UIViewController, WKNavigationDelegate {
                 }
             }
         }
+    }
+}
+
+extension WebViewController: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        guard let url = navigationAction.request.url else {
+            decisionHandler(.cancel)
+            return
+        }
+        
+        guard let vc = URLRouter.nativeViewController(forURL: url) else {
+            decisionHandler(.allow)
+            return
+        }
+        
+        decisionHandler(.cancel)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

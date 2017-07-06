@@ -23,22 +23,35 @@ class OAuthViewController: WebViewController {
         }
     }
     
-    func webView(_ webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-        if navigationAction.request.url?.lastPathComponent == OAuthConfiguration.callbackMark {
-            
-            let queryItems = URLComponents(url: navigationAction.request.url!, resolvingAgainstBaseURL: false)?.queryItems
-            if let code = queryItems?.filter({$0.name == "code"}).first!.value {
-                AccountManager.requestToken(code, success: {
-                    let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
-                    UIApplication.shared.delegate!.window!!.rootViewController = mainVC
-                }, failure: {
-                    MessageManager.show(error: $0)
-                    _ = self.navigationController?.popViewController(animated: true)
-                })
-            }
+    override func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        guard let url = navigationAction.request.url else {
             decisionHandler(.cancel)
+            return
         }
         
-        decisionHandler(.allow)
+        guard url.lastPathComponent == OAuthConfiguration.callbackMark else {
+            decisionHandler(.allow)
+            return
+        }
+        
+        guard
+            let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems,
+            let code = queryItems.filter({$0.name == "code"}).first?.value
+            else {
+                decisionHandler(.cancel)
+                return
+        }
+        
+        AccountManager.requestToken(code, success: {
+            let mainVC = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+            UIApplication.shared.delegate!.window!!.rootViewController = mainVC
+        }, failure: {
+            MessageManager.show(error: $0)
+            _ = self.navigationController?.popViewController(animated: true)
+        })
+        
+        decisionHandler(.cancel)
+        
     }
 }

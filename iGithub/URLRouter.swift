@@ -7,18 +7,25 @@
 //
 
 import Foundation
-import ObjectMapper
 
 struct URLRouter {
-    static func viewControllerForURL(_ url: URL) -> UIViewController {
-        if url.isGithubURL {
-            return viewControllerForGithubURL(url)
-        } else {
-            return WebViewController(url: url)
-        }
+    
+    static func viewController(forURL url: URL) -> UIViewController {
+        
+        return nativeViewController(forURL: url) ?? WebViewController(url: url)
     }
     
-    fileprivate static func viewControllerForGithubURL(_ url: URL) -> UIViewController {
+    static func nativeViewController(forURL url: URL) -> UIViewController? {
+        
+        if url.isGithubURL {
+            return viewController(forGitHubURL: url)
+//        } if url.isGistURL {
+        }
+        
+        return nil
+    }
+    
+    fileprivate static func viewController(forGitHubURL url: URL) -> UIViewController? {
         
         let pathComponents = url.pathComponents
         
@@ -63,6 +70,6 @@ struct URLRouter {
             }
         }
         
-        return WebViewController(url: url)
+        return nil
     }
 }

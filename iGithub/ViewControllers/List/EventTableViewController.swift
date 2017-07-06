@@ -71,7 +71,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
             return
         }
         
-        let vc = URLRouter.viewControllerForURL(url)
+        let vc = URLRouter.viewController(forURL: url)
         navigationController?.pushViewController(vc, animated: true)
     }
     

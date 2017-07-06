@@ -34,6 +34,8 @@ class FileViewController: UIViewController {
         super.viewDidLoad()
 
         webView.frame = self.view.bounds
+        webView.navigationDelegate = self
+        
         view.addSubview(webView)
         
         navigationItem.title = viewModel.fileName
@@ -53,5 +55,25 @@ class FileViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
+}
+
+extension FileViewController: WKNavigationDelegate {
     
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        guard let url = navigationAction.request.url else {
+            decisionHandler(.cancel)
+            return
+        }
+        
+        if url.isFileURL {
+            decisionHandler(.allow)
+            return
+        }
+        
+        decisionHandler(.cancel)
+        
+        let vc = URLRouter.viewController(forURL: url)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
