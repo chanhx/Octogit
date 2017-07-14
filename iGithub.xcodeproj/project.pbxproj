@@ -85,9 +85,6 @@
 		C55E08541D478E8E0004EC7C /* common.css in Resources */ = {isa = PBXBuildFile; fileRef = C55E08531D478E8E0004EC7C /* common.css */; };
 		C55E08561D4793740004EC7C /* file_extensions.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55E08551D4793740004EC7C /* file_extensions.plist */; };
 		C57005E21DAA922C008DEFA9 /* SegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57005E11DAA922C008DEFA9 /* SegmentViewController.swift */; };
-		C57005EC1DAB3712008DEFA9 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57005E81DAB3712008DEFA9 /* Palette.swift */; };
-		C57005ED1DAB3712008DEFA9 /* TwicketSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57005EA1DAB3712008DEFA9 /* TwicketSegmentedControl.swift */; };
-		C57005EE1DAB3712008DEFA9 /* UIViewShadowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57005EB1DAB3712008DEFA9 /* UIViewShadowExtension.swift */; };
 		C571EF581D64836100F752EE /* OptionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C571EF571D64836100F752EE /* OptionPickerView.swift */; };
 		C5757E901D82E5C50012EF0C /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = C5757E8F1D82E5C50012EF0C /* markdown.css */; };
 		C5757E921D82E9770012EF0C /* markdown.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5757E911D82E9770012EF0C /* markdown.mustache */; };
@@ -125,6 +122,7 @@
 		C5DB94A51D3F85CD00887E81 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DB949A1D3F85CD00887E81 /* RxSwift.framework */; };
 		C5DB94A61D3F85CD00887E81 /* SwiftDate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DB949B1D3F85CD00887E81 /* SwiftDate.framework */; };
 		C5DB94AA1D3F8A0A00887E81 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DB94A91D3F8A0A00887E81 /* Result.framework */; };
+		C5DF39001F19161D00862C4A /* TwicketSegmentedControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DF38FF1F19161D00862C4A /* TwicketSegmentedControl.framework */; };
 		C5E7337B1D5D642900913A66 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7337A1D5D642900913A66 /* ExploreViewModel.swift */; };
 		C5E7337D1D5D809A00913A66 /* Kanna.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E7337C1D5D809A00913A66 /* Kanna.framework */; };
 		C5E7337F1D5D9FE900913A66 /* ExplorationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E7337E1D5D9FE900913A66 /* ExplorationViewController.swift */; };
@@ -251,10 +249,6 @@
 		C55E08531D478E8E0004EC7C /* common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = common.css; sourceTree = "<group>"; };
 		C55E08551D4793740004EC7C /* file_extensions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = file_extensions.plist; sourceTree = "<group>"; };
 		C57005E11DAA922C008DEFA9 /* SegmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentViewController.swift; sourceTree = "<group>"; };
-		C57005E81DAB3712008DEFA9 /* Palette.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
-		C57005E91DAB3712008DEFA9 /* TwicketSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwicketSegmentedControl.h; sourceTree = "<group>"; };
-		C57005EA1DAB3712008DEFA9 /* TwicketSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwicketSegmentedControl.swift; sourceTree = "<group>"; };
-		C57005EB1DAB3712008DEFA9 /* UIViewShadowExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewShadowExtension.swift; sourceTree = "<group>"; };
 		C571EF571D64836100F752EE /* OptionPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionPickerView.swift; sourceTree = "<group>"; };
 		C5757E8F1D82E5C50012EF0C /* markdown.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = markdown.css; sourceTree = "<group>"; };
 		C5757E911D82E9770012EF0C /* markdown.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = markdown.mustache; sourceTree = "<group>"; };
@@ -298,6 +292,7 @@
 		C5DB949A1D3F85CD00887E81 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		C5DB949B1D3F85CD00887E81 /* SwiftDate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftDate.framework; path = Carthage/Build/iOS/SwiftDate.framework; sourceTree = "<group>"; };
 		C5DB94A91D3F8A0A00887E81 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		C5DF38FF1F19161D00862C4A /* TwicketSegmentedControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwicketSegmentedControl.framework; path = Carthage/Build/iOS/TwicketSegmentedControl.framework; sourceTree = "<group>"; };
 		C5DF4BA71D8CD2E900052A85 /* iGithub-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iGithub-Bridging-Header.h"; sourceTree = "<group>"; };
 		C5E7337A1D5D642900913A66 /* ExploreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		C5E7337C1D5D809A00913A66 /* Kanna.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kanna.framework; path = Carthage/Build/iOS/Kanna.framework; sourceTree = "<group>"; };
@@ -334,6 +329,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5DF39001F19161D00862C4A /* TwicketSegmentedControl.framework in Frameworks */,
 				C5F79AD51D9575DC006B0466 /* SwiftMessages.framework in Frameworks */,
 				C51547A01D940EFE00314C7F /* ReactiveSwift.framework in Frameworks */,
 				C5E7337D1D5D809A00913A66 /* Kanna.framework in Frameworks */,
@@ -465,7 +461,6 @@
 			isa = PBXGroup;
 			children = (
 				C55791511D73E69800FBBD41 /* Refresh */,
-				C57005E71DAB3712008DEFA9 /* TwicketSegmentedControl */,
 				C59730E41D994B7A00DADF01 /* Cell */,
 				C5E7C2271DB4F47900F95509 /* Button */,
 				C500F8C01DBBA2EF009BB44A /* StatusProvider */,
@@ -498,17 +493,6 @@
 				C55791541D74392600FBBD41 /* UIScrollView+RefreshComponent.swift */,
 			);
 			path = Refresh;
-			sourceTree = "<group>";
-		};
-		C57005E71DAB3712008DEFA9 /* TwicketSegmentedControl */ = {
-			isa = PBXGroup;
-			children = (
-				C57005E81DAB3712008DEFA9 /* Palette.swift */,
-				C57005E91DAB3712008DEFA9 /* TwicketSegmentedControl.h */,
-				C57005EA1DAB3712008DEFA9 /* TwicketSegmentedControl.swift */,
-				C57005EB1DAB3712008DEFA9 /* UIViewShadowExtension.swift */,
-			);
-			path = TwicketSegmentedControl;
 			sourceTree = "<group>";
 		};
 		C59730E41D994B7A00DADF01 /* Cell */ = {
@@ -599,6 +583,7 @@
 		C5DB94AB1D3F8AB700887E81 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5DF38FF1F19161D00862C4A /* TwicketSegmentedControl.framework */,
 				C5F79AD41D9575DC006B0466 /* SwiftMessages.framework */,
 				C515479F1D940EFE00314C7F /* ReactiveSwift.framework */,
 				C5E7337C1D5D809A00913A66 /* Kanna.framework */,
@@ -878,6 +863,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Kanna.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftMessages.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/TwicketSegmentedControl.framework",
 			);
 			outputPaths = (
 			);
@@ -892,7 +878,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C57005EE1DAB3712008DEFA9 /* UIViewShadowExtension.swift in Sources */,
 				C51CDEBB1DBF797C0043A755 /* UserViewController.swift in Sources */,
 				C51CDEC91DBF79910043A755 /* RepositoryViewModel.swift in Sources */,
 				C52D1ADE1DA6081E0033AC49 /* ReleaseCell.swift in Sources */,
@@ -901,7 +886,6 @@
 				C5E733881D61C90000913A66 /* SearchViewController.swift in Sources */,
 				C52678AB1DAE579100F69F1B /* CommitFileCell.swift in Sources */,
 				C51CDEB91DBF797C0043A755 /* OrganizationViewController.swift in Sources */,
-				C57005EC1DAB3712008DEFA9 /* Palette.swift in Sources */,
 				C51CDEA51DBF790F0043A755 /* EventTableViewModel.swift in Sources */,
 				C59730E21D98AFD400DADF01 /* CommentCell.swift in Sources */,
 				C51CDEA71DBF790F0043A755 /* GistTableViewModel.swift in Sources */,
@@ -966,7 +950,6 @@
 				C538FD171D40A42C003A559E /* CommitComment.swift in Sources */,
 				C51CDEBA1DBF797C0043A755 /* RepositoryViewController.swift in Sources */,
 				C52D1ADC1DA606740033AC49 /* Release.swift in Sources */,
-				C57005ED1DAB3712008DEFA9 /* TwicketSegmentedControl.swift in Sources */,
 				C51CDEAC1DBF790F0043A755 /* UserTableViewModel.swift in Sources */,
 				C538FD081D406BE8003A559E /* AccountManager.swift in Sources */,
 				C51CDEC81DBF79910043A755 /* OrganizationViewModel.swift in Sources */,
