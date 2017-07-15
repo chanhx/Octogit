@@ -11,17 +11,23 @@ import SwiftDate
 import Kingfisher
 import TTTAttributedLabel
 
+fileprivate let locale = Locale(identifier: "en")
+fileprivate let region = Region(tz: .currentAutoUpdating,
+                                cal: .currentAutoUpdating,
+                                loc: .english)
+
 extension Date {
     var naturalString: String {
         let date = Date()
         let timeInterval = date.timeIntervalSince(self)
         
         if timeInterval.in(.month)! >= 1 {
-            return self.string(dateStyle: .medium, timeStyle: .none)
+            return self.string(dateStyle: .medium, timeStyle: .none, in: region)
         } else {
             let suffix = timeInterval > 0 ? "ago" : "later"
             var options = ComponentsFormatterOptions(allowedUnits: [.second, .minute, .hour, .day], style: .full, zero: .dropAll)
             options.maxUnitCount = 1
+            options.locale = locale
             return try! "\(timeInterval.string(options: options)) \(suffix)"
         }
     }
