@@ -84,10 +84,19 @@ class AccountViewController: UITableViewController {
             }
             navigationController?.pushViewController(gistTVC, animated: true)
         case 4:
-            AccountManager.logout()
+            let alertController = UIAlertController(title: "Are you sure you want to log out?", message: nil, preferredStyle: .actionSheet)
             
-            let loginVC = UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
-            UIApplication.shared.delegate!.window!!.rootViewController = loginVC
+            let logoutAction = UIAlertAction(title: "Log out", style: .destructive) { _ in
+                AccountManager.logout()
+                
+                let loginVC = UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
+                UIApplication.shared.delegate!.window!!.rootViewController = loginVC
+            }
+            
+            alertController.addAction(logoutAction)
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                
+            self.navigationController?.present(alertController, animated: true, completion: nil)
         default:
             break
         }

@@ -360,7 +360,6 @@ extension RepositoryViewController {
             ]
             let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
             self.navigationController?.present(activityVC, animated: true, completion: nil)
-            
         })
         let starAction = UIAlertAction(title: viewModel.isStarring.value! ? "Unstar" : "Star", style: .default, handler: { _ in
             self.viewModel.toggleStarring()
