@@ -12,12 +12,7 @@ import RxSwift
 
 class UserViewController: BaseTableViewController {
     
-    @IBOutlet weak var avatarView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    
-    @IBOutlet weak var followersButton: CountButton!
-    @IBOutlet weak var followingButton: CountButton!
-    @IBOutlet weak var repositoriesButton: CountButton!
+    @IBOutlet weak var header: UserHeaderView!
     @IBOutlet weak var bioLabel: UILabel!
     @IBOutlet weak var followButton: UIButton!
     
@@ -72,6 +67,8 @@ class UserViewController: BaseTableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(showActionSheet))
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         
+        self.header.delegate = self
+        
         if !viewModel.userLoaded {
             self.viewModel.fetchUser()
         }
@@ -80,11 +77,7 @@ class UserViewController: BaseTableViewController {
     }
     
     func configureHeader(user: User) {
-        self.avatarView.setAvatar(with: user.avatarURL)
-        self.nameLabel.text = user.name ?? user.login
-        self.followersButton.setTitle(user.followers, title: "Followers")
-        self.repositoriesButton.setTitle(user.publicRepos, title: "Repositories")
-        self.followingButton.setTitle(user.following, title: "Following")
+        self.header.setContent(withUser: user)
         self.bioLabel.text = user.bio
         self.bioLabel.isHidden = user.bio == nil
     }
@@ -198,20 +191,23 @@ class UserViewController: BaseTableViewController {
             self.navigationController?.pushViewController(orgVC, animated: true)
         }
     }
+}
+
+extension UserViewController: UserHeaderViewProtocol {
     
-    @IBAction func showFollowers() {
+    func didTapFollowersButton() {
         let userTVC = UserTableViewController()
         userTVC.viewModel = UserTableViewModel(followersOf: viewModel.user.value)
         navigationController?.pushViewController(userTVC, animated: true)
     }
     
-    @IBAction func showRepositories() {
+    func didTapRepositoiesButton() {
         let repoTVC = RepositoryTableViewController()
         repoTVC.viewModel = RepositoryTableViewModel(user: viewModel.user.value)
         navigationController?.pushViewController(repoTVC, animated: true)
     }
     
-    @IBAction func showFollowings() {
+    func didTapFollowingButton() {
         let userTVC = UserTableViewController()
         userTVC.viewModel = UserTableViewModel(followedBy: viewModel.user.value)
         navigationController?.pushViewController(userTVC, animated: true)

@@ -669,63 +669,28 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="137"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eyx-hG-atJ">
-                                    <rect key="frame" x="14" y="15" width="60" height="60"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="60" id="Fjq-Vf-7OD"/>
-                                        <constraint firstAttribute="height" constant="60" id="c1M-AJ-VmQ"/>
-                                    </constraints>
-                                </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4im-D1-l8C">
-                                    <rect key="frame" x="84" y="15" width="275" height="21.5"/>
-                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Q3v-cX-cIP">
-                                    <rect key="frame" x="84" y="36.5" width="275" height="72.5"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1KC-Pe-gIQ">
+                                    <rect key="frame" x="14" y="15" width="347" height="104"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LGN-AG-Skv" customClass="CountButton" customModule="iGithub" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="30" height="72.5"/>
-                                            <connections>
-                                                <action selector="showFollowers" destination="pQL-K4-C6r" eventType="touchUpInside" id="mL4-bL-WPp"/>
-                                            </connections>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="99v-fH-cxy" customClass="CountButton" customModule="iGithub" customModuleProvider="target">
-                                            <rect key="frame" x="122.5" y="0.0" width="30" height="72.5"/>
-                                            <connections>
-                                                <action selector="showRepositories" destination="pQL-K4-C6r" eventType="touchUpInside" id="LOP-ZS-J7s"/>
-                                            </connections>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JfX-pb-zp9" customClass="CountButton" customModule="iGithub" customModuleProvider="target">
-                                            <rect key="frame" x="245" y="0.0" width="30" height="72.5"/>
-                                            <connections>
-                                                <action selector="showFollowings" destination="pQL-K4-C6r" eventType="touchUpInside" id="iMs-D6-Em7"/>
-                                            </connections>
-                                        </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aAd-9q-bvK" customClass="UserHeaderView" customModule="iGithub" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="347" height="94"/>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cL0-5r-8gj">
+                                            <rect key="frame" x="0.0" y="104" width="347" height="0.0"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </stackView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cL0-5r-8gj">
-                                    <rect key="frame" x="14" y="119" width="345" height="0.0"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                             </subviews>
                             <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstItem="Q3v-cX-cIP" firstAttribute="leading" secondItem="4im-D1-l8C" secondAttribute="leading" id="8ea-Nr-ggx"/>
-                                <constraint firstItem="4im-D1-l8C" firstAttribute="top" secondItem="eyx-hG-atJ" secondAttribute="top" id="IS2-37-cjQ"/>
-                                <constraint firstItem="Q3v-cX-cIP" firstAttribute="top" secondItem="4im-D1-l8C" secondAttribute="bottom" id="Ot8-Xk-DqF"/>
-                                <constraint firstItem="eyx-hG-atJ" firstAttribute="top" secondItem="Icc-l2-arz" secondAttribute="top" constant="15" id="QCa-h0-cpN"/>
-                                <constraint firstItem="cL0-5r-8gj" firstAttribute="leading" secondItem="eyx-hG-atJ" secondAttribute="leading" id="Yhf-MW-lWS"/>
-                                <constraint firstItem="4im-D1-l8C" firstAttribute="trailing" secondItem="cL0-5r-8gj" secondAttribute="trailing" id="aNK-qh-fYM"/>
-                                <constraint firstItem="cL0-5r-8gj" firstAttribute="top" secondItem="Q3v-cX-cIP" secondAttribute="bottom" constant="10" id="cAm-xZ-GCz"/>
-                                <constraint firstAttribute="trailingMargin" secondItem="4im-D1-l8C" secondAttribute="trailing" constant="8" id="cq7-oP-N7M"/>
-                                <constraint firstItem="4im-D1-l8C" firstAttribute="leading" secondItem="eyx-hG-atJ" secondAttribute="trailing" constant="10" id="dl0-M3-f2T"/>
-                                <constraint firstAttribute="bottomMargin" secondItem="cL0-5r-8gj" secondAttribute="bottom" constant="10" id="g3I-vQ-4kb"/>
-                                <constraint firstItem="eyx-hG-atJ" firstAttribute="leading" secondItem="Icc-l2-arz" secondAttribute="leadingMargin" constant="6" id="gux-eC-FlL"/>
-                                <constraint firstItem="Q3v-cX-cIP" firstAttribute="trailing" secondItem="4im-D1-l8C" secondAttribute="trailing" id="o2g-xt-PZV"/>
+                                <constraint firstAttribute="trailingMargin" secondItem="1KC-Pe-gIQ" secondAttribute="trailing" constant="6" id="Ttf-Gb-Aht"/>
+                                <constraint firstItem="1KC-Pe-gIQ" firstAttribute="top" secondItem="Icc-l2-arz" secondAttribute="top" constant="15" id="hcH-E7-TmD"/>
+                                <constraint firstItem="1KC-Pe-gIQ" firstAttribute="bottom" secondItem="Icc-l2-arz" secondAttribute="bottomMargin" constant="-10" id="jjD-v6-YUO"/>
+                                <constraint firstItem="1KC-Pe-gIQ" firstAttribute="leading" secondItem="Icc-l2-arz" secondAttribute="leadingMargin" constant="6" id="raM-BQ-vWS"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -753,12 +718,8 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="avatarView" destination="eyx-hG-atJ" id="J60-pj-YxZ"/>
                         <outlet property="bioLabel" destination="cL0-5r-8gj" id="E0K-tZ-BWu"/>
-                        <outlet property="followersButton" destination="LGN-AG-Skv" id="bha-cz-Efh"/>
-                        <outlet property="followingButton" destination="JfX-pb-zp9" id="l5O-a5-7ID"/>
-                        <outlet property="nameLabel" destination="4im-D1-l8C" id="ilZ-mG-Pj9"/>
-                        <outlet property="repositoriesButton" destination="99v-fH-cxy" id="Sej-AK-XVV"/>
+                        <outlet property="header" destination="aAd-9q-bvK" id="SxM-it-45r"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jns-e8-4We" userLabel="First Responder" sceneMemberID="firstResponder"/>

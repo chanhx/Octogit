@@ -12,6 +12,7 @@
 		C500F8C61DBBA2EF009BB44A /* ErrorStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C21DBBA2EF009BB44A /* ErrorStatusView.swift */; };
 		C500F8C71DBBA2EF009BB44A /* LoadingStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C31DBBA2EF009BB44A /* LoadingStatusView.swift */; };
 		C500F8C81DBBA2EF009BB44A /* StatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C41DBBA2EF009BB44A /* StatusProvider.swift */; };
+		C5084B751F1BA9AF0002DC0E /* UserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5084B741F1BA9AF0002DC0E /* UserHeaderView.swift */; };
 		C5113D1A1D87B5B400344739 /* File+DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5113D191D87B5B400344739 /* File+DataProcess.swift */; };
 		C5113D1C1D88124D00344739 /* languages_dict.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5113D1B1D88124D00344739 /* languages_dict.plist */; };
 		C51547A01D940EFE00314C7F /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C515479F1D940EFE00314C7F /* ReactiveSwift.framework */; };
@@ -176,6 +177,7 @@
 		C500F8C21DBBA2EF009BB44A /* ErrorStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorStatusView.swift; sourceTree = "<group>"; };
 		C500F8C31DBBA2EF009BB44A /* LoadingStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingStatusView.swift; sourceTree = "<group>"; };
 		C500F8C41DBBA2EF009BB44A /* StatusProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusProvider.swift; sourceTree = "<group>"; };
+		C5084B741F1BA9AF0002DC0E /* UserHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHeaderView.swift; sourceTree = "<group>"; };
 		C5113D191D87B5B400344739 /* File+DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "File+DataProcess.swift"; sourceTree = "<group>"; };
 		C5113D1B1D88124D00344739 /* languages_dict.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = languages_dict.plist; sourceTree = "<group>"; };
 		C515479F1D940EFE00314C7F /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 				C571EF571D64836100F752EE /* OptionPickerView.swift */,
 				C55791581D76E50900FBBD41 /* LoadingIndicator.swift */,
 				C5DB701E1DA3A6BB00D96248 /* TitleHeaderView.swift */,
+				C5084B741F1BA9AF0002DC0E /* UserHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -981,6 +984,7 @@
 				C57005E21DAA922C008DEFA9 /* SegmentViewController.swift in Sources */,
 				C51CDEA41DBF790F0043A755 /* CommitTableViewModel.swift in Sources */,
 				C5819AC51D4EF7AC009D7772 /* IssueCell.swift in Sources */,
+				C5084B751F1BA9AF0002DC0E /* UserHeaderView.swift in Sources */,
 				C5EE81E61DBF4EAD00673E20 /* FileTableViewController.swift in Sources */,
 				C59D12101D5AE6410098301A /* URLRouter.swift in Sources */,
 				C5E733811D5DA0F300913A66 /* MainTabBarController.swift in Sources */,
