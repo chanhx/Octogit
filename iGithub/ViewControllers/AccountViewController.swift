@@ -10,39 +10,26 @@ import UIKit
 
 class AccountViewController: UITableViewController {
     
+    @IBOutlet private var header: UserHeaderView!
     private var imageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 15
-        imageView.setAvatar(with: AccountManager.currentUser?.avatarURL)
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showProfile)))
-        
-        navigationItem.title = AccountManager.currentUser?.login
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
         
+        header.setContent(withUser: AccountManager.currentUser!)
+        sizeHeaderToFit(tableView: self.tableView)
+        
         AccountManager.refresh {
-            if self.imageView.kf.webURL != $0.avatarURL {
-                self.imageView.setAvatar(with: $0.avatarURL)
-            }
-            self.navigationItem.title = AccountManager.currentUser?.login
+            self.header.setContent(withUser: $0)
+            self.sizeHeaderToFit(tableView: self.tableView)
         }
-    }
-    
-    func showProfile() {
-        let userVC = UserViewController.instantiateFromStoryboard()
-        userVC.viewModel = UserViewModel(AccountManager.currentUser!)
-        navigationController?.pushViewController(userVC, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
-        case 0, 3, 4:
+        case 3, 4:
             return super.tableView(tableView, heightForHeaderInSection: section)
         default:
             return 25
@@ -52,8 +39,6 @@ class AccountViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let user = AccountManager.currentUser!
-        
         switch indexPath.section {
         case 0:
             let repoTVC = RepositoryTableViewController()
@@ -61,10 +46,8 @@ class AccountViewController: UITableViewController {
             
             switch indexPath.row {
             case 0:
-                repoTVC.viewModel = RepositoryTableViewModel(user: user)
-            case 1:
                 repoTVC.viewModel = RepositoryTableViewModel.starred()
-            case 2:
+            case 1:
                 repoTVC.viewModel = RepositoryTableViewModel.subscribed()
             default:
                 break
@@ -100,5 +83,26 @@ class AccountViewController: UITableViewController {
         default:
             break
         }
+    }
+}
+
+extension AccountViewController: UserHeaderViewProtocol {
+    
+    func didTapFollowersButton() {
+        let userTVC = UserTableViewController()
+        userTVC.viewModel = UserTableViewModel(followersOf: AccountManager.currentUser!)
+        navigationController?.pushViewController(userTVC, animated: true)
+    }
+    
+    func didTapRepositoiesButton() {
+        let repoTVC = RepositoryTableViewController()
+        repoTVC.viewModel = RepositoryTableViewModel(user: AccountManager.currentUser!)
+        navigationController?.pushViewController(repoTVC, animated: true)
+    }
+    
+    func didTapFollowingButton() {
+        let userTVC = UserTableViewController()
+        userTVC.viewModel = UserTableViewModel(followedBy: AccountManager.currentUser!)
+        navigationController?.pushViewController(userTVC, animated: true)
     }
 }
