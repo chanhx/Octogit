@@ -142,7 +142,7 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
             let stargazers = starSVG?.parent?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             let forkSVG = $0.at_css("svg[aria-label=\"fork\"]")
             let forks = forkSVG?.parent?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-            let periodStargazers = $0.at_css("span.float-right")?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let periodStargazers = $0.at_css("span svg.octicon-star")?.parent?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             
             return (name, description, language, stargazers, forks, periodStargazers)
         }
