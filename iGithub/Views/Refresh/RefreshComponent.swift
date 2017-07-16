@@ -39,6 +39,8 @@ class RefreshComponent: UIView {
         
         super.init(frame: CGRect.zero)
         
+        autoresizingMask = .flexibleWidth
+        
         addSubview(indicator)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         
