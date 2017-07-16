@@ -65,6 +65,7 @@ class WebViewController: UIViewController {
         super.viewDidLoad()
         
         webView.frame = view.bounds
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         webView.navigationDelegate = self
         self.view.addSubview(webView)
         

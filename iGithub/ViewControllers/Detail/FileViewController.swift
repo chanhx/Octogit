@@ -34,6 +34,7 @@ class FileViewController: UIViewController {
         super.viewDidLoad()
 
         webView.frame = self.view.bounds
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         webView.navigationDelegate = self
         
         view.addSubview(webView)
