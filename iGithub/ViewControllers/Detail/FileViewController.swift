@@ -45,16 +45,6 @@ class FileViewController: UIViewController {
 
         viewModel.getFileContent()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-    }
 }
 
 extension FileViewController: WKNavigationDelegate {
