@@ -93,7 +93,7 @@ class RepositoryViewController: BaseTableViewController {
         } else {
             iconLabel.text = Octicon.repo.rawValue
         }
-        updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString)"
+        updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString(withPreposition: true))"
         
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal

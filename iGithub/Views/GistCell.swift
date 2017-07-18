@@ -72,7 +72,7 @@ class GistCell: UITableViewCell {
             nameLabel.text = entity.files?[0].name
             
             filesCountLabel.attributedText = Octicon.gist.iconString("\(entity.files!.count)")
-            timeLabel.attributedText = Octicon.clock.iconString(entity.updatedAt!.naturalString)
+            timeLabel.attributedText = Octicon.clock.iconString(entity.updatedAt!.naturalString())
         }
     }
 }

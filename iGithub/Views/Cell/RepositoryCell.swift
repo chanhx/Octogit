@@ -91,7 +91,7 @@ class RepositoryCell: UITableViewCell {
     }
     
     func configure(withRepository repo: Repository) {
-        infoLabel.text = repo.pushedAt?.naturalString
+        infoLabel.text = repo.pushedAt?.naturalString(withPreposition: true)
         if shouldDisplayFullName {
             nameLabel.attributedText = highlightRepoName(fullName: repo.fullName!)
         } else {

@@ -57,7 +57,7 @@ class CommitViewController: BaseTableViewController {
         
         let author = viewModel.commit.value.author?.login ?? viewModel.commit.value.authorName
         
-        let attrInfo = NSMutableAttributedString(string: "\(author!) committed \(viewModel.commit.value.commitDate!.naturalString)")
+        let attrInfo = NSMutableAttributedString(string: "\(author!) committed \(viewModel.commit.value.commitDate!.naturalString(withPreposition: true))")
         attrInfo.addAttributes([
             NSForegroundColorAttributeName: UIColor(netHex: 0x555555),
             NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightMedium)

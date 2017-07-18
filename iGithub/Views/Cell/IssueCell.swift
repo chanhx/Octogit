@@ -10,10 +10,11 @@ import UIKit
 
 class IssueCell: UITableViewCell {
     
-    fileprivate let iconLabel = UILabel()
-    fileprivate let titleLabel = UILabel()
-    fileprivate let infoLabel = UILabel()
-    fileprivate let commentsLabel = UILabel()
+    private let iconLabel = UILabel()
+    private let numberLabel = UILabel()
+    private let titleLabel = UILabel()
+    private let infoLabel = UILabel()
+    private let commentsLabel = UILabel()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,7 +28,7 @@ class IssueCell: UITableViewCell {
     }
 
     func configureSubviews() {
-        iconLabel.font = UIFont.OcticonOfSize(23)
+        iconLabel.font = UIFont.OcticonOfSize(21)
         iconLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
         iconLabel.layer.isOpaque = true
         iconLabel.backgroundColor = .white
@@ -39,39 +40,44 @@ class IssueCell: UITableViewCell {
         titleLabel.layer.masksToBounds = true
         titleLabel.backgroundColor = .white
         
-        infoLabel.font = UIFont.systemFont(ofSize: 14)
-        infoLabel.textColor = UIColor(netHex: 0x888888)
-        infoLabel.layer.isOpaque = true
-        infoLabel.backgroundColor = .white
+        numberLabel.textColor = UIColor.gray
+        numberLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium)
+        numberLabel.layer.isOpaque = true
+        numberLabel.backgroundColor = .white
         
-        commentsLabel.textColor = UIColor(netHex: 0x888888)
-        commentsLabel.font = UIFont.systemFont(ofSize: 14)
-        commentsLabel.layer.isOpaque = true
-        commentsLabel.backgroundColor = .white
+        commentsLabel.textAlignment = .right
+        
+        infoLabel.numberOfLines = 0
+        infoLabel.lineBreakMode = .byWordWrapping
+        
+        for label in [infoLabel, commentsLabel] {
+            label.textColor = UIColor(netHex: 0x888888)
+            label.font = UIFont.systemFont(ofSize: 14)
+            label.layer.isOpaque = true
+            label.backgroundColor = .white
+        }
     }
     
     func layout() {
         let margins = contentView.layoutMarginsGuide
         
-        let hStackView = UIStackView(arrangedSubviews: [infoLabel, commentsLabel])
+        let hStackView = UIStackView(arrangedSubviews: [numberLabel, commentsLabel])
         hStackView.axis = .horizontal
-        hStackView.alignment = .fill
         hStackView.distribution = .equalSpacing
+        hStackView.alignment = .center
         hStackView.spacing = 10
         
-        let vStackView = UIStackView(arrangedSubviews: [titleLabel, hStackView])
+        let vStackView = UIStackView(arrangedSubviews: [hStackView, titleLabel, infoLabel])
         vStackView.axis = .vertical
-        vStackView.alignment = .fill
-        vStackView.distribution = .fill
-        vStackView.spacing = 5
+        vStackView.spacing = 6
         
         contentView.addSubviews([iconLabel, vStackView])
         
         NSLayoutConstraint.activate([
-            iconLabel.topAnchor.constraint(equalTo: margins.topAnchor),
+            iconLabel.topAnchor.constraint(equalTo: titleLabel.topAnchor),
             iconLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             
-            vStackView.topAnchor.constraint(equalTo: iconLabel.topAnchor),
+            vStackView.topAnchor.constraint(equalTo: margins.topAnchor),
             vStackView.leadingAnchor.constraint(equalTo: iconLabel.trailingAnchor, constant: 5),
             vStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             vStackView.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
@@ -80,7 +86,9 @@ class IssueCell: UITableViewCell {
     
     var entity: Issue! {
         didSet {
-            titleLabel.text = entity.title
+            numberLabel.text = "#\(entity.number!)"
+            
+            titleLabel.text = entity.title!
             
             if let comments = entity.comments, comments > 0 {
                 commentsLabel.attributedText = Octicon.comment.iconString("\(comments)")
@@ -92,26 +100,15 @@ class IssueCell: UITableViewCell {
             iconLabel.text = entity.icon.rawValue
             iconLabel.textColor = entity.iconColor
             
-            let info = "#\(entity.number!) by \(entity.user!)"
-            
-            if let pullRequest = entity as? PullRequest {
-                switch entity.state! {
-                case .closed:
-                    if let mergedAt = pullRequest.mergedAt {
-                        infoLabel.text = "\(info) - \(mergedAt.naturalString)"
-                    } else {
-                        infoLabel.text = "\(info) - \(pullRequest.closedAt!.naturalString)"
-                    }
-                case .open:
-                    infoLabel.text = "\(info) - \(entity.createdAt!.naturalString)"
+            switch entity.state! {
+            case .closed:
+                if let pullRequest = entity as? PullRequest, let mergedAt = pullRequest.mergedAt {
+                        infoLabel.text = "by \(entity.user!) was merged \(mergedAt.naturalString(withPreposition: true))"
+                } else {
+                    infoLabel.text = "by \(entity.user!) was closed \(entity.closedAt!.naturalString(withPreposition: true))"
                 }
-            } else {
-                switch entity.state! {
-                case .closed:
-                    infoLabel.text = "\(info) - \(entity.closedAt!.naturalString)"
-                case .open:
-                    infoLabel.text = "\(info) - \(entity.createdAt!.naturalString)"
-                }
+            case .open:
+                infoLabel.text = "by \(entity.user!) - \(entity.createdAt!.naturalString())"
             }
         }
     }

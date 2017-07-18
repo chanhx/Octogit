@@ -81,7 +81,7 @@ class CommentCell: UITableViewCell {
         didSet {
             avatarView.setAvatar(with: entity.user?.avatarURL)
             nameLabel.text = entity.user?.login
-            timeLabel.text = entity.createdAt?.naturalString
+            timeLabel.text = entity.createdAt?.naturalString()
             bodyLabel.text = entity.body
         }
     }

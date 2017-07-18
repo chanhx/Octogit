@@ -17,12 +17,13 @@ fileprivate let region = Region(tz: .currentAutoUpdating,
                                 loc: .english)
 
 extension Date {
-    var naturalString: String {
+    func naturalString(withPreposition: Bool = false) -> String {
         let date = Date()
         let timeInterval = date.timeIntervalSince(self)
         
         if timeInterval.in(.month)! >= 1 {
-            return self.string(dateStyle: .medium, timeStyle: .none, in: region)
+            let abosulteDate = self.string(dateStyle: .medium, timeStyle: .none, in: region)
+            return withPreposition ? "on " + abosulteDate : abosulteDate
         } else {
             let suffix = timeInterval > 0 ? "ago" : "later"
             var options = ComponentsFormatterOptions(allowedUnits: [.second, .minute, .hour, .day], style: .full, zero: .dropAll)

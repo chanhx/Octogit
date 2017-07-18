@@ -70,7 +70,7 @@ class CommitCell: UITableViewCell {
             titleLabel.text = entity.message?.replacingOccurrences(of: "\n\n", with: "\n")
             
             let author = entity.author?.login ?? entity.authorName
-            infoLabel.text = "\(entity.shortSHA) by \(author!) \(entity.commitDate!.naturalString)"
+            infoLabel.text = "\(entity.shortSHA) by \(author!) \(entity.commitDate!.naturalString(withPreposition: true))"
         }
     }
 }

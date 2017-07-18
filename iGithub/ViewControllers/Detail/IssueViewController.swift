@@ -71,7 +71,7 @@ class IssueViewController: BaseTableViewController, WKNavigationDelegate {
         
         let object = viewModel.issue.isPullRequest ? "pull request" : "issue"
         
-        let attrInfo = NSMutableAttributedString(string: "\(viewModel.issue.user!) opened this \(object) \(viewModel.issue.createdAt!.naturalString)")
+        let attrInfo = NSMutableAttributedString(string: "\(viewModel.issue.user!) opened this \(object) \(viewModel.issue.createdAt!.naturalString(withPreposition: true))")
         attrInfo.addAttributes([
             NSForegroundColorAttributeName: UIColor(netHex: 0x555555),
             NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightMedium)

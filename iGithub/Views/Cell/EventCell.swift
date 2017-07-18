@@ -102,7 +102,7 @@ class EventCell: UITableViewCell {
         let icon = event.icon
         iconLabel.text = icon.text
         iconLabel.textColor = icon.color
-        timeLabel.text = event.createdAt!.naturalString
+        timeLabel.text = event.createdAt!.naturalString()
         
         contentLabel.text = event.content
         contentLabel.isHidden = contentLabel.text == nil

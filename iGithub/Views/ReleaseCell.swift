@@ -75,7 +75,7 @@ class ReleaseCell: UITableViewCell {
             }
             
             tagLabel.attributedText = Octicon.tag.iconString(entity.tagName!, iconColor: UIColor(netHex: 0x767676))
-            timeLabel.attributedText = Octicon.clock.iconString(entity.publishedAt!.naturalString, iconColor: UIColor(netHex: 0x767676))
+            timeLabel.attributedText = Octicon.clock.iconString(entity.publishedAt!.naturalString(), iconColor: UIColor(netHex: 0x767676))
         }
     }
 }
