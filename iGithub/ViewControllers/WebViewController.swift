@@ -12,6 +12,8 @@ import WebKit
 class WebViewController: UIViewController {
     
     var webView = WKWebView()
+    var showNativeController = true
+    
     fileprivate var request: URLRequest?
     fileprivate var progressView = UIProgressView(progressViewStyle: .bar)
     
@@ -171,7 +173,7 @@ extension WebViewController: WKNavigationDelegate {
             return
         }
         
-        guard let vc = URLRouter.nativeViewController(forURL: url) else {
+        guard showNativeController, let vc = URLRouter.nativeViewController(forURL: url) else {
             decisionHandler(.allow)
             return
         }

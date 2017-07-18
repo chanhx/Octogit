@@ -363,8 +363,9 @@ extension RepositoryViewController {
         let copyURLAction = UIAlertAction(title: "Copy URL", style: .default, handler: { _ in
             UIPasteboard.general.string = self.viewModel.htmlURL.absoluteString
         })
-        let showOnGithubAction = UIAlertAction(title: "Show on Github", style: .default, handler: { _ in
+        let showOnGithubAction = UIAlertAction(title: "Show on GitHub", style: .default, handler: { _ in
             let webVC = WebViewController(url: self.viewModel.htmlURL)
+            webVC.showNativeController = false
             self.navigationController?.pushViewController(webVC, animated: true)
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
