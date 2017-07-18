@@ -50,8 +50,6 @@ class RepositoryViewController: BaseTableViewController {
                 .drive(onNext: { [unowned self] (_, isStarring) in
                     self.starButton.isEnabled = true
                     self.starButton.setTitle(isStarring! ? "Unstar" : "Star", for: .normal)
-                    
-                    self.navigationItem.rightBarButtonItem?.isEnabled = true
                 })
                 .addDisposableTo(viewModel.disposeBag)
         }
@@ -64,8 +62,9 @@ class RepositoryViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(showActionSheet))
-        navigationItem.rightBarButtonItem?.isEnabled = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action,
+                                                            target: self,
+                                                            action: #selector(showActionSheet))
         
         iconLabel.text = ""
         titleLabel.text = viewModel.repository.value.name
@@ -361,9 +360,6 @@ extension RepositoryViewController {
             let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
             self.navigationController?.present(activityVC, animated: true, completion: nil)
         })
-        let starAction = UIAlertAction(title: viewModel.isStarring.value! ? "Unstar" : "Star", style: .default, handler: { _ in
-            self.viewModel.toggleStarring()
-        })
         let copyURLAction = UIAlertAction(title: "Copy URL", style: .default, handler: { _ in
             UIPasteboard.general.string = self.viewModel.htmlURL.absoluteString
         })
@@ -374,7 +370,6 @@ extension RepositoryViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addAction(shareAction)
-        alertController.addAction(starAction)
         alertController.addAction(copyURLAction)
         alertController.addAction(showOnGithubAction)
         alertController.addAction(cancelAction)
