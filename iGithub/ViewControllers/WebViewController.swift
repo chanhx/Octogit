@@ -17,7 +17,7 @@ class WebViewController: UIViewController {
     fileprivate var request: URLRequest?
     fileprivate var progressView = UIProgressView(progressViewStyle: .bar)
     
-    fileprivate var toolbarWasHidden: Bool!
+    fileprivate var toolbarWasHidden: Bool?
     
     fileprivate var kvoContext: UInt8 = 0
     fileprivate let keyPaths = ["title", "loading", "estimatedProgress"]
@@ -89,7 +89,9 @@ class WebViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        toolbarWasHidden = self.navigationController?.isToolbarHidden
+        if toolbarWasHidden == nil {
+            toolbarWasHidden = self.navigationController?.isToolbarHidden
+        }
         navigationController?.isToolbarHidden = false
         
         progressView.isHidden = false
@@ -98,7 +100,7 @@ class WebViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        self.navigationController?.isToolbarHidden = toolbarWasHidden
+        self.navigationController?.isToolbarHidden = toolbarWasHidden!
         
         progressView.isHidden = true
     }
