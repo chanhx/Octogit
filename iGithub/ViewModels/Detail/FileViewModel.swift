@@ -110,6 +110,24 @@ class FileViewModel {
             .mapJSON()
             .subscribe(
                 onNext: { [unowned self] in
+                    if let json = $0 as? [String: Any],
+                    let errors = json["errors"] as? [[String: String]],
+                    let code = errors[0]["code"] {
+                        
+                        var message: String
+                        
+                        switch code {
+                        case "too_large":
+                            message = "Sorry about that, but we can’t show files that are this big right now"
+                        default:
+                            message = "Can not display the requested blob"
+                        }
+                        
+                        MessageManager.showMessage(title: "", body: message, type: .error)
+                        
+                        return
+                    }
+                    
                     let normalFile = Mapper<File>().map(JSONObject: $0)!
                     self.file = .normalFile(normalFile)
                     
