@@ -30,7 +30,6 @@ class RepositoryViewController: BaseTableViewController {
     var viewModel: RepositoryViewModel! {
         didSet {
             let repoDriver = viewModel.repository.asDriver()
-            let starDriver = viewModel.isStarring.asDriver()
             
             repoDriver
                 .filter { $0.defaultBranch != nil }
@@ -40,18 +39,6 @@ class RepositoryViewController: BaseTableViewController {
                     self.configureHeader(repo: repo)
                     self.sizeHeaderToFit(tableView: self.tableView)
                 }).addDisposableTo(viewModel.disposeBag)
-            
-            Driver.combineLatest(repoDriver, starDriver) { repo, isStarring in
-                    (repo, isStarring)
-                }
-                .filter { (repo, isStarring) in
-                    repo.defaultBranch != nil && isStarring != nil
-                }
-                .drive(onNext: { [unowned self] (_, isStarring) in
-                    self.starButton.isEnabled = true
-                    self.starButton.setTitle(isStarring! ? "Unstar" : "Star", for: .normal)
-                })
-                .addDisposableTo(viewModel.disposeBag)
         }
     }
     
@@ -81,19 +68,21 @@ class RepositoryViewController: BaseTableViewController {
         if !viewModel.isRepositoryLoaded {
             viewModel.fetchRepository()
         }
-        viewModel.checkIsStarring()
         viewModel.fetchBranches()
     }
     
     func configureHeader(repo: Repository) {
         if repo.isPrivate! {
             iconLabel.text = Octicon.lock.rawValue
-        } else if repo.isAFork! {
+        } else if repo.isFork! {
             iconLabel.text = Octicon.repoForked.rawValue
         } else {
             iconLabel.text = Octicon.repo.rawValue
         }
         updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString(withPreposition: true))"
+        
+        starButton.setTitle(repo.hasStarred! ? "Unstar" : "Star", for: .normal)
+        starButton.isEnabled = true
         
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
@@ -199,7 +188,7 @@ class RepositoryViewController: BaseTableViewController {
             switch indexPath.row {
             case 0:
                 cell.textLabel?.attributedText = Octicon.code.iconString(" Code", iconSize: 18, iconColor: .lightGray)
-                cell.detailTextLabel?.text = viewModel.repository.value.language
+                cell.detailTextLabel?.text = viewModel.repository.value.primaryLanguage
             case 1:
                 cell.textLabel?.attributedText = Octicon.gitCommit.iconString(" Commits", iconSize: 18, iconColor: .lightGray)
             default:
@@ -279,10 +268,10 @@ class RepositoryViewController: BaseTableViewController {
                 let repo = viewModel.repository.value
                 
                 let openIssueTVC = IssueTableViewController()
-                openIssueTVC.viewModel = IssueTableViewModel(repo: repo.fullName!)
+                openIssueTVC.viewModel = IssueTableViewModel(repo: repo.nameWithOwner!)
                 
                 let closedIssueTVC = IssueTableViewController()
-                closedIssueTVC.viewModel = IssueTableViewModel(repo: repo.fullName!, state: .closed)
+                closedIssueTVC.viewModel = IssueTableViewModel(repo: repo.nameWithOwner!, state: .closed)
                 
                 let issueSVC = SegmentViewController(viewControllers: [openIssueTVC, closedIssueTVC], titles: ["Open", "Closed"])
                 issueSVC.navigationItem.title = "Issues"
@@ -293,10 +282,10 @@ class RepositoryViewController: BaseTableViewController {
                 let repo = viewModel.repository.value
                 
                 let openPullRequestTVC = PullRequestTableViewController()
-                openPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo.fullName!)
+                openPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo.nameWithOwner!)
                 
                 let closedPullRequestTVC = PullRequestTableViewController()
-                closedPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo.fullName!, state: .closed)
+                closedPullRequestTVC.viewModel = PullRequestTableViewModel(repo: repo.nameWithOwner!, state: .closed)
                 
                 let pullRequestSVC = SegmentViewController(viewControllers: [openPullRequestTVC, closedPullRequestTVC], titles: ["Open", "Closed"])
                 pullRequestSVC.navigationItem.title = "Pull requests"

@@ -11,35 +11,37 @@ import ObjectMapper
 
 class Repository: Mappable {
     
-    var id: Int?
-    var name: String?
-    var fullName: String?
+    var name: String!
+    var nameWithOwner: String?
     var homepage: URL?
     var repoDescription: String?
-    var language: String?
+    var primaryLanguage: String?
     
     var owner: User?
     var parent: Repository?
-    var source: Repository?
     
-    var createdAt: Date?
     var pushedAt: Date?
-    var updatedAt: Date?
+    
+    var hasStarred: Bool?
     
     var isPrivate: Bool?
-    var isAFork: Bool?
-    var hasIssues: Bool?
-    var hasWiki: Bool?
-    var hasPages: Bool?
+    var isFork: Bool?
+    var isLocked: Bool?
+    var isMirror: Bool?
+    
+    var hasIssuesEnabled: Bool?
+    var hasWikiEnabled: Bool?
     
     var openIssuesCount: Int?
+    var openPRsCount: Int?
+    
     var stargazersCount: Int?
     var forksCount: Int?
     var watchersCount: Int?
     
     var defaultBranch: String?
     
-    var size: Int?
+    var diskUsage: Int?     // kilobytes
     
     required init?(map: Map) {
         mapping(map: map)
@@ -47,34 +49,34 @@ class Repository: Mappable {
     
     // Mappable
     func mapping(map: Map) {
-        id              <- map["id"]
-        name            <- map["name"]
-        fullName        <- map["full_name"]
-        homepage        <- (map["homepage"], URLTransform())
-        repoDescription <- map["description"]
-        language        <- map["language"]
+        name                 <- map["name"]
+        nameWithOwner        <- map["nameWithOwner"]
+        homepage             <- (map["homepageUrl"], URLTransform())
+        repoDescription      <- map["description"]
+        primaryLanguage      <- map["primaryLanguage.name"]
         
-        owner           <- map["owner"]
-        parent          <- map["parent"]
-        source          <- map["source"]
+        owner                <- map["owner"]
+        parent               <- map["parent"]
         
-        createdAt       <- (map["created_at"], ISO8601DateTransform())
-        pushedAt        <- (map["pushed_at"], ISO8601DateTransform())
-        updatedAt       <- (map["updated_at"], ISO8601DateTransform())
+        pushedAt             <- (map["pushedAt"], ISO8601DateTransform())
         
-        isPrivate       <- map["private"]
-        isAFork         <- map["fork"]
-        hasIssues       <- map["has_issues"]
-        hasWiki         <- map["has_wiki"]
-        hasPages        <- map["has_pages"]
+        hasStarred           <- map["viewerHasStarred"]
         
-        openIssuesCount <- map["open_issues_count"]
-        stargazersCount <- map["stargazers_count"]
-        forksCount      <- map["forks_count"]
-        watchersCount   <- map["subscribers_count"]
+        isPrivate            <- map["isPrivate"]
+        isFork               <- map["isFork"]
+        isLocked             <- map["isLocked"]
+        hasIssuesEnabled     <- map["hasIssuesEnabled"]
+        hasWikiEnabled       <- map["hasWikiEnabled"]
         
-        defaultBranch   <- map["default_branch"]
+        openIssuesCount      <- map["issues.totalCount"]
+        openPRsCount         <- map["pullRequests.totalCount"]
         
-        size            <- map["size"]
+        stargazersCount      <- map["stargazers.totalCount"]
+        forksCount           <- map["forks.totalCount"]
+        watchersCount        <- map["watchers.totalCount"]
+        
+        defaultBranch        <- map["defaultBranchRef.name"]
+        
+        diskUsage            <- map["diskUsage"]
     }
 }

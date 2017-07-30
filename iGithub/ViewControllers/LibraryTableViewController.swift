@@ -36,7 +36,7 @@ class LibraryTableViewController: BaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
         let repo = dataSource[indexPath.row]
         let repoVC = RepositoryViewController.instantiateFromStoryboard()
-        repoVC.viewModel = RepositoryViewModel(repo: repo.fullName!)
+        repoVC.viewModel = RepositoryViewModel(repo: repo.nameWithOwner!)
         
         navigationController?.pushViewController(repoVC, animated: true)
     }

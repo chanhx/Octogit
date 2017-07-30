@@ -93,7 +93,7 @@ class RepositoryCell: UITableViewCell {
     func configure(withRepository repo: Repository) {
         infoLabel.text = repo.pushedAt?.naturalString(withPreposition: true)
         if shouldDisplayFullName {
-            nameLabel.attributedText = highlightRepoName(fullName: repo.fullName!)
+            nameLabel.attributedText = highlightRepoName(fullName: repo.nameWithOwner!)
         } else {
             nameLabel.text = repo.name!
         }
@@ -101,8 +101,8 @@ class RepositoryCell: UITableViewCell {
         descriptionLabel.text = repo.repoDescription
         descriptionLabel.isHidden = repo.repoDescription == nil
         
-        languageLabel.text = repo.language
-        languageLabel.isHidden = repo.language == nil
+        languageLabel.text = repo.primaryLanguage
+        languageLabel.isHidden = repo.primaryLanguage == nil
         
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
@@ -112,7 +112,7 @@ class RepositoryCell: UITableViewCell {
         
         if repo.isPrivate! {
             iconLabel.text = Octicon.lock.rawValue
-        } else if repo.isAFork! {
+        } else if repo.isFork! {
             iconLabel.text = Octicon.repoForked.rawValue
         } else {
             iconLabel.text = Octicon.repo.rawValue

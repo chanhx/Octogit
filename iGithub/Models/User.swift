@@ -17,7 +17,7 @@ enum UserType: String {
 class User: Mappable, CustomStringConvertible {
     
     var id: Int?
-    var login: String?
+    var login: String!
     var name: String?
     var avatarURL: URL?
     var bio: String?

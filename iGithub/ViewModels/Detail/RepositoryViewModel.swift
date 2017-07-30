@@ -27,7 +27,11 @@ class RepositoryViewModel {
         case readme
     }
     
-    var fullName: String
+    var owner: String
+    var name: String
+    var nameWithOwner: String {
+        return "\(owner)/\(name)"
+    }
     let disposeBag = DisposeBag()
     var repository: Variable<Repository>
     var isStarring = Variable<Bool?>(nil)
@@ -44,7 +48,7 @@ class RepositoryViewModel {
     var infoTypes = [InfoType]()
     
     lazy var information: String = {
-        var information: String = "Check out the repository \(self.fullName)."
+        var information: String = "Check out the repository \(self.nameWithOwner)."
         if let description = self.repository.value.repoDescription,
             description.characters.count > 0 {
             information.append(" \(description)")
@@ -53,34 +57,37 @@ class RepositoryViewModel {
         return information
     }()
     lazy var htmlURL: URL = {
-        return URL(string: "https://github.com/\(self.fullName)")!
+        return URL(string: "https://github.com/\(self.nameWithOwner)")!
     }()
     
     init(repo: Repository) {
-        self.fullName = repo.fullName!
+        self.name = repo.name
+        self.owner = repo.owner!.login
         self.repository = Variable(repo)
         
         branch = repo.defaultBranch!
     }
     
     init(repo: String) {
-        self.fullName = repo
-        
-        let name = fullName.components(separatedBy: "/").last!
+        let nameComponents = repo.components(separatedBy: "/")
+        self.owner = nameComponents[0]
+        self.name = nameComponents[1]
         self.repository = Variable(Mapper<Repository>().map(JSON: ["name": "\(name)"])!)
     }
     
     func fetchRepository() {
         GitHubProvider
-            .request(.getARepository(repo: fullName))
+            .request(.repository(owner:owner, name:name))
             .mapJSON()
+//            .mapString()
             .subscribe(onNext: { [unowned self] in
                 // first check if there is an error and if the repo exists
 //                if $0.statusCode == 404 {
 //                    
 //                }
+                let json = $0 as! [String : [String : Any]]
                 
-                if let repo = Mapper<Repository>().map(JSONObject: $0) {
+                if let repo = Mapper<Repository>().map(JSONObject: json["data"]!["repository"]) {
                     self.branch = repo.defaultBranch!
                     self.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
                     self.repository.value = repo
@@ -92,7 +99,7 @@ class RepositoryViewModel {
     // MARK: Branches
     
     func fetchBranches() {
-        let token = GitHubAPI.branches(repo: fullName, page: pageForBranches)
+        let token = GitHubAPI.branches(repo: nameWithOwner, page: pageForBranches)
         
         GitHubProvider
             .request(token)
@@ -125,31 +132,14 @@ class RepositoryViewModel {
         }
     }
     
-    // MARK: Star
-    
-    func checkIsStarring() {
-        GitHubProvider
-            .request(.isStarring(repo: fullName))
-            .subscribe(onNext: { [unowned self] response in
-                if response.statusCode == 204 {
-                    self.isStarring.value = true
-                } else if response.statusCode == 404 {
-                    self.isStarring.value = false
-                } else {
-                    // error happened
-                }
-            })
-            .addDisposableTo(disposeBag)
-    }
-    
     @objc func toggleStarring() {
-        let token: GitHubAPI = isStarring.value! ? .unstar(repo: fullName) : .star(repo: fullName)
+        let token: GitHubAPI = isStarring.value! ? .unstar(repo: nameWithOwner) : .star(repo: nameWithOwner)
         
         GitHubProvider
             .request(token)
             .subscribe(onNext: { [unowned self] response in
                 if response.statusCode == 204 {
-                    self.isStarring.value = !self.isStarring.value!
+                    self.repository.value.hasStarred = !self.repository.value.hasStarred!
                 } else {
                     let json = try! response.mapJSON()
                     print(json)
@@ -216,15 +206,15 @@ class RepositoryViewModel {
     // MARK: generate child viewmodel
     
     var readmeViewModel: FileViewModel {
-        return FileViewModel(repository: fullName, ref: branch)
+        return FileViewModel(repository: nameWithOwner, ref: branch)
     }
     
     var fileTableViewModel: FileTableViewModel {
-        return FileTableViewModel(repository: fullName, ref: branch)
+        return FileTableViewModel(repository: nameWithOwner, ref: branch)
     }
     
     var commitTableViewModel: CommitTableViewModel {
-        return CommitTableViewModel(repo: fullName, branch: branch)
+        return CommitTableViewModel(repo: nameWithOwner, branch: branch)
     }
 
     var ownerViewModel: UserViewModel {

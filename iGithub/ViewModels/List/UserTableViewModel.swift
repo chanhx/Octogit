@@ -13,7 +13,7 @@ class UserTableViewModel: BaseTableViewModel<User> {
     var token: GitHubAPI
     
     init(repo: Repository) {
-        token = .repositoryContributors(repo: repo.fullName!, page: 1)
+        token = .repositoryContributors(repo: repo.nameWithOwner!, page: 1)
         super.init()
     }
     
