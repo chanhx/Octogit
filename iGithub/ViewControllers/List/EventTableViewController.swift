@@ -31,8 +31,6 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                     cell.titleLabel.tag = row
                     cell.avatarView.tag = row
                     cell.avatarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.avatarTapped)))
-                    
-                    cell.layoutIfNeeded()
                 }
                 .addDisposableTo(viewModel.disposeBag)
             

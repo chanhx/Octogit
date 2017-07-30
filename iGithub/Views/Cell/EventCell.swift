@@ -74,7 +74,7 @@ class EventCell: UITableViewCell {
         let vStackView = UIStackView(arrangedSubviews: [hStackView1, hStackView2, contentLabel])
         vStackView.axis = .vertical
         vStackView.alignment = .fill
-        vStackView.distribution = .fillProportionally
+        vStackView.distribution = .fill
         vStackView.spacing = 8
         
         vStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -83,6 +83,8 @@ class EventCell: UITableViewCell {
         let margins = contentView.layoutMarginsGuide
         
         NSLayoutConstraint.activate([
+            hStackView1.heightAnchor.constraint(equalToConstant: 18),
+            
             iconLabel.widthAnchor.constraint(equalToConstant: 36),
             
             avatarView.heightAnchor.constraint(equalToConstant: 36),
