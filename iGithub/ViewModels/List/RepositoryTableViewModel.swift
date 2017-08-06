@@ -12,59 +12,66 @@ import ObjectMapper
 class RepositoryTableViewModel: BaseTableViewModel<Repository> {
     
     fileprivate var token: GitHubAPI
+    var endCursor: String?
     
-    init(organization: User) {
-        token = .organizationRepos(org: organization.login!, page: 1)
-        super.init()
-    }
-    
-    init(user: User) {
-        token = .userRepos(user: user.login!, page: 1)
+    init(login: String, type: RepositoryOwnerType) {
+        token = .repositories(login: login, type: type, after: nil)
         super.init()
     }
     
     init(stargazer: User) {
-        token = .starredRepos(user: stargazer.login!, page: 1)
+        token = .starredRepos(user: stargazer.login!, after: nil)
         super.init()
     }
     
     init(subscriber: User) {
-        token = .subscribedRepos(user: subscriber.login!, page: 1)
+        token = .subscribedRepos(user: subscriber.login!, after: nil)
         super.init()
-    }
-    
-    private init(token: GitHubAPI) {
-        self.token = token
-        super.init()
-    }
-    
-    class func starred() -> RepositoryTableViewModel {
-        let vm = RepositoryTableViewModel(token: .starredReposOfAuthenticatedUser(page: 1))
-        return vm
-    }
-    
-    class func subscribed() -> RepositoryTableViewModel {
-        let vm = RepositoryTableViewModel(token: .subscribedReposOfAuthenticatedUser(page: 1))
-        return vm
     }
     
     func updateToken() {
         switch token {
-        case .organizationRepos(let org, _):
-            token = .organizationRepos(org: org, page: page)
-        case .userRepos(let user, _):
-            token = .userRepos(user: user, page: page)
+        case .repositories(let login, let type, _):
+            token = .repositories(login: login, type: type, after: endCursor)
         case .starredRepos(let user, _):
-            token = .starredRepos(user: user, page: page)
-        case .starredReposOfAuthenticatedUser:
-            token = .starredReposOfAuthenticatedUser(page: page)
+            token = .starredRepos(user: user, after: endCursor)
         case .subscribedRepos(let user, _):
-            token = .subscribedRepos(user: user, page: page)
-        case .subscribedReposOfAuthenticatedUser:
-            token = .subscribedReposOfAuthenticatedUser(page: page)
+            token = .subscribedRepos(user: user, after: endCursor)
         default:
             break
         }
+    }
+    
+    var ownerType: String {
+        switch token {
+        case .repositories(_, let type, _):
+            switch type {
+            case .user:
+                return "user"
+            case .organization:
+                return "organization"
+            }
+        default:
+            return "user"
+        }
+    }
+    
+    var key: String {
+        switch token {
+        case .repositories:
+            return "repositories"
+        case .starredRepos:
+            return "starredRepositories"
+        case .subscribedRepos:
+            return "watching"
+        default:
+            return ""
+        }
+    }
+    
+    override func refresh() {
+        endCursor = nil
+        super.refresh()
     }
     
     override func fetchData() {
@@ -72,23 +79,30 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
         
         GitHubProvider
             .request(token)
-            .do(onNext: { [unowned self] in
-                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
-                    self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
-                }
-            })
+            .filterSuccessfulStatusAndRedirectCodes()
             .mapJSON()
             .subscribe(
                 onNext: { [unowned self] in
-                    if let newRepos = Mapper<Repository>().mapArray(JSONObject: $0) {
-                        if self.page == 1 {
-                            self.dataSource.value = newRepos
-                        } else {
-                            self.dataSource.value.append(contentsOf: newRepos)
-                        }
-                        
-                        self.page += 1
+                    
+                    guard
+                        let json = ($0 as? [String: [String: [String: Any]]])?["data"]?[self.ownerType]?[self.key],
+                        let connection = Mapper<EntityConnection<Repository>>().map(JSONObject: json),
+                        let newRepos = connection.nodes
+                    else {
+                        // error
+//											self.error.value = Error
+                        return
                     }
+                    
+                    self.hasNextPage = connection.pageInfo!.hasNextPage!
+                    
+                    if self.endCursor == nil {
+                        self.dataSource.value = newRepos
+                    } else {
+                        self.dataSource.value.append(contentsOf: newRepos)
+                    }
+                    
+                    self.endCursor = connection.pageInfo?.endCursor
                 },
                 onError: { [unowned self] in
                     self.error.value = $0
@@ -98,7 +112,7 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
     
     var shouldDisplayFullName: Bool {
         switch token {
-        case .organizationRepos, .userRepos:
+        case .repositories:
             return false
         default:
             return true

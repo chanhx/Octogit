@@ -203,7 +203,7 @@ extension UserViewController: UserHeaderViewProtocol {
     
     func didTapRepositoiesButton() {
         let repoTVC = RepositoryTableViewController()
-        repoTVC.viewModel = RepositoryTableViewModel(user: viewModel.user.value)
+        repoTVC.viewModel = RepositoryTableViewModel(login: viewModel.user.value.login, type: .user)
         navigationController?.pushViewController(repoTVC, animated: true)
     }
     

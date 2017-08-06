@@ -123,7 +123,7 @@ class OrganizationViewController: BaseTableViewController {
                 self.navigationController?.pushViewController(eventTVC, animated: true)
             case 1:
                 let repositoryTVC = RepositoryTableViewController()
-                repositoryTVC.viewModel = RepositoryTableViewModel(organization: viewModel.user.value)
+                repositoryTVC.viewModel = RepositoryTableViewModel(login: viewModel.user.value.login, type: .organization)
                 self.navigationController?.pushViewController(repositoryTVC, animated: true)
             case 2:
                 let userTVC = UserTableViewController()

@@ -104,6 +104,11 @@ enum TrendingTime: String {
     case thisMonth = "monthly"
 }
 
+enum RepositoryOwnerType {
+    case user
+    case organization
+}
+
 enum GitHubAPI {
     
     // MARK: Web API
@@ -175,15 +180,11 @@ enum GitHubAPI {
     
     // MARK: Repository
     
-    case userRepos(user: String, page: Int)
-    case starredRepos(user: String, page: Int)
-    case starredReposOfAuthenticatedUser(page: Int)
-    case subscribedRepos(user: String, page: Int)
-    case subscribedReposOfAuthenticatedUser(page: Int)
-    case organizationRepos(org: String, page: Int)
+    case repositories(login: String, type: RepositoryOwnerType, after: String?)
+    case starredRepos(user: String, after: String?)
+    case subscribedRepos(user: String, after: String?)
     case repository(owner: String, name: String)
     
-    case isStarring(repo: String)
     case star(repo: String)
     case unstar(repo: String)
     
@@ -323,23 +324,12 @@ extension GitHubAPI: TargetType {
             
             // MARK: Repository
             
-        case .repository:
+        case .repository,
+             .repositories,
+             .starredRepos,
+             .subscribedRepos:
             return "/graphql"
-        case .userRepos(let user, _):
-            return "/users/\(user)/repos"
-        case .organizationRepos(let org, _):
-            return "/orgs/\(org)/repos"
-        case .starredRepos(let user, _):
-            return "/users/\(user)/starred"
-        case .starredReposOfAuthenticatedUser:
-            return "/user/starred"
-        case .subscribedRepos(let user, _):
-            return "/users/\(user)/subscriptions"
-        case .subscribedReposOfAuthenticatedUser:
-            return "/user/subscriptions"
-            
-        case .isStarring(let repo):
-            return "/user/starred/\(repo)"
+        
         case .star(let repo),
              .unstar(let repo):
             return "/user/starred/\(repo)"
@@ -360,11 +350,18 @@ extension GitHubAPI: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .accessToken, .repository:
+        case .accessToken,
+             
+             .repository,
+             .repositories,
+             .starredRepos,
+             .subscribedRepos:
             return .post
-        case .star, .follow:
+        case .star,
+             .follow:
             return .put
-        case .unstar, .unfollow:
+        case .unstar,
+             .unfollow:
             return .delete
         default:
             return .get
@@ -430,18 +427,14 @@ extension GitHubAPI: TargetType {
              .releases(_, let page),
              
              .userGists(_, let page),
-             .starredGists(let page),
+             .starredGists(let page):
              
-             .userRepos(_, let page),
-             .organizationRepos(_, let page),
-             .starredRepos(_, let page),
-             .starredReposOfAuthenticatedUser(let page),
-             .subscribedRepos(_, let page),
-             .subscribedReposOfAuthenticatedUser(let page):
-            
             return ["page": page]
             
-        case .repository:
+        case .repository,
+             .repositories,
+             .starredRepos,
+             .subscribedRepos:
             return GraphQL.query(self)
             
         default:
@@ -450,7 +443,12 @@ extension GitHubAPI: TargetType {
     }
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .accessToken(_), .repository(_, _):
+        case .accessToken,
+             
+             .repository,
+             .repositories,
+             .starredRepos,
+             .subscribedRepos:
             return JSONEncoding.default
         default:
             return URLEncoding.default

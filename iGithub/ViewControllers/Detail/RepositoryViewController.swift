@@ -65,9 +65,7 @@ class RepositoryViewController: BaseTableViewController {
         starsCountLabel.layer.borderColor = UIColor(netHex: 0xd5d5d5).cgColor
         forksCountLabel.layer.borderColor = UIColor(netHex: 0xd5d5d5).cgColor
         
-        if !viewModel.isRepositoryLoaded {
-            viewModel.fetchRepository()
-        }
+        viewModel.fetchRepository()
         viewModel.fetchBranches()
     }
     

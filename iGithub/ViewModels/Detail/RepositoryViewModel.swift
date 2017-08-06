@@ -34,10 +34,7 @@ class RepositoryViewModel {
     }
     let disposeBag = DisposeBag()
     var repository: Variable<Repository>
-    var isStarring = Variable<Bool?>(nil)
-    var isRepositoryLoaded: Bool {
-        return self.repository.value.defaultBranch != nil
-    }
+    var isRepositoryLoaded = false
     
     var branches = [Branch]()
     var pageForBranches = 1
@@ -64,8 +61,6 @@ class RepositoryViewModel {
         self.name = repo.name
         self.owner = repo.owner!.login
         self.repository = Variable(repo)
-        
-        branch = repo.defaultBranch!
     }
     
     init(repo: String) {
@@ -88,6 +83,7 @@ class RepositoryViewModel {
                 let json = $0 as! [String : [String : Any]]
                 
                 if let repo = Mapper<Repository>().map(JSONObject: json["data"]!["repository"]) {
+                    self.isRepositoryLoaded = true
                     self.branch = repo.defaultBranch!
                     self.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
                     self.repository.value = repo
@@ -133,7 +129,7 @@ class RepositoryViewModel {
     }
     
     @objc func toggleStarring() {
-        let token: GitHubAPI = isStarring.value! ? .unstar(repo: nameWithOwner) : .star(repo: nameWithOwner)
+        let token: GitHubAPI = repository.value.hasStarred! ? .unstar(repo: nameWithOwner) : .star(repo: nameWithOwner)
         
         GitHubProvider
             .request(token)

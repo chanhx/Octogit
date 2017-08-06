@@ -46,9 +46,9 @@ class AccountViewController: UITableViewController {
             
             switch indexPath.row {
             case 0:
-                repoTVC.viewModel = RepositoryTableViewModel.starred()
+                repoTVC.viewModel = RepositoryTableViewModel(stargazer: AccountManager.currentUser!)
             case 1:
-                repoTVC.viewModel = RepositoryTableViewModel.subscribed()
+                repoTVC.viewModel = RepositoryTableViewModel(subscriber: AccountManager.currentUser!)
             default:
                 break
             }
@@ -96,7 +96,7 @@ extension AccountViewController: UserHeaderViewProtocol {
     
     func didTapRepositoiesButton() {
         let repoTVC = RepositoryTableViewController()
-        repoTVC.viewModel = RepositoryTableViewModel(user: AccountManager.currentUser!)
+        repoTVC.viewModel = RepositoryTableViewModel(login: AccountManager.currentUser!.login, type: .user)
         navigationController?.pushViewController(repoTVC, animated: true)
     }
     
