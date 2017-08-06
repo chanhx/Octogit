@@ -70,34 +70,53 @@ class RepositoriesSearchViewModel: BaseTableViewModel<Repository> {
     ]
     
     var token: GitHubAPI {
-        let lan = languagesDict[language]!
-        let q = lan.characters.count > 0 ? query! + "+language:\(lan)" : query!
         
-        return GitHubAPI.searchRepositories(q: q, sort: sort, page: page)
+        var q = query!
+        
+        switch sort {
+        case .stars:
+            q += " sort:stars"
+        case .forks:
+            q += " sort:forks"
+        case .updated:
+            q += " sort:updated"
+        default:
+            break
+        }
+        
+        let lan = languagesDict[language]!
+        if lan.characters.count > 0 {
+            q += " language:\(lan)"
+        }
+        
+        return GitHubAPI.searchRepositories(query: q, after: endCursor)
     }
     
     override func fetchData() {
         GitHubProvider
             .request(token)
-            .do(onNext: { [unowned self] in
-                self.isLoading = false
-                
-                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
-                    self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
-                }
-            })
+            .filterSuccessfulStatusCodes()
             .mapJSON()
             .subscribe(onNext: { [unowned self] in
-                if let results = Mapper<Repository>().mapArray(JSONObject: ($0 as! [String: Any])["items"]) {
-                    if self.page == 1 {
-                        self.dataSource.value = results
-                    } else {
-                        self.dataSource.value.append(contentsOf: results)
-                    }
-                    self.page += 1
-                } else {
+                
+                guard
+                    let json = ($0 as? [String: [String: Any]])?["data"]?["search"],
+                    let connection = Mapper<EntityConnection<Repository>>().map(JSONObject: json),
+                    let newRepos = connection.nodes
+                else {
                     // deal with error
+                    return
                 }
+                
+                self.hasNextPage = connection.pageInfo!.hasNextPage!
+                
+                if self.endCursor == nil {
+                    self.dataSource.value = newRepos
+                } else {
+                    self.dataSource.value.append(contentsOf: newRepos)
+                }
+                
+                self.endCursor = connection.pageInfo?.endCursor
             })
             .addDisposableTo(disposeBag)
     }

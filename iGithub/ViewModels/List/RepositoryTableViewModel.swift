@@ -12,7 +12,6 @@ import ObjectMapper
 class RepositoryTableViewModel: BaseTableViewModel<Repository> {
     
     fileprivate var token: GitHubAPI
-    var endCursor: String?
     
     init(login: String, type: RepositoryOwnerType) {
         token = .repositories(login: login, type: type, after: nil)
@@ -67,11 +66,6 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
         default:
             return ""
         }
-    }
-    
-    override func refresh() {
-        endCursor = nil
-        super.refresh()
     }
     
     override func fetchData() {

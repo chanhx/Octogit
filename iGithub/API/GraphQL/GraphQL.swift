@@ -63,6 +63,18 @@ class GraphQL {
                 "query": watchingQuery,
                 "variables": variables
             ]
+            
+        case .searchRepositories(let query, let after):
+            var variables: [String : Any] = ["query": query]
+            if let after = after {
+                variables["after"] = after
+            }
+
+            return [
+                "query": searchRepositoriesQuery,
+                "variables": variables
+            ]
+
         default:
             return nil
 		}

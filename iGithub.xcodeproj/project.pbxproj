@@ -104,6 +104,7 @@
 		C5ABDF501D7DCCB800F07DC2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ABDF4F1D7DCCB800F07DC2 /* Constants.swift */; };
 		C5AD7DA91DC3014600FC9C1D /* Transforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AD7DA81DC3014600FC9C1D /* Transforms.swift */; };
 		C5BB907B1D487ACA005A40C0 /* empty_content.html in Resources */ = {isa = PBXBuildFile; fileRef = C5BB907A1D487ACA005A40C0 /* empty_content.html */; };
+		C5C2F8E51F37447E00D617A4 /* SearchRepositories.graphql.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5C2F8E41F37447E00D617A4 /* SearchRepositories.graphql.mustache */; };
 		C5C4D9551D4A27B2007C1891 /* CountButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4D9541D4A27B2007C1891 /* CountButton.swift */; };
 		C5CF03BE1F343C3900DCFFF4 /* Repositories.graphql.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5CF03BB1F343C3900DCFFF4 /* Repositories.graphql.mustache */; };
 		C5CF03BF1F343C3900DCFFF4 /* Repository.graphql in Resources */ = {isa = PBXBuildFile; fileRef = C5CF03BC1F343C3900DCFFF4 /* Repository.graphql */; };
@@ -276,6 +277,7 @@
 		C5ABDF4F1D7DCCB800F07DC2 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5AD7DA81DC3014600FC9C1D /* Transforms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transforms.swift; sourceTree = "<group>"; };
 		C5BB907A1D487ACA005A40C0 /* empty_content.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = empty_content.html; sourceTree = "<group>"; };
+		C5C2F8E41F37447E00D617A4 /* SearchRepositories.graphql.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SearchRepositories.graphql.mustache; sourceTree = "<group>"; };
 		C5C4D9541D4A27B2007C1891 /* CountButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountButton.swift; sourceTree = "<group>"; };
 		C5CF03BB1F343C3900DCFFF4 /* Repositories.graphql.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Repositories.graphql.mustache; sourceTree = "<group>"; };
 		C5CF03BC1F343C3900DCFFF4 /* Repository.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Repository.graphql; sourceTree = "<group>"; };
@@ -647,6 +649,7 @@
 				C5CF03BB1F343C3900DCFFF4 /* Repositories.graphql.mustache */,
 				C5CF03BC1F343C3900DCFFF4 /* Repository.graphql */,
 				C5CF03BD1F343C3900DCFFF4 /* RepositoryNode.graphql */,
+				C5C2F8E41F37447E00D617A4 /* SearchRepositories.graphql.mustache */,
 				C526EE151D7D7E36008C0D72 /* Prism */,
 				C5F4BDEA1D3F96D2009DF758 /* octicons.ttf */,
 				C55E08481D4701A20004EC7C /* content.mustache */,
@@ -855,6 +858,7 @@
 				C59482BF1D65A73300B9F47C /* languages_array.plist in Resources */,
 				C5F4BDEB1D3F96D2009DF758 /* octicons.ttf in Resources */,
 				C55E08491D4701A20004EC7C /* content.mustache in Resources */,
+				C5C2F8E51F37447E00D617A4 /* SearchRepositories.graphql.mustache in Resources */,
 				C538FD331D430466003A559E /* Login.storyboard in Resources */,
 				C5DB94681D3F842000887E81 /* Main.storyboard in Resources */,
 				C5CF03BE1F343C3900DCFFF4 /* Repositories.graphql.mustache in Resources */,

@@ -1,0 +1,14 @@
+query($query:String!, $after:String) {
+    search(query: $query, type: REPOSITORY, first: 30, after: $after) {
+        totalCount: repositoryCount
+        pageInfo {
+        	hasNextPage
+	        endCursor
+        }
+        nodes {
+            ... on Repository {
+				{{ repositoryNode }}
+            }
+        }
+    }
+}

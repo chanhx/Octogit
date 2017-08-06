@@ -175,7 +175,7 @@ enum GitHubAPI {
     
     // MARK: Search
     
-    case searchRepositories(q: String, sort: RepositoriesSearchSort, page: Int)
+    case searchRepositories(query: String, after: String?)
     case searchUsers(q: String, sort: UsersSearchSort, page: Int)
     
     // MARK: Repository
@@ -318,7 +318,7 @@ extension GitHubAPI: TargetType {
             // MARK: Search
             
         case .searchRepositories:
-            return "/search/repositories"
+            return "/graphql"
         case .searchUsers:
             return "/search/users"
             
@@ -355,7 +355,9 @@ extension GitHubAPI: TargetType {
              .repository,
              .repositories,
              .starredRepos,
-             .subscribedRepos:
+             .subscribedRepos,
+             
+             .searchRepositories:
             return .post
         case .star,
              .follow:
@@ -391,9 +393,6 @@ extension GitHubAPI: TargetType {
              .getHTMLContents(_, _, let ref),
              .getTheREADME(_, let ref):
             return ["ref": ref]
-            
-        case .searchRepositories(let q, let sort, let page):
-            return ["q": q, "sort": sort.rawValue, "page": page]
             
         case .searchUsers(let q, let sort, let page):
             return ["q": q, "sort": sort.rawValue, "page": page]
@@ -434,7 +433,8 @@ extension GitHubAPI: TargetType {
         case .repository,
              .repositories,
              .starredRepos,
-             .subscribedRepos:
+             .subscribedRepos,
+             .searchRepositories:
             return GraphQL.query(self)
             
         default:
@@ -448,7 +448,9 @@ extension GitHubAPI: TargetType {
              .repository,
              .repositories,
              .starredRepos,
-             .subscribedRepos:
+             .subscribedRepos,
+             
+             .searchRepositories:
             return JSONEncoding.default
         default:
             return URLEncoding.default

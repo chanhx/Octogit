@@ -70,3 +70,12 @@ let watchingQuery: String = {
 	]
 	return try! repositoriesTemplate.render(Box(data))
 }()
+
+let searchRepositoriesQuery: String = {
+    let template = try! Template(named: "SearchRepositories.graphql")
+    let data = [
+        "repositoryNode": repositoryNodeQuery,
+    ]
+    
+    return try! template.render(Box(data))
+}()

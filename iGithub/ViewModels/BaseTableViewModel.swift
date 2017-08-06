@@ -18,12 +18,14 @@ class BaseTableViewModel<T> {
     let disposeBag = DisposeBag()
     
     var page: Int = 1
+    var endCursor: String?
     var hasNextPage = true
     
     @objc func fetchData() {}
     
     @objc func refresh() {
         page = 1
+        endCursor = nil
         hasNextPage = true
         fetchData()
     }
