@@ -241,10 +241,10 @@ extension UserViewController {
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        alertController.addAction(shareAction)
         if viewModel.user.value.id! != AccountManager.currentUser!.id! {
             alertController.addAction(followAction)
         }
+        alertController.addAction(shareAction)
         alertController.addAction(copyURLAction)
         alertController.addAction(showOnGithubAction)
         alertController.addAction(cancelAction)

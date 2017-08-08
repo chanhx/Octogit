@@ -22,9 +22,19 @@ class RepositoryViewModel {
     
     enum InfoType {
         case author
+        case parent
+        case mirror
         case description
         case homepage
         case readme
+    }
+    
+    enum MiscType {
+        case issues
+        case pullRequests
+        case releases
+        case contributors
+        case activity
     }
     
     var owner: String
@@ -43,6 +53,7 @@ class RepositoryViewModel {
     
     var sections = [Section]()
     var infoTypes = [InfoType]()
+    var miscTypes = [MiscType]()
     
     lazy var information: String = {
         var information: String = "Check out the repository \(self.nameWithOwner)."
@@ -73,21 +84,22 @@ class RepositoryViewModel {
     func fetchRepository() {
         GitHubProvider
             .request(.repository(owner:owner, name:name))
+            .filterSuccessfulStatusAndRedirectCodes()
             .mapJSON()
-//            .mapString()
             .subscribe(onNext: { [unowned self] in
-                // first check if there is an error and if the repo exists
-//                if $0.statusCode == 404 {
-//                    
-//                }
-                let json = $0 as! [String : [String : Any]]
                 
-                if let repo = Mapper<Repository>().map(JSONObject: json["data"]!["repository"]) {
-                    self.isRepositoryLoaded = true
-                    self.branch = repo.defaultBranch!
-                    self.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
-                    self.repository.value = repo
+                guard
+                    let json = $0 as? [String : [String : Any]],
+                    let repo = Mapper<Repository>().map(JSONObject: json["data"]?["repository"])
+                else {
+//                    let message =
+                    return
                 }
+                
+                self.isRepositoryLoaded = true
+                self.branch = repo.defaultBranch!
+                self.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
+                self.repository.value = repo
             })
             .addDisposableTo(disposeBag)
     }
@@ -172,6 +184,14 @@ class RepositoryViewModel {
         
         infoTypes.append(.author)
         
+        if let _ = repo.parent {
+            infoTypes.append(.parent)
+        }
+        
+        if let _ = repo.mirrorURL {
+            infoTypes.append(.mirror)
+        }
+        
         if let desc = repo.repoDescription?.trimmingCharacters(in: .whitespacesAndNewlines),
             desc.characters.count > 0 {
             infoTypes.append(.description)
@@ -185,6 +205,19 @@ class RepositoryViewModel {
         infoTypes.append(.readme)
     }
     
+    func setMiscTypes(repo: Repository) {
+        
+        if !isRepositoryLoaded || miscTypes.count > 0 {
+            return
+        }
+        
+        if repo.hasIssuesEnabled! {
+            miscTypes.append(.issues)
+        }
+        
+        miscTypes += [.pullRequests, .releases, .contributors, .activity]
+    }
+    
     func numberOfRowsInSection(_ section: Int) -> Int {
         switch sections[section] {
         case .info:
@@ -193,7 +226,8 @@ class RepositoryViewModel {
         case .code:
             return 2
         case .misc:
-            return 5
+            setMiscTypes(repo: repository.value)
+            return miscTypes.count
         case .loading:
             return 1
         }

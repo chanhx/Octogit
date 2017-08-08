@@ -70,13 +70,7 @@ class RepositoryViewController: BaseTableViewController {
     }
     
     func configureHeader(repo: Repository) {
-        if repo.isPrivate! {
-            iconLabel.text = Octicon.lock.rawValue
-        } else if repo.isFork! {
-            iconLabel.text = Octicon.repoForked.rawValue
-        } else {
-            iconLabel.text = Octicon.repo.rawValue
-        }
+        iconLabel.text = repo.icon.rawValue
         updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString(withPreposition: true))"
         
         starButton.setTitle(repo.hasStarred! ? "Unstar" : "Star", for: .normal)
@@ -157,6 +151,21 @@ class RepositoryViewController: BaseTableViewController {
                 cell.accessoryType = .disclosureIndicator
                 
                 return cell
+            case .parent:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
+                cell.accessoryType = .disclosureIndicator
+                cell.textLabel?.textColor = UIColor(netHex: 0x333333)
+                let parent = viewModel.repository.value.parent!
+                cell.textLabel?.attributedText = Octicon.repoClone.iconString(" \(parent.owner!) / \(parent.name!)", iconSize: 18, iconColor: .gray)
+                return cell
+            case .mirror:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
+                cell.textLabel?.textColor = UIColor(netHex: 0x333333)
+                cell.accessoryType = .none
+                cell.selectionStyle = .none
+                let mirrorURL = viewModel.repository.value.mirrorURL!
+                cell.textLabel?.attributedText = Octicon.mirror.iconString(" \(mirrorURL)", iconSize: 18, iconColor: .gray)
+                return cell
             case .description:
                 let cell = UITableViewCell()
                 cell.selectionStyle = .none
@@ -196,26 +205,44 @@ class RepositoryViewController: BaseTableViewController {
             return cell
             
         case .misc:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell", for: indexPath)
-            cell.textLabel?.textColor = UIColor(netHex: 0x333333)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell2", for: indexPath)
             
-            switch indexPath.row {
-            case 0:
+            cell.detailTextLabel?.text = nil
+            
+            switch viewModel.miscTypes[indexPath.row] {
+            case .issues:
                 cell.textLabel?.attributedText = Octicon.issueOpened.iconString(" Issues", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
-            case 1:
+                
+                if let openIssuesCount = viewModel.repository.value.openIssuesCount, openIssuesCount > 0 {
+                    cell.detailTextLabel?.text = "  \(openIssuesCount)  "
+                }
+            case .pullRequests:
                 cell.textLabel?.attributedText = Octicon.gitPullrequest.iconString(" Pull requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
-            case 2:
+                
+                if let openPRsCount = viewModel.repository.value.openPRsCount, openPRsCount > 0 {
+                    cell.detailTextLabel?.text = "  \(openPRsCount)  "
+                }
+            case .releases:
                 cell.textLabel?.attributedText = Octicon.tag.iconString(" Releases", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
-            case 3:
+                
+                if let releasesCount = viewModel.repository.value.releasesCount, releasesCount > 0 {
+                    cell.detailTextLabel?.text = "  \(releasesCount)  "
+                }
+            case .contributors:
                 cell.textLabel?.attributedText = Octicon.organization.iconString(" Contributors", iconSize: 18, iconColor: .lightGray)
-            case 4:
+            case .activity:
                 cell.textLabel?.attributedText = Octicon.rss.iconString(" Recent activity", iconSize: 18, iconColor: .gray)
-            default: break
             }
             return cell
         
         case .loading:
             return statusCell
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if viewModel.sections[indexPath.section] == .misc {
+            cell.detailTextLabel?.backgroundColor = UIColor(netHex: 0xE8E9EA)
         }
     }
     
@@ -235,6 +262,8 @@ class RepositoryViewController: BaseTableViewController {
                     vc.viewModel = (self.viewModel.ownerViewModel as! OrganizationViewModel)
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
+            case .parent:
+                navigationController?.pushViewController(URLRouter.viewController(forURL: viewModel.repository.value.parent!.url!), animated: true)
             case .homepage:
                 navigationController?.pushViewController(URLRouter.viewController(forURL: viewModel.repository.value.homepage!), animated: true)
             case .readme:
@@ -261,8 +290,8 @@ class RepositoryViewController: BaseTableViewController {
             }
         
         case .misc:
-            switch indexPath.row {
-            case 0:
+            switch viewModel.miscTypes[indexPath.row] {
+            case .issues:
                 let repo = viewModel.repository.value
                 
                 let openIssueTVC = IssueTableViewController()
@@ -276,7 +305,7 @@ class RepositoryViewController: BaseTableViewController {
                 
                 self.navigationController?.pushViewController(issueSVC, animated: true)
                 
-            case 1:
+            case .pullRequests:
                 let repo = viewModel.repository.value
                 
                 let openPullRequestTVC = PullRequestTableViewController()
@@ -290,22 +319,20 @@ class RepositoryViewController: BaseTableViewController {
                 
                 self.navigationController?.pushViewController(pullRequestSVC, animated: true)
                 
-            case 2:
+            case .releases:
                 let releaseTVC = ReleaseTableViewController()
                 releaseTVC.viewModel = ReleaseTableViewModel(repo: viewModel.repository.value)
                 self.navigationController?.pushViewController(releaseTVC, animated: true)
                 
-            case 3:
+            case .contributors:
                 let memberTVC = UserTableViewController()
                 memberTVC.viewModel = UserTableViewModel(repo: viewModel.repository.value)
                 self.navigationController?.pushViewController(memberTVC, animated: true)
                 
-            case 4:
+            case .activity:
                 let eventTVC = EventTableViewController()
                 eventTVC.viewModel = EventTableViewModel(repo: viewModel.repository.value)
                 self.navigationController?.pushViewController(eventTVC, animated: true)
-            default:
-                break
             }
             
         case .loading:

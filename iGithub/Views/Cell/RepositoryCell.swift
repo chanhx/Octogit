@@ -110,13 +110,7 @@ class RepositoryCell: UITableViewCell {
         stargazersCountLabel.attributedText = Octicon.star.iconString(formatter.string(from: NSNumber(value: repo.stargazersCount!))!)
         forksCountLabel.attributedText = Octicon.gitBranch.iconString(formatter.string(from: NSNumber(value: repo.forksCount!))!)
         
-        if repo.isPrivate! {
-            iconLabel.text = Octicon.lock.rawValue
-        } else if repo.isFork! {
-            iconLabel.text = Octicon.repoForked.rawValue
-        } else {
-            iconLabel.text = Octicon.repo.rawValue
-        }
+        iconLabel.text = repo.icon.rawValue
     }
     
     func configureCell(name: String, description: String?, language: String?, stargazers: String?, forks: String?, periodStargazers: String?) {

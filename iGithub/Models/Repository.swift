@@ -13,12 +13,15 @@ class Repository: Mappable {
     
     var name: String!
     var nameWithOwner: String?
-    var homepage: URL?
     var repoDescription: String?
     var primaryLanguage: String?
     
     var owner: User?
     var parent: Repository?
+    
+    var url: URL?
+    var mirrorURL: URL?
+    var homepage: URL?
     
     var pushedAt: Date?
     
@@ -34,6 +37,7 @@ class Repository: Mappable {
     
     var openIssuesCount: Int?
     var openPRsCount: Int?
+    var releasesCount: Int?
     
     var stargazersCount: Int?
     var forksCount: Int?
@@ -51,12 +55,15 @@ class Repository: Mappable {
     func mapping(map: Map) {
         name                 <- map["name"]
         nameWithOwner        <- map["nameWithOwner"]
-        homepage             <- (map["homepageUrl"], URLTransform())
         repoDescription      <- map["description"]
         primaryLanguage      <- map["primaryLanguage.name"]
         
         owner                <- map["owner"]
         parent               <- map["parent"]
+        
+        url                  <- (map["url"], URLTransform())
+        mirrorURL            <- (map["mirrorUrl"], URLTransform())
+        homepage             <- (map["homepageUrl"], URLTransform())
         
         pushedAt             <- (map["pushedAt"], ISO8601DateTransform())
         
@@ -65,11 +72,13 @@ class Repository: Mappable {
         isPrivate            <- map["isPrivate"]
         isFork               <- map["isFork"]
         isLocked             <- map["isLocked"]
+        isMirror             <- map["isMirror"]
         hasIssuesEnabled     <- map["hasIssuesEnabled"]
         hasWikiEnabled       <- map["hasWikiEnabled"]
         
         openIssuesCount      <- map["issues.totalCount"]
         openPRsCount         <- map["pullRequests.totalCount"]
+        releasesCount        <- map["releases.totalCount"]
         
         stargazersCount      <- map["stargazers.totalCount"]
         forksCount           <- map["forks.totalCount"]
