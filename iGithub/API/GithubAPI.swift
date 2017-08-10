@@ -18,8 +18,8 @@ struct OAuthConfiguration {
     static let clientID = "638bff0d62dacd915554"
     static let clientSecret = "006e5bd102210c78981af47bbe347318cf55081b"
     static let scopes = ["user", "repo"]
-    static let note = "iOctocat: Application"
-    static let noteURL = "http://ioctocat.com"
+    static let note = "Octogit: Application"
+    static let noteURL = "https://github.com/chanhx/Octogit"
     static var accessToken: String?
     
     static var authorizationURL: URL? {
@@ -44,13 +44,13 @@ let GitHubProvider = RxMoyaProvider<GitHubAPI>(endpointClosure: {
     
     switch target {
     case .getABlob:
-        return endpoint.adding(newHTTPHeaderFields: ["Accept": Constants.MediaTypeRaw])
+        return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.Raw])
     case .getHTMLContents, .getTheREADME:
-        return endpoint.adding(newHTTPHeaderFields: ["Accept": Constants.MediaTypeHTML])
+        return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.HTML])
     case .repositoryIssues, .repositoryPullRequests:
-        return endpoint.adding(newHTTPHeaderFields: ["Accept": Constants.MediaTypeHTMLAndJSON])
+        return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.HTMLAndJSON])
     case .issueComments, .pullRequestComments, .gistComments, .commitComments:
-        return endpoint.adding(newHTTPHeaderFields: ["Accept": Constants.MediaTypeTextAndJSON])
+        return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.TextAndJSON])
     default:
         return endpoint
     }

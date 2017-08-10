@@ -12,11 +12,14 @@ struct Constants {
     static let kTheme = "theme"
     static let kLineNumbers = "linenumbers"
     
-    private static let APIVersion = "v3"
-    private static let MediaTypePrefix = "application/vnd.github.\(APIVersion)"
+    static let APIVersion = "v3"
+}
+
+struct MediaType {
+    private static let Prefix = "application/vnd.github.\(Constants.APIVersion)"
     
-    static let MediaTypeHTML = "\(MediaTypePrefix).html"
-    static let MediaTypeRaw = "\(MediaTypePrefix).raw"
-    static let MediaTypeHTMLAndJSON = "\(MediaTypePrefix).html+json"
-    static let MediaTypeTextAndJSON = "\(MediaTypePrefix).text+json"
+    static let HTML = "\(Prefix).html"
+    static let Raw = "\(Prefix).raw"
+    static let HTMLAndJSON = "\(Prefix).html+json"
+    static let TextAndJSON = "\(Prefix).text+json"
 }
