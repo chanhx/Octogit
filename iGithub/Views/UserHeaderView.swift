@@ -46,7 +46,7 @@ class UserHeaderView: UIView {
         
         repositoriesButton.addTarget(delegate, action: #selector(UserHeaderViewProtocol.didTapRepositoiesButton), for: .touchUpInside)
         followersButton.addTarget(delegate, action: #selector(UserHeaderViewProtocol.didTapFollowersButton), for: .touchUpInside)
-        followingButton.addTarget(delegate, action: #selector(UserHeaderViewProtocol.didTapFollowersButton), for: .touchUpInside)
+        followingButton.addTarget(delegate, action: #selector(UserHeaderViewProtocol.didTapFollowingButton), for: .touchUpInside)
     }
     
     private func setLayout() {
