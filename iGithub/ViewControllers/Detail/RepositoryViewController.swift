@@ -17,7 +17,7 @@ class RepositoryViewController: BaseTableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var updateTimeLabel: UILabel!
     
-    @IBOutlet weak var starButton: GradientButton!
+    @IBOutlet weak var starButton: IndicatorButton!
     @IBOutlet weak var forkButton: GradientButton!
     
     @IBOutlet weak var starsCountLabel: UILabel!
@@ -39,6 +39,13 @@ class RepositoryViewController: BaseTableViewController {
                     self.configureHeader(repo: repo)
                     self.sizeHeaderToFit(tableView: self.tableView)
                 }).addDisposableTo(viewModel.disposeBag)
+            
+            viewModel.hasStarred.asDriver()
+                .filter { $0 != nil }
+                .drive(onNext: { [unowned self] in
+                    self.updateStarStatus(hasStarred: $0!)
+                }).addDisposableTo(viewModel.disposeBag)
+            
         }
     }
     
@@ -60,7 +67,7 @@ class RepositoryViewController: BaseTableViewController {
         starButton.setImage(Octicon.star.image(iconSize: 15, size: CGSize(width: 16, height: 15)), for: .normal)
         forkButton.setImage(Octicon.repoForked.image(iconSize: 15, size: CGSize(width: 13, height: 15)), for: .normal)
         
-        starButton.addTarget(viewModel, action: #selector(viewModel.toggleStarring), for: .touchUpInside)
+        starButton.addTarget(self, action: #selector(toggleStarring), for: .touchUpInside)
         
         starsCountLabel.layer.borderColor = UIColor(netHex: 0xd5d5d5).cgColor
         forksCountLabel.layer.borderColor = UIColor(netHex: 0xd5d5d5).cgColor
@@ -73,14 +80,37 @@ class RepositoryViewController: BaseTableViewController {
         iconLabel.text = repo.icon.rawValue
         updateTimeLabel.text = "Latest commit \(repo.pushedAt!.naturalString(withPreposition: true))"
         
-        starButton.setTitle(repo.hasStarred! ? "Unstar" : "Star", for: .normal)
-        starButton.isEnabled = true
-        
         let formatter = NumberFormatter()
         formatter.numberStyle = NumberFormatter.Style.decimal
         
         starsCountLabel.text = formatter.string(from: NSNumber(value: repo.stargazersCount!))
         forksCountLabel.text = formatter.string(from: NSNumber(value: repo.forksCount!))
+    }
+    
+    func toggleStarring() {
+        starButton.showIndicator()
+        viewModel.toggleStarring()
+    }
+    
+    func updateStarStatus(hasStarred: Bool) {
+		starButton.stopIndictorAnimation()
+        starButton.setTitle(hasStarred ? "Unstar" : "Star", for: .normal)
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        
+        let stargazersCount = viewModel.repository.value.stargazersCount!
+        
+        guard hasStarred != viewModel.repository.value.hasStarred! else {
+            starsCountLabel.text = formatter.string(from: NSNumber(value: stargazersCount))
+			return
+        }
+        
+        if hasStarred {
+            starsCountLabel.text = formatter.string(from: NSNumber(value: stargazersCount + 1))
+        } else {
+            starsCountLabel.text = formatter.string(from: NSNumber(value: stargazersCount - 1))
+        }
     }
     
     // MARK: - Table view data source

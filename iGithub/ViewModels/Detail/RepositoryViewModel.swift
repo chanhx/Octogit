@@ -44,6 +44,7 @@ class RepositoryViewModel {
     }
     let disposeBag = DisposeBag()
     var repository: Variable<Repository>
+    var hasStarred: Variable<Bool?> = Variable(nil)
     var isRepositoryLoaded = false
     
     var branches = [Branch]()
@@ -100,6 +101,7 @@ class RepositoryViewModel {
                 self.branch = repo.defaultBranch!
                 self.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
                 self.repository.value = repo
+                self.hasStarred.value = repo.hasStarred!
             })
             .addDisposableTo(disposeBag)
     }
@@ -140,14 +142,14 @@ class RepositoryViewModel {
         }
     }
     
-    @objc func toggleStarring() {
+    func toggleStarring() {
         let token: GitHubAPI = repository.value.hasStarred! ? .unstar(repo: nameWithOwner) : .star(repo: nameWithOwner)
         
         GitHubProvider
             .request(token)
             .subscribe(onNext: { [unowned self] response in
                 if response.statusCode == 204 {
-                    self.repository.value.hasStarred = !self.repository.value.hasStarred!
+                    self.hasStarred.value = !self.hasStarred.value!
                 } else {
                     let json = try! response.mapJSON()
                     print(json)

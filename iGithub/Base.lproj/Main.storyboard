@@ -113,7 +113,7 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ZHJ-o8-DQx">
                                     <rect key="frame" x="16" y="72" width="343" height="27"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="owW-2D-ZKh" customClass="GradientButton" customModule="iGithub" customModuleProvider="target">
+                                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="owW-2D-ZKh" customClass="IndicatorButton" customModule="iGithub" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="161.5" height="27"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                             <state key="normal" title="Star">
@@ -249,13 +249,13 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efA-t5-VX9">
-                                    <rect key="frame" x="13" y="16" width="23" height="24.5"/>
+                                    <rect key="frame" x="13" y="16" width="26.5" height="27"/>
                                     <fontDescription key="fontDescription" name="octicons" family="octicons" pointSize="23"/>
                                     <color key="textColor" red="0.42352941176470588" green="0.75294117647058822" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HvA-gV-5Jz">
-                                    <rect key="frame" x="41" y="16" width="321" height="32"/>
+                                    <rect key="frame" x="44.5" y="16" width="317.5" height="32"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -470,7 +470,7 @@
             <objects>
                 <navigationController id="kKU-nz-ls6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Explore" image="tabbar_compass" selectedImage="tabbar_compass_selected" id="X8P-RG-3R3"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ab1-9h-7e9">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ab1-9h-7e9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -678,7 +678,7 @@
             <objects>
                 <navigationController id="aew-JJ-rZQ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Me" image="tabbar_avatar" selectedImage="tabbar_avatar_selected" id="7qu-ws-8WL"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Fk0-nu-VPZ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Fk0-nu-VPZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1114,7 +1114,7 @@
             <objects>
                 <navigationController id="AnM-2y-q4M" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="News" image="tabbar_activities" selectedImage="tabbar_activities_selected" id="C42-aT-OFm"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="9uX-Om-Uym">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9uX-Om-Uym">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

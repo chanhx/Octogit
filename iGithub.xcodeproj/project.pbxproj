@@ -106,6 +106,7 @@
 		C5BB907B1D487ACA005A40C0 /* empty_content.html in Resources */ = {isa = PBXBuildFile; fileRef = C5BB907A1D487ACA005A40C0 /* empty_content.html */; };
 		C5C2F8E51F37447E00D617A4 /* SearchRepositories.graphql.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5C2F8E41F37447E00D617A4 /* SearchRepositories.graphql.mustache */; };
 		C5C2F8E71F3760D200D617A4 /* ModelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C2F8E61F3760D200D617A4 /* ModelExtension.swift */; };
+		C5C2F8ED1F3C7A3900D617A4 /* IndicatorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C2F8EC1F3C7A3900D617A4 /* IndicatorButton.swift */; };
 		C5C4D9551D4A27B2007C1891 /* CountButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C4D9541D4A27B2007C1891 /* CountButton.swift */; };
 		C5CF03BE1F343C3900DCFFF4 /* Repositories.graphql.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5CF03BB1F343C3900DCFFF4 /* Repositories.graphql.mustache */; };
 		C5CF03BF1F343C3900DCFFF4 /* Repository.graphql in Resources */ = {isa = PBXBuildFile; fileRef = C5CF03BC1F343C3900DCFFF4 /* Repository.graphql */; };
@@ -280,6 +281,7 @@
 		C5BB907A1D487ACA005A40C0 /* empty_content.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = empty_content.html; sourceTree = "<group>"; };
 		C5C2F8E41F37447E00D617A4 /* SearchRepositories.graphql.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SearchRepositories.graphql.mustache; sourceTree = "<group>"; };
 		C5C2F8E61F3760D200D617A4 /* ModelExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelExtension.swift; sourceTree = "<group>"; };
+		C5C2F8EC1F3C7A3900D617A4 /* IndicatorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorButton.swift; sourceTree = "<group>"; };
 		C5C4D9541D4A27B2007C1891 /* CountButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountButton.swift; sourceTree = "<group>"; };
 		C5CF03BB1F343C3900DCFFF4 /* Repositories.graphql.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Repositories.graphql.mustache; sourceTree = "<group>"; };
 		C5CF03BC1F343C3900DCFFF4 /* Repository.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Repository.graphql; sourceTree = "<group>"; };
@@ -686,6 +688,7 @@
 			children = (
 				C5C4D9541D4A27B2007C1891 /* CountButton.swift */,
 				C5E7C2281DB4F4A000F95509 /* GradientButton.swift */,
+				C5C2F8EC1F3C7A3900D617A4 /* IndicatorButton.swift */,
 				C5E7C22A1DB5CB2100F95509 /* OptionButton.swift */,
 			);
 			name = Button;
@@ -1030,6 +1033,7 @@
 				C51CDEC41DBF79910043A755 /* CommitViewModel.swift in Sources */,
 				C538FD471D4491DE003A559E /* Event+DataProcess.swift in Sources */,
 				C5EE81E41DBF4EAD00673E20 /* CommitTableViewController.swift in Sources */,
+				C5C2F8ED1F3C7A3900D617A4 /* IndicatorButton.swift in Sources */,
 				C5A275BD1F34299E00445E96 /* Queries.swift in Sources */,
 				C5EE81E91DBF4EAD00673E20 /* PullRequestTableViewController.swift in Sources */,
 				C52474281D50F06A0001D9CD /* WebViewCell.swift in Sources */,
