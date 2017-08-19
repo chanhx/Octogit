@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Moya
 import RxMoya
 import RxSwift
 import ObjectMapper
@@ -45,6 +46,7 @@ class RepositoryViewModel {
     let disposeBag = DisposeBag()
     var repository: Variable<Repository>
     var hasStarred: Variable<Bool?> = Variable(nil)
+    var error: Variable<MoyaError?> = Variable(nil)
     var isRepositoryLoaded = false
     
     var branches = [Branch]()
@@ -93,7 +95,7 @@ class RepositoryViewModel {
                     let json = $0 as? [String : [String : Any]],
                     let repo = Mapper<Repository>().map(JSONObject: json["data"]?["repository"])
                 else {
-//                    let message =
+					self.error.value = MoyaError.statusCode(Response(statusCode: 404, data: Data()))
                     return
                 }
                 

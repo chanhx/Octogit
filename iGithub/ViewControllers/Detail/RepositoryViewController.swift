@@ -29,9 +29,7 @@ class RepositoryViewController: BaseTableViewController {
     
     var viewModel: RepositoryViewModel! {
         didSet {
-            let repoDriver = viewModel.repository.asDriver()
-            
-            repoDriver
+            viewModel.repository.asDriver()
                 .filter { $0.defaultBranch != nil }
                 .drive(onNext: { [unowned self] repo in
                     self.tableView.reloadData()
@@ -41,10 +39,19 @@ class RepositoryViewController: BaseTableViewController {
                 }).addDisposableTo(viewModel.disposeBag)
             
             viewModel.hasStarred.asDriver()
-                .filter { $0 != nil }
+                .flatMap { Driver.from(optional: $0) }
                 .drive(onNext: { [unowned self] in
-                    self.updateStarStatus(hasStarred: $0!)
+                    self.updateStarStatus(hasStarred: $0)
                 }).addDisposableTo(viewModel.disposeBag)
+            
+            viewModel.error
+                .asDriver()
+                .flatMap { Driver.from(optional: $0) }
+                .drive(onNext: { [unowned self] in
+                    MessageManager.show(error: $0)
+                    self.navigationController?.popViewController(animated: true)
+                })
+                .addDisposableTo(viewModel.disposeBag)
             
         }
     }

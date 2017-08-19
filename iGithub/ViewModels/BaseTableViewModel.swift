@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RxMoya
 import RxSwift
 import ObjectMapper
 
