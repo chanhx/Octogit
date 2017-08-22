@@ -71,7 +71,7 @@ extension ExplorationViewController: StatusProvider {
             loadingView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height - 180)
         ])
         
-        let indicator = LoadingIndicator(lineWidth: 3, strokeEnd: 0.95)
+        let indicator = LoadingIndicator(strokeEnd: 0.95)
         let border = UIView()
         border.backgroundColor = UIColor(netHex: 0xDDDDDD)
         
@@ -159,7 +159,7 @@ extension SearchViewController: StatusProvider {
             loadingView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height - 180)
             ])
         
-        let indicator = LoadingIndicator(lineWidth: 3, strokeEnd: 0.95)
+        let indicator = LoadingIndicator(strokeEnd: 0.95)
         let border = UIView()
         border.backgroundColor = UIColor(netHex: 0xDDDDDD)
         

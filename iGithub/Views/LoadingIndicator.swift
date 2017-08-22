@@ -18,7 +18,7 @@ class LoadingIndicator: UIView {
     fileprivate let gradations = 7
     fileprivate var strokeEnd: CGFloat
     
-    init(fromColor: UIColor = .white, toColor: UIColor = UIColor(netHex: 0x4078C0), lineWidth: CGFloat, strokeEnd: CGFloat = 0.95) {
+    init(fromColor: UIColor = .white, toColor: UIColor = UIColor(netHex: 0x4078C0), lineWidth: CGFloat = 3, strokeEnd: CGFloat = 0.95) {
         self.fromColor = fromColor
         self.toColor = toColor
         self.lineWidth = lineWidth

@@ -12,11 +12,14 @@ import WebKit
 class FileViewController: UIViewController {
 
     let webView = WKWebView()
+    let indicator = LoadingIndicator()
+    
     var viewModel: FileViewModel! {
         didSet {
             viewModel.html.asDriver()
                 .filter { $0.characters.count > 0 }
                 .drive(onNext: { [unowned self] html in
+                    self.indicator.removeFromSuperview()
                     self.webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
                 })
                 .addDisposableTo(viewModel.disposeBag)
@@ -24,6 +27,7 @@ class FileViewController: UIViewController {
             viewModel.contentData.asDriver()
                 .filter { $0.count > 0 }
                 .drive(onNext: { [unowned self] data in
+                    self.indicator.removeFromSuperview()
                     self.webView.load(data, mimeType: self.viewModel.mimeType, characterEncodingName: "utf-8", baseURL: Bundle.main.resourceURL!)
                 })
                 .addDisposableTo(viewModel.disposeBag)
@@ -38,6 +42,19 @@ class FileViewController: UIViewController {
         webView.navigationDelegate = self
         
         view.addSubview(webView)
+        
+        webView.addSubview(indicator)
+        
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: webView.centerXAnchor),
+            indicator.centerYAnchor.constraint(equalTo: webView.centerYAnchor),
+            indicator.heightAnchor.constraint(equalToConstant: 30),
+            indicator.widthAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        indicator.startAnimating()
         
         navigationItem.title = viewModel.fileName
         if let path = viewModel.filePath, path.characters.count > 0 {
