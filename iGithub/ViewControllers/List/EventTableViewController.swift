@@ -12,6 +12,8 @@ import TTTAttributedLabel
 
 class EventTableViewController: BaseTableViewController, TTTAttributedLabelDelegate {
     
+    let disposeBag = DisposeBag()
+    
     var viewModel: EventTableViewModel! {
         didSet {
             viewModel.dataSource.asDriver()
@@ -32,7 +34,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                     cell.avatarView.tag = row
                     cell.avatarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.avatarTapped)))
                 }
-                .addDisposableTo(viewModel.disposeBag)
+                .addDisposableTo(disposeBag)
             
             viewModel.error.asDriver()
                 .filter {
@@ -43,7 +45,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                     self.tableView.refreshFooter?.endRefreshing()
                     MessageManager.show(error: $0!)
                 })
-                .addDisposableTo(viewModel.disposeBag)
+                .addDisposableTo(disposeBag)
         }
     }
     
