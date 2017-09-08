@@ -14,47 +14,14 @@ import ObjectMapper
 
 class IssueViewModel: BaseTableViewModel<Comment> {
     
-    enum SectionType {
-        case content
-        case milestone
-        case asignees
-        case changes
-        case timeline
-    }
-
     var repo: String
     var issue: Issue
-    
-    private var sectionTypes = [SectionType]()
     
     init(repo: String, issue: Issue) {
         self.repo = repo
         self.issue = issue
         
         super.init()
-        
-        setSectionTypes()
-    }
-    
-    func setSectionTypes() {
-        if let body = issue.body,
-            body.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
-            sectionTypes.append(.content)
-        }
-        
-        if let _ = issue.milestone {
-            sectionTypes.append(.milestone)
-        }
-        
-        if let assignees = issue.assignees, assignees.count > 0 {
-            sectionTypes.append(.asignees)
-        }
-        
-        if let _ = issue as? PullRequest {
-            sectionTypes.append(.changes)
-        }
-        
-        sectionTypes.append(.timeline)
     }
     
     override func fetchData() {
@@ -79,34 +46,77 @@ class IssueViewModel: BaseTableViewModel<Comment> {
             .addDisposableTo(disposeBag)
     }
     
-    var numberOfSections: Int {
-        return sectionTypes.count
-    }
-    
-    func sectionType(for section: Int) -> SectionType {
-        return sectionTypes[section]
-    }
-    
-    func numberOfRowsIn(section: Int) -> Int {
-        switch sectionTypes[section] {
-        case .content:
-            return 1
-        case .milestone:
-            return 1
-        case .asignees:
-            return issue.assignees!.count
-        case .changes:
-            return 2
-        case .timeline:
-            return dataSource.value.count
-        }
-    }
-    
     var contentHTML: String {
         let template = try! Template(named: "issue")
+        template.register(StandardLibrary.each, forKey: "each")
         
-        let data = ["content": issue.body!]
+        return try! template.render(Box(templateData))
+    }
+    
+    var templateData: [String : Any] {
         
-        return try! template.render(Box(data))
+        var data: [String : Any] = [
+            "title": issue.title!,
+            "created_at": issue.createdAt!.naturalString(),
+            "repository": self.repo,
+            "author": issue.user!.login!,
+            "avatar_url": issue.user!.avatarURL!,
+            "comments": self.dataSource.value.map {
+                [
+                    "author": "\($0.user!)",
+                    "avatar_url": $0.user!.avatarURL?.absoluteString ?? "",
+                    "content": $0.body ?? "",
+                    "created_at": $0.createdAt!.naturalString(),
+                ]
+            },
+        ]
+        
+        if let state = issue.state {
+            if issue.isPullRequest {
+                var status: String
+                switch state {
+                case .closed:
+                    if let _  = (issue as? PullRequest)?.mergedAt {
+						status = "merged"
+                    } else {
+						status = "closed"
+                    }
+                case .open:
+					status = "open"
+                }
+                data["state"] = try! Template(named: "pulls-\(status)")
+            } else {
+                data["state"] = try! Template(named: "issue-\(state.rawValue)")
+            }
+        }
+        
+        if let body = issue.body {
+            data["content"] = body.characters.count > 0 ? body : "<p>No discription given.</p>"
+        }
+        
+        if let milestone = issue.milestone?.title {
+            data["milestone"] = milestone
+        }
+        
+        if let labels = issue.labels {
+            
+            data["labels"] = labels.map {
+                [
+                    "name": $0.name!,
+                    "color": $0.color!
+                ]
+            }
+        }
+        
+        if let assignees = issue.assignees, assignees.count > 0 {
+            data["asignees"] = assignees.map {
+                [
+                    "asignee": $0.login,
+                    "avatar_url": $0.avatarURL!,
+                ]
+            }
+        }
+        
+        return data
     }
 }

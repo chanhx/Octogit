@@ -22,6 +22,9 @@ class PullRequest: Issue {
     }
     
     override var icon: Octicon {
+        if let _ = mergedAt {
+            return .gitMerge
+        }
         return .gitPullrequest
     }
     

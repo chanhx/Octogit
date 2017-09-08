@@ -12,6 +12,12 @@
 		C500F8C61DBBA2EF009BB44A /* ErrorStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C21DBBA2EF009BB44A /* ErrorStatusView.swift */; };
 		C500F8C71DBBA2EF009BB44A /* LoadingStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C31DBBA2EF009BB44A /* LoadingStatusView.swift */; };
 		C500F8C81DBBA2EF009BB44A /* StatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C41DBBA2EF009BB44A /* StatusProvider.swift */; };
+		C5074AC11F62FB0100C36C84 /* issue-closed.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC01F62FB0100C36C84 /* issue-closed.mustache */; };
+		C5074AC31F62FB1600C36C84 /* issue-open.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC21F62FB1600C36C84 /* issue-open.mustache */; };
+		C5074AC51F6303C800C36C84 /* discussion-block.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC41F6303C800C36C84 /* discussion-block.mustache */; };
+		C5074AC71F6309C300C36C84 /* pulls-open.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC61F6309C300C36C84 /* pulls-open.mustache */; };
+		C5074AC91F6309D500C36C84 /* pulls-closed.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC81F6309D500C36C84 /* pulls-closed.mustache */; };
+		C5074ACB1F630A0A00C36C84 /* pulls-merged.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074ACA1F630A0A00C36C84 /* pulls-merged.mustache */; };
 		C5084B751F1BA9AF0002DC0E /* UserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5084B741F1BA9AF0002DC0E /* UserHeaderView.swift */; };
 		C5113D1A1D87B5B400344739 /* File+DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5113D191D87B5B400344739 /* File+DataProcess.swift */; };
 		C5113D1C1D88124D00344739 /* languages_dict.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5113D1B1D88124D00344739 /* languages_dict.plist */; };
@@ -42,6 +48,7 @@
 		C51CDECA1DBF79910043A755 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51CDEC31DBF79910043A755 /* UserViewModel.swift */; };
 		C52013C91D56C28C00FDCC30 /* TTTAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */; };
 		C52013CE1D57361A00FDCC30 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52013CD1D57361A00FDCC30 /* WebViewController.swift */; };
+		C521F3881F4C867800563FC8 /* github-modified.css in Resources */ = {isa = PBXBuildFile; fileRef = C521F3871F4C867800563FC8 /* github-modified.css */; };
 		C52474281D50F06A0001D9CD /* WebViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52474271D50F06A0001D9CD /* WebViewCell.swift */; };
 		C524742A1D50FB400001D9CD /* issue.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C52474291D50FB400001D9CD /* issue.mustache */; };
 		C524742D1D519CBB0001D9CD /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524742C1D519CBB0001D9CD /* Label.swift */; };
@@ -86,7 +93,6 @@
 		C55E08561D4793740004EC7C /* file_extensions.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55E08551D4793740004EC7C /* file_extensions.plist */; };
 		C57005E21DAA922C008DEFA9 /* SegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57005E11DAA922C008DEFA9 /* SegmentViewController.swift */; };
 		C571EF581D64836100F752EE /* OptionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C571EF571D64836100F752EE /* OptionPickerView.swift */; };
-		C5757E901D82E5C50012EF0C /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = C5757E8F1D82E5C50012EF0C /* markdown.css */; };
 		C5757E921D82E9770012EF0C /* markdown.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5757E911D82E9770012EF0C /* markdown.mustache */; };
 		C5819ABB1D4CF3D4009D7772 /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819ABA1D4CF3D4009D7772 /* RepositoryCell.swift */; };
 		C5819AC51D4EF7AC009D7772 /* IssueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5819AC41D4EF7AC009D7772 /* IssueCell.swift */; };
@@ -187,6 +193,12 @@
 		C500F8C21DBBA2EF009BB44A /* ErrorStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorStatusView.swift; sourceTree = "<group>"; };
 		C500F8C31DBBA2EF009BB44A /* LoadingStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingStatusView.swift; sourceTree = "<group>"; };
 		C500F8C41DBBA2EF009BB44A /* StatusProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusProvider.swift; sourceTree = "<group>"; };
+		C5074AC01F62FB0100C36C84 /* issue-closed.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "issue-closed.mustache"; sourceTree = "<group>"; };
+		C5074AC21F62FB1600C36C84 /* issue-open.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "issue-open.mustache"; sourceTree = "<group>"; };
+		C5074AC41F6303C800C36C84 /* discussion-block.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "discussion-block.mustache"; sourceTree = "<group>"; };
+		C5074AC61F6309C300C36C84 /* pulls-open.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pulls-open.mustache"; sourceTree = "<group>"; };
+		C5074AC81F6309D500C36C84 /* pulls-closed.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pulls-closed.mustache"; sourceTree = "<group>"; };
+		C5074ACA1F630A0A00C36C84 /* pulls-merged.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pulls-merged.mustache"; sourceTree = "<group>"; };
 		C5084B741F1BA9AF0002DC0E /* UserHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHeaderView.swift; sourceTree = "<group>"; };
 		C5113D191D87B5B400344739 /* File+DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "File+DataProcess.swift"; sourceTree = "<group>"; };
 		C5113D1B1D88124D00344739 /* languages_dict.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = languages_dict.plist; sourceTree = "<group>"; };
@@ -217,6 +229,7 @@
 		C51CDEC31DBF79910043A755 /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TTTAttributedLabel.framework; path = Carthage/Build/iOS/TTTAttributedLabel.framework; sourceTree = "<group>"; };
 		C52013CD1D57361A00FDCC30 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		C521F3871F4C867800563FC8 /* github-modified.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "github-modified.css"; sourceTree = "<group>"; };
 		C52474271D50F06A0001D9CD /* WebViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewCell.swift; path = Cell/WebViewCell.swift; sourceTree = "<group>"; };
 		C52474291D50FB400001D9CD /* issue.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = issue.mustache; sourceTree = "<group>"; };
 		C524742C1D519CBB0001D9CD /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
@@ -261,7 +274,6 @@
 		C55E08551D4793740004EC7C /* file_extensions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = file_extensions.plist; sourceTree = "<group>"; };
 		C57005E11DAA922C008DEFA9 /* SegmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentViewController.swift; sourceTree = "<group>"; };
 		C571EF571D64836100F752EE /* OptionPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionPickerView.swift; sourceTree = "<group>"; };
-		C5757E8F1D82E5C50012EF0C /* markdown.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = markdown.css; sourceTree = "<group>"; };
 		C5757E911D82E9770012EF0C /* markdown.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = markdown.mustache; sourceTree = "<group>"; };
 		C5819ABA1D4CF3D4009D7772 /* RepositoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepositoryCell.swift; path = Cell/RepositoryCell.swift; sourceTree = "<group>"; };
 		C5819AC41D4EF7AC009D7772 /* IssueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IssueCell.swift; path = Cell/IssueCell.swift; sourceTree = "<group>"; };
@@ -660,8 +672,14 @@
 				C55E08481D4701A20004EC7C /* content.mustache */,
 				C5757E911D82E9770012EF0C /* markdown.mustache */,
 				C52474291D50FB400001D9CD /* issue.mustache */,
+				C5074AC41F6303C800C36C84 /* discussion-block.mustache */,
+				C5074AC01F62FB0100C36C84 /* issue-closed.mustache */,
+				C5074AC21F62FB1600C36C84 /* issue-open.mustache */,
+				C5074AC61F6309C300C36C84 /* pulls-open.mustache */,
+				C5074AC81F6309D500C36C84 /* pulls-closed.mustache */,
+				C5074ACA1F630A0A00C36C84 /* pulls-merged.mustache */,
 				C55E08531D478E8E0004EC7C /* common.css */,
-				C5757E8F1D82E5C50012EF0C /* markdown.css */,
+				C521F3871F4C867800563FC8 /* github-modified.css */,
 				C5BB907A1D487ACA005A40C0 /* empty_content.html */,
 				C526EE111D7C62B6008C0D72 /* sample */,
 				C55E08551D4793740004EC7C /* file_extensions.plist */,
@@ -851,25 +869,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5074AC91F6309D500C36C84 /* pulls-closed.mustache in Resources */,
 				C5CF03BF1F343C3900DCFFF4 /* Repository.graphql in Resources */,
 				C5E7ACDB1D94C232007D1986 /* iGithub.entitlements in Resources */,
 				C526EE121D7C62B6008C0D72 /* sample in Resources */,
 				C524742A1D50FB400001D9CD /* issue.mustache in Resources */,
 				C5DB946D1D3F842000887E81 /* LaunchScreen.storyboard in Resources */,
+				C5074AC31F62FB1600C36C84 /* issue-open.mustache in Resources */,
 				C5DB946A1D3F842000887E81 /* Assets.xcassets in Resources */,
-				C5757E901D82E5C50012EF0C /* markdown.css in Resources */,
 				C5113D1C1D88124D00344739 /* languages_dict.plist in Resources */,
 				C526EE141D7D1954008C0D72 /* themes.plist in Resources */,
 				C55E08541D478E8E0004EC7C /* common.css in Resources */,
 				C59482BF1D65A73300B9F47C /* languages_array.plist in Resources */,
+				C5074ACB1F630A0A00C36C84 /* pulls-merged.mustache in Resources */,
 				C5F4BDEB1D3F96D2009DF758 /* octicons.ttf in Resources */,
 				C55E08491D4701A20004EC7C /* content.mustache in Resources */,
 				C5C2F8E51F37447E00D617A4 /* SearchRepositories.graphql.mustache in Resources */,
 				C538FD331D430466003A559E /* Login.storyboard in Resources */,
 				C5DB94681D3F842000887E81 /* Main.storyboard in Resources */,
+				C5074AC11F62FB0100C36C84 /* issue-closed.mustache in Resources */,
 				C5CF03BE1F343C3900DCFFF4 /* Repositories.graphql.mustache in Resources */,
+				C521F3881F4C867800563FC8 /* github-modified.css in Resources */,
 				C5757E921D82E9770012EF0C /* markdown.mustache in Resources */,
+				C5074AC71F6309C300C36C84 /* pulls-open.mustache in Resources */,
 				C5CF03C01F343C3900DCFFF4 /* RepositoryNode.graphql in Resources */,
+				C5074AC51F6303C800C36C84 /* discussion-block.mustache in Resources */,
 				C5BB907B1D487ACA005A40C0 /* empty_content.html in Resources */,
 				C526EE161D7D7E36008C0D72 /* Prism in Resources */,
 				C55E08561D4793740004EC7C /* file_extensions.plist in Resources */,

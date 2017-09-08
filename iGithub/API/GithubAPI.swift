@@ -47,9 +47,9 @@ let GitHubProvider = RxMoyaProvider<GitHubAPI>(endpointClosure: {
         return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.Raw])
     case .getHTMLContents, .getTheREADME:
         return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.HTML])
-    case .repositoryIssues, .repositoryPullRequests:
+    case .repositoryIssues, .repositoryPullRequests, .issueComments, .pullRequestComments:
         return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.HTMLAndJSON])
-    case .issueComments, .pullRequestComments, .gistComments, .commitComments:
+    case .gistComments, .commitComments:
         return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.TextAndJSON])
     default:
         return endpoint

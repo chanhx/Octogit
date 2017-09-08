@@ -58,7 +58,7 @@ class IssueTableViewController: BaseTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {        
-        let issueVC = IssueViewController.instantiateFromStoryboard()
+        let issueVC = IssueViewController()
         issueVC.viewModel = viewModel.viewModelForIndex(indexPath.row)
         self.navigationController?.pushViewController(issueVC, animated: true)
     }
