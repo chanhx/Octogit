@@ -1,9 +1,9 @@
 //
-//  IssueViewModel.swift
+//  PullRequestViewModel.swift
 //  iGithub
 //
-//  Created by Chan Hocheung on 8/1/16.
-//  Copyright © 2016 Hocheung. All rights reserved.
+//  Created by Chan Hocheung on 10/09/2017.
+//  Copyright © 2017 Hocheung. All rights reserved.
 //
 
 import Foundation
@@ -11,10 +11,10 @@ import Mustache
 import RxSwift
 import ObjectMapper
 
-class IssueViewModel: BaseTableViewModel<Comment> {
+class PullRequestViewModel: BaseTableViewModel<Comment> {
     
     var repo: String
-    var issue: Issue!
+    var pullRequest: PullRequest!
     var number: Int
     var token: GitHubAPI?
     
@@ -30,17 +30,17 @@ class IssueViewModel: BaseTableViewModel<Comment> {
         self.repo = "\(owner)/\(name)"
         self.number = number
         
-        token = .issue(owner: owner, name: name, number: number)
+        token = .pullRequest(owner: owner, name: name, number: number)
         
         super.init()
         
         fetchContent()
     }
     
-    init(repo: String, issue: Issue) {
-        self.number = issue.number
+    init(repo: String, pullRequest: PullRequest) {
+        self.number = pullRequest.number
         self.repo = repo
-        self.issue = issue
+        self.pullRequest = pullRequest
         
         super.init()
         
@@ -60,11 +60,11 @@ class IssueViewModel: BaseTableViewModel<Comment> {
             .subscribe(
                 onNext: { [unowned self] in
                     
-                    guard let issue = Mapper<Issue>().map(JSONObject: $0) else {
+                    guard let pullRequest = Mapper<PullRequest>().map(JSONObject: $0) else {
                         return
                     }
                     
-                    self.issue = issue
+                    self.pullRequest = pullRequest
                     self.fetchData()
                     self.html.value = try? self.template.render(Box(self.templateData))
                 },
@@ -76,11 +76,11 @@ class IssueViewModel: BaseTableViewModel<Comment> {
     }
     
     override func fetchData() {
-        guard let _ = issue else {
+        guard let _ = pullRequest else {
             return
         }
         
-        let token: GitHubAPI = .issueComments(repo: repo, number: issue.number!, page: page)
+        let token: GitHubAPI = .issueComments(repo: repo, number: pullRequest.number!, page: page)
         
         GitHubProvider
             .request(token)
@@ -100,7 +100,7 @@ class IssueViewModel: BaseTableViewModel<Comment> {
                 },
                 onError: {
                     MessageManager.show(error: $0)
-                }
+            }
             )
             .addDisposableTo(disposeBag)
     }
@@ -108,34 +108,45 @@ class IssueViewModel: BaseTableViewModel<Comment> {
     var templateData: [String : Any] {
         
         var data: [String : Any] = [
-            "title": issue.title!,
-            "created_at": issue.createdAt!.naturalString(),
+            "title": pullRequest.title!,
+            "created_at": pullRequest.createdAt!.naturalString(),
             "repository": self.repo,
-            "author": issue.author!.login!,
-            "avatar_url": issue.author!.avatarURL!,
+            "author": pullRequest.author!.login!,
+            "avatar_url": pullRequest.author!.avatarURL!,
             "comments": self.dataSource.value.map {
                 [
                     "author": "\($0.user!)",
                     "avatar_url": $0.user!.avatarURL?.absoluteString ?? "",
                     "content": $0.body ?? "",
                     "created_at": $0.createdAt!.naturalString(),
-                ]
+                    ]
             },
-        ]
+            ]
         
-        if let state = issue.state {
-            data["state"] = try! Template(named: "issue-\(state.rawValue)-span")
+        if let state = pullRequest.state {
+            var status: String
+            switch state {
+            case .closed:
+                if let _  = pullRequest.mergedAt {
+                    status = "merged"
+                } else {
+                    status = "closed"
+                }
+            case .open:
+                status = "open"
+            }
+            data["state"] = try! Template(named: "pullRequest-\(status)-span")
         }
         
-        if let body = issue.bodyHTML, body.characters.count > 0 {
+        if let body = pullRequest.bodyHTML, body.characters.count > 0 {
             data["content"] = body
         }
         
-        if let milestone = issue.milestone?.title {
+        if let milestone = pullRequest.milestone?.title {
             data["milestone"] = milestone
         }
         
-        if let labels = issue.labels {
+        if let labels = pullRequest.labels {
             
             data["labels"] = labels.map {
                 [
@@ -145,12 +156,12 @@ class IssueViewModel: BaseTableViewModel<Comment> {
             }
         }
         
-        if let assignees = issue.assignees, assignees.count > 0 {
+        if let assignees = pullRequest.assignees, assignees.count > 0 {
             data["asignees"] = assignees.map {
                 [
                     "asignee": $0.login,
                     "avatar_url": $0.avatarURL!,
-                ]
+                    ]
             }
         }
         

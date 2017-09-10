@@ -50,8 +50,8 @@ class PullRequestTableViewModel: BaseTableViewModel<PullRequest> {
             .addDisposableTo(disposeBag)
     }
     
-    func viewModelForIndex(_ index: Int) -> IssueViewModel {
-        return IssueViewModel(repo: repo, issue: dataSource.value[index])
+    func viewModelForIndex(_ index: Int) -> PullRequestViewModel {
+        return PullRequestViewModel(repo: repo, pullRequest: dataSource.value[index])
     }
 }
 

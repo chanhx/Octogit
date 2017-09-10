@@ -1,9 +1,9 @@
 //
-//  IssueViewController.swift
+//  PullRequestViewController.swift
 //  iGithub
 //
-//  Created by Chan Hocheung on 8/1/16.
-//  Copyright © 2016 Hocheung. All rights reserved.
+//  Created by Chan Hocheung on 10/09/2017.
+//  Copyright © 2017 Hocheung. All rights reserved.
 //
 
 import UIKit
@@ -11,12 +11,12 @@ import WebKit
 import RxSwift
 import RxCocoa
 
-class IssueViewController: UIViewController {
+class PullRequestViewController: UIViewController {
     
     var webView = WKWebView()
     
     let disposeBag = DisposeBag()
-    var viewModel: IssueViewModel! {
+    var viewModel: PullRequestViewModel! {
         didSet {
             viewModel.fetchData()
             
@@ -28,7 +28,7 @@ class IssueViewController: UIViewController {
                 .addDisposableTo(disposeBag)
         }
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,7 +44,7 @@ class IssueViewController: UIViewController {
     
 }
 
-extension IssueViewController: WKNavigationDelegate {
+extension PullRequestViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         

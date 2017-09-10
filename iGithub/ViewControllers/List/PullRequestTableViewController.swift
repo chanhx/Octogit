@@ -41,7 +41,7 @@ class PullRequestTableViewController: BaseTableViewController {
                     self.tableView.refreshHeader?.endRefreshing()
                     self.tableView.refreshFooter?.endRefreshing()
                     MessageManager.show(error: $0!)
-                    })
+                })
                 .addDisposableTo(viewModel.disposeBag)
         }
     }
@@ -59,7 +59,7 @@ class PullRequestTableViewController: BaseTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let pullRequestVC = IssueViewController()
+        let pullRequestVC = PullRequestViewController()
         pullRequestVC.viewModel = viewModel.viewModelForIndex(indexPath.row)
         self.navigationController?.pushViewController(pullRequestVC, animated: true)
     }

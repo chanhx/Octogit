@@ -139,7 +139,8 @@ class EventCell: UITableViewCell {
             titleLabel.addLink(URL(string: "/\(e.forkee!)")!, toText: e.forkee!)
         case .issueCommentEvent:
             let e = event as! IssueCommentEvent
-            titleLabel.addLink(URL(string: "/\(e.repository!)/issues/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")
+            let type = e.issue!.isPullRequest ? "pull" : "issues"
+            titleLabel.addLink(URL(string: "/\(e.repository!)/\(type)/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")
         case .issuesEvent:
             let e = event as! IssueEvent
             titleLabel.addLink(URL(string: "/\(e.repository!)/issues/\(e.issue!.number!)")!, toText: "\(e.repository!)#\(e.issue!.number!)")

@@ -12,16 +12,18 @@
 		C500F8C61DBBA2EF009BB44A /* ErrorStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C21DBBA2EF009BB44A /* ErrorStatusView.swift */; };
 		C500F8C71DBBA2EF009BB44A /* LoadingStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C31DBBA2EF009BB44A /* LoadingStatusView.swift */; };
 		C500F8C81DBBA2EF009BB44A /* StatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C41DBBA2EF009BB44A /* StatusProvider.swift */; };
-		C5074AC11F62FB0100C36C84 /* issue-closed.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC01F62FB0100C36C84 /* issue-closed.mustache */; };
-		C5074AC31F62FB1600C36C84 /* issue-open.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC21F62FB1600C36C84 /* issue-open.mustache */; };
+		C5074AC11F62FB0100C36C84 /* issue-closed-span.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC01F62FB0100C36C84 /* issue-closed-span.mustache */; };
+		C5074AC31F62FB1600C36C84 /* issue-open-span.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC21F62FB1600C36C84 /* issue-open-span.mustache */; };
 		C5074AC51F6303C800C36C84 /* discussion-block.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC41F6303C800C36C84 /* discussion-block.mustache */; };
-		C5074AC71F6309C300C36C84 /* pulls-open.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC61F6309C300C36C84 /* pulls-open.mustache */; };
-		C5074AC91F6309D500C36C84 /* pulls-closed.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC81F6309D500C36C84 /* pulls-closed.mustache */; };
-		C5074ACB1F630A0A00C36C84 /* pulls-merged.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074ACA1F630A0A00C36C84 /* pulls-merged.mustache */; };
+		C5074AC71F6309C300C36C84 /* pullRequest-open-span.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC61F6309C300C36C84 /* pullRequest-open-span.mustache */; };
+		C5074AC91F6309D500C36C84 /* pullRequest-closed-span.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC81F6309D500C36C84 /* pullRequest-closed-span.mustache */; };
+		C5074ACB1F630A0A00C36C84 /* pullRequest-merged-span.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074ACA1F630A0A00C36C84 /* pullRequest-merged-span.mustache */; };
 		C5084B751F1BA9AF0002DC0E /* UserHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5084B741F1BA9AF0002DC0E /* UserHeaderView.swift */; };
 		C5113D1A1D87B5B400344739 /* File+DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5113D191D87B5B400344739 /* File+DataProcess.swift */; };
 		C5113D1C1D88124D00344739 /* languages_dict.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5113D1B1D88124D00344739 /* languages_dict.plist */; };
 		C51547A01D940EFE00314C7F /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C515479F1D940EFE00314C7F /* ReactiveSwift.framework */; };
+		C51C68A11F64F49B00B8538A /* PullRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51C68A01F64F49B00B8538A /* PullRequestViewController.swift */; };
+		C51C68A31F64F54B00B8538A /* PullRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51C68A21F64F54B00B8538A /* PullRequestViewModel.swift */; };
 		C51CDEA31DBF790F0043A755 /* CommitFileTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51CDE991DBF790F0043A755 /* CommitFileTableViewModel.swift */; };
 		C51CDEA41DBF790F0043A755 /* CommitTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51CDE9A1DBF790F0043A755 /* CommitTableViewModel.swift */; };
 		C51CDEA51DBF790F0043A755 /* EventTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51CDE9B1DBF790F0043A755 /* EventTableViewModel.swift */; };
@@ -193,16 +195,18 @@
 		C500F8C21DBBA2EF009BB44A /* ErrorStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorStatusView.swift; sourceTree = "<group>"; };
 		C500F8C31DBBA2EF009BB44A /* LoadingStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingStatusView.swift; sourceTree = "<group>"; };
 		C500F8C41DBBA2EF009BB44A /* StatusProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusProvider.swift; sourceTree = "<group>"; };
-		C5074AC01F62FB0100C36C84 /* issue-closed.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "issue-closed.mustache"; sourceTree = "<group>"; };
-		C5074AC21F62FB1600C36C84 /* issue-open.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "issue-open.mustache"; sourceTree = "<group>"; };
+		C5074AC01F62FB0100C36C84 /* issue-closed-span.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "issue-closed-span.mustache"; sourceTree = "<group>"; };
+		C5074AC21F62FB1600C36C84 /* issue-open-span.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "issue-open-span.mustache"; sourceTree = "<group>"; };
 		C5074AC41F6303C800C36C84 /* discussion-block.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "discussion-block.mustache"; sourceTree = "<group>"; };
-		C5074AC61F6309C300C36C84 /* pulls-open.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pulls-open.mustache"; sourceTree = "<group>"; };
-		C5074AC81F6309D500C36C84 /* pulls-closed.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pulls-closed.mustache"; sourceTree = "<group>"; };
-		C5074ACA1F630A0A00C36C84 /* pulls-merged.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pulls-merged.mustache"; sourceTree = "<group>"; };
+		C5074AC61F6309C300C36C84 /* pullRequest-open-span.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pullRequest-open-span.mustache"; sourceTree = "<group>"; };
+		C5074AC81F6309D500C36C84 /* pullRequest-closed-span.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pullRequest-closed-span.mustache"; sourceTree = "<group>"; };
+		C5074ACA1F630A0A00C36C84 /* pullRequest-merged-span.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "pullRequest-merged-span.mustache"; sourceTree = "<group>"; };
 		C5084B741F1BA9AF0002DC0E /* UserHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserHeaderView.swift; sourceTree = "<group>"; };
 		C5113D191D87B5B400344739 /* File+DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "File+DataProcess.swift"; sourceTree = "<group>"; };
 		C5113D1B1D88124D00344739 /* languages_dict.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = languages_dict.plist; sourceTree = "<group>"; };
 		C515479F1D940EFE00314C7F /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
+		C51C68A01F64F49B00B8538A /* PullRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestViewController.swift; sourceTree = "<group>"; };
+		C51C68A21F64F54B00B8538A /* PullRequestViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestViewModel.swift; sourceTree = "<group>"; };
 		C51CDE991DBF790F0043A755 /* CommitFileTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitFileTableViewModel.swift; sourceTree = "<group>"; };
 		C51CDE9A1DBF790F0043A755 /* CommitTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitTableViewModel.swift; sourceTree = "<group>"; };
 		C51CDE9B1DBF790F0043A755 /* EventTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewModel.swift; sourceTree = "<group>"; };
@@ -435,6 +439,7 @@
 				C51CDEAF1DBF797C0043A755 /* FileViewController.swift */,
 				C51CDEB01DBF797C0043A755 /* GistViewController.swift */,
 				C51CDEB11DBF797C0043A755 /* IssueViewController.swift */,
+				C51C68A01F64F49B00B8538A /* PullRequestViewController.swift */,
 				C51CDEB21DBF797C0043A755 /* OrganizationViewController.swift */,
 				C51CDEB31DBF797C0043A755 /* RepositoryViewController.swift */,
 				C51CDEB41DBF797C0043A755 /* UserViewController.swift */,
@@ -449,6 +454,7 @@
 				C51CDEBE1DBF79910043A755 /* FileViewModel.swift */,
 				C51CDEBF1DBF79910043A755 /* GistViewModel.swift */,
 				C51CDEC01DBF79910043A755 /* IssueViewModel.swift */,
+				C51C68A21F64F54B00B8538A /* PullRequestViewModel.swift */,
 				C51CDEC11DBF79910043A755 /* OrganizationViewModel.swift */,
 				C51CDEC21DBF79910043A755 /* RepositoryViewModel.swift */,
 				C51CDEC31DBF79910043A755 /* UserViewModel.swift */,
@@ -673,11 +679,11 @@
 				C5757E911D82E9770012EF0C /* markdown.mustache */,
 				C52474291D50FB400001D9CD /* issue.mustache */,
 				C5074AC41F6303C800C36C84 /* discussion-block.mustache */,
-				C5074AC01F62FB0100C36C84 /* issue-closed.mustache */,
-				C5074AC21F62FB1600C36C84 /* issue-open.mustache */,
-				C5074AC61F6309C300C36C84 /* pulls-open.mustache */,
-				C5074AC81F6309D500C36C84 /* pulls-closed.mustache */,
-				C5074ACA1F630A0A00C36C84 /* pulls-merged.mustache */,
+				C5074AC01F62FB0100C36C84 /* issue-closed-span.mustache */,
+				C5074AC21F62FB1600C36C84 /* issue-open-span.mustache */,
+				C5074AC61F6309C300C36C84 /* pullRequest-open-span.mustache */,
+				C5074AC81F6309D500C36C84 /* pullRequest-closed-span.mustache */,
+				C5074ACA1F630A0A00C36C84 /* pullRequest-merged-span.mustache */,
 				C55E08531D478E8E0004EC7C /* common.css */,
 				C521F3871F4C867800563FC8 /* github-modified.css */,
 				C5BB907A1D487ACA005A40C0 /* empty_content.html */,
@@ -869,29 +875,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5074AC91F6309D500C36C84 /* pulls-closed.mustache in Resources */,
+				C5074AC91F6309D500C36C84 /* pullRequest-closed-span.mustache in Resources */,
 				C5CF03BF1F343C3900DCFFF4 /* Repository.graphql in Resources */,
 				C5E7ACDB1D94C232007D1986 /* iGithub.entitlements in Resources */,
 				C526EE121D7C62B6008C0D72 /* sample in Resources */,
 				C524742A1D50FB400001D9CD /* issue.mustache in Resources */,
 				C5DB946D1D3F842000887E81 /* LaunchScreen.storyboard in Resources */,
-				C5074AC31F62FB1600C36C84 /* issue-open.mustache in Resources */,
+				C5074AC31F62FB1600C36C84 /* issue-open-span.mustache in Resources */,
 				C5DB946A1D3F842000887E81 /* Assets.xcassets in Resources */,
 				C5113D1C1D88124D00344739 /* languages_dict.plist in Resources */,
 				C526EE141D7D1954008C0D72 /* themes.plist in Resources */,
 				C55E08541D478E8E0004EC7C /* common.css in Resources */,
 				C59482BF1D65A73300B9F47C /* languages_array.plist in Resources */,
-				C5074ACB1F630A0A00C36C84 /* pulls-merged.mustache in Resources */,
+				C5074ACB1F630A0A00C36C84 /* pullRequest-merged-span.mustache in Resources */,
 				C5F4BDEB1D3F96D2009DF758 /* octicons.ttf in Resources */,
 				C55E08491D4701A20004EC7C /* content.mustache in Resources */,
 				C5C2F8E51F37447E00D617A4 /* SearchRepositories.graphql.mustache in Resources */,
 				C538FD331D430466003A559E /* Login.storyboard in Resources */,
 				C5DB94681D3F842000887E81 /* Main.storyboard in Resources */,
-				C5074AC11F62FB0100C36C84 /* issue-closed.mustache in Resources */,
+				C5074AC11F62FB0100C36C84 /* issue-closed-span.mustache in Resources */,
 				C5CF03BE1F343C3900DCFFF4 /* Repositories.graphql.mustache in Resources */,
 				C521F3881F4C867800563FC8 /* github-modified.css in Resources */,
 				C5757E921D82E9770012EF0C /* markdown.mustache in Resources */,
-				C5074AC71F6309C300C36C84 /* pulls-open.mustache in Resources */,
+				C5074AC71F6309C300C36C84 /* pullRequest-open-span.mustache in Resources */,
 				C5CF03C01F343C3900DCFFF4 /* RepositoryNode.graphql in Resources */,
 				C5074AC51F6303C800C36C84 /* discussion-block.mustache in Resources */,
 				C5BB907B1D487ACA005A40C0 /* empty_content.html in Resources */,
@@ -974,6 +980,7 @@
 				C5E733851D603A8E00913A66 /* SegmentHeaderView.swift in Sources */,
 				C5F4BDEF1D3FB1E8009DF758 /* LoginViewController.swift in Sources */,
 				C5ABDF501D7DCCB800F07DC2 /* Constants.swift in Sources */,
+				C51C68A11F64F49B00B8538A /* PullRequestViewController.swift in Sources */,
 				C538FD4A1D449602003A559E /* DataProcess.swift in Sources */,
 				C59D120E1D5AE2DD0098301A /* URLExtension.swift in Sources */,
 				C5AD7DA91DC3014600FC9C1D /* Transforms.swift in Sources */,
@@ -1039,6 +1046,7 @@
 				C5F4BDE71D3F95E5009DF758 /* Octicon.swift in Sources */,
 				C5DB70171DA2AB4C00D96248 /* GistCell.swift in Sources */,
 				C5C4D9551D4A27B2007C1891 /* CountButton.swift in Sources */,
+				C51C68A31F64F54B00B8538A /* PullRequestViewModel.swift in Sources */,
 				C5EE81EB1DBF4EAD00673E20 /* UserTableViewController.swift in Sources */,
 				C538FD151D40A40B003A559E /* Comment.swift in Sources */,
 				C538FD4E1D44FB79003A559E /* File.swift in Sources */,

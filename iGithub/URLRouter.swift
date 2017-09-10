@@ -61,6 +61,7 @@ struct URLRouter {
                     return nil
                 }
                 let issueVC = IssueViewController()
+                issueVC.hidesBottomBarWhenPushed = true
                 issueVC.viewModel = IssueViewModel(owner: owner, name: name, number: number)
                 
                 return issueVC
@@ -69,8 +70,9 @@ struct URLRouter {
                 guard let number = Int(pathComponents[4]) else {
                     return nil
                 }
-                let pullVC = IssueViewController()
-                pullVC.viewModel = IssueViewModel(owner: owner, name: name, number: number)
+                let pullVC = PullRequestViewController()
+                pullVC.hidesBottomBarWhenPushed = true
+                pullVC.viewModel = PullRequestViewModel(owner: owner, name: name, number: number)
                 
                 return pullVC
 //
