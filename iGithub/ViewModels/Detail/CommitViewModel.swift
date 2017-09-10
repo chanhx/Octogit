@@ -36,7 +36,7 @@ class CommitViewModel: BaseTableViewModel<Comment> {
     }
     
     func fetchFiles() {
-        let token = GitHubAPI.getACommit(repo: repo, sha: commit.value.sha!)
+        let token = GitHubAPI.commit(repo: repo, sha: commit.value.sha!)
         
         GitHubProvider
             .request(token)

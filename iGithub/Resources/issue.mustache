@@ -10,6 +10,7 @@
 <meta name="theme-color" content="#1e2327">
 
 <link href="github-modified.css" rel="stylesheet" />
+<base href="https://github.com" />
 </head>
 
 <body>
@@ -43,9 +44,12 @@
 
 {{# milestone }}
 <div class="section-header">MILESTONE</div>
-<div class="section-body discussion-event issue-event">
-<svg aria-hidden="true" class="octicon octicon-milestone issue-event-icon" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M8 2H6V0h2v2zm4 5H2c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h10l2 2-2 2zM8 4H6v2h2V4zM6 16h2V8H6v8z"></path></svg>
-<div style="font-size:16px;">{{ milestone }}</div>
+<div class="section-body section-row discussion-event issue-event">
+<svg aria-hidden="true" class="octicon octicon-milestone issue-event-icon" height="16" version="1.1" viewBox="0 0 14 16"
+width="14">
+<path fill-rule="evenodd" d="M8 2H6V0h2v2zm4 5H2c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h10l2 2-2 2zM8 4H6v2h2V4zM6 16h2V8H6v8z"></path>
+</svg>
+<div>{{ milestone }}</div>
 </div>
 {{/}}
 
@@ -54,7 +58,7 @@
 <div class="section-header">ASSIGNEES</div>
 <div class="section-body">
 {{/}}
-<a href="https://github.com/{{ asignee }}" class="user-cell">
+<a href="/{{ asignee }}" class="user-cell">
 <img alt="@{{ asignee }}" class="avatar" height="32" width="32" src="{{ avatar_url }}">
 
 <div class="username">
@@ -64,6 +68,29 @@
 {{# @last }}
 </div>
 {{/}}
+{{/}}
+
+{{# pullRequest_number }}
+<div class="section-header">CHANGES</div>
+<div class="section-body">
+<div class="section-row discussion-event issue-event">
+<a href="/{{ repository }}/pull/{{ pullRequest_number }}/commits">
+<svg class="octicon octicon-git-commit issue-event-icon" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+<path fill-rule="evenodd" d="M10.86 7c-.45-1.72-2-3-3.86-3-1.86 0-3.41 1.28-3.86 3H0v2h3.14c.45 1.72 2 3 3.86 3 1.86 0 3.41-1.28 3.86-3H14V7h-3.14zM7 10.2c-1.22 0-2.2-.98-2.2-2.2 0-1.22.98-2.2 2.2-2.2 1.22 0 2.2.98 2.2 2.2 0 1.22-.98 2.2-2.2 2.2z"></path>
+</svg>
+<div>Commits</div>
+</a>
+</div>
+
+<div class="section-row discussion-event issue-event">
+<a href="/{{ repository }}/pull/{{ pullRequest_number }}/files">
+<svg class="octicon octicon-diff issue-event-icon" viewBox="0 0 13 16" version="1.1" width="13" height="16" aria-hidden="true">
+<path fill-rule="evenodd" d="M6 7h2v1H6v2H5V8H3V7h2V5h1v2zm-3 6h5v-1H3v1zM7.5 2L11 5.5V15c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h6.5zM10 6L7 3H1v12h9V6zM8.5 0H3v1h5l4 4v8h1V4.5L8.5 0z"></path>
+</svg>
+<div>Files changed</div>
+</a>
+</div>
+</div>
 {{/}}
 
 {{# each(comments) }}

@@ -75,14 +75,26 @@ struct URLRouter {
                 pullVC.viewModel = PullRequestViewModel(owner: owner, name: name, number: number)
                 
                 return pullVC
-//
+
 //            } else if pathComponents.count == 5 && pathComponents[3] == "commit" {
-//                let commitVC = CommitViewController.instantiateFromStoryboard()
+//                let commitVC = CommitTableViewController()
 //                commitVC.viewModel = CommitViewModel(repo: repo, commit: <#T##Commit#>)
 //                
 //                return commitVC
-//            } else if pathComponents.count >= 4 {
-//                TODO
+            } else if pathComponents.count == 6 && pathComponents[3] == "pull" && pathComponents[5] == "commits" {
+                guard let number = Int(pathComponents[4]) else {
+                    return nil
+                }
+                let commitTVC = CommitTableViewController()
+                commitTVC.viewModel = CommitTableViewModel(repo: repo, pullRequestNumber: number)
+                return commitTVC
+            } else if pathComponents.count == 6 && pathComponents[3] == "pull" && pathComponents[5] == "files" {
+                guard let number = Int(pathComponents[4]) else {
+                    return nil
+                }
+                let fileTVC = CommitFileTableViewController()
+                fileTVC.viewModel = CommitFileTableViewModel(repo: repo, pullRequestNumber: number)
+                return fileTVC
             }
         }
         

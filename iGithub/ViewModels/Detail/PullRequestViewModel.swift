@@ -113,6 +113,7 @@ class PullRequestViewModel: BaseTableViewModel<Comment> {
             "repository": self.repo,
             "author": pullRequest.author!.login!,
             "avatar_url": pullRequest.author!.avatarURL!,
+            "pullRequest_number": pullRequest.number,
             "comments": self.dataSource.value.map {
                 [
                     "author": "\($0.user!)",
@@ -121,7 +122,7 @@ class PullRequestViewModel: BaseTableViewModel<Comment> {
                     "created_at": $0.createdAt!.naturalString(),
                     ]
             },
-            ]
+        ]
         
         if let state = pullRequest.state {
             var status: String

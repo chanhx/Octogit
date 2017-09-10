@@ -7905,7 +7905,7 @@ section.blog .pagination .next_page {
 
 .issue-event-icon {
     position: absolute;
-    top: 16px;
+    top: 18px;
     left: 15px;
     width: 16px;
     color: #959da5;
@@ -9823,7 +9823,9 @@ p.history-link a {
     border-color: rgba(27, 31, 35, 0.15)
 }
 
-.discussion-block div+.discussion-block div {
+.discussion-block div+.discussion-block div,
+.section-row+.section-row,
+.user-cell+.user-cell {
     border-top: 1px solid #e1e4e8
 }
 
@@ -9854,10 +9856,6 @@ p.history-link a {
     color: #333333
 }
 
-.user-cell+.user-cell {
-    border-top: 1px solid #e1e4e8
-}
-
 .discussion-block {
     background-color: #fff;
 }
@@ -9866,4 +9864,9 @@ p.history-link a {
     border-top: 1px solid #dfe2e5;
     border-bottom: 1px solid #dfe2e5;
     background-color: #fff;
+}
+
+.section-row div {
+    font-size: 16px;
+    color: #333333;
 }

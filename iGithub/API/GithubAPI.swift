@@ -173,7 +173,7 @@ enum GitHubAPI {
     
     case repositoryCommits(repo: String, sha: String, page: Int)
     case pullRequestCommits(repo: String, number: Int, page: Int)
-    case getACommit(repo: String, sha: String)
+    case commit(repo: String, sha: String)
     
     // MARK: Search
     
@@ -317,7 +317,7 @@ extension GitHubAPI: TargetType {
             return "/repos/\(repo)/commits"
         case .pullRequestCommits(let repo, let number, _):
             return "/repos/\(repo)/pulls/\(number)/commits"
-        case .getACommit(let repo, let sha):
+        case .commit(let repo, let sha):
             return "/repos/\(repo)/commits/\(sha)"
             
             // MARK: Search
