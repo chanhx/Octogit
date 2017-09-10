@@ -35,7 +35,9 @@ struct URLRouter {
             return userVC
         } else if pathComponents.count >= 3 {
             
-            let repo = "\(pathComponents[1])/\(pathComponents[2])"
+            let owner = pathComponents[1]
+            let name = pathComponents[2]
+            let repo = "\(owner)/\(name)"
             
             if pathComponents.count == 3 {
                 let repoVC = RepositoryViewController.instantiateFromStoryboard()
@@ -53,13 +55,25 @@ struct URLRouter {
                 let commitTVC = CommitTableViewController()
                 commitTVC.viewModel = CommitTableViewModel(repo: repo, branch: pathComponents[4])
                 return commitTVC
-//            } else if pathComponents.count == 5 && pathComponents[3] == "issues" {
-//                let issueVC = IssueViewController.instantiateFromStoryboard()
-//                let issue = Issue(
-//                issueVC.viewModel = IssueViewModel(
-//            } else if pathComponents.count == 5 && pathComponents[3] == "pull" {
-//                let pullVC = IssueViewController.instantiateFromStoryboard()
-//                
+            } else if pathComponents.count == 5 && pathComponents[3] == "issues" {
+                
+                guard let number = Int(pathComponents[4]) else {
+                    return nil
+                }
+                let issueVC = IssueViewController()
+                issueVC.viewModel = IssueViewModel(owner: owner, name: name, number: number)
+                
+                return issueVC
+                
+            } else if pathComponents.count == 5 && pathComponents[3] == "pull" {
+                guard let number = Int(pathComponents[4]) else {
+                    return nil
+                }
+                let pullVC = IssueViewController()
+                pullVC.viewModel = IssueViewModel(owner: owner, name: name, number: number)
+                
+                return pullVC
+//
 //            } else if pathComponents.count == 5 && pathComponents[3] == "commit" {
 //                let commitVC = CommitViewController.instantiateFromStoryboard()
 //                commitVC.viewModel = CommitViewModel(repo: repo, commit: <#T##Commit#>)

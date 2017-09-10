@@ -9,6 +9,7 @@
 import UIKit
 import WebKit
 import RxSwift
+import RxCocoa
 
 class IssueViewController: UIViewController {
     
@@ -19,11 +20,12 @@ class IssueViewController: UIViewController {
         didSet {
             viewModel.fetchData()
             
-            viewModel.dataSource.asDriver()
+            viewModel.html.asDriver()
+                .flatMap { Driver.from(optional: $0) }
                 .drive(onNext: { [unowned self] _ in
                     self.webView.loadHTMLString(self.viewModel.contentHTML, baseURL: Bundle.main.resourceURL)
                 })
-                .addDisposableTo(viewModel.disposeBag)
+                .addDisposableTo(disposeBag)
         }
     }
         
@@ -37,7 +39,7 @@ class IssueViewController: UIViewController {
         webView.backgroundColor = UIColor(netHex: 0xefeff4)
         self.view.addSubview(webView)
         
-        navigationItem.title = "#\(viewModel.issue.number!)"
+        navigationItem.title = "#\(viewModel.number)"
     }
     
 }

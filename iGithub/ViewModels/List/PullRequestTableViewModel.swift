@@ -21,7 +21,7 @@ class PullRequestTableViewModel: BaseTableViewModel<PullRequest> {
     }
     
     override func fetchData() {
-        let token = GitHubAPI.repositoryPullRequests(repo: repo, page: page, state: state)
+        let token = GitHubAPI.pullRequests(repo: repo, page: page, state: state)
         
         GitHubProvider
             .request(token)

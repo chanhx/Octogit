@@ -103,12 +103,12 @@ class IssueCell: UITableViewCell {
             switch entity.state! {
             case .closed:
                 if let pullRequest = entity as? PullRequest, let mergedAt = pullRequest.mergedAt {
-                    infoLabel.text = "by \(entity.user!) was merged \(mergedAt.naturalString(withPreposition: true))"
+                    infoLabel.text = "by \(entity.author!) was merged \(mergedAt.naturalString(withPreposition: true))"
                 } else {
-                    infoLabel.text = "by \(entity.user!) was closed \(entity.closedAt!.naturalString(withPreposition: true))"
+                    infoLabel.text = "by \(entity.author!) was closed \(entity.closedAt!.naturalString(withPreposition: true))"
                 }
             case .open:
-                infoLabel.text = "by \(entity.user!) - \(entity.createdAt!.naturalString())"
+                infoLabel.text = "by \(entity.author!) - \(entity.createdAt!.naturalString())"
             }
         }
     }

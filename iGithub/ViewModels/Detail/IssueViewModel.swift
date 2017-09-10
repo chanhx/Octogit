@@ -15,16 +15,72 @@ import ObjectMapper
 class IssueViewModel: BaseTableViewModel<Comment> {
     
     var repo: String
-    var issue: Issue
+    var issue: Issue!
+    var number: Int
+    var token: GitHubAPI?
+    
+    let template: Template = {
+        let template = try! Template(named: "issue")
+        template.register(StandardLibrary.each, forKey: "each")
+        
+        return template
+    }()
+    var html = Variable<String?>(nil)
+    
+    init(owner: String, name: String, number: Int) {
+        self.repo = "\(owner)/\(name)"
+        self.number = number
+        
+        token = .issue(owner: owner, name: name, number: number)
+        
+        super.init()
+        
+        fetchContent()
+    }
     
     init(repo: String, issue: Issue) {
+        self.number = issue.number
         self.repo = repo
         self.issue = issue
         
         super.init()
+        
+        html.value = try? template.render(Box(templateData))
+    }
+    
+    func fetchContent() {
+        
+        guard let token = self.token else {
+            return
+        }
+        
+        GitHubProvider
+            .request(token)
+            .filterSuccessfulStatusCodes()
+            .mapJSON()
+            .subscribe(
+                onNext: { [unowned self] in
+                    
+                    guard let issue = Mapper<Issue>().map(JSONObject: $0) else {
+                        return
+                    }
+                    
+                    self.issue = issue
+                    self.fetchData()
+                    self.html.value = try? self.template.render(Box(self.templateData))
+                },
+                onError: {
+                    MessageManager.show(error: $0)
+            }
+            )
+            .addDisposableTo(disposeBag)
     }
     
     override func fetchData() {
+        guard let _ = issue else {
+            return
+        }
+        
         let token: GitHubAPI = issue.isPullRequest ?
             .pullRequestComments(repo: repo, number: issue.number!, page: page) :
             .issueComments(repo: repo, number: issue.number!, page: page)
@@ -35,9 +91,15 @@ class IssueViewModel: BaseTableViewModel<Comment> {
             .mapJSON()
             .subscribe(
                 onNext: { [unowned self] in
-                    if let newComments = Mapper<Comment>().mapArray(JSONObject: $0) {
-                        self.dataSource.value.append(contentsOf: newComments)
+                    guard
+                        let newComments = Mapper<Comment>().mapArray(JSONObject: $0),
+                        newComments.count > 0
+                    else {
+                        return
                     }
+                    
+                    self.dataSource.value.append(contentsOf: newComments)
+                    self.html.value = try? self.template.render(Box(self.templateData))
                 },
                 onError: {
                     MessageManager.show(error: $0)
@@ -59,8 +121,8 @@ class IssueViewModel: BaseTableViewModel<Comment> {
             "title": issue.title!,
             "created_at": issue.createdAt!.naturalString(),
             "repository": self.repo,
-            "author": issue.user!.login!,
-            "avatar_url": issue.user!.avatarURL!,
+            "author": issue.author!.login!,
+            "avatar_url": issue.author!.avatarURL!,
             "comments": self.dataSource.value.map {
                 [
                     "author": "\($0.user!)",
@@ -90,7 +152,7 @@ class IssueViewModel: BaseTableViewModel<Comment> {
             }
         }
         
-        if let body = issue.body {
+        if let body = issue.bodyHTML {
             data["content"] = body.characters.count > 0 ? body : "<p>No discription given.</p>"
         }
         

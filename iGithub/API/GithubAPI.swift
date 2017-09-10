@@ -47,7 +47,7 @@ let GitHubProvider = RxMoyaProvider<GitHubAPI>(endpointClosure: {
         return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.Raw])
     case .getHTMLContents, .getTheREADME:
         return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.HTML])
-    case .repositoryIssues, .repositoryPullRequests, .issueComments, .pullRequestComments:
+    case .issue, .pullRequest, .issues, .pullRequests, .issueComments, .pullRequestComments:
         return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.HTMLAndJSON])
     case .gistComments, .commitComments:
         return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.TextAndJSON])
@@ -162,8 +162,11 @@ enum GitHubAPI {
     
     // MARK: Issue & Pull Request
     
-    case repositoryIssues(repo: String, page: Int, state: IssueState)
-    case repositoryPullRequests(repo: String, page: Int, state: IssueState)
+    case issues(repo: String, page: Int, state: IssueState)
+    case pullRequests(repo: String, page: Int, state: IssueState)
+    
+    case issue(owner: String, name: String, number: Int)
+    case pullRequest(owner: String, name: String, number: Int)
     
     case authenticatedUserIssues(page: Int, state: IssueState)
     
@@ -298,10 +301,15 @@ extension GitHubAPI: TargetType {
             
             // MARK: Issue & Pull Request
             
-        case .repositoryIssues(let repo, _, _):
+        case .issues(let repo, _, _):
             return "/repos/\(repo)/issues"
-        case .repositoryPullRequests(let repo, _, _):
+        case .pullRequests(let repo, _, _):
             return "/repos/\(repo)/pulls"
+            
+        case .issue(let owner, let name, let number):
+            return "/repos/\(owner)/\(name)/issues/\(number)"
+        case .pullRequest(let owner, let name, let number):
+            return "/repos/\(owner)/\(name)/pulls/\(number)"
             
         case .authenticatedUserIssues:
             return "/issues"
@@ -397,8 +405,8 @@ extension GitHubAPI: TargetType {
         case .searchUsers(let q, let sort, let page):
             return ["q": q, "sort": sort.rawValue, "page": page]
             
-        case .repositoryIssues(_, let page, let state),
-             .repositoryPullRequests(_, let page, let state),
+        case .issues(_, let page, let state),
+             .pullRequests(_, let page, let state),
              .authenticatedUserIssues(let page, let state):
             return ["page": page, "state": state.rawValue]
             

@@ -18,10 +18,10 @@ class Issue: Mappable {
     
     var id: Int?
     var title: String?
-    var body: String?
+    var bodyHTML: String?
     var state: IssueState?
-    var number: Int?
-    var user: User?
+    var number: Int!
+    var author: User?
     var assignees: [User]?
     var labels: [Label]?
     var milestone: Milestone?
@@ -38,9 +38,9 @@ class Issue: Mappable {
         id          <- map["id"]
         number      <- map["number"]
         title       <- map["title"]
-        body        <- map["body_html"]
+        bodyHTML    <- map["body_html"]
         state       <- map["state"]
-        user        <- map["user"]
+        author	    <- map["user"]
         assignees   <- map["assignees"]
         milestone   <- map["milestone"]
         labels      <- map["labels"]
