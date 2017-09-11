@@ -23,7 +23,7 @@ class Comment: Mappable {
     func mapping(map: Map) {
         id          <- map["id"]
         user        <- map["user"]
-        body        <- map["body_html"]
+        body        <- (map["body_html"].isKeyPresent ? map["body_html"] : map["body_text"])
         createdAt   <- (map["created_at"], ISO8601DateTransform())
     }
 }

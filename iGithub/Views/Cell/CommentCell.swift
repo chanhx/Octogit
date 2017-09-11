@@ -58,12 +58,12 @@ class CommentCell: UITableViewCell {
         let margins = contentView.layoutMarginsGuide
         
         NSLayoutConstraint.activate([
-            avatarView.topAnchor.constraint(equalTo: margins.topAnchor),
-            avatarView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            avatarView.topAnchor.constraint(equalTo: margins.topAnchor, constant: 8),
+            avatarView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 8),
             avatarView.heightAnchor.constraint(equalToConstant: 36),
             avatarView.widthAnchor.constraint(equalToConstant: 36),
             
-            nameLabel.topAnchor.constraint(equalTo: margins.topAnchor),
+            nameLabel.topAnchor.constraint(equalTo: avatarView.topAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 8),
             
             timeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 3),
@@ -72,7 +72,7 @@ class CommentCell: UITableViewCell {
             
             bodyLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 8),
             bodyLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
-            bodyLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            bodyLabel.leadingAnchor.constraint(equalTo: avatarView.leadingAnchor),
             bodyLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
         ])
     }
