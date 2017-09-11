@@ -9870,3 +9870,7 @@ p.history-link a {
     font-size: 16px;
     color: #333333;
 }
+
+.section-row a, .avatar, .username {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
