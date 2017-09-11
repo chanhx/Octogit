@@ -19,8 +19,12 @@ class CommitViewModel: BaseTableViewModel<Comment> {
     }
     
     var repo: String
-    var commit: Variable<Commit>
+    var sha: String
+    var commit = Variable<Commit?>(nil)
     var sectionTypes = [SectionType]()
+    var shortSHA: String {
+        return sha.substring(to: sha.index(sha.startIndex, offsetBy: 7))
+    }
     
     var additions = 0
     var removed = 0
@@ -28,15 +32,23 @@ class CommitViewModel: BaseTableViewModel<Comment> {
     
     init(repo: String, commit: Commit) {
         self.repo = repo
-        self.commit = Variable(commit)
+        self.sha = commit.sha
+        self.commit.value = commit
         
         super.init()
         
-        setSectionTypes()
+        setSectionTypes(withCommit: commit)
+    }
+    
+    init(repo: String, sha: String) {
+        self.repo = repo
+        self.sha = sha
+        
+        super.init()
     }
     
     func fetchFiles() {
-        let token = GitHubAPI.commit(repo: repo, sha: commit.value.sha!)
+        let token = GitHubAPI.commit(repo: repo, sha: sha)
         
         GitHubProvider
             .request(token)
@@ -45,6 +57,7 @@ class CommitViewModel: BaseTableViewModel<Comment> {
                 onNext: { [unowned self] in
                     if let commit = Mapper<Commit>().map(JSONObject: $0) {
                         self.classifyFiles(ofCommit: commit)
+                        self.setSectionTypes(withCommit: commit)
                         self.commit.value = commit
                     }
                 },
@@ -56,7 +69,7 @@ class CommitViewModel: BaseTableViewModel<Comment> {
     }
     
     override func fetchData() {
-        let token = GitHubAPI.commitComments(repo: repo, sha: commit.value.sha!, page: page)
+        let token = GitHubAPI.commitComments(repo: repo, sha: sha, page: page)
         
         GitHubProvider
             .request(token)
@@ -79,8 +92,10 @@ class CommitViewModel: BaseTableViewModel<Comment> {
             .addDisposableTo(disposeBag)
     }
     
-    func setSectionTypes() {
-        if commit.value.message!.components(separatedBy: "\n").count > 1 {
+    func setSectionTypes(withCommit commit: Commit) {
+        sectionTypes.removeAll()
+        
+        if commit.message!.components(separatedBy: "\n").count > 1 {
             sectionTypes.append(.message)
         }
         

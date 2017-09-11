@@ -78,11 +78,12 @@ struct URLRouter {
                 
                 return pullVC
 
-//            } else if len == 5 && pathComponents[3] == "commit" {
-//                let commitVC = CommitTableViewController()
-//                commitVC.viewModel = CommitViewModel(repo: repo, commit: <#T##Commit#>)
-//                
-//                return commitVC
+            } else if len == 5 && pathComponents[3] == "commit" {
+                let sha = pathComponents[4]
+                let commitVC = CommitViewController.instantiateFromStoryboard()
+                commitVC.viewModel = CommitViewModel(repo: repo, sha: sha)
+                
+                return commitVC
             } else if len == 5 && pathComponents[3] == "tree" {
                 let ref = pathComponents[4]
                 let fileTVC = FileTableViewController()

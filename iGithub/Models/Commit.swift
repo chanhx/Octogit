@@ -11,7 +11,7 @@ import ObjectMapper
 
 class Commit: Mappable {
     
-    var sha: String?
+    var sha: String!
     var message: String?
     var commitDate: Date?
     var countOfChanges: Int?
@@ -35,7 +35,7 @@ class Commit: Mappable {
     }
     
     lazy var shortSHA: String = {
-        return self.sha!.substring(to: self.sha!.characters.index(self.sha!.startIndex, offsetBy: 7))
+        return self.sha!.substring(to: self.sha!.index(self.sha!.startIndex, offsetBy: 7))
     }()
 }
 

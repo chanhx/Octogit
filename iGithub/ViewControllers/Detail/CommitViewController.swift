@@ -16,25 +16,7 @@ class CommitViewController: BaseTableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
     
-    var viewModel: CommitViewModel! {
-        didSet {
-            viewModel.fetchFiles()
-            viewModel.fetchData()
-            
-            let commitDriver = viewModel.commit.asDriver()
-            let commentsDriver = viewModel.dataSource.asDriver()
-            
-            Driver.combineLatest(commitDriver, commentsDriver) { commit, comments in
-                    (commit, comments)
-                }
-                .drive(onNext: { [unowned self] _ in
-                    self.tableView.reloadData()
-                    
-                    self.sizeHeaderToFit(tableView: self.tableView)
-                })
-                .addDisposableTo(viewModel.disposeBag)
-        }
-    }
+    var viewModel: CommitViewModel!
     
     class func instantiateFromStoryboard() -> CommitViewController {
         return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CommitViewController") as! CommitViewController
@@ -43,21 +25,47 @@ class CommitViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = viewModel.commit.value.shortSHA
+        navigationItem.title = viewModel.shortSHA
         
-        configureHeader()
-        sizeHeaderToFit(tableView: tableView)
+        viewModel.fetchFiles()
+        viewModel.fetchData()
+        
+        let commitDriver = viewModel.commit.asDriver().flatMap {
+            Driver.from(optional: $0)
+        }
+        let commentsDriver = viewModel.dataSource.asDriver()
+        
+        commitDriver
+            .drive(onNext: { [unowned self] _ in
+                self.configureHeader()
+                self.sizeHeaderToFit(tableView: self.tableView)
+            })
+            .addDisposableTo(viewModel.disposeBag)
+        
+        Driver.combineLatest(commitDriver, commentsDriver) { commit, comments in
+            	(commit, comments)
+            }
+            .drive(onNext: { [unowned self] _ in
+                self.tableView.reloadData()
+                
+                self.sizeHeaderToFit(tableView: self.tableView)
+            })
+            .addDisposableTo(viewModel.disposeBag)
     }
     
     func configureHeader() {
         
-        titleLabel.text = viewModel.commit.value.message!.components(separatedBy: "\n").first!
+        guard let commit = viewModel.commit.value else {
+            return
+        }
         
-        avatarView.setAvatar(with: viewModel.commit.value.author?.avatarURL)
+        titleLabel.text = commit.message!.components(separatedBy: "\n").first!
         
-        let author = viewModel.commit.value.author?.login ?? viewModel.commit.value.authorName
+        avatarView.setAvatar(with: commit.author?.avatarURL)
         
-        let attrInfo = NSMutableAttributedString(string: "\(author!) committed \(viewModel.commit.value.commitDate!.naturalString(withPreposition: true))")
+        let author = commit.author?.login ?? commit.authorName
+        
+        let attrInfo = NSMutableAttributedString(string: "\(author!) committed \(commit.commitDate!.naturalString(withPreposition: true))")
         attrInfo.addAttributes([
             NSForegroundColorAttributeName: UIColor(netHex: 0x555555),
             NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightMedium)
@@ -109,7 +117,7 @@ class CommitViewController: BaseTableViewController {
             cell.textLabel?.lineBreakMode = .byWordWrapping
             cell.textLabel?.textColor = UIColor(netHex: 0x333333)
             cell.accessoryType = .none
-            cell.textLabel?.text = viewModel.commit.value.message
+            cell.textLabel?.text = viewModel.commit.value?.message
             
             return cell
             
@@ -131,7 +139,7 @@ class CommitViewController: BaseTableViewController {
                 cell.accessoryType = viewModel.modified > 0 ? .disclosureIndicator : .none
             default:
                 cell.textLabel?.attributedText = Octicon.diff.iconString(" All files", iconSize: 18, iconColor: iconColor)
-                cell.accessoryType = viewModel.commit.value.files == nil ? .none : .disclosureIndicator
+                cell.accessoryType = viewModel.commit.value?.files == nil ? .none : .disclosureIndicator
             }
             
             return cell
@@ -150,7 +158,7 @@ class CommitViewController: BaseTableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         guard viewModel.sectionTypes[indexPath.section] == .changes,
-            var files = viewModel.commit.value.files else {
+            var files = viewModel.commit.value?.files else {
                 return
         }
         
