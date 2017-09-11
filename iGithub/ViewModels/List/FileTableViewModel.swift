@@ -25,7 +25,7 @@ class FileTableViewModel: BaseTableViewModel<File> {
     }
     
     var title: String {        
-        return (path == "" ? repository : path).components(separatedBy: "/").last!
+        return (path == "" ? ref : path).components(separatedBy: "/").last!
     }
     
     override func fetchData() {
