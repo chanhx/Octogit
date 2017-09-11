@@ -24,15 +24,20 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                         self.tableView.refreshFooter?.endRefreshing() :
                         self.tableView.refreshFooter?.endRefreshingWithNoMoreData()
                 })
-                .drive(tableView.rx.items(cellIdentifier: "EventCell", cellType: EventCell.self)) { [unowned self] row, element, cell in
+                .drive(tableView.rx.items(cellIdentifier: "EventCell", cellType: EventCell.self)) { [weak self] row, element, cell in
+                    
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    
                     cell.configure(withEvent: element)
-                    cell.titleLabel.delegate = self
-                    cell.contentLabel.delegate = self
+                    cell.titleLabel.delegate = strongSelf
+                    cell.contentLabel.delegate = strongSelf
                     cell.selectionStyle = .none
                     
                     cell.titleLabel.tag = row
                     cell.avatarView.tag = row
-                    cell.avatarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.avatarTapped)))
+                    cell.avatarView.addGestureRecognizer(UITapGestureRecognizer(target: strongSelf, action: #selector(strongSelf.avatarTapped)))
                 }
                 .addDisposableTo(disposeBag)
             
