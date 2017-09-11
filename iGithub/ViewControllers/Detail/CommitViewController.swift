@@ -16,6 +16,8 @@ class CommitViewController: BaseTableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
     
+    let indicator = LoadingIndicator()
+    
     var viewModel: CommitViewModel!
     
     class func instantiateFromStoryboard() -> CommitViewController {
@@ -27,8 +29,7 @@ class CommitViewController: BaseTableViewController {
         
         navigationItem.title = viewModel.shortSHA
         
-        viewModel.fetchFiles()
-        viewModel.fetchData()
+        self.show(indicator: indicator)
         
         let commitDriver = viewModel.commit.asDriver().flatMap {
             Driver.from(optional: $0)
@@ -39,6 +40,8 @@ class CommitViewController: BaseTableViewController {
             .drive(onNext: { [unowned self] _ in
                 self.configureHeader()
                 self.sizeHeaderToFit(tableView: self.tableView)
+                
+                self.indicator.removeFromSuperview()
             })
             .addDisposableTo(viewModel.disposeBag)
         
@@ -51,6 +54,9 @@ class CommitViewController: BaseTableViewController {
                 self.sizeHeaderToFit(tableView: self.tableView)
             })
             .addDisposableTo(viewModel.disposeBag)
+        
+        viewModel.fetchFiles()
+        viewModel.fetchData()
     }
     
     func configureHeader() {

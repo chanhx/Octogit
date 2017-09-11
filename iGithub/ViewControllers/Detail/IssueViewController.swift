@@ -13,22 +13,12 @@ import RxCocoa
 
 class IssueViewController: UIViewController {
     
-    var webView = WKWebView()
+    let indicator = LoadingIndicator()
+    let webView = WKWebView()
     
     let disposeBag = DisposeBag()
-    var viewModel: IssueViewModel! {
-        didSet {
-            viewModel.fetchData()
-            
-            viewModel.html.asDriver()
-                .flatMap { Driver.from(optional: $0) }
-                .drive(onNext: { [unowned self] in
-                    self.webView.loadHTMLString($0, baseURL: Bundle.main.resourceURL)
-                })
-                .addDisposableTo(disposeBag)
-        }
-    }
-        
+    var viewModel: IssueViewModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,7 +29,19 @@ class IssueViewController: UIViewController {
         webView.backgroundColor = UIColor(netHex: 0xefeff4)
         self.view.addSubview(webView)
         
+        self.show(indicator: indicator, onView: webView)
+        
         navigationItem.title = "#\(viewModel.number)"
+        
+        viewModel.html.asDriver()
+            .flatMap { Driver.from(optional: $0) }
+            .drive(onNext: { [unowned self] in
+                self.webView.loadHTMLString($0, baseURL: Bundle.main.resourceURL)
+                self.indicator.removeFromSuperview()
+            })
+            .addDisposableTo(disposeBag)
+        
+        viewModel.fetchData()
     }
     
 }

@@ -17,8 +17,6 @@ class GistViewController: BaseTableViewController {
     
     var viewModel: GistViewModel! {
         didSet {
-            viewModel.fetchData()
-            
             viewModel.dataSource.asDriver()
                 .drive(onNext: { [unowned self] _ in
                     self.tableView.reloadData()
@@ -26,6 +24,8 @@ class GistViewController: BaseTableViewController {
                     self.sizeHeaderToFit(tableView: self.tableView)
                 })
                 .addDisposableTo(viewModel.disposeBag)
+            
+            viewModel.fetchData()
         }
     }
     

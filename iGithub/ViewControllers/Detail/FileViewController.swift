@@ -14,25 +14,7 @@ class FileViewController: UIViewController {
     let webView = WKWebView()
     let indicator = LoadingIndicator()
     
-    var viewModel: FileViewModel! {
-        didSet {
-            viewModel.html.asDriver()
-                .filter { $0.characters.count > 0 }
-                .drive(onNext: { [unowned self] html in
-                    self.indicator.removeFromSuperview()
-                    self.webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
-                })
-                .addDisposableTo(viewModel.disposeBag)
-            
-            viewModel.contentData.asDriver()
-                .filter { $0.count > 0 }
-                .drive(onNext: { [unowned self] data in
-                    self.indicator.removeFromSuperview()
-                    self.webView.load(data, mimeType: self.viewModel.mimeType, characterEncodingName: "utf-8", baseURL: Bundle.main.resourceURL!)
-                })
-                .addDisposableTo(viewModel.disposeBag)
-        }
-    }
+    var viewModel: FileViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,23 +25,28 @@ class FileViewController: UIViewController {
         
         view.addSubview(webView)
         
-        webView.addSubview(indicator)
-        
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            indicator.centerXAnchor.constraint(equalTo: webView.centerXAnchor),
-            indicator.centerYAnchor.constraint(equalTo: webView.centerYAnchor),
-            indicator.heightAnchor.constraint(equalToConstant: 30),
-            indicator.widthAnchor.constraint(equalToConstant: 30)
-        ])
-        
-        indicator.startAnimating()
+        self.show(indicator: indicator, onView: webView)
         
         navigationItem.title = viewModel.fileName
         if let path = viewModel.filePath, path.characters.count > 0 {
             navigationItem.prompt = path
         }
+        
+        viewModel.html.asDriver()
+            .filter { $0.characters.count > 0 }
+            .drive(onNext: { [unowned self] html in
+                self.indicator.removeFromSuperview()
+                self.webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
+            })
+            .addDisposableTo(viewModel.disposeBag)
+        
+        viewModel.contentData.asDriver()
+            .filter { $0.count > 0 }
+            .drive(onNext: { [unowned self] data in
+                self.indicator.removeFromSuperview()
+                self.webView.load(data, mimeType: self.viewModel.mimeType, characterEncodingName: "utf-8", baseURL: Bundle.main.resourceURL!)
+            })
+            .addDisposableTo(viewModel.disposeBag)
 
         viewModel.getFileContent()
     }
