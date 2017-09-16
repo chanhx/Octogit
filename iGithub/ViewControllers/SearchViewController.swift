@@ -13,8 +13,8 @@ class SearchViewController: BaseTableViewController {
     
     let viewModel = SearchViewModel()
     
-    let headerView = SegmentHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 90))
-//    let headerView = SegmentHeaderView()
+    fileprivate let searchBar = UISearchBar()
+    fileprivate let headerView = SegmentHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 90))
     
     lazy var repoOptionsPickerView: OptionPickerView = OptionPickerView(delegate: self, optionsCount: 2)
     lazy var userOptionPickerView: OptionPickerView = OptionPickerView(delegate: self)
@@ -22,11 +22,12 @@ class SearchViewController: BaseTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        automaticallyAdjustsScrollViewInsets = false
-        tableView.contentInset = UIEdgeInsetsMake(64, 0, 44, 0)
+        searchBar.delegate = self
+        searchBar.placeholder = "Search"
+        navigationItem.titleView = searchBar
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(popBack))
 
         tableView.tableHeaderView = headerView
-        
         tableView.keyboardDismissMode = .onDrag
         tableView.backgroundColor = UIColor(netHex: 0xFAFAFA)
         tableView.register(RepositoryCell.self, forCellReuseIdentifier: "RepositoryCell")
@@ -38,58 +39,62 @@ class SearchViewController: BaseTableViewController {
         headerView.titleLabel.delegate = self
         updateTitle()
     }
+    
+    func popBack() {
+        searchBar.text = nil
+        searchBar.resignFirstResponder()
+        viewModel.clean()
+        
+        let transition = CATransition()
+        transition.duration = 0.1
+        transition.type = kCATransitionFade
+        transition.subtype = kCATransitionFromBottom
+        
+        navigationController?.view.layer.add(transition, forKey: kCATransition)
+        navigationController?.popViewController(animated: false)
+    }
+    
+    func activateSearchBar() {
+        searchBar.becomeFirstResponder()
+    }
 
     // MARK: - Table view data source
     
-//    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 90
-//    }
-//    
-//    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        return headerView
-//    }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        searchBar.resignFirstResponder()
         
         switch viewModel.searchObject {
         case .repository:
             let repo = viewModel.repoTVM.dataSource.value[indexPath.row]
             let repoVC = RepositoryViewController.instantiateFromStoryboard()
             repoVC.viewModel = RepositoryViewModel(repo: repo)
-            self.presentingViewController?.navigationController?.pushViewController(repoVC, animated: true)
+            self.navigationController?.pushViewController(repoVC, animated: true)
         case .user:
             let user = viewModel.userTVM.dataSource.value[indexPath.row]
             switch user.type! {
             case .user:
                 let userVC = UserViewController.instantiateFromStoryboard()
                 userVC.viewModel = UserViewModel(user)
-                self.presentingViewController?.navigationController?.pushViewController(userVC, animated: true)
+                self.navigationController?.pushViewController(userVC, animated: true)
             case .organization:
                 let orgVC = OrganizationViewController.instantiateFromStoryboard()
                 orgVC.viewModel = OrganizationViewModel(user)
-                self.presentingViewController?.navigationController?.pushViewController(orgVC, animated: true)
+                self.navigationController?.pushViewController(orgVC, animated: true)
             }
         }
     }
 }
 
-extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        
-        guard let query = searchController.searchBar.text, query.characters.count > 0 else {
-            self.view.isHidden = false
-            return
-        }
-    }
+extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         if let query = searchBar.text , query.characters.count > 0 {
+            searchBar.resignFirstResponder()
             viewModel.search(query: query)
         }
-    }
+    }    
 }
 
 extension SearchViewController: SegmentHeaderViewDelegate {

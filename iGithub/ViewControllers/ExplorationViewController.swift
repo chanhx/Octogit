@@ -8,12 +8,11 @@
 
 import UIKit
 
-class ExplorationViewController: BaseTableViewController, UISearchControllerDelegate {
+class ExplorationViewController: BaseTableViewController {
     
     let viewModel = ExplorationViewModel()
     let headerView = SegmentHeaderView()
     
-    var searchController: UISearchController!
     var searchViewController = SearchViewController()
     
     lazy var pickerView: OptionPickerView = OptionPickerView(delegate:self, optionsCount: 2, selectedRows: [0, 0])
@@ -28,24 +27,25 @@ class ExplorationViewController: BaseTableViewController, UISearchControllerDele
         headerView.titleLabel.delegate = self
         updateTitle()
         
-        searchController = UISearchController(searchResultsController: searchViewController)
-        
-        searchController.searchResultsUpdater = searchViewController
-        searchController.searchBar.delegate = searchViewController
-        searchController.searchBar.autocapitalizationType = .none
-        searchController.delegate = self
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.dimsBackgroundDuringPresentation = true
-        
-        navigationItem.titleView = searchController.searchBar
-        
-        definesPresentationContext = true
+        navigationItem.title = "Trending"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(showSearchViewController))
     }
     
-    // MARK: UISearchControllerDelegate
+    // MARK: SearchViewController
     
-    func willDismissSearchController(_ searchController: UISearchController) {
-        searchViewController.viewModel.clean()
+    func showSearchViewController() {
+        
+        searchViewController.hidesBottomBarWhenPushed = true
+        searchViewController.navigationItem.setHidesBackButton(true, animated: false)
+        searchViewController.activateSearchBar()
+        
+        let transition = CATransition()
+        transition.duration = 0.1
+        transition.type = kCATransitionFade
+        transition.subtype = kCATransitionFromTop
+        
+        navigationController?.view.layer.add(transition, forKey: kCATransition)
+		navigationController?.pushViewController(searchViewController, animated: false)
     }
     
     // MARK: UITableViewDelegate
