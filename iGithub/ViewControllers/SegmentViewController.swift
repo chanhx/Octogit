@@ -8,23 +8,34 @@
 
 import Foundation
 import TwicketSegmentedControl
+import Pageboy
 
 class SegmentViewController: UIViewController {
     
     var titles: [String]
+    var viewControllers: [UIViewController]
+    let pageViewController = PageboyViewController()
+    let segmentedControl = TwicketSegmentedControl()
+    var initialPage: Int
     
-    init(viewControllers: [UIViewController], titles: [String]) {
+    init(viewControllers: [UIViewController], titles: [String], initialPage: Int = 0) {
         
         assert(viewControllers.count == titles.count)
         
         self.titles = titles
+        self.viewControllers = viewControllers
+        segmentedControl.setSegmentItems(titles)
+
+        self.initialPage = initialPage
         
         super.init(nibName: nil, bundle: nil)
         
-        viewControllers.forEach {
-            addChildViewController($0)
-            $0.didMove(toParentViewController: self)
-        }
+        addChildViewController(pageViewController)
+        pageViewController.didMove(toParentViewController: self)
+        
+        pageViewController.dataSource = self
+        pageViewController.delegate = self
+        segmentedControl.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -33,57 +44,72 @@ class SegmentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        addView(ofViewController: childViewControllers[0])
+        self.view.backgroundColor = UIColor.white
         
         configureSegmentedControl()
     }
     
     func configureSegmentedControl() {
-        let segmentedControl = TwicketSegmentedControl()
-        let height = TwicketSegmentedControl.height
         
-        segmentedControl.frame = CGRect(x: 0,
-                                        y: view.bounds.height - height,
-                                        width: view.bounds.width,
-                                        height: height)
+        let contentView = pageViewController.view!
         
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: view.bounds.height - 41, width: view.bounds.width, height: 41))
-        let segmentedControlItem = UIBarButtonItem(customView: segmentedControl)
-        let fixSpace0 = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        let line = UIView()
+        line.backgroundColor = UIColor(netHex: 0xB2B2B2)
         
-        fixSpace0.width = -16
+        view.addSubviews([contentView, line, segmentedControl])
         
-        toolbar.setItems([fixSpace0, segmentedControlItem, fixSpace0], animated: false)
+        NSLayoutConstraint.activate([
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            
+            line.heightAnchor.constraint(equalToConstant: 1),
+            line.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            line.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            line.topAnchor.constraint(equalTo: contentView.bottomAnchor),
+            line.bottomAnchor.constraint(equalTo: segmentedControl.topAnchor),
+            
+            segmentedControl.heightAnchor.constraint(equalToConstant: TwicketSegmentedControl.height),
+            segmentedControl.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			segmentedControl.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            segmentedControl.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+        ])
         
-        segmentedControl.setSegmentItems(titles)
-        segmentedControl.delegate = self
-        
-        view.addSubview(toolbar)
-    }
-    
-    func addView(ofViewController vc: UIViewController) {
-        var frame = view.bounds
-        frame.size.height -= TwicketSegmentedControl.height
-        vc.view.frame = frame
-        view.addSubview(vc.view)
-        view.sendSubview(toBack: vc.view)
-        vc.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        // important! cause scrollview insets to be re-calculated for the new view controller's contents
-        // http://stackoverflow.com/a/33344516/2596280
-        navigationController?.view.setNeedsLayout()
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
     }
 }
 
 extension SegmentViewController: TwicketSegmentedControlDelegate {
     func didSelect(_ segmentIndex: Int) {
-        for (index, vc) in childViewControllers.enumerated() {
-            if index == segmentIndex {
-                addView(ofViewController: vc)
-            } else {
-                vc.view.removeFromSuperview()
-            }
-        }
+        pageViewController.scrollToPage(.at(index: segmentIndex), animated: true)
     }
 }
+
+extension SegmentViewController: PageboyViewControllerDataSource {
+    
+    public func numberOfViewControllers(in pageboyViewController: Pageboy.PageboyViewController) -> Int {
+        return viewControllers.count
+    }
+    
+    public func viewController(for pageboyViewController: Pageboy.PageboyViewController, 
+                               at index: Pageboy.PageboyViewController.PageIndex) -> UIViewController? {
+        return viewControllers[index]
+    }
+    
+    public func defaultPage(for pageboyViewController: Pageboy.PageboyViewController) -> Pageboy.PageboyViewController.Page? {
+        
+        return Pageboy.PageboyViewController.Page.at(index: initialPage)
+    }
+}
+
+extension SegmentViewController: PageboyViewControllerDelegate {
+
+    func pageboyViewController(_ pageboyViewController: PageboyViewController,
+                               didScrollToPageAt index: Int,
+                               direction: PageboyViewController.NavigationDirection,
+                               animated: Bool) {
+        segmentedControl.move(to: index)
+    }
+}
+
