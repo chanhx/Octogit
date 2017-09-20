@@ -242,44 +242,36 @@ class RepositoryViewController: BaseTableViewController {
             return cell
             
         case .misc:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryInfoCell2", for: indexPath)
-            
-            cell.detailTextLabel?.text = nil
+            let cell = tableView.dequeueReusableCell(withIdentifier: "InfoNumberCell", for: indexPath) as! InfoNumberCell
             
             switch viewModel.miscTypes[indexPath.row] {
             case .issues:
-                cell.textLabel?.attributedText = Octicon.issueOpened.iconString(" Issues", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
+                cell.infoLabel.attributedText = Octicon.issueOpened.iconString(" Issues", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
                 
                 if let openIssuesCount = viewModel.repository.value.openIssuesCount, openIssuesCount > 0 {
-                    cell.detailTextLabel?.text = "  \(openIssuesCount)  "
+                    cell.number = openIssuesCount
                 }
             case .pullRequests:
-                cell.textLabel?.attributedText = Octicon.gitPullrequest.iconString(" Pull requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
+                cell.infoLabel.attributedText = Octicon.gitPullrequest.iconString(" Pull requests", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
                 
                 if let openPRsCount = viewModel.repository.value.openPRsCount, openPRsCount > 0 {
-                    cell.detailTextLabel?.text = "  \(openPRsCount)  "
+                    cell.number = openPRsCount
                 }
             case .releases:
-                cell.textLabel?.attributedText = Octicon.tag.iconString(" Releases", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
+                cell.infoLabel.attributedText = Octicon.tag.iconString(" Releases", iconSize: 18, iconColor: UIColor(netHex: 0x6CC644))
                 
                 if let releasesCount = viewModel.repository.value.releasesCount, releasesCount > 0 {
-                    cell.detailTextLabel?.text = "  \(releasesCount)  "
+                    cell.number = releasesCount
                 }
             case .contributors:
-                cell.textLabel?.attributedText = Octicon.organization.iconString(" Contributors", iconSize: 18, iconColor: .lightGray)
+                cell.infoLabel.attributedText = Octicon.organization.iconString(" Contributors", iconSize: 18, iconColor: .lightGray)
             case .activity:
-                cell.textLabel?.attributedText = Octicon.rss.iconString(" Recent activity", iconSize: 18, iconColor: .gray)
+                cell.infoLabel.attributedText = Octicon.rss.iconString(" Recent activity", iconSize: 18, iconColor: .gray)
             }
             return cell
         
         case .loading:
             return statusCell
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if viewModel.sections[indexPath.section] == .misc {
-            cell.detailTextLabel?.backgroundColor = UIColor(netHex: 0xE8E9EA)
         }
     }
     

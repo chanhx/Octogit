@@ -82,6 +82,7 @@
 		C538FD4A1D449602003A559E /* DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD491D449602003A559E /* DataProcess.swift */; };
 		C538FD4E1D44FB79003A559E /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD4D1D44FB79003A559E /* File.swift */; };
 		C538FD541D45A0A2003A559E /* FileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C538FD531D45A0A2003A559E /* FileCell.swift */; };
+		C54361041F7266C70046FD7B /* InfoNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54361031F7266C70046FD7B /* InfoNumberCell.swift */; };
 		C545BDF41DE2A5BC005031F1 /* AppInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C545BDF31DE2A5BC005031F1 /* AppInfoViewController.swift */; };
 		C554238D1DC60392001B7D20 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C554238C1DC60392001B7D20 /* AccountViewController.swift */; };
 		C55423941DC6EFEE001B7D20 /* LibraryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55423931DC6EFEE001B7D20 /* LibraryTableViewController.swift */; };
@@ -265,6 +266,7 @@
 		C538FD491D449602003A559E /* DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProcess.swift; sourceTree = "<group>"; };
 		C538FD4D1D44FB79003A559E /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		C538FD531D45A0A2003A559E /* FileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileCell.swift; path = Cell/FileCell.swift; sourceTree = "<group>"; };
+		C54361031F7266C70046FD7B /* InfoNumberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoNumberCell.swift; sourceTree = "<group>"; };
 		C545BDF31DE2A5BC005031F1 /* AppInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfoViewController.swift; sourceTree = "<group>"; };
 		C554238C1DC60392001B7D20 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		C55423931DC6EFEE001B7D20 /* LibraryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryTableViewController.swift; sourceTree = "<group>"; };
@@ -553,6 +555,7 @@
 				C5DB70161DA2AB4C00D96248 /* GistCell.swift */,
 				C52D1ADD1DA6081E0033AC49 /* ReleaseCell.swift */,
 				C55423981DC755D4001B7D20 /* LibraryCell.swift */,
+				C54361031F7266C70046FD7B /* InfoNumberCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1040,6 +1043,7 @@
 				C51CDEBA1DBF797C0043A755 /* RepositoryViewController.swift in Sources */,
 				C52D1ADC1DA606740033AC49 /* Release.swift in Sources */,
 				C51CDEAC1DBF790F0043A755 /* UserTableViewModel.swift in Sources */,
+				C54361041F7266C70046FD7B /* InfoNumberCell.swift in Sources */,
 				C538FD081D406BE8003A559E /* AccountManager.swift in Sources */,
 				C51CDEC81DBF79910043A755 /* OrganizationViewModel.swift in Sources */,
 				C51CDEAB1DBF790F0043A755 /* RepositoryTableViewModel.swift in Sources */,
