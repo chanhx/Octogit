@@ -58,7 +58,7 @@ class PullRequestViewModel: BaseTableViewModel<Comment> {
             .filterSuccessfulStatusCodes()
             .mapJSON()
             .subscribe(
-                onNext: { [unowned self] in
+                onSuccess: { [unowned self] in
                     
                     guard let pullRequest = Mapper<PullRequest>().map(JSONObject: $0) else {
                         return
@@ -87,7 +87,7 @@ class PullRequestViewModel: BaseTableViewModel<Comment> {
             .filterSuccessfulStatusCodes()
             .mapJSON()
             .subscribe(
-                onNext: { [unowned self] in
+                onSuccess: { [unowned self] in
                     guard
                         let newComments = Mapper<Comment>().mapArray(JSONObject: $0),
                         newComments.count > 0

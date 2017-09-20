@@ -94,7 +94,7 @@ class RepositoryViewController: BaseTableViewController {
         forksCountLabel.text = formatter.string(from: NSNumber(value: repo.forksCount!))
     }
     
-    func toggleStarring() {
+    @objc func toggleStarring() {
         starButton.showIndicator()
         viewModel.toggleStarring()
     }
@@ -429,7 +429,7 @@ extension RepositoryViewController {
         return alertController
     }
     
-    func showActionSheet() {
+    @objc func showActionSheet() {
         self.present(alertController, animated: true, completion: nil)
     }
 }

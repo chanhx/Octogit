@@ -89,7 +89,7 @@ class RepositoryViewModel {
             .request(.repository(owner:owner, name:name))
             .filterSuccessfulStatusAndRedirectCodes()
             .mapJSON()
-            .subscribe(onNext: { [unowned self] in
+            .subscribe(onSuccess: { [unowned self] in
                 
                 guard
                     let json = $0 as? [String : [String : Any]],
@@ -115,13 +115,13 @@ class RepositoryViewModel {
         
         GitHubProvider
             .request(token)
-            .subscribe(onNext: { [unowned self] in
+            .subscribe(onSuccess: { [unowned self] in
                 
                 if let json = try? $0.mapJSON(), let newBranches = Mapper<Branch>().mapArray(JSONObject: json) {
                     self.branches.append(contentsOf: newBranches)
                 }
                 
-                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                if let headers = $0.response?.allHeaderFields {
                     if let _ = (headers["Link"] as? String)?.range(of: "rel=\"next\"") {
                         self.pageForBranches += 1
                         self.fetchBranches()
@@ -149,7 +149,7 @@ class RepositoryViewModel {
         
         GitHubProvider
             .request(token)
-            .subscribe(onNext: { [unowned self] response in
+            .subscribe(onSuccess: { [unowned self] response in
                 if response.statusCode == 204 {
                     self.hasStarred.value = !self.hasStarred.value!
                 } else {

@@ -35,7 +35,7 @@ class FileTableViewModel: BaseTableViewModel<File> {
             .request(token)
             .mapJSON()
             .subscribe(
-                onNext: { [unowned self] in
+                onSuccess: { [unowned self] in
                     self.dataSource.value = Mapper<File>().mapArray(JSONObject: $0)!
                         .map {
                             if $0.isSubmodule {

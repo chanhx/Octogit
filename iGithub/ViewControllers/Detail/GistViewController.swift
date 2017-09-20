@@ -48,8 +48,8 @@ class GistViewController: BaseTableViewController {
         
         let attrInfo = NSMutableAttributedString(string: "\(viewModel.gist.owner!) created \(viewModel.gist.createdAt!.naturalString(withPreposition: true))")
         attrInfo.addAttributes([
-            NSForegroundColorAttributeName: UIColor(netHex: 0x555555),
-            NSFontAttributeName: UIFont.systemFont(ofSize: 15, weight: UIFontWeightMedium)
+            NSAttributedStringKey.foregroundColor: UIColor(netHex: 0x555555),
+            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
             ],
                                range: NSRange(location: 0, length: viewModel.gist.owner!.login!.characters.count))
         

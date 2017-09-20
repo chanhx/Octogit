@@ -109,7 +109,7 @@ class FileViewModel {
             .request(token)
             .mapJSON()
             .subscribe(
-                onNext: { [unowned self] in
+                onSuccess: { [unowned self] in
                     if let json = $0 as? [String: Any],
                     let errors = json["errors"] as? [[String: String]],
                     let code = errors[0]["code"] {
@@ -159,7 +159,7 @@ class FileViewModel {
         GitHubProvider
             .request(token)
             .mapString()
-            .subscribe(onNext: { [unowned self] in
+            .subscribe(onSuccess: { [unowned self] in
                 self.html.value = self.htmlForMarkdown($0)
             })
             .addDisposableTo(disposeBag)

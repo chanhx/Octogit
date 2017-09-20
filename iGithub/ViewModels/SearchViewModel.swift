@@ -97,7 +97,7 @@ class RepositoriesSearchViewModel: BaseTableViewModel<Repository> {
             .request(token)
             .filterSuccessfulStatusCodes()
             .mapJSON()
-            .subscribe(onNext: { [unowned self] in
+            .subscribe(onSuccess: { [unowned self] in
                 
                 guard
                     let json = ($0 as? [String: [String: Any]])?["data"]?["search"],
@@ -142,12 +142,12 @@ class UsersSearchViewModel: BaseTableViewModel<User> {
             .do(onNext: { [unowned self] in
                 self.isLoading = false
                 
-                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                if let headers = $0.response?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
                 }
             })
             .mapJSON()
-            .subscribe(onNext: { [unowned self] in
+            .subscribe(onSuccess: { [unowned self] in
                 if let results = Mapper<User>().mapArray(JSONObject: ($0 as! [String: Any])["items"]) {
                     if self.page == 1 {
                         self.dataSource.value = results

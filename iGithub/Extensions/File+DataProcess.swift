@@ -10,6 +10,6 @@ import Foundation
 
 extension File {    
     var shortSHA: String {
-        return sha!.substring(to: sha!.characters.index(sha!.startIndex, offsetBy: 7))
+        return String(sha![...sha!.index(sha!.startIndex, offsetBy: 7)])
     }
 }

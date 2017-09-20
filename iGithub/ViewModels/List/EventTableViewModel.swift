@@ -61,13 +61,13 @@ class EventTableViewModel: BaseTableViewModel<Event> {
             .request(token)
             .filterSuccessfulStatusAndRedirectCodes()
             .do(onNext: { [unowned self] in
-                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                if let headers = $0.response?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
                 }
             })
             .mapJSON()
             .subscribe(
-                onNext: { [unowned self] in
+                onSuccess: { [unowned self] in
                     if let newEvents = Mapper<Event>().mapArray(JSONObject: $0) {
                         if self.page == 1 {
                             self.dataSource.value = newEvents

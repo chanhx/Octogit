@@ -46,7 +46,7 @@ class AccountManager {
         GitHubProvider
             .request(.user(user: AccountManager.currentUser!.login!))
             .mapJSON()
-            .subscribe(onNext: {
+            .subscribe(onSuccess: {
                 currentUser = Mapper<User>().map(JSONObject: $0)!
                 completionHandler(currentUser!)
             })
@@ -57,6 +57,7 @@ class AccountManager {
         GitHubProvider
             .request(.accessToken(code: code))
             .filterSuccessfulStatusAndRedirectCodes()
+            .asObservable()
             .flatMapLatest { (response) -> Observable<Moya.Response> in
                 
                 guard let string = String(data: response.data, encoding: .utf8),
@@ -67,7 +68,7 @@ class AccountManager {
                 
                 AccountManager.token = accessToken
                 
-                return GitHubProvider.request(.oAuthUser(accessToken: accessToken))
+                return GitHubProvider.request(.oAuthUser(accessToken: accessToken)).asObservable()
             }
             .filterSuccessfulStatusAndRedirectCodes()
             .mapJSON()

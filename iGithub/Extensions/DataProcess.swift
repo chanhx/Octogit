@@ -111,9 +111,13 @@ extension String {
     
     func removePrefix(_ prefix: String) -> String {
         if hasPrefix(prefix) {
-            return substring(from: prefix.endIndex)
+            return String(self[prefix.endIndex..<self.endIndex])
         }
         
         return self
+    }
+    
+    func substring(to index: Int) -> String {
+        return String(self[..<self.index(self.startIndex, offsetBy: 7)])
     }
 }

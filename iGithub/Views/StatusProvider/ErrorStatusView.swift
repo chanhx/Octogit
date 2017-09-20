@@ -76,7 +76,7 @@ open class ErrorStatusView: UIView, ErrorStatusDisplaying {
             ])
     }
     
-    func errorButtonAction() {
+    @objc func errorButtonAction() {
         retry?()
     }
     

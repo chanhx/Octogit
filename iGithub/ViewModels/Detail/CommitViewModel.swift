@@ -23,7 +23,7 @@ class CommitViewModel: BaseTableViewModel<Comment> {
     var commit = Variable<Commit?>(nil)
     var sectionTypes = [SectionType]()
     var shortSHA: String {
-        return sha.substring(to: sha.index(sha.startIndex, offsetBy: 7))
+        return sha.substring(to: 7)
     }
     
     var additions = 0
@@ -54,7 +54,7 @@ class CommitViewModel: BaseTableViewModel<Comment> {
             .request(token)
             .mapJSON()
             .subscribe(
-                onNext: { [unowned self] in
+                onSuccess: { [unowned self] in
                     if let commit = Mapper<Commit>().map(JSONObject: $0) {
                         self.classifyFiles(ofCommit: commit)
                         self.setSectionTypes(withCommit: commit)
@@ -74,13 +74,13 @@ class CommitViewModel: BaseTableViewModel<Comment> {
         GitHubProvider
             .request(token)
             .do(onNext: { [unowned self] in
-                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                if let headers = $0.response?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
                 }
             })
             .mapJSON()
             .subscribe(
-                onNext: { [unowned self] in
+                onSuccess: { [unowned self] in
                     if let newComments = Mapper<Comment>().mapArray(JSONObject: $0) {
                         self.dataSource.value.append(contentsOf: newComments)
                     }

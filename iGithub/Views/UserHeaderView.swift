@@ -42,7 +42,7 @@ class UserHeaderView: UIView {
     
     private func configureSubviews() {
         
-        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
+        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
         
         repositoriesButton.addTarget(delegate, action: #selector(UserHeaderViewProtocol.didTapRepositoiesButton), for: .touchUpInside)
         followersButton.addTarget(delegate, action: #selector(UserHeaderViewProtocol.didTapFollowersButton), for: .touchUpInside)

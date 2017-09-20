@@ -31,7 +31,7 @@ class TitleHeaderView: UIView {
     func configureSubviews() {
         iconLabel.font = UIFont.OcticonOfSize(23)
         
-        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
+        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
         titleLabel.numberOfLines = 0
         titleLabel.lineBreakMode = .byWordWrapping
         
@@ -46,10 +46,10 @@ class TitleHeaderView: UIView {
     func layout() {
         let margins = layoutMarginsGuide
         
-        iconLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-        iconLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        iconLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
+        iconLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         
-        infoLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        infoLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
         
         NSLayoutConstraint.activate([
             iconLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 13),

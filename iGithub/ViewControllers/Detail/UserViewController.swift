@@ -252,7 +252,7 @@ extension UserViewController {
         return alertController
     }
     
-    func showActionSheet() {
+    @objc func showActionSheet() {
         self.present(alertController, animated: true, completion: nil)
     }
 }

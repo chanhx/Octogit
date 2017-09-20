@@ -46,8 +46,8 @@ class EventCell: UITableViewCell {
         contentLabel.numberOfLines = 0
         
         titleLabel.linkAttributes = [
-            NSForegroundColorAttributeName: UIColor(netHex: 0x4078C0),
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue
+            NSAttributedStringKey.foregroundColor: UIColor(netHex: 0x4078C0),
+            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleNone.rawValue
         ]
         contentLabel.linkAttributes = titleLabel.linkAttributes
         

@@ -127,7 +127,7 @@ class WebViewController: UIViewController {
                              animated: false)
     }
     
-    func share(_ button: UIBarButtonItem) {
+    @objc func share(_ button: UIBarButtonItem) {
         var items = [Any]()
         if webView.title != nil {
             items.append(webView.title!)

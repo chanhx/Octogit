@@ -80,7 +80,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    func avatarTapped(_ recognizer: UITapGestureRecognizer) {
+    @objc func avatarTapped(_ recognizer: UITapGestureRecognizer) {
         let row = recognizer.view?.tag
         let user = viewModel.dataSource.value[row!].actor!
         showUser(user)

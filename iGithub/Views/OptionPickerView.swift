@@ -130,7 +130,7 @@ class OptionPickerView: UIPickerView {
     
     // MARK: show and hide
     
-    func show() {
+    @objc func show() {
         if let _ = self.superview {
             return
         }
@@ -151,7 +151,7 @@ class OptionPickerView: UIPickerView {
         }) 
     }
     
-    func hide() {
+    @objc func hide() {
         guard let _ = self.superview else {
             return
         }

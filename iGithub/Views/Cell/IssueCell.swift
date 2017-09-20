@@ -29,11 +29,11 @@ class IssueCell: UITableViewCell {
 
     func configureSubviews() {
         iconLabel.font = UIFont.OcticonOfSize(21)
-        iconLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+        iconLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
         iconLabel.layer.isOpaque = true
         iconLabel.backgroundColor = .white
         
-        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
+        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
         titleLabel.numberOfLines = 0
         titleLabel.lineBreakMode = .byWordWrapping
         titleLabel.layer.isOpaque = true
@@ -41,7 +41,7 @@ class IssueCell: UITableViewCell {
         titleLabel.backgroundColor = .white
         
         numberLabel.textColor = UIColor.gray
-        numberLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFontWeightMedium)
+        numberLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
         numberLabel.layer.isOpaque = true
         numberLabel.backgroundColor = .white
         

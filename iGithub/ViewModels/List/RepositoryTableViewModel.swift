@@ -76,7 +76,7 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
             .filterSuccessfulStatusAndRedirectCodes()
             .mapJSON()
             .subscribe(
-                onNext: { [unowned self] in
+                onSuccess: { [unowned self] in
                     
                     guard
                         let json = ($0 as? [String: [String: [String: Any]]])?["data"]?[self.ownerType]?[self.key],

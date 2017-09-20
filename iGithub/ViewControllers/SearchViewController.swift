@@ -40,7 +40,7 @@ class SearchViewController: BaseTableViewController {
         updateTitle()
     }
     
-    func popBack() {
+    @objc func popBack() {
         searchBar.text = nil
         searchBar.resignFirstResponder()
         viewModel.clean()

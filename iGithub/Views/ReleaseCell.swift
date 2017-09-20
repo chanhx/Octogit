@@ -28,7 +28,7 @@ class ReleaseCell: UITableViewCell {
     func configureSubviews() {
         nameLabel.numberOfLines = 3
         nameLabel.lineBreakMode = .byTruncatingTail
-        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
+        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
         nameLabel.layer.isOpaque = true
         nameLabel.backgroundColor = .white
         

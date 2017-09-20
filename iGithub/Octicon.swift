@@ -177,18 +177,18 @@ enum Octicon : String, CustomStringConvertible {
     case x = "\u{f081}"
     case zap = "\u{26a1}"
     
-    func iconString(_ text: String, iconSize: CGFloat = 14, iconColor: UIColor? = nil, attributes: [String: AnyObject]? = nil) -> NSMutableAttributedString {
+    func iconString(_ text: String, iconSize: CGFloat = 14, iconColor: UIColor? = nil, attributes: [NSAttributedStringKey: AnyObject]? = nil) -> NSMutableAttributedString {
         
-        var iconAttributes: [String: AnyObject] = [NSFontAttributeName: UIFont.OcticonOfSize(iconSize)]
+        var iconAttributes: [NSAttributedStringKey: AnyObject] = [NSAttributedStringKey.font: UIFont.OcticonOfSize(iconSize)]
         if iconColor != nil {
-            iconAttributes[NSForegroundColorAttributeName] = iconColor
+            iconAttributes[NSAttributedStringKey.foregroundColor] = iconColor
         }
         
         let iconString = NSMutableAttributedString(string: "\(self)", attributes: iconAttributes)
         let attributedText = NSMutableAttributedString(string: " \(text)")
         
-        if let unwrapAttributes = attributes {
-            attributedText.addAttributes(unwrapAttributes, range: NSMakeRange(1, text.characters.count))
+        if let attributes = attributes {
+            attributedText.addAttributes(attributes, range: NSMakeRange(1, text.characters.count))
         }
         
         iconString.append(attributedText)
@@ -202,9 +202,9 @@ enum Octicon : String, CustomStringConvertible {
         
         (rawValue as NSString).draw(in: CGRect(origin: CGPoint.zero, size: size),
                                     withAttributes: [
-                                        NSFontAttributeName: UIFont.OcticonOfSize(iconSize),
-                                        NSForegroundColorAttributeName: color,
-                                        NSBackgroundColorAttributeName: backgroundColor])
+                                        NSAttributedStringKey.font: UIFont.OcticonOfSize(iconSize),
+                                        NSAttributedStringKey.foregroundColor: color,
+                                        NSAttributedStringKey.backgroundColor: backgroundColor])
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

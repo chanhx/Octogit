@@ -35,7 +35,7 @@ class Commit: Mappable {
     }
     
     lazy var shortSHA: String = {
-        return self.sha!.substring(to: self.sha!.index(self.sha!.startIndex, offsetBy: 7))
+        return self.sha!.substring(to: 7)
     }()
 }
 
@@ -54,6 +54,6 @@ class EventCommit: Mappable {
     }
     
     lazy var shortSHA: String = {
-        return self.sha!.substring(to: self.sha!.characters.index(self.sha!.startIndex, offsetBy: 7))
+        return self.sha!.substring(to: 7)
     }()
 }

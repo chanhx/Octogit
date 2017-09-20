@@ -49,8 +49,8 @@ class CommitFileCell: UITableViewCell {
     func layout() {
         let margins = contentView.layoutMarginsGuide
         
-        iconLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        iconLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        iconLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        iconLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         
         NSLayoutConstraint.activate([
             iconLabel.topAnchor.constraint(equalTo: margins.topAnchor),

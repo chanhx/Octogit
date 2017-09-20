@@ -33,7 +33,7 @@ class ExplorationViewController: BaseTableViewController {
     
     // MARK: SearchViewController
     
-    func showSearchViewController() {
+    @objc func showSearchViewController() {
         
         searchViewController.hidesBottomBarWhenPushed = true
         searchViewController.navigationItem.setHidesBackButton(true, animated: false)
@@ -150,7 +150,7 @@ extension ExplorationViewController: TTTAttributedLabelDelegate {
         headerView.titleLabel.setText(Octicon.flame.iconString("Trending for \(time) in \(viewModel.language)",
             iconSize: 18,
             iconColor: .red,
-            attributes: [NSFontAttributeName: headerView.titleLabel.font]))
+            attributes: [NSAttributedStringKey.font: headerView.titleLabel.font]))
         
         headerView.titleLabel.addLink(URL(string: "Time")!, toText: time)
         headerView.titleLabel.addLink(URL(string: "Language")!, toText: language)

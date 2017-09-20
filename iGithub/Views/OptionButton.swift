@@ -26,7 +26,7 @@ class OptionButton: GradientButton {
         layer.cornerRadius = 3
         
         setTitleColor(UIColor(netHex: 0x333333), for: .normal)
-        titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: UIFontWeightMedium)
+        titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.medium)
         
         imageEdgeInsets = UIEdgeInsets(top: 0, left: -3, bottom: 0, right: 0)
         titleLabel?.lineBreakMode = .byTruncatingTail
@@ -42,7 +42,7 @@ class OptionButton: GradientButton {
     var choice: String! {
         didSet {
             let attributedTitle = NSMutableAttributedString(string: "\(optionTitle): \(choice!)")
-            attributedTitle.addAttribute(NSForegroundColorAttributeName, value: UIColor(netHex: 0x818181),
+            attributedTitle.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor(netHex: 0x818181),
                                          range: NSRange(location: 0, length: optionTitle.characters.count + 1))
             
             setAttributedTitle(attributedTitle, for: .normal)

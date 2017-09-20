@@ -28,7 +28,7 @@ class GistCell: UITableViewCell {
     func configureSubviews() {
         nameLabel.numberOfLines = 3
         nameLabel.lineBreakMode = .byTruncatingTail
-        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
+        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
         nameLabel.textColor = UIColor(netHex: 0x4078C0)
         nameLabel.layer.isOpaque = true
         nameLabel.backgroundColor = .white
@@ -42,8 +42,8 @@ class GistCell: UITableViewCell {
     }
     
     func layout() {
-        filesCountLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        timeLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        filesCountLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        timeLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .horizontal)
         
         let stackView = UIStackView(arrangedSubviews: [filesCountLabel, timeLabel])
         stackView.axis = .horizontal

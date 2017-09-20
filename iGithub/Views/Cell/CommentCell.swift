@@ -34,7 +34,7 @@ class CommentCell: UITableViewCell {
     }
     
     func configureSubviews() {
-        nameLabel.font = .systemFont(ofSize: 15, weight: UIFontWeightMedium)
+        nameLabel.font = .systemFont(ofSize: 15, weight: UIFont.Weight.medium)
         nameLabel.textColor = UIColor(netHex: 0x555555)
         nameLabel.layer.isOpaque = true
         nameLabel.backgroundColor = contentView.backgroundColor

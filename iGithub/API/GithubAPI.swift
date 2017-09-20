@@ -32,29 +32,7 @@ struct OAuthConfiguration {
 
 // MARK: - Provider setup
 
-let GitHubProvider = RxMoyaProvider<GitHubAPI>(endpointClosure: {
-    
-    (target: GitHubAPI) -> Endpoint<GitHubAPI> in
-    
-    var endpoint = MoyaProvider.defaultEndpointMapping(for: target)
-    
-    if let token = AccountManager.token {
-        endpoint = endpoint.adding(newHTTPHeaderFields: ["Authorization": "token \(token)"])
-    }
-    
-    switch target {
-    case .getABlob:
-        return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.Raw])
-    case .getHTMLContents, .getTheREADME:
-        return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.HTML])
-    case .issue, .pullRequest, .issues, .pullRequests, .issueComments:
-        return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.HTMLAndJSON])
-    case .gistComments, .commitComments:
-        return endpoint.adding(newHTTPHeaderFields: ["Accept": MediaType.TextAndJSON])
-    default:
-        return endpoint
-    }
-})
+let GitHubProvider = RxMoyaProvider<GitHubAPI>()
 
 // MARK: - Provider support
 
@@ -201,6 +179,29 @@ enum GitHubAPI {
 }
 
 extension GitHubAPI: TargetType {
+    
+    var headers: [String : String]? {
+        var headers = ["Content-type": "application/json"]
+        
+        if let token = AccountManager.token {
+            headers["Authorization"] = "token \(token)"
+        }
+        
+        switch self {
+        case .getABlob:
+        	headers["Accept"] = MediaType.Raw
+        case .getHTMLContents, .getTheREADME:
+	        headers["Accept"] = MediaType.HTML
+        case .issue, .pullRequest, .issues, .pullRequests, .issueComments:
+            headers["Accept"] = MediaType.HTMLAndJSON
+        case .gistComments, .commitComments:
+            headers["Accept"] = MediaType.TextAndJSON
+        default:
+        	break
+        }
+        
+        return headers
+    }
     
     var baseURL: URL {
         switch self {
@@ -461,7 +462,7 @@ extension GitHubAPI: TargetType {
         }
     }
     var task: Moya.Task {
-        return .request
+        return .requestParameters(parameters: parameters ?? [:], encoding: parameterEncoding)
     }
     var sampleData: Data {
         switch self {

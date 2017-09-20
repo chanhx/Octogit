@@ -43,11 +43,11 @@ class RepositoryCell: UITableViewCell {
         }
         
         iconLabel.font = UIFont.OcticonOfSize(23)
-        iconLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        iconLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         iconLabel.layer.isOpaque = true
         iconLabel.backgroundColor = .white
         
-        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFontWeightMedium)
+        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.medium)
         nameLabel.textColor = UIColor(netHex: 0x4078C0)
         nameLabel.numberOfLines = 0
         nameLabel.lineBreakMode = .byWordWrapping
@@ -144,8 +144,8 @@ class RepositoryCell: UITableViewCell {
         let attributedName = NSMutableAttributedString(string: "\(owner) / ")
         attributedName.append(NSAttributedString(string: repo,
                                                  attributes: [
-                                                    NSFontAttributeName : UIFont.systemFont(ofSize: 18, weight: UIFontWeightSemibold),
-                                                    NSForegroundColorAttributeName: UIColor(netHex: 0x437abe)
+                                                    NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.semibold),
+                                                    NSAttributedStringKey.foregroundColor: UIColor(netHex: 0x437abe)
             ]))
         
         return attributedName

@@ -42,13 +42,13 @@ class GistTableViewModel: BaseTableViewModel<Gist> {
         GitHubProvider
             .request(token)
             .do(onNext: { [unowned self] in
-                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                if let headers = $0.response?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
                 }
             })
             .mapJSON()
             .subscribe(
-                onNext: { [unowned self] in
+                onSuccess: { [unowned self] in
                     if let newGists = Mapper<Gist>().mapArray(JSONObject: $0) {
                         if self.page == 1 {
                             self.dataSource.value = newGists

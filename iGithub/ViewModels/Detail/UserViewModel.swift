@@ -76,7 +76,7 @@ class UserViewModel {
         GitHubProvider
             .request(token)
             .mapJSON()
-            .subscribe(onNext: { [unowned self] in
+            .subscribe(onSuccess: { [unowned self] in
                 let user = Mapper<User>().map(JSONObject: $0)!
                 self.setSectionTypes(user: user)
                 self.user.value = user
@@ -89,7 +89,7 @@ class UserViewModel {
             .request(.organizations(user: user.value.login!))
             .filterSuccessfulStatusAndRedirectCodes()
             .mapJSON()
-            .subscribe(onNext: { [unowned self] in
+            .subscribe(onSuccess: { [unowned self] in
                 self.organizations.value = Mapper<User>().mapArray(JSONObject: $0)!
             })
             .addDisposableTo(disposeBag)
@@ -98,7 +98,7 @@ class UserViewModel {
     func checkIsFollowing() {
         GitHubProvider
             .request(.isFollowing(user: user.value.login!))
-            .subscribe(onNext: { [unowned self] response in
+            .subscribe(onSuccess: { [unowned self] response in
                 if response.statusCode == 204 {
                     self.isFollowing.value = true
                 } else if response.statusCode == 404 {
@@ -115,7 +115,7 @@ class UserViewModel {
         
         GitHubProvider
             .request(token)
-            .subscribe(onNext: { [unowned self] response in
+            .subscribe(onSuccess: { [unowned self] response in
                 if response.statusCode == 204 {
                     self.isFollowing.value = !self.isFollowing.value!
                 } else {

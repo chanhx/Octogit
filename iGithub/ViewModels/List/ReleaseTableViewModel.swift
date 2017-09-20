@@ -25,13 +25,13 @@ class ReleaseTableViewModel: BaseTableViewModel<Release> {
         GitHubProvider
             .request(token)
             .do(onNext: { [unowned self] in
-                if let headers = ($0.response as? HTTPURLResponse)?.allHeaderFields {
+                if let headers = $0.response?.allHeaderFields {
                     self.hasNextPage = (headers["Link"] as? String)?.range(of: "rel=\"next\"") != nil
                 }
             })
             .mapJSON()
             .subscribe(
-                onNext: { [unowned self] in
+                onSuccess: { [unowned self] in
                     let newReleases = Mapper<Release>().mapArray(JSONObject: $0)!
                     
                     if self.page == 1 {

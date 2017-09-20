@@ -63,7 +63,7 @@ class IGLinkLabel: UILabel {
         if let attributedText = attributedText {
             textStorage.setAttributedString(attributedText)
             
-            textStorage.enumerateAttribute(NSLinkAttributeName, in: NSRange(location: 0, length: textStorage.length), options: []) { (value, range, _) in
+            textStorage.enumerateAttribute(NSAttributedStringKey.link, in: NSRange(location: 0, length: textStorage.length), options: []) { (value, range, _) in
                 // Because NSLinkAttributeName supports both NSURL and NSString
                 // values. *sigh*
                 let URL: Foundation.URL? = {
@@ -80,16 +80,16 @@ class IGLinkLabel: UILabel {
                     
                     // Remove `NSLinkAttributeName` to prevent `UILabel` from applying
                     // the default styling.
-                    self.textStorage.removeAttribute(NSLinkAttributeName, range: range)
+                    self.textStorage.removeAttribute(NSAttributedStringKey.link, range: range)
                     
                     let originalAttributes = self.textStorage.attributes(at: range.location, effectiveRange: nil)
                     var proposedAttributes = originalAttributes
                     
-                    if originalAttributes[NSForegroundColorAttributeName] == nil {
-                        proposedAttributes[NSForegroundColorAttributeName] = UIColor(netHex: 0x80A6CD)
+                    if originalAttributes[NSAttributedStringKey.foregroundColor] == nil {
+                        proposedAttributes[NSAttributedStringKey.foregroundColor] = UIColor(netHex: 0x80A6CD)
                     }
-                    if originalAttributes[NSUnderlineStyleAttributeName] == nil {
-                        proposedAttributes[NSUnderlineStyleAttributeName] = NSUnderlineStyle.styleNone.rawValue
+                    if originalAttributes[NSAttributedStringKey.underlineStyle] == nil {
+                        proposedAttributes[NSAttributedStringKey.underlineStyle] = NSUnderlineStyle.styleNone.rawValue
                     }
                     self.textStorage.setAttributes(proposedAttributes, range: range)
                 }
