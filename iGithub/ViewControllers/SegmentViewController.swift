@@ -46,6 +46,12 @@ class SegmentViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         
+        if #available(iOS 11.0, *) {
+            // do nothing
+        } else {
+            self.edgesForExtendedLayout = []
+        }
+        
         configureSegmentedControl()
     }
     
@@ -58,10 +64,17 @@ class SegmentViewController: UIViewController {
         
         view.addSubviews([contentView, line, segmentedControl])
         
+        var topConstraint: NSLayoutConstraint
+        if #available(iOS 11.0, *) {
+            topConstraint = contentView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor)
+        } else {
+            topConstraint = contentView.topAnchor.constraint(equalTo: view.topAnchor)
+        }
+        
         NSLayoutConstraint.activate([
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            contentView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            topConstraint,
             
             line.heightAnchor.constraint(equalToConstant: 1),
             line.leadingAnchor.constraint(equalTo: view.leadingAnchor),
