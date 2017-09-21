@@ -37,11 +37,10 @@ class InfoNumberCell: UITableViewCell {
         
         contentView.addSubviews([infoLabel, numberLabel])
         
-        let margins = contentView.layoutMarginsGuide
-        
         NSLayoutConstraint.activate([
-            infoLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            infoLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            infoLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            infoLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 11.5),
+            infoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -11.5),
             
             numberLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             numberLabel.centerYAnchor.constraint(equalTo: infoLabel.centerYAnchor),
