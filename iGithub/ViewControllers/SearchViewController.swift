@@ -13,7 +13,10 @@ class SearchViewController: BaseTableViewController {
     
     let viewModel = SearchViewModel()
     
-    fileprivate let searchBar = UISearchBar()
+    fileprivate let searchBar: SearchBar = {
+        $0.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: $0.intrinsicContentSize)
+        return $0
+    }(SearchBar())
     fileprivate let headerView = SegmentHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 90))
     
     lazy var repoOptionsPickerView: OptionPickerView = OptionPickerView(delegate: self, optionsCount: 2)
@@ -25,7 +28,19 @@ class SearchViewController: BaseTableViewController {
         searchBar.delegate = self
         searchBar.placeholder = "Search"
         navigationItem.titleView = searchBar
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(popBack))
+        
+        var buttonItem: UIBarButtonItem
+        if #available(iOS 11.0, *) {
+            let barButton = UIButton(type: .custom)
+            barButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+            barButton.setTitle("Cancel", for: .normal)
+            barButton.addTarget(self, action: #selector(popBack), for: .touchUpInside)
+            barButton.contentEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0)
+            buttonItem = UIBarButtonItem(customView: barButton)
+        } else {
+	        buttonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(popBack))
+        }
+        navigationItem.rightBarButtonItem = buttonItem
 
         tableView.tableHeaderView = headerView
         tableView.keyboardDismissMode = .onDrag
@@ -42,7 +57,7 @@ class SearchViewController: BaseTableViewController {
     
     @objc func popBack() {
         searchBar.text = nil
-        searchBar.resignFirstResponder()
+        _ = searchBar.resignFirstResponder()
         viewModel.clean()
         
         let transition = CATransition()
@@ -55,14 +70,14 @@ class SearchViewController: BaseTableViewController {
     }
     
     func activateSearchBar() {
-        searchBar.becomeFirstResponder()
+        _ = searchBar.becomeFirstResponder()
     }
 
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        searchBar.resignFirstResponder()
+        _ = searchBar.resignFirstResponder()
         
         switch viewModel.searchObject {
         case .repository:
@@ -86,15 +101,15 @@ class SearchViewController: BaseTableViewController {
     }
 }
 
-extension SearchViewController: UISearchBarDelegate {
+extension SearchViewController: SearchBarDelegate {
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: SearchBar) {
         
         if let query = searchBar.text , query.characters.count > 0 {
-            searchBar.resignFirstResponder()
+            _ = searchBar.resignFirstResponder()
             viewModel.search(query: query)
         }
-    }    
+    }
 }
 
 extension SearchViewController: SegmentHeaderViewDelegate {

@@ -107,6 +107,7 @@
 		C571EF581D64836100F752EE /* OptionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C571EF571D64836100F752EE /* OptionPickerView.swift */; };
 		C5757E921D82E9770012EF0C /* markdown.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5757E911D82E9770012EF0C /* markdown.mustache */; };
 		C58A7F981F72B9F30030B477 /* Pageboy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C58A7F971F72B9F30030B477 /* Pageboy.framework */; };
+		C58A7FB01F735BA90030B477 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58A7FAF1F735BA90030B477 /* SearchBar.swift */; };
 		C59482BF1D65A73300B9F47C /* languages_array.plist in Resources */ = {isa = PBXBuildFile; fileRef = C59482BE1D65A73300B9F47C /* languages_array.plist */; };
 		C59730E01D980C4700DADF01 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59730DF1D980C4700DADF01 /* UIViewControllerExtension.swift */; };
 		C59D120E1D5AE2DD0098301A /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D120D1D5AE2DD0098301A /* URLExtension.swift */; };
@@ -292,6 +293,7 @@
 		C571EF571D64836100F752EE /* OptionPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionPickerView.swift; sourceTree = "<group>"; };
 		C5757E911D82E9770012EF0C /* markdown.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = markdown.mustache; sourceTree = "<group>"; };
 		C58A7F971F72B9F30030B477 /* Pageboy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pageboy.framework; path = Carthage/Build/iOS/Pageboy.framework; sourceTree = "<group>"; };
+		C58A7FAF1F735BA90030B477 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		C59482BE1D65A73300B9F47C /* languages_array.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = languages_array.plist; sourceTree = "<group>"; };
 		C59730DF1D980C4700DADF01 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		C59D120D1D5AE2DD0098301A /* URLExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
@@ -515,6 +517,7 @@
 				C55791581D76E50900FBBD41 /* LoadingIndicator.swift */,
 				C5DB701E1DA3A6BB00D96248 /* TitleHeaderView.swift */,
 				C5084B741F1BA9AF0002DC0E /* UserHeaderView.swift */,
+				C58A7FAF1F735BA90030B477 /* SearchBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1073,6 +1076,7 @@
 				C51CDEB61DBF797C0043A755 /* FileViewController.swift in Sources */,
 				C51CDEC41DBF79910043A755 /* CommitViewModel.swift in Sources */,
 				C54361251F728FFE0046FD7B /* LibraryCell.swift in Sources */,
+				C58A7FB01F735BA90030B477 /* SearchBar.swift in Sources */,
 				C54361291F728FFE0046FD7B /* UserCell.swift in Sources */,
 				C538FD471D4491DE003A559E /* Event+DataProcess.swift in Sources */,
 				C5EE81E41DBF4EAD00673E20 /* CommitTableViewController.swift in Sources */,

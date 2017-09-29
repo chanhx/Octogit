@@ -39,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         UINavigationBar.appearance().tintColor = UIColor.white
         
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).alpha = 0.6
         UITextField.appearance().tintColor = UIColor(netHex: 0x2A9883)
         
         let backgroundView = UIView()
