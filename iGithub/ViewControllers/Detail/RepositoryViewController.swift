@@ -30,7 +30,9 @@ class RepositoryViewController: BaseTableViewController {
     var viewModel: RepositoryViewModel! {
         didSet {
             viewModel.repository.asDriver()
-                .filter { $0.defaultBranch != nil }
+                .filter { [unowned self] _ in
+                    return self.viewModel.isRepositoryLoaded
+                }
                 .drive(onNext: { [unowned self] repo in
                     self.tableView.reloadData()
                     

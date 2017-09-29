@@ -52,7 +52,7 @@ class RepositoryViewModel {
     var branches = [Branch]()
     var pageForBranches = 1
     var isBranchesLoaded = Variable(false)
-    var branch: String!
+    var branch: String?
     
     var sections = [Section]()
     var infoTypes = [InfoType]()
@@ -100,8 +100,10 @@ class RepositoryViewModel {
                 }
                 
                 self.isRepositoryLoaded = true
-                self.branch = repo.defaultBranch!
-                self.rearrangeBranches(withDefaultBranch: repo.defaultBranch!)
+                self.branch = repo.defaultBranch
+                if let defaultBranch = repo.defaultBranch {
+                    self.rearrangeBranches(withDefaultBranch: defaultBranch)
+                }
                 self.repository.value = repo
                 self.hasStarred.value = repo.hasStarred!
             })
@@ -206,7 +208,9 @@ class RepositoryViewModel {
             infoTypes.append(.homepage)
         }
         
-        infoTypes.append(.readme)
+        if let _ = repo.defaultBranch {
+            infoTypes.append(.readme)
+        }
     }
     
     func setMiscTypes(repo: Repository) {
@@ -219,7 +223,13 @@ class RepositoryViewModel {
             miscTypes.append(.issues)
         }
         
-        miscTypes += [.pullRequests, .releases, .contributors, .activity]
+        miscTypes += [.pullRequests, .releases]
+        
+        if let _ = repo.defaultBranch {
+            miscTypes.append(.contributors)
+        }
+        
+        miscTypes.append(.activity)
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
@@ -240,15 +250,15 @@ class RepositoryViewModel {
     // MARK: generate child viewmodel
     
     var readmeViewModel: FileViewModel {
-        return FileViewModel(repository: nameWithOwner, ref: branch)
+        return FileViewModel(repository: nameWithOwner, ref: branch!)
     }
     
     var fileTableViewModel: FileTableViewModel {
-        return FileTableViewModel(repository: nameWithOwner, ref: branch)
+        return FileTableViewModel(repository: nameWithOwner, ref: branch!)
     }
     
     var commitTableViewModel: CommitTableViewModel {
-        return CommitTableViewModel(repo: nameWithOwner, branch: branch)
+        return CommitTableViewModel(repo: nameWithOwner, branch: branch!)
     }
 
     var ownerViewModel: UserViewModel {
