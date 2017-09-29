@@ -14,6 +14,14 @@ class FileViewController: UIViewController {
     let webView = WKWebView()
     let indicator = LoadingIndicator()
     
+    let titleLabel: UILabel = {
+        $0.numberOfLines = 0
+        $0.textAlignment = .center
+        $0.font = UIFont.boldSystemFont(ofSize: 16)
+        $0.textColor = UIColor.white
+        return $0
+    } (UILabel())
+    
     var viewModel: FileViewModel!
     
     override func viewDidLoad() {
@@ -27,11 +35,9 @@ class FileViewController: UIViewController {
         
         self.show(indicator: indicator, onView: webView)
         
-        navigationItem.title = viewModel.fileName
-        if let path = viewModel.filePath, path.characters.count > 0 {
-            navigationItem.prompt = path
-        }
-        
+        navigationItem.titleView = titleLabel
+        setTitle()
+		
         viewModel.html.asDriver()
             .filter { $0.characters.count > 0 }
             .drive(onNext: { [unowned self] html in
@@ -49,6 +55,24 @@ class FileViewController: UIViewController {
             .addDisposableTo(viewModel.disposeBag)
 
         viewModel.getFileContent()
+    }
+    
+    private func setTitle()  {
+        
+        let attributedTitle = NSMutableAttributedString(string: viewModel.fileName)
+        
+        if let path = viewModel.filePath, path.characters.count > 0 {
+            attributedTitle.append(NSAttributedString(string: "\n\(path)",
+                attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 11)]))
+        }
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 10
+        attributedTitle.addAttributes(
+            [NSAttributedStringKey.paragraphStyle : paragraphStyle],
+            range: NSRangeFromString(attributedTitle.string))
+        
+        titleLabel.attributedText = attributedTitle
     }
 }
 
