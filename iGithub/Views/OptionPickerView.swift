@@ -131,9 +131,6 @@ class OptionPickerView: UIPickerView {
     // MARK: show and hide
     
     @objc func show() {
-        if let _ = self.superview {
-            return
-        }
         
         UIApplication.shared.windows.last?.addSubview(background)
         

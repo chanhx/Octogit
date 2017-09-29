@@ -24,7 +24,7 @@ class MessageManager {
             body = "Data error"
         case .statusCode(let response):
             body = "\(response.statusCode) error"
-        case .underlying(let nsError as NSError):
+        case .underlying(let nsError as NSError, _):
             switch nsError.code {
             case NSURLErrorTimedOut:
                 body = "Request timeout."
