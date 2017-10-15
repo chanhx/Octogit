@@ -28,7 +28,7 @@ class OptionPickerView: UIPickerView {
         $0.backgroundColor = UIColor(white: 0.3, alpha: 0.6)
         $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hide)))
         return $0
-    }(UIView(frame: UIApplication.shared.windows.last!.bounds))
+    }(UIView(frame: UIApplication.shared.windows.first!.bounds))
     
     private var tmpSelectedRows: [Int]
     
@@ -132,7 +132,15 @@ class OptionPickerView: UIPickerView {
     
     @objc func show() {
         
-        UIApplication.shared.windows.last?.addSubview(background)
+        if let _ = self.superview {
+            return
+        }
+        
+        guard let window = UIApplication.shared.windows.first else {
+            return
+        }
+        
+        window.addSubview(background)
         
         var pickerFrame = background.frame
         pickerFrame.origin.y = pickerFrame.height
@@ -140,7 +148,7 @@ class OptionPickerView: UIPickerView {
         self.frame = pickerFrame
         self.selectRow(self.selectedRows[self.index], inComponent: 0, animated: false)
         
-        UIApplication.shared.windows.last?.addSubview(self)
+        window.addSubview(self)
         
         UIView.animate(withDuration: 0.2, animations: {
             pickerFrame.origin.y -= pickerFrame.size.height
