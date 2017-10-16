@@ -1,0 +1,2 @@
+- support for iOS 11
+- minor bug fix

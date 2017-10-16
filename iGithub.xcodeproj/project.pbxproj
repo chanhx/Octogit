@@ -103,6 +103,7 @@
 		C55E08491D4701A20004EC7C /* content.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C55E08481D4701A20004EC7C /* content.mustache */; };
 		C55E08541D478E8E0004EC7C /* common.css in Resources */ = {isa = PBXBuildFile; fileRef = C55E08531D478E8E0004EC7C /* common.css */; };
 		C55E08561D4793740004EC7C /* file_extensions.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55E08551D4793740004EC7C /* file_extensions.plist */; };
+		C56E78EE1F950A9D0031E666 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56E78ED1F950A9C0031E666 /* SnapshotHelper.swift */; };
 		C57005E21DAA922C008DEFA9 /* SegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57005E11DAA922C008DEFA9 /* SegmentViewController.swift */; };
 		C571EF581D64836100F752EE /* OptionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C571EF571D64836100F752EE /* OptionPickerView.swift */; };
 		C5757E921D82E9770012EF0C /* markdown.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5757E911D82E9770012EF0C /* markdown.mustache */; };
@@ -117,6 +118,7 @@
 		C5A275B41F2F6D4100445E96 /* GraphQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A275B01F2F6D4100445E96 /* GraphQL.swift */; };
 		C5A275B51F2F6D4100445E96 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A275B11F2F6D4100445E96 /* PageInfo.swift */; };
 		C5A275BD1F34299E00445E96 /* Queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A275BC1F34299E00445E96 /* Queries.swift */; };
+		C5AA778A1F9513FA002835BB /* TTTAttributedLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C52013C81D56C28C00FDCC30 /* TTTAttributedLabel.framework */; };
 		C5ABDF4E1D7DC8A800F07DC2 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ABDF4D1D7DC8A800F07DC2 /* Renderer.swift */; };
 		C5ABDF501D7DCCB800F07DC2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ABDF4F1D7DCCB800F07DC2 /* Constants.swift */; };
 		C5AD7DA91DC3014600FC9C1D /* Transforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AD7DA81DC3014600FC9C1D /* Transforms.swift */; };
@@ -289,6 +291,7 @@
 		C55E08481D4701A20004EC7C /* content.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = content.mustache; sourceTree = "<group>"; };
 		C55E08531D478E8E0004EC7C /* common.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = common.css; sourceTree = "<group>"; };
 		C55E08551D4793740004EC7C /* file_extensions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = file_extensions.plist; sourceTree = "<group>"; };
+		C56E78ED1F950A9C0031E666 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		C57005E11DAA922C008DEFA9 /* SegmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentViewController.swift; sourceTree = "<group>"; };
 		C571EF571D64836100F752EE /* OptionPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionPickerView.swift; sourceTree = "<group>"; };
 		C5757E911D82E9770012EF0C /* markdown.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = markdown.mustache; sourceTree = "<group>"; };
@@ -398,6 +401,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5AA778A1F9513FA002835BB /* TTTAttributedLabel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,6 +660,7 @@
 		C5DB94811D3F842000887E81 /* iGithubUITests */ = {
 			isa = PBXGroup;
 			children = (
+				C56E78ED1F950A9C0031E666 /* SnapshotHelper.swift */,
 				C5DB94821D3F842000887E81 /* iGithubUITests.swift */,
 				C5DB94841D3F842000887E81 /* Info.plist */,
 			);
@@ -1105,6 +1110,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5DB94831D3F842000887E81 /* iGithubUITests.swift in Sources */,
+				C56E78EE1F950A9D0031E666 /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1296,11 +1302,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = iGithubTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithubTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iGithub.app/iGithub";
 			};
@@ -1310,11 +1320,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = iGithubTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithubTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iGithub.app/iGithub";
 			};
@@ -1327,7 +1341,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithubUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = iGithub;
 			};
@@ -1340,7 +1354,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithubUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = iGithub;
 			};

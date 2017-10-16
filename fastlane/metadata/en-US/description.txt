@@ -1,0 +1,9 @@
+Octogit is an open source client for GitHub.
+
+Features included:
+• View users' and repositories' events
+• Search repositories and users
+• See trending repositories and users
+• Browse source code
+• Star and unstar repositories, follow and unfollow users
+• Check issues and pull requests

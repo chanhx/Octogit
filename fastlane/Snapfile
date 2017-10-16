@@ -1,0 +1,30 @@
+# A list of devices you want to take the screenshots from
+devices([
+  #"iPhone X",
+  "iPhone 6s",
+  "iPhone 6s Plus",
+  "iPhone 5s",
+  "iPad Pro (12.9-inch)",
+  "iPad Pro (9.7-inch)",
+])
+
+languages([
+  "en-US",
+])
+
+# The name of the scheme which contains the UI Tests
+scheme "iGithub"
+
+output_directory "./screenshots"
+
+clear_previous_screenshots true
+
+# Choose which project/workspace to use
+project "../iGithub.xcodeproj"
+# workspace "./Project.xcworkspace"
+
+# Arguments to pass to the app on launch. See https://github.com/fastlane/fastlane/tree/master/snapshot#launch-arguments
+# launch_arguments(["-favColor red"])
+
+# For more information about all available options run
+# fastlane snapshot --help
