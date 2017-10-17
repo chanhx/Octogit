@@ -1,0 +1,16 @@
+osx_image: xcode9
+language: objective-c
+cache:
+  directories:
+    - Carthage
+
+before_install:
+  - carthage bootstrap --platform iOS --cache-builds --no-use-binaries
+
+script:
+  - xcodebuild clean build test
+    -sdk iphonesimulator
+    -project iGithub.xcodeproj
+    -scheme iGithub
+    -destination "platform=iOS Simulator,name=iPhone 8"
+    CODE_SIGNING_REQUIRED=NO
