@@ -105,11 +105,10 @@ extension TrendingViewModelProtocol {
         GitHubProvider
             .request(token)
             .mapString()
-            .subscribe(onSuccess: { [unowned self] in
-                guard let doc = Kanna.HTML(html: $0, encoding: String.Encoding.utf8) else {
+            .subscribe(onSuccess: { [unowned self] (body: String) in
+                guard let doc = try? Kanna.HTML(html: body, encoding: String.Encoding.utf8) else {
                     return  // Result(error: ParseError.HTMLParseError)
                 }
-                
                 self.parse(doc)
             })
             .addDisposableTo(disposeBag)
