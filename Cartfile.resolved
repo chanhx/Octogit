@@ -1,6 +1,6 @@
 github "Alamofire/Alamofire" "4.5.1"
 github "groue/GRMustache.swift" "2.0.0"
-github "tid-kijyun/Kanna" "2.2.1"
+github "tid-kijyun/Kanna" "4.0.0"
 github "kishikawakatsumi/KeychainAccess" "v3.1.0"
 github "onevcat/Kingfisher" "4.1.0"
 github "Hearst-DD/ObjectMapper" "3.0.0"
