@@ -63,7 +63,7 @@ class GistTableViewModel: BaseTableViewModel<Gist> {
                     self.error.value = $0
                 }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
 }

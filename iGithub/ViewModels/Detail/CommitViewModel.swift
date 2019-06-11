@@ -65,7 +65,7 @@ class CommitViewModel: BaseTableViewModel<Comment> {
                     MessageManager.show(error: $0)
                 }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     override func fetchData() {
@@ -89,7 +89,7 @@ class CommitViewModel: BaseTableViewModel<Comment> {
                     MessageManager.show(error: $0)
                 }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func setSectionTypes(withCommit commit: Commit) {

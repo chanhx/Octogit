@@ -85,7 +85,7 @@ class RepositoriesSearchViewModel: BaseTableViewModel<Repository> {
         }
         
         let lan = languagesDict[language]!
-        if lan.characters.count > 0 {
+        if lan.count > 0 {
             q += " language:\(lan)"
         }
         
@@ -118,7 +118,7 @@ class RepositoriesSearchViewModel: BaseTableViewModel<Repository> {
                 
                 self.endCursor = connection.pageInfo?.endCursor
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -159,6 +159,6 @@ class UsersSearchViewModel: BaseTableViewModel<User> {
                     // deal with error
                 }
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 }

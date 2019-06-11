@@ -74,6 +74,6 @@ class UserTableViewModel: BaseTableViewModel<User> {
                     self.error.value = $0
                 }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 }

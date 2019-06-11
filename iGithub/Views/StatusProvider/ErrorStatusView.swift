@@ -26,8 +26,8 @@ open class ErrorStatusView: UIView, ErrorStatusDisplaying {
         }
     }
     
-    open let errorTitleLabel: UILabel = {
-        $0.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)
+    public let errorTitleLabel: UILabel = {
+        $0.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline)
         $0.textColor = UIColor.black
         $0.textAlignment = .center
         $0.text = "Error"
@@ -35,19 +35,19 @@ open class ErrorStatusView: UIView, ErrorStatusDisplaying {
         return $0
     }(UILabel())
     
-    open let errorDescriptionLabel: UILabel = {
-        $0.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption2)
+    public let errorDescriptionLabel: UILabel = {
+        $0.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption2)
         $0.textColor = UIColor.black
         
         return $0
     }(UILabel())
     
-    open let errorActionButton: UIButton = {
+    public let errorActionButton: UIButton = {
         $0.setTitle("Retry", for: .normal)
         $0.isHidden = true
         
         return $0
-    }(UIButton(type: UIButtonType.system))
+    }(UIButton(type: UIButton.ButtonType.system))
     
     let stackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false

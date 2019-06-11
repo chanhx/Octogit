@@ -38,13 +38,13 @@ class RepositoryViewController: BaseTableViewController {
                     
                     self.configureHeader(repo: repo)
                     self.sizeHeaderToFit(tableView: self.tableView)
-                }).addDisposableTo(viewModel.disposeBag)
+                }).disposed(by: viewModel.disposeBag)
             
             viewModel.hasStarred.asDriver()
                 .flatMap { Driver.from(optional: $0) }
                 .drive(onNext: { [unowned self] in
                     self.updateStarStatus(hasStarred: $0)
-                }).addDisposableTo(viewModel.disposeBag)
+                }).disposed(by: viewModel.disposeBag)
             
             viewModel.error
                 .asDriver()
@@ -53,7 +53,7 @@ class RepositoryViewController: BaseTableViewController {
                     MessageManager.show(error: $0)
                     self.navigationController?.popViewController(animated: true)
                 })
-                .addDisposableTo(viewModel.disposeBag)
+                .disposed(by: viewModel.disposeBag)
             
         }
     }
@@ -156,7 +156,7 @@ class RepositoryViewController: BaseTableViewController {
             .map { $0.1 }
             .observeOn(MainScheduler.instance)
             .bind(to: button.rx.isEnabled)
-            .addDisposableTo(self.viewModel.disposeBag)
+            .disposed(by: self.viewModel.disposeBag)
         
         return button
     }()

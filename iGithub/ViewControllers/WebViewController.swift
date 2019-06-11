@@ -191,8 +191,8 @@ class ActivitySafari: UIActivity {
     
     fileprivate var url: URL!
     
-    open override var activityType : UIActivityType? {
-        return UIActivityType("me.hochueng.activity.WebViewController")
+    open override var activityType : UIActivity.ActivityType? {
+        return UIActivity.ActivityType("me.hochueng.activity.WebViewController")
     }
     override var activityTitle : String? {
         return "Open in Safari"

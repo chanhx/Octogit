@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import TwicketSegmentedControl
+//import TwicketSegmentedControl
 import Pageboy
 
 class SegmentViewController: UIViewController {
@@ -15,7 +15,7 @@ class SegmentViewController: UIViewController {
     var titles: [String]
     var viewControllers: [UIViewController]
     let pageViewController = PageboyViewController()
-    let segmentedControl = TwicketSegmentedControl()
+//    let segmentedControl = TwicketSegmentedControl()
     var initialPage: Int
     
     init(viewControllers: [UIViewController], titles: [String], initialPage: Int = 0) {
@@ -24,18 +24,18 @@ class SegmentViewController: UIViewController {
         
         self.titles = titles
         self.viewControllers = viewControllers
-        segmentedControl.setSegmentItems(titles)
+//        segmentedControl.setSegmentItems(titles)
 
         self.initialPage = initialPage
         
         super.init(nibName: nil, bundle: nil)
         
-        addChildViewController(pageViewController)
-        pageViewController.didMove(toParentViewController: self)
+        addChild(pageViewController)
+        pageViewController.didMove(toParent: self)
         
         pageViewController.dataSource = self
-        pageViewController.delegate = self
-        segmentedControl.delegate = self
+//        pageViewController.delegate = self
+//        segmentedControl.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,30 +62,25 @@ class SegmentViewController: UIViewController {
         let line = UIView()
         line.backgroundColor = UIColor(netHex: 0xB2B2B2)
         
-        view.addSubviews([contentView, line, segmentedControl])
-        
-        var topConstraint: NSLayoutConstraint
-        if #available(iOS 11.0, *) {
-            topConstraint = contentView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor)
-        } else {
-            topConstraint = contentView.topAnchor.constraint(equalTo: view.topAnchor)
-        }
+//        view.addSubviews([contentView, line, segmentedControl])
+        view.addSubview(contentView)
         
         NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            topConstraint,
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            line.heightAnchor.constraint(equalToConstant: 1),
-            line.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            line.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            line.topAnchor.constraint(equalTo: contentView.bottomAnchor),
-            line.bottomAnchor.constraint(equalTo: segmentedControl.topAnchor),
+//            line.heightAnchor.constraint(equalToConstant: 1),
+//            line.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            line.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            line.topAnchor.constraint(equalTo: contentView.bottomAnchor),
+//            line.bottomAnchor.constraint(equalTo: segmentedControl.topAnchor),
             
-            segmentedControl.heightAnchor.constraint(equalToConstant: TwicketSegmentedControl.height),
-            segmentedControl.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-			segmentedControl.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-            segmentedControl.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+//            segmentedControl.heightAnchor.constraint(equalToConstant: TwicketSegmentedControl.height),
+//            segmentedControl.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            segmentedControl.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+//            segmentedControl.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
         ])
         
         view.setNeedsLayout()
@@ -93,11 +88,11 @@ class SegmentViewController: UIViewController {
     }
 }
 
-extension SegmentViewController: TwicketSegmentedControlDelegate {
-    func didSelect(_ segmentIndex: Int) {
-        pageViewController.scrollToPage(.at(index: segmentIndex), animated: true)
-    }
-}
+//extension SegmentViewController: TwicketSegmentedControlDelegate {
+//    func didSelect(_ segmentIndex: Int) {
+//        pageViewController.scrollToPage(.at(index: segmentIndex), animated: true)
+//    }
+//}
 
 extension SegmentViewController: PageboyViewControllerDataSource {
     
@@ -116,13 +111,13 @@ extension SegmentViewController: PageboyViewControllerDataSource {
     }
 }
 
-extension SegmentViewController: PageboyViewControllerDelegate {
-
-    func pageboyViewController(_ pageboyViewController: PageboyViewController,
-                               didScrollToPageAt index: Int,
-                               direction: PageboyViewController.NavigationDirection,
-                               animated: Bool) {
-        segmentedControl.move(to: index)
-    }
-}
+//extension SegmentViewController: PageboyViewControllerDelegate {
+//
+//    func pageboyViewController(_ pageboyViewController: PageboyViewController,
+//                               didScrollToPageAt index: Int,
+//                               direction: PageboyViewController.NavigationDirection,
+//                               animated: Bool) {
+//        segmentedControl.move(to: index)
+//    }
+//}
 

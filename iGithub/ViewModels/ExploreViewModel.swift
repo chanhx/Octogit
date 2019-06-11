@@ -105,13 +105,13 @@ extension TrendingViewModelProtocol {
         GitHubProvider
             .request(token)
             .mapString()
-            .subscribe(onSuccess: { [unowned self] (body: String) in
-                guard let doc = try? Kanna.HTML(html: body, encoding: String.Encoding.utf8) else {
+            .subscribe(onSuccess: { [unowned self] in
+                guard let doc = try? Kanna.HTML(html: $0, encoding: String.Encoding.utf8) else {
                     return  // Result(error: ParseError.HTMLParseError)
                 }
                 self.parse(doc)
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -131,7 +131,7 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
         message = doc.css("div.blankslate h3").first?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
         repositories.value = doc.css("div.explore-content li").map {
-            let name = String($0.at_css("h3 a")!["href"]!.characters.dropFirst())
+            let name = String($0.at_css("h3 a")!["href"]!.dropFirst())
             
             let rawDesc = $0.at_css("div.py-1 p")
             let description = rawDesc?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -163,7 +163,7 @@ class TrendingUserTableViewModel: TrendingViewModelProtocol {
         message = doc.css("div.blankslate h3").first?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
         users.value = doc.css("li.user-leaderboard-list-item.leaderboard-list-item").map {
-            let name = String($0.at_css("div h2 a")!["href"]!.characters.dropFirst())
+            let name = String($0.at_css("div h2 a")!["href"]!.dropFirst())
             let avatarURL = $0.at_css("a img")!["src"]!
 
             var type: String

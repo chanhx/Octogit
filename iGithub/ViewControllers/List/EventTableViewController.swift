@@ -39,7 +39,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                     cell.avatarView.tag = row
                     cell.avatarView.addGestureRecognizer(UITapGestureRecognizer(target: strongSelf, action: #selector(strongSelf.avatarTapped)))
                 }
-                .addDisposableTo(disposeBag)
+                .disposed(by: disposeBag)
             
             viewModel.error.asDriver()
                 .filter {
@@ -50,7 +50,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
                     self.tableView.refreshFooter?.endRefreshing()
                     MessageManager.show(error: $0!)
                 })
-                .addDisposableTo(disposeBag)
+                .disposed(by: disposeBag)
         }
     }
     

@@ -32,7 +32,7 @@ class UserTableViewController: BaseTableViewController {
                 .drive(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) { row, element, cell in
                     cell.entity = element
                 }
-                .addDisposableTo(viewModel.disposeBag)
+                .disposed(by: viewModel.disposeBag)
             
             viewModel.error.asDriver()
                 .filter {
@@ -43,7 +43,7 @@ class UserTableViewController: BaseTableViewController {
                     self.tableView.refreshFooter?.endRefreshing()
                     MessageManager.show(error: $0!)
                 })
-                .addDisposableTo(viewModel.disposeBag)
+                .disposed(by: viewModel.disposeBag)
         }
     }
     

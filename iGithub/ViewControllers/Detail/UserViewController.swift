@@ -30,7 +30,7 @@ class UserViewController: BaseTableViewController {
                     self.configureHeader(user: user)
                     self.sizeHeaderToFit(tableView: self.tableView)
                 })
-                .addDisposableTo(viewModel.disposeBag)
+                .disposed(by: viewModel.disposeBag)
             
             Driver.combineLatest(userDriver, orgsDriver) { user, orgs in
                     (user, orgs)
@@ -41,7 +41,7 @@ class UserViewController: BaseTableViewController {
                 .drive(onNext: { [unowned self] _ in
                     self.tableView.reloadData()
                 })
-                .addDisposableTo(viewModel.disposeBag)
+                .disposed(by: viewModel.disposeBag)
             
             Driver.combineLatest(userDriver, isFollowingDriver) { user, isFollowing in
                     (user, isFollowing)
@@ -52,7 +52,7 @@ class UserViewController: BaseTableViewController {
                 .drive(onNext: { [unowned self] _ in
                     self.navigationItem.rightBarButtonItem?.isEnabled = true
                 })
-                .addDisposableTo(viewModel.disposeBag)
+                .disposed(by: viewModel.disposeBag)
         }
     }
     

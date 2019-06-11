@@ -38,9 +38,9 @@ class OAuthViewController: WebViewController {
         guard
             let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems,
             let code = queryItems.filter({$0.name == "code"}).first?.value
-            else {
-                decisionHandler(.cancel)
-                return
+        else {
+            decisionHandler(.cancel)
+            return
         }
         
         AccountManager.requestToken(code, success: {

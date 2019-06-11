@@ -10,7 +10,7 @@ import UIKit
 
 class IndicatorButton: GradientButton {
     
-    let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let indicatorView = UIActivityIndicatorView(style: .gray)
     var originalImage: UIImage?
 
     func showIndicator() {
@@ -44,7 +44,7 @@ class IndicatorButton: GradientButton {
         isEnabled = true
     }
     
-    override func setImage(_ image: UIImage?, for state: UIControlState) {
+    override func setImage(_ image: UIImage?, for state: UIControl.State) {
         originalImage = image
         super.setImage(image, for: state)
     }

@@ -32,7 +32,7 @@ class RepositoryTableViewController: BaseTableViewController {
                     cell.shouldDisplayFullName = self.viewModel.shouldDisplayFullName
                     cell.configure(withRepository: element)
                 }
-                .addDisposableTo(viewModel.disposeBag)
+                .disposed(by: viewModel.disposeBag)
             
             viewModel.error.asDriver()
                 .filter {
@@ -43,7 +43,7 @@ class RepositoryTableViewController: BaseTableViewController {
                     self.tableView.refreshFooter?.endRefreshing()
                     MessageManager.show(error: $0!)
                 })
-                .addDisposableTo(viewModel.disposeBag)
+                .disposed(by: viewModel.disposeBag)
         }
     }
     

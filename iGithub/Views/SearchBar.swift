@@ -22,7 +22,7 @@ class SearchBar: UIView {
     var placeholder: String? {
         set {
             textField.attributedPlaceholder = NSAttributedString(string: newValue ?? "",
-                                                                 attributes: [NSAttributedStringKey.foregroundColor : UIColor.gray])
+                                                                 attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
         }
         get {
             return textField.placeholder
@@ -38,7 +38,7 @@ class SearchBar: UIView {
     }
     
     override var intrinsicContentSize: CGSize {
-        var size = UILayoutFittingExpandedSize
+        var size = UIView.layoutFittingExpandedSize
         size.height = 28
         return size
     }

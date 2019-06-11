@@ -50,7 +50,7 @@ class AccountManager {
                 currentUser = Mapper<User>().map(JSONObject: $0)!
                 completionHandler(currentUser!)
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     class func requestToken(_ code: String, success: @escaping () -> Void, failure: @escaping (MoyaError) -> Void) {
@@ -82,6 +82,6 @@ class AccountManager {
 //                    failure($0)
 //                }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 }

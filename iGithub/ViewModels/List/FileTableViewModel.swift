@@ -65,7 +65,7 @@ class FileTableViewModel: BaseTableViewModel<File> {
                     self.error.value = $0
                 }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func fileViewModel(_ file: File) -> FileViewModel {

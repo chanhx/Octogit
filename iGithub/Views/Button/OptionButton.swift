@@ -42,8 +42,8 @@ class OptionButton: GradientButton {
     var choice: String! {
         didSet {
             let attributedTitle = NSMutableAttributedString(string: "\(optionTitle): \(choice!)")
-            attributedTitle.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor(netHex: 0x818181),
-                                         range: NSRange(location: 0, length: optionTitle.characters.count + 1))
+            attributedTitle.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(netHex: 0x818181),
+                                         range: NSRange(location: 0, length: optionTitle.count + 1))
             
             setAttributedTitle(attributedTitle, for: .normal)
             

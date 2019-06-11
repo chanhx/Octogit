@@ -42,17 +42,17 @@ class CountButton: UIButton {
         
         let attributedNumber = NSMutableAttributedString(string: "\(countText)\n",
                                                          attributes: [
-                                                            NSAttributedStringKey.foregroundColor: UIColor(netHex: 0x4078C0),
-                                                            NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20)])
+                                                            NSAttributedString.Key.foregroundColor: UIColor(netHex: 0x4078C0),
+                                                            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
         
         let attributedTitle = NSAttributedString(string: title,
                                                  attributes: [
-                                                    NSAttributedStringKey.foregroundColor: UIColor.gray,
-                                                    NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)])
+                                                    NSAttributedString.Key.foregroundColor: UIColor.gray,
+                                                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)])
         
         attributedNumber.append(attributedTitle)
         
-        setAttributedTitle(attributedNumber, for: UIControlState())
+        setAttributedTitle(attributedNumber, for: UIControl.State())
     }
     
 }

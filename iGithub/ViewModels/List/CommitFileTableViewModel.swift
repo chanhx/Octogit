@@ -55,7 +55,7 @@ class CommitFileTableViewModel: BaseTableViewModel<CommitFile> {
                     self.error.value = $0
                 }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func fileViewModel(forRow row: Int) -> FileViewModel {

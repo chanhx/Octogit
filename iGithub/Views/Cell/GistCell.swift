@@ -14,7 +14,7 @@ class GistCell: UITableViewCell {
     fileprivate let filesCountLabel = UILabel()
     fileprivate let timeLabel = UILabel()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.configureSubviews()

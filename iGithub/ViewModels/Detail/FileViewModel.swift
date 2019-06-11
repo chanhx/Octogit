@@ -145,7 +145,7 @@ class FileViewModel {
                     MessageManager.show(error: $0)
                 }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func fetchHTMLContent(_ file: File) {
@@ -162,7 +162,7 @@ class FileViewModel {
             .subscribe(onSuccess: { [unowned self] in
                 self.html.value = self.htmlForMarkdown($0)
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func fetch(gistFile: GistFile) {

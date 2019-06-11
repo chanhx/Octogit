@@ -24,7 +24,7 @@ class CommitFileTableViewController: BaseTableViewController {
                 .drive(tableView.rx.items(cellIdentifier: "CommitFileCell", cellType: CommitFileCell.self)) { row, element, cell in
                     cell.entity = element
                 }
-                .addDisposableTo(viewModel.disposeBag)
+                .disposed(by: viewModel.disposeBag)
             
             viewModel.error.asDriver()
                 .filter {
@@ -35,7 +35,7 @@ class CommitFileTableViewController: BaseTableViewController {
                     self.tableView.refreshFooter?.endRefreshing()
                     MessageManager.show(error: $0!)
                 })
-                .addDisposableTo(viewModel.disposeBag)
+                .disposed(by: viewModel.disposeBag)
         }
     }
     

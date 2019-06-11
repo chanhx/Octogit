@@ -63,7 +63,7 @@ class IGLinkLabel: UILabel {
         if let attributedText = attributedText {
             textStorage.setAttributedString(attributedText)
             
-            textStorage.enumerateAttribute(NSAttributedStringKey.link, in: NSRange(location: 0, length: textStorage.length), options: []) { (value, range, _) in
+            textStorage.enumerateAttribute(NSAttributedString.Key.link, in: NSRange(location: 0, length: textStorage.length), options: []) { (value, range, _) in
                 // Because NSLinkAttributeName supports both NSURL and NSString
                 // values. *sigh*
                 let URL: Foundation.URL? = {
@@ -80,16 +80,16 @@ class IGLinkLabel: UILabel {
                     
                     // Remove `NSLinkAttributeName` to prevent `UILabel` from applying
                     // the default styling.
-                    self.textStorage.removeAttribute(NSAttributedStringKey.link, range: range)
+                    self.textStorage.removeAttribute(NSAttributedString.Key.link, range: range)
                     
                     let originalAttributes = self.textStorage.attributes(at: range.location, effectiveRange: nil)
                     var proposedAttributes = originalAttributes
                     
-                    if originalAttributes[NSAttributedStringKey.foregroundColor] == nil {
-                        proposedAttributes[NSAttributedStringKey.foregroundColor] = UIColor(netHex: 0x80A6CD)
+                    if originalAttributes[NSAttributedString.Key.foregroundColor] == nil {
+                        proposedAttributes[NSAttributedString.Key.foregroundColor] = UIColor(netHex: 0x80A6CD)
                     }
-                    if originalAttributes[NSAttributedStringKey.underlineStyle] == nil {
-                        proposedAttributes[NSAttributedStringKey.underlineStyle] = NSUnderlineStyle.styleNone.rawValue
+                    if originalAttributes[NSAttributedString.Key.underlineStyle] == nil {
+                        proposedAttributes[NSAttributedString.Key.underlineStyle] = []
                     }
                     self.textStorage.setAttributes(proposedAttributes, range: range)
                 }

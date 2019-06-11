@@ -38,7 +38,7 @@ class LoadingIndicator: UIView {
         circleLayer.strokeColor = UIColor(netHex: 0x4078C0).cgColor
         circleLayer.fillColor = UIColor.clear.cgColor
         circleLayer.lineWidth = lineWidth
-        circleLayer.lineCap = kCALineCapRound
+        circleLayer.lineCap = CAShapeLayerLineCap.round
         circleLayer.strokeStart = 0.15
         circleLayer.strokeEnd = strokeEnd
         
@@ -77,7 +77,7 @@ class LoadingIndicator: UIView {
     func updateStrokeEnd(_ strokeEnd: CGFloat) {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.toValue = strokeEnd
-        animation.fillMode = kCAFillModeForwards
+        animation.fillMode = CAMediaTimingFillMode.forwards
         animation.isRemovedOnCompletion = false
         
         circleLayer.add(animation, forKey: nil)

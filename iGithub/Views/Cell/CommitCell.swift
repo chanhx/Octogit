@@ -14,7 +14,7 @@ class CommitCell: UITableViewCell {
     fileprivate let titleLabel = UILabel()
     fileprivate let infoLabel = UILabel()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.configureSubviews()

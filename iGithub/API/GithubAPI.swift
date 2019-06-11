@@ -23,16 +23,16 @@ struct OAuthConfiguration {
     static var accessToken: String?
     
     static var authorizationURL: URL? {
-        return GitHubProvider
+        return try! MoyaProvider<GitHubAPI>()
             .endpoint(.authorize)
-            .urlRequest?
+            .urlRequest()
             .url
     }
 }
 
 // MARK: - Provider setup
 
-let GitHubProvider = RxMoyaProvider<GitHubAPI>()
+let GitHubProvider = MoyaProvider<GitHubAPI>().rx
 
 // MARK: - Provider support
 

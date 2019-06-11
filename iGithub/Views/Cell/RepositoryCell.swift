@@ -20,7 +20,7 @@ class RepositoryCell: UITableViewCell {
     
     var shouldDisplayFullName = true
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.configureSubviews()
@@ -144,8 +144,8 @@ class RepositoryCell: UITableViewCell {
         let attributedName = NSMutableAttributedString(string: "\(owner) / ")
         attributedName.append(NSAttributedString(string: repo,
                                                  attributes: [
-                                                    NSAttributedStringKey.font : UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.semibold),
-                                                    NSAttributedStringKey.foregroundColor: UIColor(netHex: 0x437abe)
+                                                    NSAttributedString.Key.font : UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.semibold),
+                                                    NSAttributedString.Key.foregroundColor: UIColor(netHex: 0x437abe)
             ]))
         
         return attributedName

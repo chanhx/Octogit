@@ -21,7 +21,7 @@ class FileTableViewController: BaseTableViewController {
                 .drive(tableView.rx.items(cellIdentifier: "FileCell", cellType: FileCell.self)) { row, element, cell in
                     cell.entity = element
                 }
-                .addDisposableTo(viewModel.disposeBag)            
+                .disposed(by: viewModel.disposeBag)            
         }
     }
     

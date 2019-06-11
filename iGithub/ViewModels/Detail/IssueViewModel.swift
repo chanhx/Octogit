@@ -72,7 +72,7 @@ class IssueViewModel: BaseTableViewModel<Comment> {
                     MessageManager.show(error: $0)
             }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     override func fetchData() {
@@ -102,7 +102,7 @@ class IssueViewModel: BaseTableViewModel<Comment> {
                     MessageManager.show(error: $0)
                 }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     var templateData: [String : Any] {
@@ -127,7 +127,7 @@ class IssueViewModel: BaseTableViewModel<Comment> {
             data["state"] = try! Template(named: "issue-\(state.rawValue)-span")
         }
         
-        if let body = issue.bodyHTML, body.characters.count > 0 {
+        if let body = issue.bodyHTML, body.count > 0 {
             data["content"] = body
         }
         

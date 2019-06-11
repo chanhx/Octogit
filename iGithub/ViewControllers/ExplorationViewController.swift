@@ -41,8 +41,8 @@ class ExplorationViewController: BaseTableViewController {
         
         let transition = CATransition()
         transition.duration = 0.1
-        transition.type = kCATransitionFade
-        transition.subtype = kCATransitionFromTop
+        transition.type = CATransitionType.fade
+        transition.subtype = CATransitionSubtype.fromTop
         
         navigationController?.view.layer.add(transition, forKey: kCATransition)
 		navigationController?.pushViewController(searchViewController, animated: false)
@@ -117,7 +117,7 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
                                    forks: repo.forks,
                                    periodStargazers: repo.periodStargazers)
             }
-            .addDisposableTo(viewModel.repoTVM.disposeBag)
+            .disposed(by: viewModel.repoTVM.disposeBag)
     }
     
     func bindToUserTVM() {
@@ -137,7 +137,7 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
                 row, user, cell in
                 cell.entity = user
             }
-            .addDisposableTo(viewModel.userTVM.disposeBag)
+            .disposed(by: viewModel.userTVM.disposeBag)
     }
 }
 
@@ -150,7 +150,7 @@ extension ExplorationViewController: TTTAttributedLabelDelegate {
         headerView.titleLabel.setText(Octicon.flame.iconString("Trending for \(time) in \(viewModel.language)",
             iconSize: 18,
             iconColor: .red,
-            attributes: [NSAttributedStringKey.font: headerView.titleLabel.font]))
+            attributes: [NSAttributedString.Key.font: headerView.titleLabel.font]))
         
         headerView.titleLabel.addLink(URL(string: "Time")!, toText: time)
         headerView.titleLabel.addLink(URL(string: "Language")!, toText: language)

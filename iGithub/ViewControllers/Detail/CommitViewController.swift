@@ -43,7 +43,7 @@ class CommitViewController: BaseTableViewController {
                 
                 self.indicator.removeFromSuperview()
             })
-            .addDisposableTo(viewModel.disposeBag)
+            .disposed(by: viewModel.disposeBag)
         
         Driver.combineLatest(commitDriver, commentsDriver) { commit, comments in
             	(commit, comments)
@@ -53,7 +53,7 @@ class CommitViewController: BaseTableViewController {
                 
                 self.sizeHeaderToFit(tableView: self.tableView)
             })
-            .addDisposableTo(viewModel.disposeBag)
+            .disposed(by: viewModel.disposeBag)
         
         viewModel.fetchFiles()
         viewModel.fetchData()
@@ -71,12 +71,12 @@ class CommitViewController: BaseTableViewController {
         
         let author = commit.author?.login ?? commit.authorName
         
-        let attrInfo = NSMutableAttributedString(string: "\(author!) committed \(commit.commitDate!.naturalString(withPreposition: true))")
+        let attrInfo = NSMutableAttributedString(string: "\(author!) committed \(commit.commitDate!.naturalString())")
         attrInfo.addAttributes([
-            NSAttributedStringKey.foregroundColor: UIColor(netHex: 0x555555),
-            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
+            NSAttributedString.Key.foregroundColor: UIColor(netHex: 0x555555),
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
             ],
-                               range: NSRange(location: 0, length: author!.characters.count))
+                               range: NSRange(location: 0, length: author!.count))
         
         infoLabel.attributedText = attrInfo
     }

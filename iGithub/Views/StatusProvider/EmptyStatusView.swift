@@ -9,16 +9,16 @@ import UIKit
 
 open class EmptyStatusView: UIView {
     
-    open let emptyTitleLabel: UILabel = {
-        $0.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)
+    public let emptyTitleLabel: UILabel = {
+        $0.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline)
         $0.textColor = UIColor.black
         $0.textAlignment = .center
         
         return $0
     }(UILabel())
     
-    open let emptyDescriptionLabel: UILabel = {
-        $0.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption2)
+    public let emptyDescriptionLabel: UILabel = {
+        $0.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption2)
         $0.textColor = UIColor.black
         $0.textAlignment = .center
         $0.numberOfLines = 0
@@ -26,7 +26,7 @@ open class EmptyStatusView: UIView {
         return $0
     }(UILabel())
     
-    open let emptyImageView: UIImageView = {
+    public let emptyImageView: UIImageView = {
         $0.contentMode = .center
         
         return $0
@@ -43,13 +43,13 @@ open class EmptyStatusView: UIView {
     public convenience init(title: String?, caption: String? = nil, image: UIImage? = nil) {
         self.init(frame: CGRect.zero)
         
-        if let title = title , title.characters.count > 0 {
+        if let title = title , title.count > 0 {
             emptyTitleLabel.text = title
         } else {
             emptyTitleLabel.isHidden = true
         }
         
-        if let caption = caption , caption.characters.count > 0 {
+        if let caption = caption , caption.count > 0 {
             emptyDescriptionLabel.text = caption
         } else {
             emptyDescriptionLabel.isHidden = true

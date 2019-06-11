@@ -26,7 +26,7 @@ class OrganizationViewController: BaseTableViewController {
                     self.configureHeader(org: org)
                     self.sizeHeaderToFit(tableView: self.tableView)
                 })
-                .addDisposableTo(viewModel.disposeBag)
+                .disposed(by: viewModel.disposeBag)
         }
     }
     
@@ -47,7 +47,7 @@ class OrganizationViewController: BaseTableViewController {
         self.descLabel.text = org.orgDescription
         
         if let name = org.name?.trimmingCharacters(in: .whitespaces)
-            , name.characters.count > 0 {
+            , name.count > 0 {
             self.nameLabel.text = name
         } else {
             self.nameLabel.text = org.login

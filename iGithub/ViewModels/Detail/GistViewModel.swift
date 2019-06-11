@@ -41,7 +41,7 @@ class GistViewModel: BaseTableViewModel<Comment> {
                     MessageManager.show(error: $0)
                 }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func numberOfRows(inSection section: Int) -> Int {

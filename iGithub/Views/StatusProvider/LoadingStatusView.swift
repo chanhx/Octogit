@@ -17,19 +17,19 @@ open class LoadingStatusView: UIView {
         case activity
     }
     
-    open let activityIndicatorView: UIActivityIndicatorView = {
+    public let activityIndicatorView: UIActivityIndicatorView = {
         $0.startAnimating()
         #if os(tvOS)
             $0.activityIndicatorViewStyle = .whiteLarge
         #elseif os(iOS)
-            $0.activityIndicatorViewStyle = .gray
+            $0.style = .gray
         #endif
         return $0
-    }(UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge))
+    }(UIActivityIndicatorView(style: .whiteLarge))
     
-    open let loadingLabel: UILabel = {
+    public let loadingLabel: UILabel = {
         $0.text = "Loading…"
-        $0.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.footnote)
+        $0.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.footnote)
         $0.textColor = UIColor.black
         
         return $0

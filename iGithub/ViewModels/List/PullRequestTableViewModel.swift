@@ -47,7 +47,7 @@ class PullRequestTableViewModel: BaseTableViewModel<PullRequest> {
                 onError: { [unowned self] in
                     self.error.value = $0
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func viewModelForIndex(_ index: Int) -> PullRequestViewModel {

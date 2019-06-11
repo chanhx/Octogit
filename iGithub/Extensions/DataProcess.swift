@@ -11,25 +11,20 @@ import SwiftDate
 import Kingfisher
 import TTTAttributedLabel
 
-fileprivate let locale = Locale(identifier: "en")
-fileprivate let region = Region(tz: .currentAutoUpdating,
-                                cal: .currentAutoUpdating,
-                                loc: .english)
-
 extension Date {
     func naturalString(withPreposition: Bool = false) -> String {
         let date = Date()
         let timeInterval = date.timeIntervalSince(self)
         
-        if timeInterval.in(.month)! >= 1 {
-            let abosulteDate = self.string(dateStyle: .medium, timeStyle: .none, in: region)
-            return withPreposition ? "on " + abosulteDate : abosulteDate
+        if self.year != date.year {
+            let absoluteDate = self.toFormat("MMM dd, yyyy", locale: Locales.english)
+            return withPreposition ? "on " + absoluteDate : absoluteDate
+        }
+        if timeInterval.toUnit(.month)! >= 1 {
+            let absoluteDate = self.toFormat("MMM dd", locale: Locales.english)
+            return withPreposition ? "on " + absoluteDate : absoluteDate
         } else {
-            let suffix = timeInterval > 0 ? "ago" : "later"
-            var options = ComponentsFormatterOptions(allowedUnits: [.second, .minute, .hour, .day], style: .full, zero: .dropAll)
-            options.maxUnitCount = 1
-            options.locale = locale
-            return try! "\(timeInterval.string(options: options)) \(suffix)"
+            return self.toRelative()
         }
     }
 }
@@ -87,7 +82,7 @@ extension UIView {
 extension TTTAttributedLabel {
     func addLink(_ url: URL, toText text: String) {
         let regexString = NSString(format: "(^|\\s)%1$@(\\s|$)", text) as String
-        let range = (self.text! as NSString).range(of: regexString, options: .regularExpression)
+        let range = (self.text! as! NSString).range(of: regexString, options: .regularExpression)
         self.addLink(to: url, with: range)
     }
 }

@@ -51,14 +51,11 @@ class SegmentHeaderView: UIView {
         titleLabel.font = UIFont.systemFont(ofSize: 14)
         titleLabel.layer.isOpaque = true
         titleLabel.backgroundColor = backgroundColor
-        titleLabel.linkAttributes = [
-            NSAttributedStringKey.foregroundColor: UIColor(netHex: 0x4078C0),
-            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleNone.rawValue
-        ]
+        titleLabel.linkAttributes = [NSAttributedString.Key.foregroundColor: UIColor(netHex: 0x4078C0)]
         
-        reposButton.setTitle("Repositories", for: UIControlState())
+        reposButton.setTitle("Repositories", for: UIControl.State())
         reposButton.addTarget(self, action: #selector(SegmentHeaderView.buttonTouched(_:)), for: .touchUpInside)
-        usersButton.setTitle("Users", for: UIControlState())
+        usersButton.setTitle("Users", for: UIControl.State())
         usersButton.addTarget(self, action: #selector(SegmentHeaderView.buttonTouched(_:)), for: .touchUpInside)
     }
     
@@ -114,10 +111,10 @@ class SegmentHeaderView: UIView {
             
             adjustsImageWhenHighlighted = false
             titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
-            setTitleColor(UIColor(netHex: 0x4078C0), for: UIControlState())
+            setTitleColor(UIColor(netHex: 0x4078C0), for: UIControl.State())
             setTitleColor(UIColor(netHex: 0x444444), for: .selected)
             setBackgroundImage(UIImage.imageWithColor(UIColor.white), for: .selected)
-            setBackgroundImage(UIImage.imageWithColor(UIColor(netHex: 0xFAFAFA)), for: UIControlState())
+            setBackgroundImage(UIImage.imageWithColor(UIColor(netHex: 0xFAFAFA)), for: UIControl.State())
             
             addBorders()
         }

@@ -35,7 +35,7 @@ class SearchViewController: BaseTableViewController {
             barButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
             barButton.setTitle("Cancel", for: .normal)
             barButton.addTarget(self, action: #selector(popBack), for: .touchUpInside)
-            barButton.contentEdgeInsets = UIEdgeInsetsMake(0, 8, 0, 0)
+            barButton.contentEdgeInsets = UIEdgeInsets.init(top: 0, left: 8, bottom: 0, right: 0)
             buttonItem = UIBarButtonItem(customView: barButton)
         } else {
 	        buttonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(popBack))
@@ -62,8 +62,8 @@ class SearchViewController: BaseTableViewController {
         
         let transition = CATransition()
         transition.duration = 0.1
-        transition.type = kCATransitionFade
-        transition.subtype = kCATransitionFromBottom
+        transition.type = CATransitionType.fade
+        transition.subtype = CATransitionSubtype.fromBottom
         
         navigationController?.view.layer.add(transition, forKey: kCATransition)
         navigationController?.popViewController(animated: false)
@@ -105,7 +105,7 @@ extension SearchViewController: SearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: SearchBar) {
         
-        if let query = searchBar.text , query.characters.count > 0 {
+        if let query = searchBar.text , query.count > 0 {
             _ = searchBar.resignFirstResponder()
             viewModel.search(query: query)
         }
@@ -148,7 +148,7 @@ extension SearchViewController: SegmentHeaderViewDelegate {
                 row, repo, cell in
                 cell.configure(withRepository: repo)
             }
-            .addDisposableTo(viewModel.repoTVM.disposeBag)
+            .disposed(by: viewModel.repoTVM.disposeBag)
     }
     
     func bindToUserTVM() {
@@ -172,7 +172,7 @@ extension SearchViewController: SegmentHeaderViewDelegate {
                 row, user, cell in
                 cell.entity = user
             }
-            .addDisposableTo(viewModel.userTVM.disposeBag)
+            .disposed(by: viewModel.userTVM.disposeBag)
     }
 }
 

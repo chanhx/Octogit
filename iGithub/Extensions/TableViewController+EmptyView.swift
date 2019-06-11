@@ -109,7 +109,7 @@ extension ExplorationViewController: StatusProvider {
         let label: UILabel = {
             $0.numberOfLines = 0
             $0.lineBreakMode = .byWordWrapping
-            $0.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)
+            $0.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline)
             $0.textColor = UIColor.black
             $0.textAlignment = .center
             return $0
@@ -197,7 +197,7 @@ extension SearchViewController: StatusProvider {
         let label: UILabel = {
             $0.numberOfLines = 0
             $0.lineBreakMode = .byWordWrapping
-            $0.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)
+            $0.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline)
             $0.textColor = UIColor.black
             $0.textAlignment = .center
             return $0

@@ -39,7 +39,7 @@ class IssueViewController: UIViewController {
                 self.webView.loadHTMLString($0, baseURL: Bundle.main.resourceURL)
                 self.indicator.removeFromSuperview()
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         viewModel.fetchData()
     }

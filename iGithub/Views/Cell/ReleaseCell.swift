@@ -14,7 +14,7 @@ class ReleaseCell: UITableViewCell {
     private let tagLabel = UILabel()
     private let timeLabel = UILabel()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.configureSubviews()
@@ -68,7 +68,7 @@ class ReleaseCell: UITableViewCell {
     var entity: Release! {
         didSet {
             if let name = entity.name,
-                name.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
+                name.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
                 nameLabel.text = entity.name
             } else {
                 nameLabel.text = entity.tagName

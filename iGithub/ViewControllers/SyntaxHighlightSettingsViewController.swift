@@ -46,13 +46,13 @@ class SyntaxHighlightSettingsViewController: UITableViewController {
         webViewCell.webView.isOpaque = false
         tableView.tableFooterView = webViewCell
         
-        pickerView.selectedRows[0] = self.themes.index(of: self.themeLabel.text!) ?? 0
+        pickerView.selectedRows[0] = self.themes.firstIndex(of: self.themeLabel.text!) ?? 0
 
         lineNumbersSwitch.rx.value.asDriver()
             .drive(onNext: { [unowned self] _ in
                 self.renderSample()
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

@@ -101,7 +101,7 @@ class RepositoryTableViewModel: BaseTableViewModel<Repository> {
                 onError: { [unowned self] in
                     self.error.value = $0
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     var shouldDisplayFullName: Bool {

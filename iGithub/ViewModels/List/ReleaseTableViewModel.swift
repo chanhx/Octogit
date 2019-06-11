@@ -46,7 +46,7 @@ class ReleaseTableViewModel: BaseTableViewModel<Release> {
                     self.error.value = $0
                 }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
 }

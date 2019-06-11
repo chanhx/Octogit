@@ -23,7 +23,7 @@ class GistViewController: BaseTableViewController {
                     
                     self.sizeHeaderToFit(tableView: self.tableView)
                 })
-                .addDisposableTo(viewModel.disposeBag)
+                .disposed(by: viewModel.disposeBag)
             
             viewModel.fetchData()
         }
@@ -48,10 +48,10 @@ class GistViewController: BaseTableViewController {
         
         let attrInfo = NSMutableAttributedString(string: "\(viewModel.gist.owner!) created \(viewModel.gist.createdAt!.naturalString(withPreposition: true))")
         attrInfo.addAttributes([
-            NSAttributedStringKey.foregroundColor: UIColor(netHex: 0x555555),
-            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
+            NSAttributedString.Key.foregroundColor: UIColor(netHex: 0x555555),
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
             ],
-                               range: NSRange(location: 0, length: viewModel.gist.owner!.login!.characters.count))
+                               range: NSRange(location: 0, length: viewModel.gist.owner!.login!.count))
         
         infoLabel.attributedText = attrInfo
     }

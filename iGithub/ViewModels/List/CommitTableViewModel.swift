@@ -66,7 +66,7 @@ class CommitTableViewModel: BaseTableViewModel<Commit> {
                     self.error.value = $0
                 }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func commitViewModel(forRow row: Int) -> CommitViewModel {

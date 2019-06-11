@@ -38,13 +38,13 @@ class UserViewModel {
     var vcardDetails = [VcardDetail]()
     lazy var information: String = {
         var information: String = self.user.value.login!
-        if let name = self.user.value.name, name.characters.count > 0 {
+        if let name = self.user.value.name, name.count > 0 {
             information.append("(\(name))")
         }
-        if let company = self.user.value.company, company.characters.count > 0 {
+        if let company = self.user.value.company, company.count > 0 {
             information.append(", \(company)")
         }
-        if let location = self.user.value.location, location.characters.count > 0 {
+        if let location = self.user.value.location, location.count > 0 {
             information.append(", \(location)")
         }
         
@@ -81,7 +81,7 @@ class UserViewModel {
                 self.setSectionTypes(user: user)
                 self.user.value = user
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func fetchOrganizations() {
@@ -92,7 +92,7 @@ class UserViewModel {
             .subscribe(onSuccess: { [unowned self] in
                 self.organizations.value = Mapper<User>().mapArray(JSONObject: $0)!
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func checkIsFollowing() {
@@ -107,7 +107,7 @@ class UserViewModel {
                     // error happened
                 }
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func toggleFollowing() {
@@ -123,7 +123,7 @@ class UserViewModel {
                     print(json)
                 }
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     var numberOfSections: Int {
@@ -149,16 +149,16 @@ class UserViewModel {
     private func setVcardDetails(user: User) {
         vcardDetails.removeAll()
         
-        if let company = user.company, company.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
+        if let company = user.company, company.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
             vcardDetails.append(.company)
         }
-        if let location = user.location, location.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
+        if let location = user.location, location.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
             vcardDetails.append(.location)
         }
-        if let email = user.email, email.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
+        if let email = user.email, email.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
             vcardDetails.append(.email)
         }
-        if let blog = user.blog, blog.absoluteString.trimmingCharacters(in: .whitespacesAndNewlines).characters.count > 0 {
+        if let blog = user.blog, blog.absoluteString.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 {
             vcardDetails.append(.blog)
         }
     }

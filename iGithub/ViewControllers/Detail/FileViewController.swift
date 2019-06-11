@@ -39,12 +39,12 @@ class FileViewController: UIViewController {
         setTitle()
 		
         viewModel.html.asDriver()
-            .filter { $0.characters.count > 0 }
+            .filter { $0.count > 0 }
             .drive(onNext: { [unowned self] html in
                 self.indicator.removeFromSuperview()
                 self.webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
             })
-            .addDisposableTo(viewModel.disposeBag)
+            .disposed(by: viewModel.disposeBag)
         
         viewModel.contentData.asDriver()
             .filter { $0.count > 0 }
@@ -52,7 +52,7 @@ class FileViewController: UIViewController {
                 self.indicator.removeFromSuperview()
                 self.webView.load(data, mimeType: self.viewModel.mimeType, characterEncodingName: "utf-8", baseURL: Bundle.main.resourceURL!)
             })
-            .addDisposableTo(viewModel.disposeBag)
+            .disposed(by: viewModel.disposeBag)
 
         viewModel.getFileContent()
     }
@@ -61,15 +61,15 @@ class FileViewController: UIViewController {
         
         let attributedTitle = NSMutableAttributedString(string: viewModel.fileName)
         
-        if let path = viewModel.filePath, path.characters.count > 0 {
+        if let path = viewModel.filePath, path.count > 0 {
             attributedTitle.append(NSAttributedString(string: "\n\(path)",
-                attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 11)]))
+                attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 11)]))
         }
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.paragraphSpacing = 10
         attributedTitle.addAttributes(
-            [NSAttributedStringKey.paragraphStyle : paragraphStyle],
+            [NSAttributedString.Key.paragraphStyle : paragraphStyle],
             range: NSRangeFromString(attributedTitle.string))
         
         titleLabel.attributedText = attributedTitle

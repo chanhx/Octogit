@@ -72,7 +72,7 @@ class PullRequestViewModel: BaseTableViewModel<Comment> {
                     MessageManager.show(error: $0)
             }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     override func fetchData() {
@@ -102,7 +102,7 @@ class PullRequestViewModel: BaseTableViewModel<Comment> {
                     MessageManager.show(error: $0)
             }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     var templateData: [String : Any] {
@@ -139,7 +139,7 @@ class PullRequestViewModel: BaseTableViewModel<Comment> {
             data["state"] = try! Template(named: "pullRequest-\(status)-span")
         }
         
-        if let body = pullRequest.bodyHTML, body.characters.count > 0 {
+        if let body = pullRequest.bodyHTML, body.count > 0 {
             data["content"] = body
         }
         

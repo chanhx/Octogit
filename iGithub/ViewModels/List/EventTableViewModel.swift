@@ -82,7 +82,7 @@ class EventTableViewModel: BaseTableViewModel<Event> {
                     self.error.value = $0
                 }
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
     
     var title: String {

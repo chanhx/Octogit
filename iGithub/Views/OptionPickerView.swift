@@ -51,7 +51,7 @@ class OptionPickerView: UIPickerView {
         
         rx.itemSelected.asObservable().subscribe(onNext: { [unowned self] in
             self.tmpSelectedRows[self.index] = $0.0
-        }).addDisposableTo(disposeBag)
+        }).disposed(by: disposeBag)
         
         clipsToBounds = false
         backgroundColor = UIColor(netHex: 0xDADADA)

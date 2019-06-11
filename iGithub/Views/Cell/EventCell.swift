@@ -18,7 +18,7 @@ class EventCell: UITableViewCell {
     let titleLabel = TTTAttributedLabel(frame: .zero)
     let contentLabel = TTTAttributedLabel(frame: .zero)
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.configureSubviews()
@@ -45,11 +45,9 @@ class EventCell: UITableViewCell {
         titleLabel.numberOfLines = 0
         contentLabel.numberOfLines = 0
         
-        titleLabel.linkAttributes = [
-            NSAttributedStringKey.foregroundColor: UIColor(netHex: 0x4078C0),
-            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleNone.rawValue
-        ]
-        contentLabel.linkAttributes = titleLabel.linkAttributes
+        let linkAttributes = [NSAttributedString.Key.foregroundColor: UIColor(netHex: 0x4078C0)]
+        titleLabel.linkAttributes = linkAttributes
+        contentLabel.linkAttributes = linkAttributes
         
         for label in [iconLabel, timeLabel, titleLabel, contentLabel] {
             label.layer.isOpaque = true

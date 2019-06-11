@@ -33,7 +33,7 @@ class StatusCell: UITableViewCell {
         }
     }
     
-    fileprivate let indicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    fileprivate let indicator = UIActivityIndicatorView(style: .gray)
     fileprivate let promptLabel = UILabel()
     
     init(name: String, status: Status = .loading) {

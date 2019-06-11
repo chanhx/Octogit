@@ -40,14 +40,14 @@ class MessageManager {
 
     class func showMessage(title: String, body: String, type: Theme) {
         var config = SwiftMessages.Config()
-        config.presentationContext = .window(windowLevel: UIWindowLevelNormal)
+//        config.presentationSty = .window(windowLevel: UIWindowLevelNormal)
         config.interactiveHide = true
         
         let messageView: MessageView = try! SwiftMessages.viewFromNib()
         messageView.configureTheme(type)
         messageView.configureContent(title: title, body: body)
         messageView.button?.isHidden = true
-        messageView.titleLabel?.isHidden = title.characters.count <= 0
+        messageView.titleLabel?.isHidden = title.count <= 0
         
         SwiftMessages.show(config: config, view: messageView)
     }
