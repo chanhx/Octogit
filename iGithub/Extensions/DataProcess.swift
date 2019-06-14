@@ -19,12 +19,11 @@ extension Date {
         if self.year != date.year {
             let absoluteDate = self.toFormat("MMM dd, yyyy", locale: Locales.english)
             return withPreposition ? "on " + absoluteDate : absoluteDate
-        }
-        if timeInterval.toUnit(.month)! >= 1 {
+        } else if timeInterval.toUnit(.month)! >= 1 {
             let absoluteDate = self.toFormat("MMM dd", locale: Locales.english)
             return withPreposition ? "on " + absoluteDate : absoluteDate
         } else {
-            return self.toRelative()
+            return self.toRelative(style: RelativeFormatter.Style(flavours: [.long], gradation: .twitter()))
         }
     }
 }
