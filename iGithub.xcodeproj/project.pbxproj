@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C500B7961D545A3A00DC6D2A /* IGLinkLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */; };
 		C500F8C51DBBA2EF009BB44A /* EmptyStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C11DBBA2EF009BB44A /* EmptyStatusView.swift */; };
 		C500F8C61DBBA2EF009BB44A /* ErrorStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C21DBBA2EF009BB44A /* ErrorStatusView.swift */; };
 		C500F8C71DBBA2EF009BB44A /* LoadingStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C31DBBA2EF009BB44A /* LoadingStatusView.swift */; };
@@ -194,7 +193,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IGLinkLabel.swift; sourceTree = "<group>"; };
 		C500F8C11DBBA2EF009BB44A /* EmptyStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStatusView.swift; sourceTree = "<group>"; };
 		C500F8C21DBBA2EF009BB44A /* ErrorStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorStatusView.swift; sourceTree = "<group>"; };
 		C500F8C31DBBA2EF009BB44A /* LoadingStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingStatusView.swift; sourceTree = "<group>"; };
@@ -513,7 +511,6 @@
 				C543610E1F728FFD0046FD7B /* Cell */,
 				C55791511D73E69800FBBD41 /* Refresh */,
 				C500F8C01DBBA2EF009BB44A /* StatusProvider */,
-				C500B7951D545A3A00DC6D2A /* IGLinkLabel.swift */,
 				C5E733841D603A8E00913A66 /* SegmentHeaderView.swift */,
 				C571EF571D64836100F752EE /* OptionPickerView.swift */,
 				C55791581D76E50900FBBD41 /* LoadingIndicator.swift */,
@@ -1037,7 +1034,6 @@
 				C543611D1F728FFE0046FD7B /* CommentCell.swift in Sources */,
 				C54361201F728FFE0046FD7B /* EventCell.swift in Sources */,
 				C571EF581D64836100F752EE /* OptionPickerView.swift in Sources */,
-				C500B7961D545A3A00DC6D2A /* IGLinkLabel.swift in Sources */,
 				C5C2F8E71F3760D200D617A4 /* ModelExtension.swift in Sources */,
 				C524742F1D51A1500001D9CD /* Milestone.swift in Sources */,
 				C500F8C81DBBA2EF009BB44A /* StatusProvider.swift in Sources */,

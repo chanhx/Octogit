@@ -30,7 +30,7 @@ extension Event {
             return "\(e.actor!) deleted \(e.refType!) \(e.ref!) at \(e.repository!)"
         case .forkEvent:
             let e = self as! ForkEvent
-            return "\(e.actor!) forked \(e.repository!) to \(e.forkee!)"
+            return "\(e.actor!) forked \(e.forkee!) from \(e.repository!)"
         case .gollumEvent:
             let e = self as! GollumEvent
             return "\(e.actor!) \(e.action!) \(e.pageName!) in the \(e.repository!) wiki"

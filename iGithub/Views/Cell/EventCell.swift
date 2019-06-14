@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import SwiftDate
-import TTTAttributedLabel
 
 class EventCell: UITableViewCell {
 
@@ -65,7 +63,7 @@ class EventCell: UITableViewCell {
         
         let hStackView2 = UIStackView(arrangedSubviews: [avatarView, titleLabel])
         hStackView2.axis = .horizontal
-        hStackView2.alignment = .center
+        hStackView2.alignment = .top
         hStackView2.distribution = .fill
         hStackView2.spacing = 8
         
@@ -79,14 +77,16 @@ class EventCell: UITableViewCell {
         self.contentView.addSubview(vStackView)
         
         let margins = contentView.layoutMarginsGuide
+        let imageSize: CGFloat = 36
         
         NSLayoutConstraint.activate([
             hStackView1.heightAnchor.constraint(equalToConstant: 18),
             
             iconLabel.widthAnchor.constraint(equalToConstant: 36),
             
-            avatarView.heightAnchor.constraint(equalToConstant: 36),
-            avatarView.widthAnchor.constraint(equalToConstant: 36),
+            avatarView.heightAnchor.constraint(equalToConstant: imageSize),
+            avatarView.widthAnchor.constraint(equalToConstant: imageSize),
+            titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: imageSize),
             
             vStackView.topAnchor.constraint(equalTo: margins.topAnchor),
             vStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
