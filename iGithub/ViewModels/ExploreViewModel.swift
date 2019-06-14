@@ -130,10 +130,10 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
     @inline(__always) func parse(_ doc: HTMLDocument) {
         message = doc.css("div.blankslate h3").first?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        repositories.value = doc.css("div.explore-content li").map {
-            let name = String($0.at_css("h3 a")!["href"]!.dropFirst())
+        repositories.value = doc.css("article.Box-row").map {
+            let name = String($0.at_css("h1 a")!["href"]!.dropFirst())
             
-            let rawDesc = $0.at_css("div.py-1 p")
+            let rawDesc = $0.at_css("p")
             let description = rawDesc?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             
             let language = $0.at_css("span[itemprop=\"programmingLanguage\"]")?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -162,12 +162,12 @@ class TrendingUserTableViewModel: TrendingViewModelProtocol {
     @inline(__always) func parse(_ doc: HTMLDocument) {
         message = doc.css("div.blankslate h3").first?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        users.value = doc.css("li.user-leaderboard-list-item.leaderboard-list-item").map {
-            let name = String($0.at_css("div h2 a")!["href"]!.dropFirst())
+        users.value = doc.css("article.Box-row").map {
+            let name = String($0.at_css("h1 a")!["href"]!.dropFirst())
             let avatarURL = $0.at_css("a img")!["src"]!
 
             var type: String
-            switch $0.css("div.leaderboard-action span") {
+            switch $0.css("span.follow") {
             case .none:
                 type = "Organization"
             default:
