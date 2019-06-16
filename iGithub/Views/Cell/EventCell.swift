@@ -19,6 +19,8 @@ class EventCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.contentView.backgroundColor = .themeBackgroundColor
+        
         self.configureSubviews()
         self.layout()
     }
@@ -50,7 +52,7 @@ class EventCell: UITableViewCell {
         for label in [iconLabel, timeLabel, titleLabel, contentLabel] {
             label.layer.isOpaque = true
             label.layer.masksToBounds = true
-            label.backgroundColor = .white
+            label.backgroundColor = self.contentView.backgroundColor
         }
     }
     

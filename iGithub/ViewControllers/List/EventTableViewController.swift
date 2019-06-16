@@ -60,6 +60,7 @@ class EventTableViewController: BaseTableViewController, TTTAttributedLabelDeleg
         self.navigationItem.title = viewModel.title
         
         tableView.register(EventCell.self, forCellReuseIdentifier: "EventCell")
+        tableView.backgroundColor = .themeBackgroundColor
         
         tableView.refreshHeader = RefreshHeader(target: viewModel, selector: #selector(viewModel.refresh))
         tableView.refreshFooter = RefreshFooter(target: viewModel, selector: #selector(viewModel.fetchData))
