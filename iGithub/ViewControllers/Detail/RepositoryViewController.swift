@@ -233,10 +233,10 @@ class RepositoryViewController: BaseTableViewController {
             
             switch indexPath.row {
             case 0:
-                cell.textLabel?.attributedText = Octicon.code.iconString(" Code", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.fileCode.iconString(" Code", iconSize: 18, iconColor: .lightGray)
                 cell.detailTextLabel?.text = viewModel.repository.value.primaryLanguage
             case 1:
-                cell.textLabel?.attributedText = Octicon.gitCommit.iconString(" Commits", iconSize: 18, iconColor: .lightGray)
+                cell.textLabel?.attributedText = Octicon.history.iconString(" Commits", iconSize: 18, iconColor: .lightGray)
             default:
                 break
             }
