@@ -11,6 +11,7 @@
 		C500F8C61DBBA2EF009BB44A /* ErrorStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C21DBBA2EF009BB44A /* ErrorStatusView.swift */; };
 		C500F8C71DBBA2EF009BB44A /* LoadingStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C31DBBA2EF009BB44A /* LoadingStatusView.swift */; };
 		C500F8C81DBBA2EF009BB44A /* StatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C500F8C41DBBA2EF009BB44A /* StatusProvider.swift */; };
+		C5022CFA22C1205A00122B0C /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DB94971D3F85CD00887E81 /* RxBlocking.framework */; };
 		C5074AC11F62FB0100C36C84 /* issue-closed-span.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC01F62FB0100C36C84 /* issue-closed-span.mustache */; };
 		C5074AC31F62FB1600C36C84 /* issue-open-span.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC21F62FB1600C36C84 /* issue-open-span.mustache */; };
 		C5074AC51F6303C800C36C84 /* discussion-block.mustache in Resources */ = {isa = PBXBuildFile; fileRef = C5074AC41F6303C800C36C84 /* discussion-block.mustache */; };
@@ -142,7 +143,6 @@
 		C5DB949F1D3F85CD00887E81 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DB94941D3F85CD00887E81 /* Moya.framework */; };
 		C5DB94A01D3F85CD00887E81 /* Mustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DB94951D3F85CD00887E81 /* Mustache.framework */; };
 		C5DB94A11D3F85CD00887E81 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DB94961D3F85CD00887E81 /* ObjectMapper.framework */; };
-		C5DB94A21D3F85CD00887E81 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DB94971D3F85CD00887E81 /* RxBlocking.framework */; };
 		C5DB94A31D3F85CD00887E81 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DB94981D3F85CD00887E81 /* RxCocoa.framework */; };
 		C5DB94A41D3F85CD00887E81 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DB94991D3F85CD00887E81 /* RxMoya.framework */; };
 		C5DB94A51D3F85CD00887E81 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DB949A1D3F85CD00887E81 /* RxSwift.framework */; };
@@ -373,6 +373,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5022CFA22C1205A00122B0C /* RxBlocking.framework in Frameworks */,
 				C53A175022B3EBE100432C74 /* Kanna.framework in Frameworks */,
 				C58A7F981F72B9F30030B477 /* Pageboy.framework in Frameworks */,
 				C5F79AD51D9575DC006B0466 /* SwiftMessages.framework in Frameworks */,
@@ -385,7 +386,6 @@
 				C5DB94A01D3F85CD00887E81 /* Mustache.framework in Frameworks */,
 				C5DB94A11D3F85CD00887E81 /* ObjectMapper.framework in Frameworks */,
 				C5DB94AA1D3F8A0A00887E81 /* Result.framework in Frameworks */,
-				C5DB94A21D3F85CD00887E81 /* RxBlocking.framework in Frameworks */,
 				C5DB94A31D3F85CD00887E81 /* RxCocoa.framework in Frameworks */,
 				C5DB94A41D3F85CD00887E81 /* RxMoya.framework in Frameworks */,
 				C5DB94A51D3F85CD00887E81 /* RxSwift.framework in Frameworks */,
@@ -843,8 +843,9 @@
 				TargetAttributes = {
 					C5DB945E1D3F842000887E81 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = U4BQ82MM2T;
+						DevelopmentTeam = 85F8EE85FH;
 						LastSwiftMigration = 1020;
+						ProvisioningStyle = Automatic;
 					};
 					C5DB94721D3F842000887E81 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -1259,7 +1260,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = U4BQ82MM2T;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 85F8EE85FH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1267,8 +1269,9 @@
 				INFOPLIST_FILE = iGithub/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithub;
+				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.Octogit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iGithub/iGithub-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1281,7 +1284,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = U4BQ82MM2T;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 85F8EE85FH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1289,8 +1293,9 @@
 				INFOPLIST_FILE = iGithub/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.iGithub;
+				PRODUCT_BUNDLE_IDENTIFIER = me.hocheung.Octogit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "iGithub/iGithub-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};

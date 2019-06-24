@@ -224,13 +224,20 @@ extension GitHubAPI: TargetType {
             return "/login/oauth/authorize"
         case .accessToken:
             return "/login/oauth/access_token"
-        case .trending(_, _, let type):
+        case .trending(_, let language, let type):
+            var path: String
             switch type {
             case .repositories:
-                return "/trending"
+                path = "/trending"
             case .users:
-                return "/trending/developers"
+                path = "/trending/developers"
             }
+            
+            if language.count > 0 {
+                path += "/\(language)"
+            }
+            
+            return path
             
             // MARK: Branch
             
@@ -386,8 +393,8 @@ extension GitHubAPI: TargetType {
         case .accessToken(let code):
             return ["client_id": OAuthConfiguration.clientID as AnyObject, "client_secret": OAuthConfiguration.clientSecret as AnyObject, "code": code as AnyObject]
             
-        case .trending(let since, let language, _):
-            return ["since": since.rawValue as AnyObject, "l": language as AnyObject]
+        case .trending(let since, _, _):
+            return ["since": since.rawValue as AnyObject]
             
         case .oAuthUser(let accessToken):
             return ["access_token": accessToken]
