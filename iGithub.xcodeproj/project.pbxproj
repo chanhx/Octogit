@@ -22,6 +22,7 @@
 		C5113D1A1D87B5B400344739 /* File+DataProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5113D191D87B5B400344739 /* File+DataProcess.swift */; };
 		C5113D1C1D88124D00344739 /* languages_dict.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5113D1B1D88124D00344739 /* languages_dict.plist */; };
 		C51547A01D940EFE00314C7F /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C515479F1D940EFE00314C7F /* ReactiveSwift.framework */; };
+		C518BD8C22C26245004BDC28 /* TrendingUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C518BD8B22C26245004BDC28 /* TrendingUserCell.swift */; };
 		C51C68A11F64F49B00B8538A /* PullRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51C68A01F64F49B00B8538A /* PullRequestViewController.swift */; };
 		C51C68A31F64F54B00B8538A /* PullRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51C68A21F64F54B00B8538A /* PullRequestViewModel.swift */; };
 		C51CDEA31DBF790F0043A755 /* CommitFileTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51CDE991DBF790F0043A755 /* CommitFileTableViewModel.swift */; };
@@ -207,6 +208,7 @@
 		C5113D191D87B5B400344739 /* File+DataProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "File+DataProcess.swift"; sourceTree = "<group>"; };
 		C5113D1B1D88124D00344739 /* languages_dict.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = languages_dict.plist; sourceTree = "<group>"; };
 		C515479F1D940EFE00314C7F /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
+		C518BD8B22C26245004BDC28 /* TrendingUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingUserCell.swift; sourceTree = "<group>"; };
 		C51C68A01F64F49B00B8538A /* PullRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestViewController.swift; sourceTree = "<group>"; };
 		C51C68A21F64F54B00B8538A /* PullRequestViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestViewModel.swift; sourceTree = "<group>"; };
 		C51CDE991DBF790F0043A755 /* CommitFileTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommitFileTableViewModel.swift; sourceTree = "<group>"; };
@@ -422,6 +424,15 @@
 			path = StatusProvider;
 			sourceTree = "<group>";
 		};
+		C518BD8A22C261B9004BDC28 /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				C5E7337E1D5D9FE900913A66 /* ExplorationViewController.swift */,
+				C5E733871D61C90000913A66 /* SearchViewController.swift */,
+			);
+			path = Explore;
+			sourceTree = "<group>";
+		};
 		C51CDE981DBF790F0043A755 /* List */ = {
 			isa = PBXGroup;
 			children = (
@@ -563,6 +574,7 @@
 				C543611A1F728FFD0046FD7B /* StatusCell.swift */,
 				C543611B1F728FFD0046FD7B /* UserCell.swift */,
 				C543611C1F728FFD0046FD7B /* WebViewCell.swift */,
+				C518BD8B22C26245004BDC28 /* TrendingUserCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -751,11 +763,10 @@
 				C5F4BDED1D3FB19A009DF758 /* Login */,
 				C5EE81D91DBF4EAD00673E20 /* List */,
 				C51CDEAD1DBF797C0043A755 /* Detail */,
+				C518BD8A22C261B9004BDC28 /* Explore */,
 				C538FD261D40E86B003A559E /* BaseTableViewController.swift */,
 				C5E733801D5DA0F300913A66 /* MainTabBarController.swift */,
 				C52013CD1D57361A00FDCC30 /* WebViewController.swift */,
-				C5E7337E1D5D9FE900913A66 /* ExplorationViewController.swift */,
-				C5E733871D61C90000913A66 /* SearchViewController.swift */,
 				C526EE0F1D7C5C5B008C0D72 /* SyntaxHighlightSettingsViewController.swift */,
 				C57005E11DAA922C008DEFA9 /* SegmentViewController.swift */,
 				C554238C1DC60392001B7D20 /* AccountViewController.swift */,
@@ -1020,6 +1031,7 @@
 				C5E7C22D1DB61D5200F95509 /* Branch.swift in Sources */,
 				C51CDEC61DBF79910043A755 /* GistViewModel.swift in Sources */,
 				C54361241F728FFE0046FD7B /* IssueCell.swift in Sources */,
+				C518BD8C22C26245004BDC28 /* TrendingUserCell.swift in Sources */,
 				C5DB94631D3F842000887E81 /* AppDelegate.swift in Sources */,
 				C5A275B21F2F6D4100445E96 /* GithubAPI.swift in Sources */,
 				C538FD0B1D40A30F003A559E /* Event.swift in Sources */,

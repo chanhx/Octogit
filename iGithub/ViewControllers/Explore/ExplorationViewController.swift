@@ -32,20 +32,20 @@ class ExplorationViewController: BaseTableViewController {
     }
     
     // MARK: SearchViewController
-    
+
     @objc func showSearchViewController() {
-        
+
         searchViewController.hidesBottomBarWhenPushed = true
         searchViewController.navigationItem.setHidesBackButton(true, animated: false)
         searchViewController.activateSearchBar()
-        
+
         let transition = CATransition()
         transition.duration = 0.1
         transition.type = CATransitionType.fade
         transition.subtype = CATransitionSubtype.fromTop
-        
+
         navigationController?.view.layer.add(transition, forKey: kCATransition)
-		navigationController?.pushViewController(searchViewController, animated: false)
+        navigationController?.pushViewController(searchViewController, animated: false)
     }
     
     // MARK: UITableViewDelegate
@@ -68,14 +68,14 @@ class ExplorationViewController: BaseTableViewController {
             self.navigationController?.pushViewController(repoVC, animated: true)
         case .users:
             let user = viewModel.userTVM.users.value[indexPath.row]
-            switch user.type! {
+            switch user.0.type! {
             case .user:
                 let userVC = UserViewController.instantiateFromStoryboard()
-                userVC.viewModel = UserViewModel(user)
+                userVC.viewModel = UserViewModel(user.0)
                 self.navigationController?.pushViewController(userVC, animated: true)
             case .organization:
                 let orgVC = OrganizationViewController.instantiateFromStoryboard()
-                orgVC.viewModel = OrganizationViewModel(user)
+                orgVC.viewModel = OrganizationViewModel(user.0)
                 self.navigationController?.pushViewController(orgVC, animated: true)
             }
         }
@@ -133,9 +133,9 @@ extension ExplorationViewController: SegmentHeaderViewDelegate {
                     self.hide(statusType: .loading)
                 }
             })
-            .drive(tableView.rx.items(cellIdentifier: "UserCell", cellType: UserCell.self)) {
+            .drive(tableView.rx.items(cellIdentifier: "TrendingUserCell", cellType: TrendingUserCell.self)) {
                 row, user, cell in
-                cell.entity = user
+                cell.setContentWith(user: user.0, repository: user.1)
             }
             .disposed(by: viewModel.userTVM.disposeBag)
     }

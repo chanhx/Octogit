@@ -25,7 +25,7 @@ let languagesDict: [String: String] = {
 
 class ExplorationViewModel {
     
-    var since: TrendingTime
+    var since: DateRange
     var language: String
     var type: TrendingType {
         didSet {
@@ -43,7 +43,7 @@ class ExplorationViewModel {
         }
     }
     
-    init(since: TrendingTime = .today, language: String = "All Languages", type: TrendingType = .repositories) {
+    init(since: DateRange = .today, language: String = "All Languages", type: TrendingType = .repositories) {
         self.since = since
         self.language = language
         self.type = type
@@ -83,7 +83,7 @@ class ExplorationViewModel {
 
 class PickerViewModel {
     
-    let timeOptions: [(time: TrendingTime, desc: String)] = [
+    let timeOptions: [(time: DateRange, desc: String)] = [
         (.today, "today"),
         (.thisWeek, "this week"),
         (.thisMonth, "this month")
@@ -94,7 +94,7 @@ class PickerViewModel {
 protocol TrendingViewModelProtocol: class {
     var disposeBag: DisposeBag { get }
     var token: GitHubAPI { get }
-    var since: TrendingTime? { get set }
+    var since: DateRange? { get set }
     var language: String? { get set }
     func fetchHTML()
     func parse(_ doc: HTMLDocument)
@@ -118,7 +118,7 @@ extension TrendingViewModelProtocol {
 class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
     
     var disposeBag = DisposeBag()
-    var since: TrendingTime?
+    var since: DateRange?
     var language: String?
     var repositories: Variable<[(name: String, repoDescription: String?, language: String?, stargazers: String?, forks: String?, periodStargazers: String?)]>
         = Variable([])
@@ -151,9 +151,9 @@ class TrendingRepositoryTableViewModel: TrendingViewModelProtocol {
 class TrendingUserTableViewModel: TrendingViewModelProtocol {
     
     var disposeBag = DisposeBag()
-    var since: TrendingTime?
+    var since: DateRange?
     var language: String?
-    var users: Variable<[User]> = Variable([])
+    var users: Variable<[(User, Repository)]> = Variable([])
     var message: String?
     var token: GitHubAPI {
         return GitHubAPI.trending(since: since!, language: languagesDict[language!]!, type: .users)
@@ -163,8 +163,9 @@ class TrendingUserTableViewModel: TrendingViewModelProtocol {
         message = doc.css("div.blankslate h3").first?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
         users.value = doc.css("article.Box-row").map {
-            let name = String($0.at_css("h1 a")!["href"]!.dropFirst())
             let avatarURL = $0.at_css("a img")!["src"]!
+            let name = $0.at_css("h1 a")?.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            let loginName = $0.at_css("p a")?.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
             var type: String
             switch $0.css("span.follow") {
@@ -174,7 +175,13 @@ class TrendingUserTableViewModel: TrendingViewModelProtocol {
                 type = "User"
             }
             
-            return Mapper<User>().map(JSON: ["login": name, "avatar_url": avatarURL, "type": type])!
+            let repoName = $0.at_css("article h1 a")?.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            let repoDescription = $0.at_css("article h1")?.nextSibling?.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            
+            return (
+                Mapper<User>().map(JSON: ["name": name, "login": loginName, "avatar_url": avatarURL, "type": type])!,
+                Mapper<Repository>().map(JSON: ["name": repoName, "description": repoDescription])!
+            )
         }
     }
 }

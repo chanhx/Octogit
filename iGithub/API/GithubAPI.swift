@@ -76,7 +76,7 @@ enum UsersSearchSort: String, CustomStringConvertible {
     }
 }
 
-enum TrendingTime: String {
+enum DateRange: String {
     case today = "daily"
     case thisWeek = "weekly"
     case thisMonth = "monthly"
@@ -93,7 +93,7 @@ enum GitHubAPI {
     
     case authorize
     case accessToken(code: String)
-    case trending(since: TrendingTime, language: String, type: TrendingType)
+    case trending(since: DateRange, language: String, type: TrendingType)
     
     // MARK: Branch
     
