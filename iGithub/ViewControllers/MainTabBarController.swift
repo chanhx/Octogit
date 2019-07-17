@@ -17,6 +17,10 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         let eventTVC = (viewControllers![0]  as! UINavigationController).topViewController as! EventTableViewController
         eventTVC.viewModel = EventTableViewModel(user: AccountManager.currentUser!, type: .received)
+        
+        for vc in self.viewControllers! {
+            vc.view.backgroundColor = .white
+        }
     }
 
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
