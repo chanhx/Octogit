@@ -79,12 +79,12 @@ class EventCell: UITableViewCell {
         self.contentView.addSubview(vStackView)
         
         let margins = contentView.layoutMarginsGuide
-        let imageSize: CGFloat = 36
+        let imageSize: CGFloat = 42
         
         NSLayoutConstraint.activate([
             hStackView1.heightAnchor.constraint(equalToConstant: 18),
             
-            iconLabel.widthAnchor.constraint(equalToConstant: 36),
+            iconLabel.widthAnchor.constraint(equalToConstant: imageSize),
             
             avatarView.heightAnchor.constraint(equalToConstant: imageSize),
             avatarView.widthAnchor.constraint(equalToConstant: imageSize),

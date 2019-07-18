@@ -35,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func customizeAppearance() {
         
+        UINavigationBar.appearance().shadowImage = UIImage()
+        
         UITextField.appearance().tintColor = UIColor(netHex: 0x2A9883)
         
         let backgroundView = UIView()
